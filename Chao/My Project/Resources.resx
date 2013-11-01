@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="A1_step1" xml:space="preserve">
+    <value>最大轉速穏定運轉測試時散熱風扇必須有70 %以上時間維持運轉(油門到底)</value>
+  </data>
+  <data name="A2_Excavator_step1" xml:space="preserve">
+    <value>最大挖掘半徑75%距地面0.5公尺高處，切刃背面與地面呈60度</value>
+  </data>
+  <data name="A2_Excavator_step2" xml:space="preserve">
+    <value>高速怠轉</value>
+  </data>
+  <data name="A2_Excavator_step3" xml:space="preserve">
+    <value>抓斗移動至操作範圍50%，並保持距地面0.5公尺之高度</value>
+  </data>
+  <data name="A2_Excavator_step4" xml:space="preserve">
+    <value>抓斗最大伸展高度之30%</value>
+  </data>
+  <data name="A2_Excavator_step5" xml:space="preserve">
+    <value>吊桿向左方向旋轉90度</value>
+  </data>
+  <data name="A2_Excavator_step6" xml:space="preserve">
+    <value>最大伸展高度之60%停</value>
+  </data>
+  <data name="A2_Excavator_step7" xml:space="preserve">
+    <value>伸展至75%並使抓斗之切刃呈垂直時傾卸(外推黃錐卸土)</value>
+  </data>
+  <data name="A2_Excavator_step8" xml:space="preserve">
+    <value>向右迴轉90度</value>
+  </data>
+  <data name="A2_Excavator_step9" xml:space="preserve">
+    <value>回致原先之位置(下降回紅錐)</value>
+  </data>
+  <data name="A2_Loader_Excavator_step5" xml:space="preserve">
+    <value>吊桿向左方向旋轉45度</value>
+  </data>
+  <data name="A2_Loader_Excavator_step8" xml:space="preserve">
+    <value>向右迴轉45度</value>
+  </data>
+  <data name="A2_Loader_step1" xml:space="preserve">
+    <value>高速怠轉(油門到底)</value>
+  </data>
+  <data name="A2_Loader_step2" xml:space="preserve">
+    <value>抓斗上舉制最高舉程之75%處(舉高X米)</value>
+  </data>
+  <data name="A2_Loader_step3" xml:space="preserve">
+    <value>再回復至原始位置(放下)</value>
+  </data>
+  <data name="A3_Loader_step1" xml:space="preserve">
+    <value>抓斗底距地面0.3公尺±0.05公尺(起點紅錐斗高1尺)</value>
+  </data>
+  <data name="A3_Loader_step2" xml:space="preserve">
+    <value>引擎高速怠轉(高速怠轉)</value>
+  </data>
+  <data name="A3_Loader_step3" xml:space="preserve">
+    <value>履帶式前進速度儘量接近且不超過4公里/小時，膠輪式前進速度儘量接近且不超過8公里/小時(低檔前進白錐)</value>
+  </data>
+  <data name="A3_Loader_step4" xml:space="preserve">
+    <value>後退行走與速度無關，可使用適宜之變速檔。(後退回紅錐)</value>
+  </data>
+  <data name="A3_Tractor_step1" xml:space="preserve">
+    <value>排土板為標準裝置，距地面高0.3公尺±0.05公尺(起點紅錐板高1尺)</value>
+  </data>
+  <data name="A3_Tractor_step2" xml:space="preserve">
+    <value>高速怠轉(油門到底)</value>
+  </data>
+  <data name="A3_Tractor_step3" xml:space="preserve">
+    <value>膠輪式於堅硬反射面行走，前進速度儘量接近且不超過每小時8公里，履帶式及鋼輪式於砂土上行走，前進速度儘量接近且不超過每小時4公里(前進至白錐)(停)</value>
+  </data>
+  <data name="A3_Tractor_step4" xml:space="preserve">
+    <value>後退速度則視情況使用變速檔。(後退回紅錐)</value>
+  </data>
+  <data name="A4_Asphalt_Finisher" xml:space="preserve">
+    <value>定置高速怠轉狀態。(全速空轉)</value>
+  </data>
+  <data name="A4_Auger_Drill_Driver" xml:space="preserve">
+    <value>定置高速怠轉。(全速空轉)</value>
+  </data>
+  <data name="A4_Compressor" xml:space="preserve">
+    <value>原則上定數回轉與定額負載之狀態。(定速定載)</value>
+  </data>
+  <data name="A4_Concrete_Breaker" xml:space="preserve">
+    <value>以規定之工作壓力為測定作業狀態，將鑿桿(chisel)強烈押在控制板，須避免組裝部分影響測值。作業者不可站在噪音測線上</value>
+  </data>
+  <data name="A4_Concrete_Cutter" xml:space="preserve">
+    <value>以定速回轉切割混凝土，深度為刀片直徑之1/4</value>
+  </data>
+  <data name="A4_Concrete_Pump" xml:space="preserve">
+    <value>以最大之運轉狀態壓送混凝土，此時吊桿應向水平方向延伸，配管長度約為10公尺。(最大之運轉狀態壓送混凝土)</value>
+  </data>
+  <data name="A4_Crane" xml:space="preserve">
+    <value>吊桿之角度為60度，勾子抓斗等以上卷狀態，定置高速怠轉。(全速空轉)</value>
+  </data>
+  <data name="A4_Generator" xml:space="preserve">
+    <value>無負載定速回轉(60Hz)。(無負載定速回轉)</value>
+  </data>
+  <data name="A4_Roller" xml:space="preserve">
+    <value>可裝載道碴之機具，以裝載最大量之狀態，定置高速怠轉。(滿載全速空轉)</value>
+  </data>
+  <data name="A4_Vibrating_Hammer" xml:space="preserve">
+    <value>吊在空中之狀態，不超過地面上50公分為原則並使其產生最大振動數</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="green" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\green.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="red" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\red.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="yellow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\yellow.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+</root>

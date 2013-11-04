@@ -469,18 +469,7 @@ Public Class Program
         PanelExcavatorA2.Controls.Add(TextBox_Ex_A2_av3)
         PanelExcavatorA2.Controls.Add(TextBox_Ex_A2_av4)
 
-        PanelLoaderA3.Controls.Add(Panel_LoA3_Fst_bkd)
-        PanelLoaderA3.Controls.Add(Panel_LoA3_Fst_fwd)
-        PanelLoaderA3.Controls.Add(Panel_LoA3_Sec_bkd)
-        PanelLoaderA3.Controls.Add(Panel_LoA3_Sec_fwd)
-        PanelLoaderA3.Controls.Add(Panel_LoA3_Thd_bkd)
-        PanelLoaderA3.Controls.Add(Panel_LoA3_Thd_bkd)
-        PanelLoaderA3.Controls.Add(Panel_LoA3_Add_bkd)
-        PanelLoaderA3.Controls.Add(Panel_LoA3_Add_bkd)
-        PanelLoaderA3.Controls.Add(TextBox_Lo_A3_av1)
-        PanelLoaderA3.Controls.Add(TextBox_Lo_A3_av2)
-        PanelLoaderA3.Controls.Add(TextBox_Lo_A3_av3)
-        PanelLoaderA3.Controls.Add(TextBox_Lo_A3_av4)
+
 
         'Create an object for each step
         Dim tempRun As Run_Unit
@@ -608,43 +597,6 @@ Public Class Program
         tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Add_3rd, Panel_ExA2_Add_3rd, Nothing, tempRun, 30)
         tempRun = tempRun.NextUnit
 
-        ''A3
-        'A3 First forward
-        Set_Panel(Panel_LoA3_Fst_fwd, LinkLabel_LoA3_Fst_fwd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Fst_fwd, Panel_LoA3_Fst_fwd, Nothing, tempRun, 30)
-        tempRun = tempRun.NextUnit
-        'A3 First backward
-        Set_Panel(Panel_LoA3_Fst_bkd, LinkLabel_LoA3_Fst_bkd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Fst_bkd, Panel_LoA3_Fst_bkd, Nothing, tempRun, 30)
-        tempRun = tempRun.NextUnit
-
-        'A3 Second fwd
-        Set_Panel(Panel_LoA3_Sec_fwd, LinkLabel_LoA3_Sec_fwd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Sec_fwd, Panel_LoA3_Sec_fwd, Nothing, tempRun, 30)
-        tempRun = tempRun.NextUnit
-        'A3 Second backward
-        Set_Panel(Panel_LoA3_Sec_bkd, LinkLabel_LoA3_Sec_bkd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Sec_bkd, Panel_LoA3_Sec_bkd, Nothing, tempRun, 30)
-        tempRun = tempRun.NextUnit
-
-        'A3 Third fwd
-        Set_Panel(Panel_LoA3_Thd_fwd, LinkLabel_LoA3_Thd_fwd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Thd_fwd, Panel_LoA3_Thd_fwd, Nothing, tempRun, 30)
-        tempRun = tempRun.NextUnit
-        'A3 Third bkd
-        Set_Panel(Panel_LoA3_Thd_bkd, LinkLabel_LoA3_Thd_bkd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Thd_bkd, Panel_LoA3_Thd_bkd, Nothing, tempRun, 30)
-        tempRun = tempRun.NextUnit
-
-        'A3 Add fwd
-        Set_Panel(Panel_LoA3_Add_fwd, LinkLabel_LoA3_Add_fwd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Add_fwd, Panel_LoA3_Add_fwd, Nothing, tempRun, 30)
-        tempRun = tempRun.NextUnit
-        'A3 Add bkd
-        Set_Panel(Panel_LoA3_Add_bkd, LinkLabel_LoA3_Add_bkd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Add_bkd, Panel_LoA3_Add_bkd, Nothing, tempRun, 30)
-        tempRun = tempRun.NextUnit
-
         Return tempRun
 
     End Function
@@ -693,6 +645,19 @@ Public Class Program
         PanelLoaderA2.Controls.Add(TextBox_Lo_A2_av2)
         PanelLoaderA2.Controls.Add(TextBox_Lo_A2_av3)
         PanelLoaderA2.Controls.Add(TextBox_Lo_A2_av4)
+
+        PanelLoaderA3.Controls.Add(Panel_LoA3_Fst_bkd)
+        PanelLoaderA3.Controls.Add(Panel_LoA3_Fst_fwd)
+        PanelLoaderA3.Controls.Add(Panel_LoA3_Sec_bkd)
+        PanelLoaderA3.Controls.Add(Panel_LoA3_Sec_fwd)
+        PanelLoaderA3.Controls.Add(Panel_LoA3_Thd_bkd)
+        PanelLoaderA3.Controls.Add(Panel_LoA3_Thd_bkd)
+        PanelLoaderA3.Controls.Add(Panel_LoA3_Add_bkd)
+        PanelLoaderA3.Controls.Add(Panel_LoA3_Add_bkd)
+        PanelLoaderA3.Controls.Add(TextBox_Lo_A3_av1)
+        PanelLoaderA3.Controls.Add(TextBox_Lo_A3_av2)
+        PanelLoaderA3.Controls.Add(TextBox_Lo_A3_av3)
+        PanelLoaderA3.Controls.Add(TextBox_Lo_A3_av4)
 
         'Create an object for each step
         Dim tempRun As Run_Unit
@@ -818,6 +783,43 @@ Public Class Program
         'A2 Add 3
         Set_Panel(Panel_LoA2_Add_3rd, LinkLabel_LoA2_Add_3rd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Add_3rd, Panel_LoA2_Add_3rd, Nothing, tempRun, 30)
+        tempRun = tempRun.NextUnit
+
+        ''A3
+        'A3 First forward
+        Set_Panel(Panel_LoA3_Fst_fwd, LinkLabel_LoA3_Fst_fwd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Fst_fwd, Panel_LoA3_Fst_fwd, Nothing, tempRun, 30)
+        tempRun = tempRun.NextUnit
+        'A3 First backward
+        Set_Panel(Panel_LoA3_Fst_bkd, LinkLabel_LoA3_Fst_bkd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Fst_bkd, Panel_LoA3_Fst_bkd, Nothing, tempRun, 30)
+        tempRun = tempRun.NextUnit
+
+        'A3 Second fwd
+        Set_Panel(Panel_LoA3_Sec_fwd, LinkLabel_LoA3_Sec_fwd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Sec_fwd, Panel_LoA3_Sec_fwd, Nothing, tempRun, 30)
+        tempRun = tempRun.NextUnit
+        'A3 Second backward
+        Set_Panel(Panel_LoA3_Sec_bkd, LinkLabel_LoA3_Sec_bkd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Sec_bkd, Panel_LoA3_Sec_bkd, Nothing, tempRun, 30)
+        tempRun = tempRun.NextUnit
+
+        'A3 Third fwd
+        Set_Panel(Panel_LoA3_Thd_fwd, LinkLabel_LoA3_Thd_fwd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Thd_fwd, Panel_LoA3_Thd_fwd, Nothing, tempRun, 30)
+        tempRun = tempRun.NextUnit
+        'A3 Third bkd
+        Set_Panel(Panel_LoA3_Thd_bkd, LinkLabel_LoA3_Thd_bkd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Thd_bkd, Panel_LoA3_Thd_bkd, Nothing, tempRun, 30)
+        tempRun = tempRun.NextUnit
+
+        'A3 Add fwd
+        Set_Panel(Panel_LoA3_Add_fwd, LinkLabel_LoA3_Add_fwd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Add_fwd, Panel_LoA3_Add_fwd, Nothing, tempRun, 30)
+        tempRun = tempRun.NextUnit
+        'A3 Add bkd
+        Set_Panel(Panel_LoA3_Add_bkd, LinkLabel_LoA3_Add_bkd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Add_bkd, Panel_LoA3_Add_bkd, Nothing, tempRun, 30)
         tempRun = tempRun.NextUnit
 
         Return tempRun

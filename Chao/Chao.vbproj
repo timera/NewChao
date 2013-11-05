@@ -103,6 +103,7 @@
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
     <Compile Include="Run.vb" />
+    <Compile Include="Steps.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Form3.resx">

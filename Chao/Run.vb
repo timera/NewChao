@@ -5,7 +5,7 @@
     Public NextUnit As Run_Unit
     Public PrevUnit As Run_Unit
     Dim Time As Integer
-    Public Steps(8) As String
+    Public Steps As Steps
     Public CurStep As Integer
     Public StartStep As Integer
     Public EndStep As Integer

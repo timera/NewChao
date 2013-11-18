@@ -1,8 +1,8 @@
 ﻿Public Class Steps
     Dim step_str As String
     Dim step_label As Label
-    Dim NextStep As Steps
-    Dim LastStep As Boolean
+    Public NextStep As Steps
+    Public LastStep As Boolean
 
     Sub New(ByRef ss As String, ByRef sl As Label, ByRef ns As Steps, ByRef ls As Boolean)
         step_str = ss

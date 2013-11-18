@@ -9,8 +9,9 @@
     Public CurStep As Integer
     Public StartStep As Integer
     Public EndStep As Integer
+    Public Name As String
 
-    Sub New(ByRef l As LinkLabel, ByRef p As Panel, ByRef nu As Run_Unit, ByRef pu As Run_Unit, ByVal sec As Integer)
+    Sub New(ByRef l As LinkLabel, ByRef p As Panel, ByRef nu As Run_Unit, ByRef pu As Run_Unit, ByVal sec As Integer, ByRef na As String)
         Link = l
         Panel = p
         NextUnit = nu
@@ -20,6 +21,7 @@
         CurStep = 0
         StartStep = 0
         EndStep = 0
+        Name = na
     End Sub
 
     Public Function HasNext()

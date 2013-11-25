@@ -76,7 +76,7 @@ Public Class Program
     Const seconds As Integer = 3
     Const graphW As Integer = 650
     Const graphH As Integer = 200
-    Const ASize As Size = New Size(128, 405)
+    Dim ASize As Size = New Size(128, 405)
 
     Public Sub New()
 
@@ -170,9 +170,13 @@ Public Class Program
 
 
         'Set invisible
+        Panel_PreCal.Visible = True
+        Panel_Bkg.Visible = True
+        Panel_RSS.Visible = True
+        Panel_PostCal.Visible = True
         PanelA4.Visible = False
-        PanelExcavatorA1.Visible = False
-        PanelExcavatorA2.Visible = False
+        PanelExcavatorA1.Visible = True
+        PanelExcavatorA2.Visible = True
         PanelLoaderA3.Visible = False
         PanelLoaderA1.Visible = False
         PanelLoaderA2.Visible = False
@@ -181,39 +185,41 @@ Public Class Program
 
         'location of all objects
 
-        LinkLabel_preCal.Location = New Point(50, 22)
-        LinkLabel_BG.Location = New Point(50, 62)
-        LinkLabel_RSS.Location = New Point(50, 262)
-        LinkLabel_postCal.Location = New Point(50, 302)
+        'LinkLabel_preCal.Location = New Point(50, 22)
+        'LinkLabel_BG.Location = New Point(50, 62)
+        'LinkLabel_RSS.Location = New Point(50, 262)
+        'LinkLabel_postCal.Location = New Point(50, 302)
 
 
-        startButton.Location = New Point(9, 354)
-        AcceptButton.Location = New Point(133, 354)
-        AcceptButton.Enabled = False
-        timeLabel.Location = New Point(9, 380)
-        stopButton.Location = New Point(9, 461)
+        startButton.Location = New Point(19, 126)
+        Accept_Button.Location = New Point(19, 194)
+        Accept_Button.Enabled = False
+        timeLabel.Location = New Point(142, 126)
+        stopButton.Location = New Point(267, 126)
+        testButton.Location = New Point(142, 231)
 
-        NoisesArray = {Noise1, Noise2, Noise3, Noise4, Noise5, Noise6}
-        Dim noiseX = 90
-        Dim noiseY = 580
-        Noise1.Location = New Point(250, 580)
-        Noise2.Location = New Point(250 + noiseX, 580)
-        Noise3.Location = New Point(250 + noiseX * 2, 580)
-        Noise4.Location = New Point(250 + noiseX * 3, 580)
-        Noise5.Location = New Point(250 + noiseX * 4, 580)
-        Noise6.Location = New Point(250 + noiseX * 5, 580)
+        NoisesArray = {Noise1, Noise2, Noise3, Noise4, Noise5, Noise6, Noise_Avg}
+        Dim noiseX = 70
+        Noise1.Location = New Point(399, 203)
+        Noise2.Location = New Point(399 + noiseX, 203)
+        Noise3.Location = New Point(399 + noiseX * 2, 203)
+        Noise4.Location = New Point(399 + noiseX * 3, 203)
+        Noise5.Location = New Point(399 + noiseX * 4, 203)
+        Noise6.Location = New Point(399 + noiseX * 5, 203)
+        Noise_Avg.Location = New Point(399 + noiseX * 6, 203)
 
-        Dim stepX As Integer = 960
-        Step1.Location = New Point(stepX, 22)
-        Step2.Location = New Point(stepX, 84)
-        Step3.Location = New Point(stepX, 146)
-        Step4.Location = New Point(stepX, 208)
-        Step5.Location = New Point(stepX, 270)
-        Step6.Location = New Point(stepX, 332)
-        Step7.Location = New Point(stepX, 394)
-        Step8.Location = New Point(stepX, 456)
-        Step9.Location = New Point(stepX, 518)
-        Step10.Location = New Point(stepX, 580)
+        Dim stepX As Integer = 1240
+        Dim stepY As Integer = 75
+        Step1.Location = New Point(stepX, 23)
+        Step2.Location = New Point(stepX, 23 + stepY * 1)
+        Step3.Location = New Point(stepX, 23 + stepY * 2)
+        Step4.Location = New Point(stepX, 23 + stepY * 3)
+        Step5.Location = New Point(stepX, 23 + stepY * 4)
+        Step6.Location = New Point(stepX, 23 + stepY * 5)
+        Step7.Location = New Point(stepX, 23 + stepY * 6)
+        Step8.Location = New Point(stepX, 23 + stepY * 7)
+        Step9.Location = New Point(stepX, 23 + stepY * 8)
+        Step10.Location = New Point(stepX, 23 + stepY * 9)
         array_step(0) = Step1
         array_step(1) = Step2
         array_step(2) = Step3
@@ -225,6 +231,15 @@ Public Class Program
         array_step(8) = Step9
         array_step(9) = Step10
 
+
+        Label1.Location = New Point(156, 329)
+        Label2.Location = New Point(156, 417)
+        Label3.Location = New Point(156, 509)
+        Label4.Location = New Point(156, 602)
+
+        Panel_PreCal.Location = New Point(10, 289)
+        Panel_Bkg.Location = New Point(10, 400)
+        Load_Excavator()
 
         MachChosen = False
     End Sub
@@ -431,11 +446,9 @@ Public Class Program
         PanelExcavatorA2.Visible = True
         PanelLoaderA3.Visible = True
         PanelExcavatorA1.Size = ASize
-        PanelA4.Location = New Point(220, 280)
+        PanelExcavatorA1.Location = New Point(220, 280)
         PanelExcavatorA2.Size = ASize
-        PanelA4.Location = New Point(354, 280)
-        PanelLoaderA3.Size = ASize
-        PanelA4.Location = New Point(488, 280)
+        PanelExcavatorA2.Location = New Point(354, 280)
 
         PanelExcavatorA1.Controls.Add(Panel_ExA1_Fst_1st)
         PanelExcavatorA1.Controls.Add(Panel_ExA1_Fst_2nd)
@@ -631,13 +644,13 @@ Public Class Program
     Sub Load_Loader()
         PanelLoaderA1.Visible = True
         PanelLoaderA2.Visible = True
-
+        PanelLoaderA3.Visible = True
         PanelLoaderA1.Size = ASize
-        PanelA4.Location = New Point(220, 280)
+        PanelLoaderA1.Location = New Point(220, 280)
         PanelLoaderA2.Size = ASize
-        PanelA4.Location = New Point(354, 280)
-
-        PanelA4.Location = New Point(488, 280)
+        PanelLoaderA2.Location = New Point(354, 280)
+        PanelLoaderA3.Size = ASize
+        PanelLoaderA3.Location = New Point(488, 280)
 
         PanelLoaderA1.Controls.Add(Panel_LoA1_Fst_1st)
         PanelLoaderA1.Controls.Add(Panel_LoA1_Fst_2nd)
@@ -1095,10 +1108,9 @@ Public Class Program
         End If
         tempRun = HeadRun
         While Not IsNothing(tempRun)
-            tempRun.Steps = text
+            'tempRun.Steps = text
             tempRun = tempRun.NextUnit
         End While
-        Load_Steps(HeadRun)
     End Sub
     Function Load_Steps_helper(ByRef run As Run_Unit)
         Dim tempRun As Run_Unit = run
@@ -1159,12 +1171,10 @@ Public Class Program
         If tempRun.Name = "LoA3_bkd" Then
             tempRun.Steps = New Steps(My.Resources.A3_Loader_step4, Step1, Nothing, True)
         End If
+
+        Return tempRun.Steps
+
     End Function
-    Private Sub Load_Steps(ByRef curRun As Run_Unit)
-        For i = 0 To curRun.EndStep
-            array_step(i).Text = curRun.Steps(i)
-        Next
-    End Sub
 
     Private MouseIsDown As Boolean = False
     Private lastPos As Point
@@ -1201,58 +1211,10 @@ Public Class Program
             lastPos = temp
         End If
     End Sub
-    ' for now produce fake data
-    Private Function GetInstantData()
-        Dim num As Integer
-        If Not status = 4 Then
-            num = 6
-        Else
-            num = 4
-        End If
-        Dim r = New Random()
-        Dim result(num - 1) As Double
-        For i = 0 To num - 1
-            result(i) = r.Next(90, 120)
-        Next
-        Return result
-    End Function
 
-    Private Sub SetScreenValuesAndGraphs(ByVal vals() As Double)
-        Dim num As Integer
-        If Not status = 4 Then
-            num = 6
-        Else
-            num = 4
-        End If
-        'Set Texts
-        For i = 0 To num - 1
-            NoisesArray(i).Text = vals(i)
-        Next
-        'Set graphs
-        MainBarGraph.Update(vals)
-        MainLineGraphs.Update(vals)
-    End Sub
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
 
-        If timeLeft > 0 Then 'counting
-            timeLeft = timeLeft - 1
-            timeLabel.Text = timeLeft & " s"
-
-            'send values to display as text and graphs
-            SetScreenValuesAndGraphs(GetInstantData())
-
-        ElseIf timeLeft = 0 Then 'time's up
-            Timer1.Stop()
-            timeLabel.Text = "Time's up!"
-            'System.Threading.Thread.Sleep(1000)
-            startButton.Enabled = True
-            stopButton.Enabled = False
-            'determine what the next step is
-            determine_next()
-            timeLeft = TimeofStep(0, cStep - 1)
-            timeLabel.Text = timeLeft & " s"
-        End If
 
     End Sub
 
@@ -1260,34 +1222,15 @@ Public Class Program
     Private Sub startButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles startButton.Click
         startButton.Enabled = False
         stopButton.Enabled = True
-        If state < 4 And Not NewGraph Then ' if now A1,A2, or A3
-            'multiple steps
-            If MainLineGraphs.HasNextGraph() Then
-                MainLineGraphs.MoveToNextGraph()
-            Else
-                Dim numTimes(TimeofStep.GetLength(1) - 1) As Integer
-                For i = 0 To TimeofStep.GetLength(1) - 1
-                    numTimes(i) = TimeofStep(0, i)
-                Next
-                'dispose graphs from 1st and 2nd runs for now
-                MainLineGraphs.Dispose()
-                MainLineGraphs = New LineGraphPanel(New Point(300, 100), New Size(graphW, graphH), TabPage2, CGraph.Modes.A1A2A3, eStep, numTimes, graphH)
-            End If
-        End If
-        ' start the next left step, because new graph is already created in determine_next doesn't need to do anything else
 
-        timeLeft = TimeofStep(0, 0)
-        TimeofStep(1, cStep - 1) -= 1
         Timer1.Start()
+
     End Sub
 
-    Private Sub AcceptButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AcceptButton.Click
+    Private Sub AcceptButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Accept_Button.Click
         If MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             MessageBox.Show("此機具所有測量步驟已結束")
-            ' upon accepting data, we delete the current MainLineGraph and create a new one in determine_next
-            MainLineGraphs.Dispose()
-            determine_next()
-            AcceptButton.Enabled = False
+            Accept_Button.Enabled = False
             startButton.Enabled = True
         End If
     End Sub
@@ -1298,297 +1241,6 @@ Public Class Program
         Timer1.Stop()
     End Sub
 
-
-
-
-
-
-
-
-    Private Sub clearSteps()
-        For index = 0 To 8
-            array_step(index).Text = ""
-            array_step(index).BackColor = Color.DarkGray
-        Next
-    End Sub
-
-    'step10 is label for occurances when there are too many steps
-    Private Function determine_next()
-        Dim mode As CGraph.Modes = CGraph.Modes.A1A2A3
-        If status = 4 Then
-            mode = CGraph.Modes.A4
-        End If
-
-        'set up lights for the first time
-        If state = 0 Then
-            cStep = 1
-            sStep = 1
-            eStep = 1
-
-            'initialize timeofstep
-            TimeofStep(0, cStep - 1) = seconds
-            TimeofStep(1, cStep - 1) = 1
-            'start from pre cal
-            state = 5
-            SetupNextLights()
-
-            'Graphing for the main screen
-            MainLineGraphs = New LineGraphPanel(New Point(300, 100), New Size(graphW, graphH), TabPage2, mode, eStep, {TimeofStep(0, cStep - 1)}, graphH)
-            MainBarGraph = New BarGraph(New Point(300, 300), New Size(graphW, graphH), TabPage2, mode)
-            NewGraph = True
-        ElseIf state = 7 Then 'If additional, need special treatment because we don't know if we need to change lights or not
-            'NewGraph
-            'If left step change (including repetitions)
-        ElseIf state > 4 Or (cStep = eStep And TimeofStep(1, eStep - 1) = 0) Then ' if running precal,bg,RSS,or post cal, or right hand side runs out 3 times
-            If Not AcceptButton.Enabled Then
-                AcceptButton.Enabled = True
-                startButton.Enabled = False
-                Return False
-            End If
-            ''set up the lights
-            SetupNextLights()
-            ''if previous is additional determine if we need another additional
-            If state > 7 Or state = 5 Then 'if previous is RSS or postcal or precal 
-                state += 1
-            ElseIf (state = 6 And Not status = 4) Or (state = 1 And Not trial = 3) Then  '' A1 is next -background or A1 is the previous, meaning current is A1
-                auto = True
-                'if previous is background
-                If state = 6 Then
-                    state = 1
-                    trial = 1
-                Else 'if previous is A1
-                    trial += 1
-                    array_step(eStep - 1).ForeColor = Color.Black 'make last step black
-                End If
-
-
-                ''set up sStep and eStep and cStep
-                sStep = 1
-                eStep = 1
-                cStep = 1
-                labelRepeat = Step2
-                TimeofStep(1, 0) = 3
-                TimeofStep(0, 0) = seconds
-                Step1.Text = My.Resources.A1_step1
-                Step1.BackColor = Color.Orange
-                ' times-1
-                labelRepeat.Text = "第幾次循環 : 第 " & 4 - TimeofStep(1, sStep - 1) & " 次 / 共 3 次"
-                ' set the next step red
-                array_step(0).ForeColor = Color.Red
-            ElseIf (state = 1 And status = 1 And trial = 3) Or (state = 2 And Not trial = 3) Then ''' if next is A2 (A1->A2, or A2 repeat)
-                auto = False
-                'if previous is A1
-                If state = 1 Then
-                    state = 2
-                    trial = 1
-                    clearSteps()
-                Else 'if previous is A2
-                    trial += 1
-                    array_step(eStep - 1).ForeColor = Color.Black 'make last step black
-                End If
-
-                If Machine = Machines.Excavator Then
-                    sStep = 2
-                    eStep = 9
-                    cStep = 1
-                    For i = sStep - 1 To eStep - 1
-                        TimeofStep(0, i) = seconds 'defaulted to global var first
-                        TimeofStep(1, i) = 3
-                    Next
-                    labelRepeat = Step10
-                    '載入步驟
-                    For i = 0 To eStep - 1
-                        array_step(i).Visible = True
-                    Next
-                    Step1.Text = My.Resources.A2_Excavator_step1
-                    Step1.BackColor = Color.MistyRose
-                    Step2.Text = My.Resources.A2_Excavator_step2
-                    Step2.BackColor = Color.Orange
-                    Step3.Text = My.Resources.A2_Excavator_step3
-                    Step3.BackColor = Color.Orange
-                    Step4.Text = My.Resources.A2_Excavator_step4
-                    Step4.BackColor = Color.Orange
-                    Step5.Text = My.Resources.A2_Excavator_step5
-                    Step5.BackColor = Color.Orange
-                    Step6.Text = My.Resources.A2_Excavator_step6
-                    Step6.BackColor = Color.Orange
-                    Step7.Text = My.Resources.A2_Excavator_step7
-                    Step7.BackColor = Color.Orange
-                    Step8.Text = My.Resources.A2_Excavator_step8
-                    Step8.BackColor = Color.Orange
-                    Step9.Text = My.Resources.A2_Excavator_step9
-                    Step9.BackColor = Color.Orange
-                    labelRepeat.Text = "第幾次循環 : 第 " & 4 - TimeofStep(1, sStep - 1) & " 次 / 共 3 次"
-                    ' set the next step red
-                    array_step(0).ForeColor = Color.Red
-                ElseIf Machine = Machines.Loader_Excavator Then
-                    '''''''''''''''FILL IN
-                End If
-            ElseIf (state = 1 And trial = 3) Or (state = 2 And status = 3 And trial = 3) Or (state = 3 And Not trial = 3) Then ''' if next is A3 (A1->A3, A1->A2->A3, A3 repeat)
-                auto = False
-                'if previous is A3
-                If state = 3 Then
-                    trial += 1
-                    array_step(eStep - 1).ForeColor = Color.Black 'make last step black
-                Else 'if previous is A1,A2
-                    state = 3
-                    trial = 1
-                    clearSteps()
-                End If
-
-                If Machine = Machines.Loader_Excavator Then
-                    '''''''''''''''FILL IN
-                    For i = 0 To eStep
-                        array_step(i).Visible = True
-                    Next
-                    labelRepeat.Text = "第幾次循環 : 第 " & 4 - TimeofStep(1, sStep - 1) & " 次 / 共 3 次"
-                    ' set the next step red
-                    array_step(0).ForeColor = Color.Red
-                ElseIf Machine = Machines.Loader Then
-                    For i = sStep - 1 To eStep - 1
-                        TimeofStep(0, i) = seconds 'defaulted to global var first
-                        TimeofStep(1, i) = 3
-                    Next
-                    sStep = 2
-                    eStep = 3
-                    cStep = 1
-                    For i = 0 To eStep
-                        array_step(i).Visible = True
-                    Next
-                    Step1.Text = My.Resources.A2_Loader_step1
-                    Step1.BackColor = Color.MistyRose
-                    Step2.Text = My.Resources.A2_Loader_step2
-                    Step2.BackColor = Color.Orange
-                    Step3.Text = My.Resources.A2_Loader_step3
-                    Step3.BackColor = Color.Orange
-                    Step4.BackColor = Color.DarkGray
-                    Step5.BackColor = Color.DarkGray
-                    Step6.BackColor = Color.DarkGray
-                    Step7.BackColor = Color.DarkGray
-                    Step8.BackColor = Color.DarkGray
-                    Step9.BackColor = Color.DarkGray
-                    labelRepeat.Text = "第幾次循環 : 第 " & 4 - TimeofStep(1, sStep - 1) & " 次 / 共 3 次"
-                    ' set the next step red
-                    array_step(0).ForeColor = Color.Red
-                ElseIf Machine = Machines.Tractor Then
-                    For i = sStep - 1 To eStep - 1
-                        TimeofStep(0, i) = seconds 'defaulted to global var first
-                        TimeofStep(1, i) = 3
-                    Next
-                    sStep = 3
-                    eStep = 4
-                    cStep = 1
-                    For i = 0 To eStep
-                        array_step(i).Visible = True
-                    Next
-                    Step1.Text = My.Resources.A3_Tractor_step1
-                    Step1.BackColor = Color.MistyRose
-                    Step2.Text = My.Resources.A3_Tractor_step2
-                    Step2.BackColor = Color.MistyRose
-                    Step3.Text = My.Resources.A3_Tractor_step3
-                    Step3.BackColor = Color.Orange
-                    Step4.Text = My.Resources.A3_Tractor_step4
-                    Step4.BackColor = Color.Orange
-                    Step5.BackColor = Color.DarkGray
-                    Step6.BackColor = Color.DarkGray
-                    Step7.BackColor = Color.DarkGray
-                    Step8.BackColor = Color.DarkGray
-                    Step9.BackColor = Color.DarkGray
-                    labelRepeat.Text = "第幾次循環 : 第 " & 4 - TimeofStep(1, sStep - 1) & " 次 / 共 3 次"
-                    ' set the next step red
-                    array_step(0).ForeColor = Color.Red
-                End If
-            ElseIf ((status = 1 And state = 2) Or (status = 2 And state = 3) Or (status = 3 And state = 3)) And trial = 3 Then ''' if next step is additional
-
-                '''''''''''''''FILL IN
-
-                If (cStep = sStep) Then 'if the first step is the repetitive step
-                    labelRepeat.Text = "第幾次循環 : 第 " & 4 - TimeofStep(1, sStep - 1) & " 次 / 共 3 次"
-                End If
-            ElseIf (state = 6 And status = 4) Or (state = 4 And Not trial = 3) Then ' A4 from background or repeat
-                auto = True
-                state = 4
-                trial += 1
-                sStep = 1
-                eStep = 1
-                cStep = 1
-                TimeofStep(0, 0) = seconds
-                TimeofStep(1, 0) = 1
-                For i = 0 To eStep
-                    array_step(i).Visible = True
-                Next
-                Step1.BackColor = Color.MistyRose
-                Dim choice As String = ComboBox_machine_list.Text
-
-                If choice = "履帶起重機(Crawler crane)" Then
-                    Step1.Text = My.Resources.A4_Crane
-                ElseIf choice = "卡車起重機(Truck crane)" Then
-                    Step1.Text = My.Resources.A4_Crane
-                ElseIf choice = "輪形起重機(Wheel crane)" Then
-                    Step1.Text = My.Resources.A4_Crane
-                ElseIf choice = "振動式樁錘(Vibrating hammer)" Then
-                    Step1.Text = My.Resources.A4_Vibrating_Hammer
-                ElseIf choice = "油壓式打樁機(Hydraulic pile driver)" Then
-                    Step1.Text = My.Resources.A4_Auger_Drill_Driver
-                ElseIf choice = "拔樁機" Then
-                    Step1.Text = My.Resources.A4_Auger_Drill_Driver
-                ElseIf choice = "油壓式拔樁機" Then
-                    Step1.Text = My.Resources.A4_Auger_Drill_Driver
-                ElseIf choice = "土壤取樣器(地鑽) (Earth auger)" Then
-                    Step1.Text = My.Resources.A4_Auger_Drill_Driver
-                ElseIf choice = "全套管鑽掘機" Then
-                    Step1.Text = My.Resources.A4_Auger_Drill_Driver
-                ElseIf choice = "鑽土機(Earth drill)" Then
-                    Step1.Text = My.Resources.A4_Auger_Drill_Driver
-                ElseIf choice = "鑽岩機(Rock breaker)" Then
-                    Step1.Text = My.Resources.A4_Auger_Drill_Driver
-                ElseIf choice = "混凝土泵車(Concrete pump)" Then
-                    Step1.Text = My.Resources.A4_Concrete_Pump
-                ElseIf choice = "混凝土破碎機(Concrete breaker)" Then
-                    Step1.Text = My.Resources.A4_Concrete_Breaker
-                ElseIf choice = "瀝青混凝土舖築機(Asphalt finisher)" Then
-                    Step1.Text = My.Resources.A4_Asphalt_Finisher
-                ElseIf choice = "混凝土割切機(Concrete cutter)" Then
-                    Step1.Text = My.Resources.A4_Concrete_Cutter
-                ElseIf choice = "發電機(Generator)" Then
-                    Step1.Text = My.Resources.A4_Generator
-                ElseIf choice = "空氣壓縮機(Compressor)" Then
-                    Step1.Text = My.Resources.A4_Compressor
-                End If
-            End If
-            Dim numTimes(TimeofStep.GetLength(1) - 1) As Integer
-            For i = 0 To TimeofStep.GetLength(1) - 1
-                numTimes(i) = TimeofStep(0, i)
-            Next
-            MainLineGraphs = New LineGraphPanel(New Point(300, 100), New Size(graphW, graphH), TabPage2, mode, eStep, numTimes, graphH)
-            NewGraph = True
-        Else 'If right step change
-            'if loop again
-            If cStep = eStep Then
-                ' times-1
-                labelRepeat.Text = "第幾次循環 : 第 " & 4 - TimeofStep(1, sStep - 1) & " 次 / 共 3 次"
-                ' set the next step red
-                array_step(cStep - 1).ForeColor = Color.Black
-                array_step(sStep - 1).ForeColor = Color.Red
-                cStep = sStep
-
-                'set graphs
-                Dim numTimes(TimeofStep.GetLength(0)) As Integer
-                For i = 0 To TimeofStep.GetLength(0) - 1
-                    numTimes(i) = TimeofStep(0, i)
-                Next
-                'this will clear the previous graphs and start fresh
-            Else
-                'set the next step red
-                array_step(cStep - 1).ForeColor = Color.Black
-                cStep += 1
-                array_step(cStep - 1).ForeColor = Color.Red
-            End If
-            NewGraph = False
-        End If
-
-        Return True
-    End Function
 
     'plot the coordinate system on startup
     Private Sub plotCor(ByVal xCor, ByVal yCor)

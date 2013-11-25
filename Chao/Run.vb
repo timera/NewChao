@@ -40,11 +40,11 @@
         Panel.BackColor = c
     End Sub
 
-    Function L_Average()
+    'Function L_Average()
 
-    End Function
+    'End Function
 
-    Function Set_Time()
+    'Function Set_Time()
 
-    End Function
+    'End Function
 End Class

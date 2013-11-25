@@ -185,11 +185,11 @@
     End Function
 
 
-    Shared Function A3Calc(ByRef matrix As List(Of List(Of Double)), ByVal r As Double, ByRef warning As String)
+    'Shared Function A3Calc(ByRef matrix As List(Of List(Of Double)), ByVal r As Double, ByRef warning As String)
 
-    End Function
+    'End Function
 
-    Shared Function A4Calc(ByRef matrix As List(Of List(Of Double)), ByVal r As Double, ByRef warning As String)
+    'Shared Function A4Calc(ByRef matrix As List(Of List(Of Double)), ByVal r As Double, ByRef warning As String)
 
-    End Function
+    'End Function
 End Class

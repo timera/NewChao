@@ -239,7 +239,6 @@ Public Class Program
 
         Panel_PreCal.Location = New Point(10, 289)
         Panel_Bkg.Location = New Point(10, 400)
-        Load_Excavator()
 
         MachChosen = False
     End Sub
@@ -269,7 +268,7 @@ Public Class Program
         If choice = "開挖機(Excavator)" Then
             Picture_machine.Image = My.Resources.Resource1.小型開挖機_compact_excavator_
             Machine = Machines.Excavator
-
+            Load_Excavator()
         ElseIf choice = "推土機(Crawler and wheel tractor)" Then  'A1+A3
             Picture_machine.Image = My.Resources.Resource1.履帶式推土機_crawler_dozer_
             Machine = Machines.Tractor
@@ -288,9 +287,11 @@ Public Class Program
         ElseIf choice = "裝料機(Crawler and wheel loader)" Then
             Picture_machine.Image = My.Resources.Resource1.履帶式裝料機_crawler_loader_
             Machine = Machines.Loader
+            Load_Loader()
         ElseIf choice = "裝料開挖機" Then
             Picture_machine.Image = My.Resources.Resource1.履帶式開挖裝料機_crawler_backhoe_loader_
             Machine = Machines.Loader_Excavator
+            Load_Loader_Excavator()
         ElseIf choice = "履帶起重機(Crawler crane)" Then
             Picture_machine.Image = My.Resources.Resource1.膠輪式推土機_wheeled_dozer_
             Machine = Machines.Others
@@ -491,22 +492,23 @@ Public Class Program
 
         'Precal
         Set_Panel(Panel_PreCal, LinkLabel_preCal)
-        tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 30, "PreCal")
+        tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 30, "PreCal", 0, 0, 0)
         HeadRun = tempRun
+        CurRun = HeadRun
         'Background
         Set_Panel(Panel_Bkg, LinkLabel_BG)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, tempRun, 30, "Background")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, tempRun, 30, "Background", 0, 0, 0)
         tempRun = tempRun.NextUnit
 
         tempRun = Load_Excavator_Helper(tempRun)
 
         'RSS
         Set_Panel(Panel_RSS, LinkLabel_RSS)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 30, "RSS")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 30, "RSS", 0, 0, 0)
         tempRun = tempRun.NextUnit
         'PostCal
         Set_Panel(Panel_PostCal, LinkLabel_postCal)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_postCal, Panel_PostCal, Nothing, tempRun, 30, "PostCal")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_postCal, Panel_PostCal, Nothing, tempRun, 30, "PostCal", 0, 0, 0)
         tempRun = tempRun.NextUnit
     End Sub
 
@@ -516,124 +518,124 @@ Public Class Program
         ''A1
         'A1 First 1
         Set_Panel(Panel_ExA1_Fst_1st, LinkLabel_ExA1_Fst_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Fst_1st, Panel_ExA1_Fst_1st, Nothing, tempRun, 30, "ExA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Fst_1st, Panel_ExA1_Fst_1st, Nothing, tempRun, 30, "ExA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 First 2
         Set_Panel(Panel_ExA1_Fst_2nd, LinkLabel_ExA1_Fst_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Fst_2nd, Panel_ExA1_Fst_2nd, Nothing, tempRun, 30, "ExA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Fst_2nd, Panel_ExA1_Fst_2nd, Nothing, tempRun, 30, "ExA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 First 3
         Set_Panel(Panel_ExA1_Fst_3rd, LinkLabel_ExA1_Fst_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Fst_3rd, Panel_ExA1_Fst_3rd, Nothing, tempRun, 30, "ExA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Fst_3rd, Panel_ExA1_Fst_3rd, Nothing, tempRun, 30, "ExA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Second 1
         Set_Panel(Panel_ExA1_Sec_1st, LinkLabel_ExA1_Sec_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Sec_1st, Panel_ExA1_Sec_1st, Nothing, tempRun, 30, "ExA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Sec_1st, Panel_ExA1_Sec_1st, Nothing, tempRun, 30, "ExA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Second 2
         Set_Panel(Panel_ExA1_Sec_2nd, LinkLabel_ExA1_Sec_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Sec_2nd, Panel_ExA1_Sec_2nd, Nothing, tempRun, 30, "ExA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Sec_2nd, Panel_ExA1_Sec_2nd, Nothing, tempRun, 30, "ExA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Second 3
         Set_Panel(Panel_ExA1_Sec_3rd, LinkLabel_ExA1_Sec_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Sec_3rd, Panel_ExA1_Sec_3rd, Nothing, tempRun, 30, "ExA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Sec_3rd, Panel_ExA1_Sec_3rd, Nothing, tempRun, 30, "ExA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Third 1
         Set_Panel(Panel_ExA1_Thd_1st, LinkLabel_ExA1_Thd_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Thd_1st, Panel_ExA1_Thd_1st, Nothing, tempRun, 30, "ExA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Thd_1st, Panel_ExA1_Thd_1st, Nothing, tempRun, 30, "ExA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Third 2
         Set_Panel(Panel_ExA1_Thd_2nd, LinkLabel_ExA1_Thd_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Thd_2nd, Panel_ExA1_Thd_2nd, Nothing, tempRun, 30, "ExA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Thd_2nd, Panel_ExA1_Thd_2nd, Nothing, tempRun, 30, "ExA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Third 3
         Set_Panel(Panel_ExA1_Thd_3rd, LinkLabel_ExA1_Thd_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Thd_3rd, Panel_ExA1_Thd_3rd, Nothing, tempRun, 30, "ExA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Thd_3rd, Panel_ExA1_Thd_3rd, Nothing, tempRun, 30, "ExA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Add 1
         Set_Panel(Panel_ExA1_Add_3rd, LinkLabel_ExA1_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Add_3rd, Panel_ExA1_Add_3rd, Nothing, tempRun, 30, "ExA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Add_3rd, Panel_ExA1_Add_3rd, Nothing, tempRun, 30, "ExA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Add 2
         Set_Panel(Panel_ExA1_Add_3rd, LinkLabel_ExA1_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Add_3rd, Panel_ExA1_Add_3rd, Nothing, tempRun, 30, "ExA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Add_3rd, Panel_ExA1_Add_3rd, Nothing, tempRun, 30, "ExA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Add 3
         Set_Panel(Panel_ExA1_Add_3rd, LinkLabel_ExA1_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Add_3rd, Panel_ExA1_Add_3rd, Nothing, tempRun, 30, "ExA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Add_3rd, Panel_ExA1_Add_3rd, Nothing, tempRun, 30, "ExA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
 
         ''A2
         'A2 First 1
         Set_Panel(Panel_ExA2_Fst_1st, LinkLabel_ExA2_Fst_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Fst_1st, Panel_ExA2_Fst_1st, Nothing, tempRun, 30, "ExA2_1st")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Fst_1st, Panel_ExA2_Fst_1st, Nothing, tempRun, 30, "ExA2_1st", 1, 1, 9)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 First 2
         Set_Panel(Panel_ExA2_Fst_2nd, LinkLabel_ExA2_Fst_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Fst_2nd, Panel_ExA2_Fst_2nd, Nothing, tempRun, 30, "ExA2_2nd_3rd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Fst_2nd, Panel_ExA2_Fst_2nd, Nothing, tempRun, 30, "ExA2_2nd_3rd", 1, 1, 8)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 First 3
         Set_Panel(Panel_ExA2_Fst_3rd, LinkLabel_ExA2_Fst_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Fst_3rd, Panel_ExA2_Fst_3rd, Nothing, tempRun, 30, "ExA2_2nd_3rd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Fst_3rd, Panel_ExA2_Fst_3rd, Nothing, tempRun, 30, "ExA2_2nd_3rd", 1, 1, 8)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Second 1
         Set_Panel(Panel_ExA2_Sec_1st, LinkLabel_ExA2_Sec_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Sec_1st, Panel_ExA2_Sec_1st, Nothing, tempRun, 30, "ExA2_1st")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Sec_1st, Panel_ExA2_Sec_1st, Nothing, tempRun, 30, "ExA2_1st", 1, 1, 9)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Second 2
         Set_Panel(Panel_ExA2_Sec_2nd, LinkLabel_ExA2_Sec_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Sec_2nd, Panel_ExA2_Sec_2nd, Nothing, tempRun, 30, "ExA2_2nd_3rd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Sec_2nd, Panel_ExA2_Sec_2nd, Nothing, tempRun, 30, "ExA2_2nd_3rd", 1, 1, 8)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Second 3
         Set_Panel(Panel_ExA2_Sec_3rd, LinkLabel_ExA2_Sec_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Sec_3rd, Panel_ExA2_Sec_3rd, Nothing, tempRun, 30, "ExA2_2nd_3rd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Sec_3rd, Panel_ExA2_Sec_3rd, Nothing, tempRun, 30, "ExA2_2nd_3rd", 1, 1, 8)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Third 1
         Set_Panel(Panel_ExA2_Thd_1st, LinkLabel_ExA2_Thd_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Thd_1st, Panel_ExA2_Thd_1st, Nothing, tempRun, 30, "ExA2_1st")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Thd_1st, Panel_ExA2_Thd_1st, Nothing, tempRun, 30, "ExA2_1st", 1, 1, 9)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Third 2
         Set_Panel(Panel_ExA2_Thd_2nd, LinkLabel_ExA2_Thd_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Thd_2nd, Panel_ExA2_Thd_2nd, Nothing, tempRun, 30, "ExA2_2nd_3rd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Thd_2nd, Panel_ExA2_Thd_2nd, Nothing, tempRun, 30, "ExA2_2nd_3rd", 1, 1, 8)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Third 3
         Set_Panel(Panel_ExA2_Thd_3rd, LinkLabel_ExA2_Thd_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Thd_3rd, Panel_ExA2_Thd_3rd, Nothing, tempRun, 30, "ExA2_2nd_3rd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Thd_3rd, Panel_ExA2_Thd_3rd, Nothing, tempRun, 30, "ExA2_2nd_3rd", 1, 1, 8)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Add 1
         Set_Panel(Panel_ExA2_Add_3rd, LinkLabel_ExA2_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Add_3rd, Panel_ExA2_Add_3rd, Nothing, tempRun, 30, "ExA2_1st")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Add_3rd, Panel_ExA2_Add_3rd, Nothing, tempRun, 30, "ExA2_1st", 1, 1, 9)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Add 2
         Set_Panel(Panel_ExA2_Add_3rd, LinkLabel_ExA2_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Add_3rd, Panel_ExA2_Add_3rd, Nothing, tempRun, 30, "ExA2_2nd_3rd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Add_3rd, Panel_ExA2_Add_3rd, Nothing, tempRun, 30, "ExA2_2nd_3rd", 1, 1, 8)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Add 3
         Set_Panel(Panel_ExA2_Add_3rd, LinkLabel_ExA2_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Add_3rd, Panel_ExA2_Add_3rd, Nothing, tempRun, 30, "ExA2_2nd_3rd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Add_3rd, Panel_ExA2_Add_3rd, Nothing, tempRun, 30, "ExA2_2nd_3rd", 1, 1, 8)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
 
@@ -703,22 +705,22 @@ Public Class Program
         Dim tempRun As Run_Unit
         'Precal
         Set_Panel(Panel_PreCal, LinkLabel_preCal)
-        tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 30, "PreCal")
+        tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 30, "PreCal", 0, 0, 0)
         HeadRun = tempRun
         'Background
         Set_Panel(Panel_Bkg, LinkLabel_BG)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, Nothing, 30, "Background")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, Nothing, 30, "Background", 0, 0, 0)
         tempRun = tempRun.NextUnit
 
         tempRun = Load_Loader_Helper(tempRun)
 
         'RSS
         Set_Panel(Panel_RSS, LinkLabel_RSS)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 30, "RSS")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 30, "RSS", 0, 0, 0)
         tempRun = tempRun.NextUnit
         'PostCal
         Set_Panel(Panel_PostCal, LinkLabel_postCal)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_postCal, Panel_PostCal, Nothing, tempRun, 30, "PostCal")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_postCal, Panel_PostCal, Nothing, tempRun, 30, "PostCal", 0, 0, 0)
         tempRun = tempRun.NextUnit
     End Sub
 
@@ -728,169 +730,169 @@ Public Class Program
         ''A1
         'A1 First 1
         Set_Panel(Panel_LoA1_Fst_1st, LinkLabel_LoA1_Fst_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Fst_1st, Panel_LoA1_Fst_1st, Nothing, tempRun, 30, "LoA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Fst_1st, Panel_LoA1_Fst_1st, Nothing, tempRun, 30, "LoA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 First 2
         Set_Panel(Panel_LoA1_Fst_2nd, LinkLabel_LoA1_Fst_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Fst_2nd, Panel_LoA1_Fst_2nd, Nothing, tempRun, 30, "LoA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Fst_2nd, Panel_LoA1_Fst_2nd, Nothing, tempRun, 30, "LoA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 First 3
         Set_Panel(Panel_LoA1_Fst_3rd, LinkLabel_LoA1_Fst_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Fst_3rd, Panel_LoA1_Fst_3rd, Nothing, tempRun, 30, "LoA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Fst_3rd, Panel_LoA1_Fst_3rd, Nothing, tempRun, 30, "LoA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Second 1
         Set_Panel(Panel_LoA1_Sec_1st, LinkLabel_LoA1_Sec_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Sec_1st, Panel_LoA1_Sec_1st, Nothing, tempRun, 30, "LoA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Sec_1st, Panel_LoA1_Sec_1st, Nothing, tempRun, 30, "LoA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Second 2
         Set_Panel(Panel_LoA1_Sec_2nd, LinkLabel_LoA1_Sec_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Sec_2nd, Panel_LoA1_Sec_2nd, Nothing, tempRun, 30, "LoA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Sec_2nd, Panel_LoA1_Sec_2nd, Nothing, tempRun, 30, "LoA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Second 3
         Set_Panel(Panel_LoA1_Sec_3rd, LinkLabel_LoA1_Sec_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Sec_3rd, Panel_LoA1_Sec_3rd, Nothing, tempRun, 30, "LoA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Sec_3rd, Panel_LoA1_Sec_3rd, Nothing, tempRun, 30, "LoA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Third 1
         Set_Panel(Panel_LoA1_Thd_1st, LinkLabel_LoA1_Thd_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Thd_1st, Panel_LoA1_Thd_1st, Nothing, tempRun, 30, "LoA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Thd_1st, Panel_LoA1_Thd_1st, Nothing, tempRun, 30, "LoA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Third 2
         Set_Panel(Panel_LoA1_Thd_2nd, LinkLabel_LoA1_Thd_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Thd_2nd, Panel_LoA1_Thd_2nd, Nothing, tempRun, 30, "LoA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Thd_2nd, Panel_LoA1_Thd_2nd, Nothing, tempRun, 30, "LoA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Third 3
         Set_Panel(Panel_LoA1_Thd_3rd, LinkLabel_LoA1_Thd_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Thd_3rd, Panel_LoA1_Thd_3rd, Nothing, tempRun, 30, "LoA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Thd_3rd, Panel_LoA1_Thd_3rd, Nothing, tempRun, 30, "LoA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Add 1
         Set_Panel(Panel_LoA1_Add_3rd, LinkLabel_LoA1_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Add_3rd, Panel_LoA1_Add_3rd, Nothing, tempRun, 30, "LoA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Add_3rd, Panel_LoA1_Add_3rd, Nothing, tempRun, 30, "LoA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Add 2
         Set_Panel(Panel_LoA1_Add_3rd, LinkLabel_LoA1_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Add_3rd, Panel_LoA1_Add_3rd, Nothing, tempRun, 30, "LoA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Add_3rd, Panel_LoA1_Add_3rd, Nothing, tempRun, 30, "LoA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Add 3
         Set_Panel(Panel_LoA1_Add_3rd, LinkLabel_LoA1_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Add_3rd, Panel_LoA1_Add_3rd, Nothing, tempRun, 30, "LoA1")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Add_3rd, Panel_LoA1_Add_3rd, Nothing, tempRun, 30, "LoA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
 
         ''A2
         'A2 First 1
         Set_Panel(Panel_LoA2_Fst_1st, LinkLabel_LoA2_Fst_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Fst_1st, Panel_LoA2_Fst_1st, Nothing, tempRun, 30, "LoA2_1st")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Fst_1st, Panel_LoA2_Fst_1st, Nothing, tempRun, 30, "LoA2_1st", 1, 1, 3)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 First 2
         Set_Panel(Panel_LoA2_Fst_2nd, LinkLabel_LoA2_Fst_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Fst_2nd, Panel_LoA2_Fst_2nd, Nothing, tempRun, 30, "LoA2_2nd_3rd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Fst_2nd, Panel_LoA2_Fst_2nd, Nothing, tempRun, 30, "LoA2_2nd_3rd", 1, 1, 2)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 First 3
         Set_Panel(Panel_LoA2_Fst_3rd, LinkLabel_LoA2_Fst_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Fst_3rd, Panel_LoA2_Fst_3rd, Nothing, tempRun, 30, "LoA2_2nd_3rd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Fst_3rd, Panel_LoA2_Fst_3rd, Nothing, tempRun, 30, "LoA2_2nd_3rd", 1, 1, 2)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Second 1
         Set_Panel(Panel_LoA2_Sec_1st, LinkLabel_LoA2_Sec_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Sec_1st, Panel_LoA2_Sec_1st, Nothing, tempRun, 30, "LoA2_1st")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Sec_1st, Panel_LoA2_Sec_1st, Nothing, tempRun, 30, "LoA2_1st", 1, 1, 3)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Second 2
         Set_Panel(Panel_LoA2_Sec_2nd, LinkLabel_LoA2_Sec_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Sec_2nd, Panel_LoA2_Sec_2nd, Nothing, tempRun, 30, "LoA2_2nd_3rd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Sec_2nd, Panel_LoA2_Sec_2nd, Nothing, tempRun, 30, "LoA2_2nd_3rd", 1, 1, 2)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Second 3
         Set_Panel(Panel_LoA2_Sec_3rd, LinkLabel_LoA2_Sec_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Sec_3rd, Panel_LoA2_Sec_3rd, Nothing, tempRun, 30, "LoA2_2nd_3rd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Sec_3rd, Panel_LoA2_Sec_3rd, Nothing, tempRun, 30, "LoA2_2nd_3rd", 1, 1, 2)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Third 1
         Set_Panel(Panel_LoA2_Thd_1st, LinkLabel_LoA2_Thd_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Thd_1st, Panel_LoA2_Thd_1st, Nothing, tempRun, 30, "LoA2_1st")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Thd_1st, Panel_LoA2_Thd_1st, Nothing, tempRun, 30, "LoA2_1st", 1, 1, 3)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Third 2
         Set_Panel(Panel_LoA2_Thd_2nd, LinkLabel_LoA2_Thd_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Thd_2nd, Panel_LoA2_Thd_2nd, Nothing, tempRun, 30, "LoA2_2nd_3rd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Thd_2nd, Panel_LoA2_Thd_2nd, Nothing, tempRun, 30, "LoA2_2nd_3rd", 1, 1, 2)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Third 3
         Set_Panel(Panel_LoA2_Thd_3rd, LinkLabel_LoA2_Thd_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Thd_3rd, Panel_LoA2_Thd_3rd, Nothing, tempRun, 30, "LoA2_2nd_3rd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Thd_3rd, Panel_LoA2_Thd_3rd, Nothing, tempRun, 30, "LoA2_2nd_3rd", 1, 1, 2)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Add 1
         Set_Panel(Panel_LoA2_Add_3rd, LinkLabel_LoA2_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Add_3rd, Panel_LoA2_Add_3rd, Nothing, tempRun, 30, "LoA2_1st")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Add_3rd, Panel_LoA2_Add_3rd, Nothing, tempRun, 30, "LoA2_1st", 1, 1, 3)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Add 2
         Set_Panel(Panel_LoA2_Add_3rd, LinkLabel_LoA2_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Add_3rd, Panel_LoA2_Add_3rd, Nothing, tempRun, 30, "LoA2_2nd_3rd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Add_3rd, Panel_LoA2_Add_3rd, Nothing, tempRun, 30, "LoA2_2nd_3rd", 1, 1, 2)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Add 3
         Set_Panel(Panel_LoA2_Add_3rd, LinkLabel_LoA2_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Add_3rd, Panel_LoA2_Add_3rd, Nothing, tempRun, 30, "LoA2_2nd_3rd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Add_3rd, Panel_LoA2_Add_3rd, Nothing, tempRun, 30, "LoA2_2nd_3rd", 1, 1, 2)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
 
         ''A3
         'A3 First forward
         Set_Panel(Panel_LoA3_Fst_fwd, LinkLabel_LoA3_Fst_fwd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Fst_fwd, Panel_LoA3_Fst_fwd, Nothing, tempRun, 30, "LoA3_fwd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Fst_fwd, Panel_LoA3_Fst_fwd, Nothing, tempRun, 30, "LoA3_fwd", 1, 1, 3)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A3 First backward
         Set_Panel(Panel_LoA3_Fst_bkd, LinkLabel_LoA3_Fst_bkd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Fst_bkd, Panel_LoA3_Fst_bkd, Nothing, tempRun, 30, "LoA3_bkd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Fst_bkd, Panel_LoA3_Fst_bkd, Nothing, tempRun, 30, "LoA3_bkd", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
 
         'A3 Second fwd
         Set_Panel(Panel_LoA3_Sec_fwd, LinkLabel_LoA3_Sec_fwd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Sec_fwd, Panel_LoA3_Sec_fwd, Nothing, tempRun, 30, "LoA3_fwd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Sec_fwd, Panel_LoA3_Sec_fwd, Nothing, tempRun, 30, "LoA3_fwd", 1, 1, 3)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A3 Second backward
         Set_Panel(Panel_LoA3_Sec_bkd, LinkLabel_LoA3_Sec_bkd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Sec_bkd, Panel_LoA3_Sec_bkd, Nothing, tempRun, 30, "LoA3_bkd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Sec_bkd, Panel_LoA3_Sec_bkd, Nothing, tempRun, 30, "LoA3_bkd", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
 
         'A3 Third fwd
         Set_Panel(Panel_LoA3_Thd_fwd, LinkLabel_LoA3_Thd_fwd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Thd_fwd, Panel_LoA3_Thd_fwd, Nothing, tempRun, 30, "LoA3_fwd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Thd_fwd, Panel_LoA3_Thd_fwd, Nothing, tempRun, 30, "LoA3_fwd", 1, 1, 3)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A3 Third bkd
         Set_Panel(Panel_LoA3_Thd_bkd, LinkLabel_LoA3_Thd_bkd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Thd_bkd, Panel_LoA3_Thd_bkd, Nothing, tempRun, 30, "LoA3_bkd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Thd_bkd, Panel_LoA3_Thd_bkd, Nothing, tempRun, 30, "LoA3_bkd", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
 
         'A3 Add fwd
         Set_Panel(Panel_LoA3_Add_fwd, LinkLabel_LoA3_Add_fwd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Add_fwd, Panel_LoA3_Add_fwd, Nothing, tempRun, 30, "LoA3_fwd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Add_fwd, Panel_LoA3_Add_fwd, Nothing, tempRun, 30, "LoA3_fwd", 1, 1, 3)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A3 Add bkd
         Set_Panel(Panel_LoA3_Add_bkd, LinkLabel_LoA3_Add_bkd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Add_bkd, Panel_LoA3_Add_bkd, Nothing, tempRun, 30, "LoA3_bkd")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Add_bkd, Panel_LoA3_Add_bkd, Nothing, tempRun, 30, "LoA3_bkd", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
 
@@ -1001,11 +1003,11 @@ Public Class Program
         Dim tempRun As Run_Unit
         'Precal
         Set_Panel(Panel_PreCal, LinkLabel_preCal)
-        tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 30, "PreCal")
+        tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 30, "PreCal", 0, 0, 0)
         HeadRun = tempRun
         'Background
         Set_Panel(Panel_Bkg, LinkLabel_BG)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, tempRun, 30, "Background")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, tempRun, 30, "Background", 0, 0, 0)
         tempRun = tempRun.NextUnit
 
         tempRun = Load_Excavator_Helper(tempRun)
@@ -1013,11 +1015,11 @@ Public Class Program
 
         'RSS
         Set_Panel(Panel_RSS, LinkLabel_RSS)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 30, "RSS")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 30, "RSS", 0, 0, 0)
         tempRun = tempRun.NextUnit
         'PostCal
         Set_Panel(Panel_PostCal, LinkLabel_postCal)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_postCal, Panel_PostCal, Nothing, tempRun, 30, "PostCal")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_postCal, Panel_PostCal, Nothing, tempRun, 30, "PostCal", 0, 0, 0)
         tempRun = tempRun.NextUnit
     End Sub
 
@@ -1038,35 +1040,35 @@ Public Class Program
         Dim tempRun As Run_Unit
         'Precal
         Set_Panel(Panel_PreCal, LinkLabel_preCal)
-        tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 30, "PreCal")
+        tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 30, "PreCal", 0, 0, 0)
         HeadRun = tempRun
         'Background
         Set_Panel(Panel_Bkg, LinkLabel_BG)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, Nothing, 30, "Background")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, Nothing, 30, "Background", 0, 0, 0)
         tempRun = tempRun.NextUnit
         'A4 1
         Set_Panel(Panel_A4_Fst, LinkLabel_A4_First)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_A4_First, Panel_A4_Fst, Nothing, tempRun, 30, "A4")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_A4_First, Panel_A4_Fst, Nothing, tempRun, 30, "A4", 1, 1, 1)
         tempRun = tempRun.NextUnit
         'A4 2
         Set_Panel(Panel_A4_Sec, LinkLabel_A4_Second)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Second, Panel_A4_Sec, Nothing, tempRun, 30, "A4")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Second, Panel_A4_Sec, Nothing, tempRun, 30, "A4", 1, 1, 1)
         tempRun = tempRun.NextUnit
         'A4 3
         Set_Panel(Panel_A4_Thd, LinkLabel_A4_Third)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Second, Panel_A4_Sec, Nothing, tempRun, 30, "A4")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Second, Panel_A4_Sec, Nothing, tempRun, 30, "A4", 1, 1, 1)
         tempRun = tempRun.NextUnit
         'A4 add
         Set_Panel(Panel_A4_Add, LinkLabel_A4_Additional)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Second, Panel_A4_Sec, Nothing, tempRun, 30, "A4")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Second, Panel_A4_Sec, Nothing, tempRun, 30, "A4", 1, 1, 1)
         tempRun = tempRun.NextUnit
         'RSS
         Set_Panel(Panel_RSS, LinkLabel_RSS)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 30, "RSS")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 30, "RSS", 0, 0, 0)
         tempRun = tempRun.NextUnit
         'PostCal
         Set_Panel(Panel_PostCal, LinkLabel_postCal)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_postCal, Panel_PostCal, Nothing, tempRun, 30, "PostCal")
+        tempRun.NextUnit = New Run_Unit(LinkLabel_postCal, Panel_PostCal, Nothing, tempRun, 30, "PostCal", 0, 0, 0)
         tempRun = tempRun.NextUnit
 
 
@@ -1220,13 +1222,59 @@ Public Class Program
 
     ' click event on Start Button
     Private Sub startButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles startButton.Click
-        startButton.Enabled = False
-        stopButton.Enabled = True
+        'startButton.Enabled = False
+        'stopButton.Enabled = True
+        'Dim CurStep As steps
+        If Machine = Machines.Excavator Then
+            If CurRun.Name = "PreCal" Then
+                    MessageBox.Show(CurRun.Name)
+                    CurRun = CurRun.NextUnit
+            Else
+                If CurRun.CurStep = 0 Then
+                    MessageBox.Show(CurRun.Name)
+                    If CurRun.Name = "Background" Then
+                        CurRun = CurRun.NextUnit
+                        CurStep = CurRun.Steps
+                        For index = CurRun.StartStep To CurRun.EndStep
+                            array_step(index - 1).Text = CurStep.step_str
+                            If CurStep.HasNext() Then
+                                CurStep = CurStep.NextStep
+                            End If
+                        Next
+                    Else
+                        CurRun = CurRun.NextUnit
+                    End If
+                Else
+                    If CurRun.CurStep = CurRun.EndStep Then
+                        MessageBox.Show(CurRun.Steps.step_str + " of  " + CurRun.Name + " -  " + Str(CurRun.CurStep) + "  / " + Str(CurRun.EndStep))
+                        CurRun = CurRun.NextUnit
+                        CurStep = CurRun.Steps
+                        For index = CurRun.StartStep To CurRun.EndStep
+                            array_step(index - 1).Text = CurStep.step_str
+                            If CurStep.HasNext() = True Then
+                                CurStep = CurStep.NextStep
+                            End If
+                        Next
+                    Else
+                        MessageBox.Show(CurRun.Steps.step_str + " of  " + CurRun.Name + " -  " + Str(CurRun.CurStep) + "  / " + Str(CurRun.EndStep))
+                        CurRun.Steps = CurRun.Steps.NextStep
+                        CurRun.CurStep = CurRun.CurStep + 1
+                    End If
+                End If
+            End If
+        ElseIf Machine = Machines.Loader Then
 
-        Timer1.Start()
+        ElseIf Machine = Machines.Loader_Excavator Then
+
+        ElseIf Machine = Machines.Tractor Then
+
+        ElseIf Machine = Machines.Others Then
+
+        End If
+
+            'Timer1.Start()
 
     End Sub
-
     Private Sub AcceptButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Accept_Button.Click
         If MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             MessageBox.Show("此機具所有測量步驟已結束")

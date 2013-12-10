@@ -11,16 +11,16 @@
     Public EndStep As Integer
     Public Name As String
 
-    Sub New(ByRef l As LinkLabel, ByRef p As Panel, ByRef nu As Run_Unit, ByRef pu As Run_Unit, ByVal sec As Integer, ByRef na As String)
+    Sub New(ByRef l As LinkLabel, ByRef p As Panel, ByRef nu As Run_Unit, ByRef pu As Run_Unit, ByVal sec As Integer, ByRef na As String, ByVal cur As Integer, ByVal start As Integer, ByVal en As Integer)
         Link = l
         Panel = p
         NextUnit = nu
         PrevUnit = pu
         Time = sec
         Data = New List(Of Double)
-        CurStep = 0
-        StartStep = 0
-        EndStep = 0
+        CurStep = cur
+        StartStep = start
+        EndStep = en
         Name = na
     End Sub
 

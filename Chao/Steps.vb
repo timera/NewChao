@@ -1,6 +1,6 @@
 ﻿Public Class Steps
-    Dim step_str As String
-    Dim step_label As Label
+    Public step_str As String
+    Public step_label As Label
     Public NextStep As Steps
     Public LastStep As Boolean
 

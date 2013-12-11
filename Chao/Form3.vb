@@ -170,13 +170,13 @@ Public Class Program
 
 
         'Set invisible
-        Panel_PreCal.Visible = True
-        Panel_Bkg.Visible = True
-        Panel_RSS.Visible = True
-        Panel_PostCal.Visible = True
+        Panel_PreCal.Visible = False
+        Panel_Bkg.Visible = False
+        Panel_RSS.Visible = False
+        Panel_PostCal.Visible = False
         PanelA4.Visible = False
-        PanelExcavatorA1.Visible = True
-        PanelExcavatorA2.Visible = True
+        PanelExcavatorA1.Visible = False
+        PanelExcavatorA2.Visible = False
         PanelLoaderA3.Visible = False
         PanelLoaderA1.Visible = False
         PanelLoaderA2.Visible = False
@@ -272,6 +272,7 @@ Public Class Program
         ElseIf choice = "推土機(Crawler and wheel tractor)" Then  'A1+A3
             Picture_machine.Image = My.Resources.Resource1.履帶式推土機_crawler_dozer_
             Machine = Machines.Tractor
+            Load_Tractor()
         ElseIf choice = "鐵輪壓路機(Road roller)" Then
             Picture_machine.Image = My.Resources.Resource1.壓路機_rollers_
             Machine = Machines.Others
@@ -435,17 +436,35 @@ Public Class Program
     End Sub
 
     Sub Set_Panel(ByRef p As Panel, ByRef l As Label)
-        p.Size = New Size(60, 26)
-        p.BackColor = Color.DarkRed
-        p.Controls.Add(l)
-        l.Location = New Point(3, 5)
-        l.ForeColor = Color.White
+        If p.Name = "Panel_PreCal" Or p.Name = "Panel_Bkg" Or p.Name = "Panel_RSS" Or p.Name = "Panel_PostCal" Then
+            p.Size = New Size(100, 26)
+            p.BackColor = Color.IndianRed
+            p.Controls.Add(l)
+            l.Location = New Point(3, 5)
+            l.ForeColor = Color.White
+        Else
+            p.Size = New Size(60, 26)
+            p.BackColor = Color.IndianRed
+            p.Controls.Add(l)
+            l.Location = New Point(3, 5)
+            l.ForeColor = Color.White
+        End If
+
     End Sub
 
     Sub Load_Excavator()
         PanelExcavatorA1.Visible = True
         PanelExcavatorA2.Visible = True
-        PanelLoaderA3.Visible = True
+        Panel_PreCal.Visible = True
+        Panel_Bkg.Visible = True
+        Panel_RSS.Visible = True
+        Panel_PostCal.Visible = True
+        PanelA4.Visible = False
+        PanelLoaderA3.Visible = False
+        PanelLoaderA1.Visible = False
+        PanelLoaderA2.Visible = False
+        PanelTractorA1.Visible = False
+        PanelTractorA3.Visible = False
         PanelExcavatorA1.Size = ASize
         PanelExcavatorA1.Location = New Point(220, 280)
         PanelExcavatorA2.Size = ASize
@@ -495,6 +514,8 @@ Public Class Program
         tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 30, "PreCal", 0, 0, 0)
         HeadRun = tempRun
         CurRun = HeadRun
+        timeLeft = CurRun.Time
+        timeLabel.Text = timeLeft & " s"
         'Background
         Set_Panel(Panel_Bkg, LinkLabel_BG)
         tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, tempRun, 30, "Background", 0, 0, 0)
@@ -562,13 +583,13 @@ Public Class Program
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Add 1
-        Set_Panel(Panel_ExA1_Add_3rd, LinkLabel_ExA1_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Add_3rd, Panel_ExA1_Add_3rd, Nothing, tempRun, 30, "ExA1", 1, 1, 1)
+        Set_Panel(Panel_ExA1_Add_1st, LinkLabel_ExA1_Add_1st)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Add_1st, Panel_ExA1_Add_1st, Nothing, tempRun, 30, "ExA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Add 2
-        Set_Panel(Panel_ExA1_Add_3rd, LinkLabel_ExA1_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Add_3rd, Panel_ExA1_Add_3rd, Nothing, tempRun, 30, "ExA1", 1, 1, 1)
+        Set_Panel(Panel_ExA1_Add_2nd, LinkLabel_ExA1_Add_2nd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Add_2nd, Panel_ExA1_Add_2nd, Nothing, tempRun, 30, "ExA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Add 3
@@ -624,13 +645,13 @@ Public Class Program
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Add 1
-        Set_Panel(Panel_ExA2_Add_3rd, LinkLabel_ExA2_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Add_3rd, Panel_ExA2_Add_3rd, Nothing, tempRun, 30, "ExA2_1st", 1, 1, 9)
+        Set_Panel(Panel_ExA2_Add_1st, LinkLabel_ExA2_Add_1st)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Add_1st, Panel_ExA2_Add_1st, Nothing, tempRun, 30, "ExA2_1st", 1, 1, 9)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Add 2
-        Set_Panel(Panel_ExA2_Add_3rd, LinkLabel_ExA2_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Add_3rd, Panel_ExA2_Add_3rd, Nothing, tempRun, 30, "ExA2_2nd_3rd", 1, 1, 8)
+        Set_Panel(Panel_ExA2_Add_2nd, LinkLabel_ExA2_Add_2nd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Add_2nd, Panel_ExA2_Add_2nd, Nothing, tempRun, 30, "ExA2_2nd_3rd", 1, 1, 8)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Add 3
@@ -647,6 +668,15 @@ Public Class Program
         PanelLoaderA1.Visible = True
         PanelLoaderA2.Visible = True
         PanelLoaderA3.Visible = True
+        Panel_PreCal.Visible = True
+        Panel_Bkg.Visible = True
+        Panel_RSS.Visible = True
+        Panel_PostCal.Visible = True
+        PanelA4.Visible = False
+        PanelExcavatorA1.Visible = False
+        PanelExcavatorA2.Visible = False
+        PanelTractorA1.Visible = False
+        PanelTractorA3.Visible = False
         PanelLoaderA1.Size = ASize
         PanelLoaderA1.Location = New Point(220, 280)
         PanelLoaderA2.Size = ASize
@@ -707,6 +737,9 @@ Public Class Program
         Set_Panel(Panel_PreCal, LinkLabel_preCal)
         tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 30, "PreCal", 0, 0, 0)
         HeadRun = tempRun
+        CurRun = HeadRun
+        timeLeft = CurRun.Time
+        timeLabel.Text = timeLeft & " s"
         'Background
         Set_Panel(Panel_Bkg, LinkLabel_BG)
         tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, Nothing, 30, "Background", 0, 0, 0)
@@ -774,13 +807,13 @@ Public Class Program
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Add 1
-        Set_Panel(Panel_LoA1_Add_3rd, LinkLabel_LoA1_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Add_3rd, Panel_LoA1_Add_3rd, Nothing, tempRun, 30, "LoA1", 1, 1, 1)
+        Set_Panel(Panel_LoA1_Add_1st, LinkLabel_LoA1_Add_1st)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Add_1st, Panel_LoA1_Add_1st, Nothing, tempRun, 30, "LoA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Add 2
-        Set_Panel(Panel_LoA1_Add_3rd, LinkLabel_LoA1_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Add_3rd, Panel_LoA1_Add_3rd, Nothing, tempRun, 30, "LoA1", 1, 1, 1)
+        Set_Panel(Panel_LoA1_Add_2nd, LinkLabel_LoA1_Add_2nd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Add_2nd, Panel_LoA1_Add_2nd, Nothing, tempRun, 30, "LoA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Add 3
@@ -836,13 +869,13 @@ Public Class Program
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Add 1
-        Set_Panel(Panel_LoA2_Add_3rd, LinkLabel_LoA2_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Add_3rd, Panel_LoA2_Add_3rd, Nothing, tempRun, 30, "LoA2_1st", 1, 1, 3)
+        Set_Panel(Panel_LoA2_Add_1st, LinkLabel_LoA2_Add_1st)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Add_1st, Panel_LoA2_Add_1st, Nothing, tempRun, 30, "LoA2_1st", 1, 1, 3)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Add 2
-        Set_Panel(Panel_LoA2_Add_3rd, LinkLabel_LoA2_Add_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Add_3rd, Panel_LoA2_Add_3rd, Nothing, tempRun, 30, "LoA2_2nd_3rd", 1, 1, 2)
+        Set_Panel(Panel_LoA2_Add_2nd, LinkLabel_LoA2_Add_2nd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Add_2nd, Panel_LoA2_Add_2nd, Nothing, tempRun, 30, "LoA2_2nd_3rd", 1, 1, 2)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Add 3
@@ -906,6 +939,13 @@ Public Class Program
         PanelLoaderA1.Visible = True
         PanelLoaderA2.Visible = True
         PanelLoaderA3.Visible = True
+        Panel_PreCal.Visible = True
+        Panel_Bkg.Visible = True
+        Panel_RSS.Visible = True
+        Panel_PostCal.Visible = True
+        PanelA4.Visible = False
+        PanelTractorA1.Visible = False
+        PanelTractorA3.Visible = False
 
         PanelExcavatorA1.Size = ASize
         PanelExcavatorA1.Location = New Point(220, 280)
@@ -1005,6 +1045,9 @@ Public Class Program
         Set_Panel(Panel_PreCal, LinkLabel_preCal)
         tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 30, "PreCal", 0, 0, 0)
         HeadRun = tempRun
+        CurRun = HeadRun
+        timeLeft = CurRun.Time
+        timeLabel.Text = timeLeft & " s"
         'Background
         Set_Panel(Panel_Bkg, LinkLabel_BG)
         tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, tempRun, 30, "Background", 0, 0, 0)
@@ -1023,8 +1066,211 @@ Public Class Program
         tempRun = tempRun.NextUnit
     End Sub
 
+    Sub Load_Tractor()
+        PanelTractorA1.Visible = True
+        PanelTractorA3.Visible = True
+        Panel_PreCal.Visible = True
+        Panel_Bkg.Visible = True
+        Panel_RSS.Visible = True
+        Panel_PostCal.Visible = True
+        PanelA4.Visible = False
+        PanelExcavatorA1.Visible = False
+        PanelExcavatorA2.Visible = False
+        PanelLoaderA3.Visible = False
+        PanelLoaderA1.Visible = False
+        PanelLoaderA2.Visible = False
+        PanelTractorA1.Size = ASize
+        PanelTractorA1.Location = New Point(220, 280)
+        PanelTractorA3.Size = ASize
+        PanelTractorA3.Location = New Point(354, 280)
+
+        PanelTractorA1.Controls.Add(Panel_TrA1_Fst_1st)
+        PanelTractorA1.Controls.Add(Panel_TrA1_Fst_2nd)
+        PanelTractorA1.Controls.Add(Panel_TrA1_Fst_3rd)
+        PanelTractorA1.Controls.Add(Panel_TrA1_Sec_1st)
+        PanelTractorA1.Controls.Add(Panel_TrA1_Sec_2nd)
+        PanelTractorA1.Controls.Add(Panel_TrA1_Sec_3rd)
+        PanelTractorA1.Controls.Add(Panel_TrA1_Thd_1st)
+        PanelTractorA1.Controls.Add(Panel_TrA1_Thd_2nd)
+        PanelTractorA1.Controls.Add(Panel_TrA1_Thd_3rd)
+        PanelTractorA1.Controls.Add(Panel_TrA1_Add_1st)
+        PanelTractorA1.Controls.Add(Panel_TrA1_Add_2nd)
+        PanelTractorA1.Controls.Add(Panel_TrA1_Add_3rd)
+        PanelTractorA1.Controls.Add(TextBox_Tr_A1_av1)
+        PanelTractorA1.Controls.Add(TextBox_Tr_A1_av2)
+        PanelTractorA1.Controls.Add(TextBox_Tr_A1_av3)
+        PanelTractorA1.Controls.Add(TextBox_Tr_A1_av4)
+
+        PanelTractorA3.Controls.Add(Panel_TrA3_Fst_bkd)
+        PanelTractorA3.Controls.Add(Panel_TrA3_Fst_fwd)
+        PanelTractorA3.Controls.Add(Panel_TrA3_Sec_bkd)
+        PanelTractorA3.Controls.Add(Panel_TrA3_Sec_fwd)
+        PanelTractorA3.Controls.Add(Panel_TrA3_Thd_bkd)
+        PanelTractorA3.Controls.Add(Panel_TrA3_Thd_bkd)
+        PanelTractorA3.Controls.Add(Panel_TrA3_Add_bkd)
+        PanelTractorA3.Controls.Add(Panel_TrA3_Add_bkd)
+        PanelTractorA3.Controls.Add(TextBox_Tr_A3_av1)
+        PanelTractorA3.Controls.Add(TextBox_Tr_A3_av2)
+        PanelTractorA3.Controls.Add(TextBox_Tr_A3_av3)
+        PanelTractorA3.Controls.Add(TextBox_Tr_A3_av4)
+
+
+
+        'Create an object for each step
+        Dim tempRun As Run_Unit
+
+        'Precal
+        Set_Panel(Panel_PreCal, LinkLabel_preCal)
+        tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 30, "PreCal", 0, 0, 0)
+        HeadRun = tempRun
+        CurRun = HeadRun
+        timeLeft = CurRun.Time
+        timeLabel.Text = timeLeft & " s"
+        'Background
+        Set_Panel(Panel_Bkg, LinkLabel_BG)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, tempRun, 30, "Background", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+
+        tempRun = Load_Tractor_Helper(tempRun)
+
+        'RSS
+        Set_Panel(Panel_RSS, LinkLabel_RSS)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 30, "RSS", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        'PostCal
+        Set_Panel(Panel_PostCal, LinkLabel_postCal)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_postCal, Panel_PostCal, Nothing, tempRun, 30, "PostCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+    End Sub
+
+    Function Load_Tractor_Helper(ByRef run As Run_Unit)
+        'Create an object for each step
+        Dim tempRun As Run_Unit = run
+        ''A1
+        'A1 First 1
+        Set_Panel(Panel_TrA1_Fst_1st, LinkLabel_TrA1_Fst_1st)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Fst_1st, Panel_TrA1_Fst_1st, Nothing, tempRun, 30, "TrA1", 1, 1, 1)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+        'A1 First 2
+        Set_Panel(Panel_TrA1_Fst_2nd, LinkLabel_TrA1_Fst_2nd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Fst_2nd, Panel_TrA1_Fst_2nd, Nothing, tempRun, 30, "TrA1", 1, 1, 1)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+        'A1 First 3
+        Set_Panel(Panel_TrA1_Fst_3rd, LinkLabel_TrA1_Fst_3rd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Fst_3rd, Panel_TrA1_Fst_3rd, Nothing, tempRun, 30, "TrA1", 1, 1, 1)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+        'A1 Second 1
+        Set_Panel(Panel_TrA1_Sec_1st, LinkLabel_TrA1_Sec_1st)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Sec_1st, Panel_TrA1_Sec_1st, Nothing, tempRun, 30, "TrA1", 1, 1, 1)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+        'A1 Second 2
+        Set_Panel(Panel_TrA1_Sec_2nd, LinkLabel_TrA1_Sec_2nd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Sec_2nd, Panel_TrA1_Sec_2nd, Nothing, tempRun, 30, "TrA1", 1, 1, 1)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+        'A1 Second 3
+        Set_Panel(Panel_TrA1_Sec_3rd, LinkLabel_TrA1_Sec_3rd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Sec_3rd, Panel_TrA1_Sec_3rd, Nothing, tempRun, 30, "TrA1", 1, 1, 1)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+        'A1 Third 1
+        Set_Panel(Panel_TrA1_Thd_1st, LinkLabel_TrA1_Thd_1st)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Thd_1st, Panel_TrA1_Thd_1st, Nothing, tempRun, 30, "TrA1", 1, 1, 1)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+        'A1 Third 2
+        Set_Panel(Panel_TrA1_Thd_2nd, LinkLabel_TrA1_Thd_2nd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Thd_2nd, Panel_TrA1_Thd_2nd, Nothing, tempRun, 30, "TrA1", 1, 1, 1)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+        'A1 Third 3
+        Set_Panel(Panel_TrA1_Thd_3rd, LinkLabel_TrA1_Thd_3rd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Thd_3rd, Panel_TrA1_Thd_3rd, Nothing, tempRun, 30, "TrA1", 1, 1, 1)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+        'A1 Add 1
+        Set_Panel(Panel_TrA1_Add_1st, LinkLabel_TrA1_Add_1st)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Add_1st, Panel_TrA1_Add_1st, Nothing, tempRun, 30, "TrA1", 1, 1, 1)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+        'A1 Add 2
+        Set_Panel(Panel_TrA1_Add_2nd, LinkLabel_TrA1_Add_2nd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Add_2nd, Panel_TrA1_Add_2nd, Nothing, tempRun, 30, "TrA1", 1, 1, 1)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+        'A1 Add 3
+        Set_Panel(Panel_TrA1_Add_3rd, LinkLabel_TrA1_Add_3rd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Add_3rd, Panel_TrA1_Add_3rd, Nothing, tempRun, 30, "TrA1", 1, 1, 1)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+
+
+        ''A3
+        'A3 First forward
+        Set_Panel(Panel_TrA3_Fst_fwd, LinkLabel_TrA3_Fst_fwd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA3_Fst_fwd, Panel_TrA3_Fst_fwd, Nothing, tempRun, 30, "TrA3_fwd", 1, 1, 3)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+        'A3 First backward
+        Set_Panel(Panel_TrA3_Fst_bkd, LinkLabel_TrA3_Fst_bkd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA3_Fst_bkd, Panel_TrA3_Fst_bkd, Nothing, tempRun, 30, "TrA3_bkd", 1, 1, 1)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+
+        'A3 Second fwd
+        Set_Panel(Panel_TrA3_Sec_fwd, LinkLabel_TrA3_Sec_fwd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA3_Sec_fwd, Panel_TrA3_Sec_fwd, Nothing, tempRun, 30, "TrA3_fwd", 1, 1, 3)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+        'A3 Second backward
+        Set_Panel(Panel_TrA3_Sec_bkd, LinkLabel_TrA3_Sec_bkd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA3_Sec_bkd, Panel_TrA3_Sec_bkd, Nothing, tempRun, 30, "TrA3_bkd", 1, 1, 1)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+
+        'A3 Third fwd
+        Set_Panel(Panel_TrA3_Thd_fwd, LinkLabel_TrA3_Thd_fwd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA3_Thd_fwd, Panel_TrA3_Thd_fwd, Nothing, tempRun, 30, "TrA3_fwd", 1, 1, 3)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+        'A3 Third bkd
+        Set_Panel(Panel_TrA3_Thd_bkd, LinkLabel_TrA3_Thd_bkd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA3_Thd_bkd, Panel_TrA3_Thd_bkd, Nothing, tempRun, 30, "TrA3_bkd", 1, 1, 1)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+
+        'A3 Add fwd
+        Set_Panel(Panel_TrA3_Add_fwd, LinkLabel_TrA3_Add_fwd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA3_Add_fwd, Panel_TrA3_Add_fwd, Nothing, tempRun, 30, "TrA3_fwd", 1, 1, 3)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+        'A3 Add bkd
+        Set_Panel(Panel_TrA3_Add_bkd, LinkLabel_TrA3_Add_bkd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA3_Add_bkd, Panel_TrA3_Add_bkd, Nothing, tempRun, 30, "TrA3_bkd", 1, 1, 1)
+        tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
+
+        Return tempRun
+
+    End Function
+
     Sub Load_Others(ByVal name As String)
         PanelA4.Visible = True
+        Panel_PreCal.Visible = True
+        Panel_Bkg.Visible = True
+        Panel_RSS.Visible = True
+        Panel_PostCal.Visible = True
+        PanelExcavatorA1.Visible = False
+        PanelExcavatorA2.Visible = False
+        PanelLoaderA3.Visible = False
+        PanelLoaderA1.Visible = False
+        PanelLoaderA2.Visible = False
+        PanelTractorA1.Visible = False
+        PanelTractorA3.Visible = False
         PanelA4.Size = ASize
         PanelA4.Location = New Point(488, 280)
         PanelA4.Controls.Add(Panel_A4_Fst)
@@ -1042,6 +1288,9 @@ Public Class Program
         Set_Panel(Panel_PreCal, LinkLabel_preCal)
         tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 30, "PreCal", 0, 0, 0)
         HeadRun = tempRun
+        CurRun = HeadRun
+        timeLeft = CurRun.Time
+        timeLabel.Text = timeLeft & " s"
         'Background
         Set_Panel(Panel_Bkg, LinkLabel_BG)
         tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, Nothing, 30, "Background", 0, 0, 0)
@@ -1114,10 +1363,11 @@ Public Class Program
             tempRun = tempRun.NextUnit
         End While
     End Sub
+
     Function Load_Steps_helper(ByRef run As Run_Unit)
         Dim tempRun As Run_Unit = run
         Dim tempStep As Steps
-        If tempRun.Name = "ExA1" Or tempRun.Name = "LoA1" Then
+        If tempRun.Name = "ExA1" Or tempRun.Name = "LoA1" Or tempRun.Name = "TrA1" Then
             tempRun.Steps = New Steps(My.Resources.A1_step1, Step1, Nothing, True)
         End If
         If tempRun.Name = "ExA2_1st" Then
@@ -1173,6 +1423,15 @@ Public Class Program
         If tempRun.Name = "LoA3_bkd" Then
             tempRun.Steps = New Steps(My.Resources.A3_Loader_step4, Step1, Nothing, True)
         End If
+        If tempRun.Name = "TrA3_fwd" Then
+            tempRun.Steps = New Steps(My.Resources.A3_Tractor_step1, Step1, Nothing, False)
+            tempRun.Steps.NextStep = New Steps(My.Resources.A3_Tractor_step2, Step2, Nothing, False)
+            tempStep = tempRun.Steps.NextStep
+            tempStep.NextStep = New Steps(My.Resources.A3_Tractor_step3, Step3, Nothing, True)
+        End If
+        If tempRun.Name = "TrA3_bkd" Then
+            tempRun.Steps = New Steps(My.Resources.A3_Tractor_step4, Step1, Nothing, True)
+        End If
 
         Return tempRun.Steps
 
@@ -1217,63 +1476,95 @@ Public Class Program
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
 
+        If timeLeft > 0 Then 'counting
+            timeLeft = timeLeft - 1
+            timeLabel.Text = timeLeft & " s"
 
-    End Sub
-
-    ' click event on Start Button
-    Private Sub startButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles startButton.Click
-        'startButton.Enabled = False
-        'stopButton.Enabled = True
-        'Dim CurStep As steps
-        If Machine = Machines.Excavator Then
+        ElseIf timeLeft = 0 Then 'time's up
+            Timer1.Stop()
+            timeLabel.Text = "Time's up!"
+            'System.Threading.Thread.Sleep(1000)
+            startButton.Enabled = True
+            stopButton.Enabled = False
+            'determine what the next step is
+            timeLeft = CurRun.Time
+            timeLabel.Text = timeLeft & " s"
             If CurRun.Name = "PreCal" Then
-                    MessageBox.Show(CurRun.Name)
-                    CurRun = CurRun.NextUnit
+                Set_Panel_BackColor()
+                CurRun = CurRun.NextUnit
             Else
                 If CurRun.CurStep = 0 Then
-                    MessageBox.Show(CurRun.Name)
                     If CurRun.Name = "Background" Then
+                        Set_Panel_BackColor()
                         CurRun = CurRun.NextUnit
                         CurStep = CurRun.Steps
-                        For index = CurRun.StartStep To CurRun.EndStep
-                            array_step(index - 1).Text = CurStep.step_str
-                            If CurStep.HasNext() Then
-                                CurStep = CurStep.NextStep
-                            End If
+                        For index = 0 To 8
+                            array_step(index).Text = ""
+                            array_step(index).BackColor = Color.DarkGray
                         Next
-                    Else
-                        CurRun = CurRun.NextUnit
-                    End If
-                Else
-                    If CurRun.CurStep = CurRun.EndStep Then
-                        MessageBox.Show(CurRun.Steps.step_str + " of  " + CurRun.Name + " -  " + Str(CurRun.CurStep) + "  / " + Str(CurRun.EndStep))
-                        CurRun = CurRun.NextUnit
-                        CurStep = CurRun.Steps
                         For index = CurRun.StartStep To CurRun.EndStep
                             array_step(index - 1).Text = CurStep.step_str
+                            array_step(index - 1).BackColor = Color.White
                             If CurStep.HasNext() = True Then
                                 CurStep = CurStep.NextStep
                             End If
                         Next
+                    ElseIf CurRun.Name = "PostCal" Then
+                        CurRun.Set_BackColor(Color.Green)
+                        MessageBox.Show("此機具所有測量步驟已結束")
                     Else
-                        MessageBox.Show(CurRun.Steps.step_str + " of  " + CurRun.Name + " -  " + Str(CurRun.CurStep) + "  / " + Str(CurRun.EndStep))
+                        Set_Panel_BackColor()
+                        CurRun = CurRun.NextUnit
+                    End If
+                ElseIf CurRun.NextUnit.CurStep = 0 Then
+                    array_step(CurRun.CurStep - 1).BackColor = Color.Green
+                    Set_Panel_BackColor()
+                    CurRun = CurRun.NextUnit
+                Else
+                    If CurRun.CurStep = CurRun.EndStep And CurRun.NextUnit.EndStep > 0 Then
+                        Set_Panel_BackColor()
+                        CurRun = CurRun.NextUnit
+                        CurStep = CurRun.Steps
+                        For index = 0 To 8
+                            array_step(index).Text = ""
+                            array_step(index).BackColor = Color.DarkGray
+                        Next
+                        For index = CurRun.StartStep To CurRun.EndStep
+                            array_step(index - 1).Text = CurStep.step_str
+                            array_step(index - 1).BackColor = Color.White
+                            If CurStep.HasNext() = True Then
+                                CurStep = CurStep.NextStep
+                            End If
+                        Next
+                        array_step(0).BackColor = Color.Yellow
+                    Else
+                        Set_Step_BackColor()
                         CurRun.Steps = CurRun.Steps.NextStep
                         CurRun.CurStep = CurRun.CurStep + 1
                     End If
                 End If
             End If
-        ElseIf Machine = Machines.Loader Then
-
-        ElseIf Machine = Machines.Loader_Excavator Then
-
-        ElseIf Machine = Machines.Tractor Then
-
-        ElseIf Machine = Machines.Others Then
-
+           
         End If
 
-            'Timer1.Start()
+    End Sub
+    Sub Set_Panel_BackColor()
+        CurRun.Set_BackColor(Color.Green)
+        CurRun.NextUnit.Set_BackColor(Color.Yellow)
+    End Sub
+    Sub Set_Step_BackColor()
+        array_step(CurRun.CurStep - 1).BackColor = Color.Green
+        array_step(CurRun.CurStep).BackColor = Color.Yellow
+    End Sub
+    ' click event on Start Button
+    Private Sub startButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles startButton.Click
+        startButton.Enabled = False
+        stopButton.Enabled = True
 
+        timeLeft = CurRun.Time
+
+        Timer1.Start()
+        
     End Sub
     Private Sub AcceptButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Accept_Button.Click
         If MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then

@@ -23,13 +23,47 @@ Partial Class Program
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.p6Label = New System.Windows.Forms.Label()
+        Me.p5Label = New System.Windows.Forms.Label()
+        Me.p4Label = New System.Windows.Forms.Label()
+        Me.p3Label = New System.Windows.Forms.Label()
+        Me.p2Label = New System.Windows.Forms.Label()
+        Me.p1Label = New System.Windows.Forms.Label()
+        Me.GroupBox_Plot = New System.Windows.Forms.GroupBox()
+        Me.yLabel = New System.Windows.Forms.Label()
+        Me.xLabel = New System.Windows.Forms.Label()
+        Me.p9Label = New System.Windows.Forms.Label()
+        Me.p8Label = New System.Windows.Forms.Label()
+        Me.p7Label = New System.Windows.Forms.Label()
+        Me.p10Label = New System.Windows.Forms.Label()
+        Me.GroupBox_A4 = New System.Windows.Forms.GroupBox()
+        Me.Button_L1_L2_L3_check = New System.Windows.Forms.Button()
+        Me.TextBox_r2 = New System.Windows.Forms.TextBox()
+        Me.TextBox_L3 = New System.Windows.Forms.TextBox()
+        Me.TextBox_L2 = New System.Windows.Forms.TextBox()
+        Me.TextBox_L1 = New System.Windows.Forms.TextBox()
+        Me.Label_r2 = New System.Windows.Forms.Label()
+        Me.Label_input_L2 = New System.Windows.Forms.Label()
+        Me.Label_input_L3 = New System.Windows.Forms.Label()
+        Me.Label_input_L1 = New System.Windows.Forms.Label()
+        Me.GroupBox_A1_A2_A3 = New System.Windows.Forms.GroupBox()
+        Me.Button_L_check = New System.Windows.Forms.Button()
+        Me.TextBox_r1 = New System.Windows.Forms.TextBox()
+        Me.TextBox_L = New System.Windows.Forms.TextBox()
+        Me.Label_r1 = New System.Windows.Forms.Label()
+        Me.Label_input_L = New System.Windows.Forms.Label()
+        Me.Picture_machine = New System.Windows.Forms.PictureBox()
+        Me.Label_machine_pic = New System.Windows.Forms.Label()
+        Me.ComboBox_machine_list = New System.Windows.Forms.ComboBox()
+        Me.Label_machine_choose = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.Panel_PostCal = New System.Windows.Forms.Panel()
         Me.LinkLabel_postCal = New System.Windows.Forms.LinkLabel()
@@ -283,42 +317,13 @@ Partial Class Program
         Me.stopButton = New System.Windows.Forms.Button()
         Me.timeLabel = New System.Windows.Forms.Label()
         Me.startButton = New System.Windows.Forms.Button()
-        Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.p6Label = New System.Windows.Forms.Label()
-        Me.p5Label = New System.Windows.Forms.Label()
-        Me.p4Label = New System.Windows.Forms.Label()
-        Me.p3Label = New System.Windows.Forms.Label()
-        Me.p2Label = New System.Windows.Forms.Label()
-        Me.p1Label = New System.Windows.Forms.Label()
-        Me.GroupBox_Plot = New System.Windows.Forms.GroupBox()
-        Me.yLabel = New System.Windows.Forms.Label()
-        Me.xLabel = New System.Windows.Forms.Label()
-        Me.p9Label = New System.Windows.Forms.Label()
-        Me.p8Label = New System.Windows.Forms.Label()
-        Me.p7Label = New System.Windows.Forms.Label()
-        Me.p10Label = New System.Windows.Forms.Label()
-        Me.GroupBox_A4 = New System.Windows.Forms.GroupBox()
-        Me.Button_L1_L2_L3_check = New System.Windows.Forms.Button()
-        Me.TextBox_r2 = New System.Windows.Forms.TextBox()
-        Me.TextBox_L3 = New System.Windows.Forms.TextBox()
-        Me.TextBox_L2 = New System.Windows.Forms.TextBox()
-        Me.TextBox_L1 = New System.Windows.Forms.TextBox()
-        Me.Label_r2 = New System.Windows.Forms.Label()
-        Me.Label_input_L2 = New System.Windows.Forms.Label()
-        Me.Label_input_L3 = New System.Windows.Forms.Label()
-        Me.Label_input_L1 = New System.Windows.Forms.Label()
-        Me.GroupBox_A1_A2_A3 = New System.Windows.Forms.GroupBox()
-        Me.Button_L_check = New System.Windows.Forms.Button()
-        Me.TextBox_r1 = New System.Windows.Forms.TextBox()
-        Me.TextBox_L = New System.Windows.Forms.TextBox()
-        Me.Label_r1 = New System.Windows.Forms.Label()
-        Me.Label_input_L = New System.Windows.Forms.Label()
-        Me.Picture_machine = New System.Windows.Forms.PictureBox()
-        Me.Label_machine_pic = New System.Windows.Forms.Label()
-        Me.ComboBox_machine_list = New System.Windows.Forms.ComboBox()
-        Me.Label_machine_choose = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.TabControl1.SuspendLayout()
+        Me.TabPage1.SuspendLayout()
+        Me.GroupBox_Plot.SuspendLayout()
+        Me.GroupBox_A4.SuspendLayout()
+        Me.GroupBox_A1_A2_A3.SuspendLayout()
+        CType(Me.Picture_machine, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage2.SuspendLayout()
         Me.Panel_PostCal.SuspendLayout()
         Me.PanelTractorA3.SuspendLayout()
@@ -414,11 +419,6 @@ Partial Class Program
         Me.Panel_ExA1_Fst_3rd.SuspendLayout()
         Me.Panel_ExA1_Fst_2nd.SuspendLayout()
         Me.Panel_ExA1_Fst_1st.SuspendLayout()
-        Me.TabPage1.SuspendLayout()
-        Me.GroupBox_Plot.SuspendLayout()
-        Me.GroupBox_A4.SuspendLayout()
-        Me.GroupBox_A1_A2_A3.SuspendLayout()
-        CType(Me.Picture_machine, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -433,6 +433,362 @@ Partial Class Program
         Me.TabControl1.Size = New System.Drawing.Size(1421, 807)
         Me.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.TabControl1.TabIndex = 0
+        '
+        'TabPage1
+        '
+        Me.TabPage1.BackColor = System.Drawing.Color.DarkGray
+        Me.TabPage1.Controls.Add(Me.p6Label)
+        Me.TabPage1.Controls.Add(Me.p5Label)
+        Me.TabPage1.Controls.Add(Me.p4Label)
+        Me.TabPage1.Controls.Add(Me.p3Label)
+        Me.TabPage1.Controls.Add(Me.p2Label)
+        Me.TabPage1.Controls.Add(Me.p1Label)
+        Me.TabPage1.Controls.Add(Me.GroupBox_Plot)
+        Me.TabPage1.Controls.Add(Me.p9Label)
+        Me.TabPage1.Controls.Add(Me.p8Label)
+        Me.TabPage1.Controls.Add(Me.p7Label)
+        Me.TabPage1.Controls.Add(Me.p10Label)
+        Me.TabPage1.Controls.Add(Me.GroupBox_A4)
+        Me.TabPage1.Controls.Add(Me.GroupBox_A1_A2_A3)
+        Me.TabPage1.Controls.Add(Me.Picture_machine)
+        Me.TabPage1.Controls.Add(Me.Label_machine_pic)
+        Me.TabPage1.Controls.Add(Me.ComboBox_machine_list)
+        Me.TabPage1.Controls.Add(Me.Label_machine_choose)
+        Me.TabPage1.Font = New System.Drawing.Font("新細明體", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.TabPage1.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage1.Margin = New System.Windows.Forms.Padding(0)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Size = New System.Drawing.Size(1413, 778)
+        Me.TabPage1.TabIndex = 0
+        Me.TabPage1.Text = "機具選擇"
+        '
+        'p6Label
+        '
+        Me.p6Label.AutoSize = True
+        Me.p6Label.Location = New System.Drawing.Point(641, 450)
+        Me.p6Label.Name = "p6Label"
+        Me.p6Label.Size = New System.Drawing.Size(0, 15)
+        Me.p6Label.TabIndex = 45
+        '
+        'p5Label
+        '
+        Me.p5Label.AutoSize = True
+        Me.p5Label.Location = New System.Drawing.Point(631, 440)
+        Me.p5Label.Name = "p5Label"
+        Me.p5Label.Size = New System.Drawing.Size(0, 15)
+        Me.p5Label.TabIndex = 44
+        '
+        'p4Label
+        '
+        Me.p4Label.AutoSize = True
+        Me.p4Label.Location = New System.Drawing.Point(620, 430)
+        Me.p4Label.Name = "p4Label"
+        Me.p4Label.Size = New System.Drawing.Size(0, 15)
+        Me.p4Label.TabIndex = 43
+        '
+        'p3Label
+        '
+        Me.p3Label.AutoSize = True
+        Me.p3Label.Location = New System.Drawing.Point(609, 420)
+        Me.p3Label.Name = "p3Label"
+        Me.p3Label.Size = New System.Drawing.Size(0, 15)
+        Me.p3Label.TabIndex = 42
+        '
+        'p2Label
+        '
+        Me.p2Label.AutoSize = True
+        Me.p2Label.Location = New System.Drawing.Point(599, 410)
+        Me.p2Label.Name = "p2Label"
+        Me.p2Label.Size = New System.Drawing.Size(0, 15)
+        Me.p2Label.TabIndex = 41
+        '
+        'p1Label
+        '
+        Me.p1Label.AutoSize = True
+        Me.p1Label.Location = New System.Drawing.Point(588, 400)
+        Me.p1Label.Name = "p1Label"
+        Me.p1Label.Size = New System.Drawing.Size(0, 15)
+        Me.p1Label.TabIndex = 40
+        '
+        'GroupBox_Plot
+        '
+        Me.GroupBox_Plot.BackColor = System.Drawing.Color.DarkGray
+        Me.GroupBox_Plot.Controls.Add(Me.yLabel)
+        Me.GroupBox_Plot.Controls.Add(Me.xLabel)
+        Me.GroupBox_Plot.Location = New System.Drawing.Point(175, 390)
+        Me.GroupBox_Plot.Margin = New System.Windows.Forms.Padding(4)
+        Me.GroupBox_Plot.Name = "GroupBox_Plot"
+        Me.GroupBox_Plot.Padding = New System.Windows.Forms.Padding(4)
+        Me.GroupBox_Plot.Size = New System.Drawing.Size(524, 416)
+        Me.GroupBox_Plot.TabIndex = 39
+        Me.GroupBox_Plot.TabStop = False
+        '
+        'yLabel
+        '
+        Me.yLabel.AutoSize = True
+        Me.yLabel.Location = New System.Drawing.Point(200, 22)
+        Me.yLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.yLabel.Name = "yLabel"
+        Me.yLabel.Size = New System.Drawing.Size(18, 15)
+        Me.yLabel.TabIndex = 1
+        Me.yLabel.Text = "Y"
+        '
+        'xLabel
+        '
+        Me.xLabel.AutoSize = True
+        Me.xLabel.Location = New System.Drawing.Point(392, 174)
+        Me.xLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.xLabel.Name = "xLabel"
+        Me.xLabel.Size = New System.Drawing.Size(18, 15)
+        Me.xLabel.TabIndex = 0
+        Me.xLabel.Text = "X"
+        '
+        'p9Label
+        '
+        Me.p9Label.AutoSize = True
+        Me.p9Label.Location = New System.Drawing.Point(577, 390)
+        Me.p9Label.Name = "p9Label"
+        Me.p9Label.Size = New System.Drawing.Size(0, 15)
+        Me.p9Label.TabIndex = 38
+        '
+        'p8Label
+        '
+        Me.p8Label.AutoSize = True
+        Me.p8Label.Location = New System.Drawing.Point(567, 380)
+        Me.p8Label.Name = "p8Label"
+        Me.p8Label.Size = New System.Drawing.Size(0, 15)
+        Me.p8Label.TabIndex = 37
+        '
+        'p7Label
+        '
+        Me.p7Label.AutoSize = True
+        Me.p7Label.Location = New System.Drawing.Point(556, 370)
+        Me.p7Label.Name = "p7Label"
+        Me.p7Label.Size = New System.Drawing.Size(0, 15)
+        Me.p7Label.TabIndex = 36
+        '
+        'p10Label
+        '
+        Me.p10Label.AutoSize = True
+        Me.p10Label.Location = New System.Drawing.Point(545, 360)
+        Me.p10Label.Name = "p10Label"
+        Me.p10Label.Size = New System.Drawing.Size(0, 15)
+        Me.p10Label.TabIndex = 35
+        '
+        'GroupBox_A4
+        '
+        Me.GroupBox_A4.Controls.Add(Me.Button_L1_L2_L3_check)
+        Me.GroupBox_A4.Controls.Add(Me.TextBox_r2)
+        Me.GroupBox_A4.Controls.Add(Me.TextBox_L3)
+        Me.GroupBox_A4.Controls.Add(Me.TextBox_L2)
+        Me.GroupBox_A4.Controls.Add(Me.TextBox_L1)
+        Me.GroupBox_A4.Controls.Add(Me.Label_r2)
+        Me.GroupBox_A4.Controls.Add(Me.Label_input_L2)
+        Me.GroupBox_A4.Controls.Add(Me.Label_input_L3)
+        Me.GroupBox_A4.Controls.Add(Me.Label_input_L1)
+        Me.GroupBox_A4.Location = New System.Drawing.Point(573, 165)
+        Me.GroupBox_A4.Margin = New System.Windows.Forms.Padding(4)
+        Me.GroupBox_A4.Name = "GroupBox_A4"
+        Me.GroupBox_A4.Padding = New System.Windows.Forms.Padding(4)
+        Me.GroupBox_A4.Size = New System.Drawing.Size(371, 211)
+        Me.GroupBox_A4.TabIndex = 19
+        Me.GroupBox_A4.TabStop = False
+        Me.GroupBox_A4.Text = "A4"
+        '
+        'Button_L1_L2_L3_check
+        '
+        Me.Button_L1_L2_L3_check.Location = New System.Drawing.Point(289, 92)
+        Me.Button_L1_L2_L3_check.Margin = New System.Windows.Forms.Padding(4)
+        Me.Button_L1_L2_L3_check.Name = "Button_L1_L2_L3_check"
+        Me.Button_L1_L2_L3_check.Size = New System.Drawing.Size(56, 26)
+        Me.Button_L1_L2_L3_check.TabIndex = 9
+        Me.Button_L1_L2_L3_check.Text = "確認"
+        Me.Button_L1_L2_L3_check.UseVisualStyleBackColor = True
+        '
+        'TextBox_r2
+        '
+        Me.TextBox_r2.Location = New System.Drawing.Point(137, 141)
+        Me.TextBox_r2.Margin = New System.Windows.Forms.Padding(4)
+        Me.TextBox_r2.Name = "TextBox_r2"
+        Me.TextBox_r2.Size = New System.Drawing.Size(131, 25)
+        Me.TextBox_r2.TabIndex = 17
+        '
+        'TextBox_L3
+        '
+        Me.TextBox_L3.Location = New System.Drawing.Point(137, 91)
+        Me.TextBox_L3.Margin = New System.Windows.Forms.Padding(4)
+        Me.TextBox_L3.Name = "TextBox_L3"
+        Me.TextBox_L3.Size = New System.Drawing.Size(131, 25)
+        Me.TextBox_L3.TabIndex = 16
+        '
+        'TextBox_L2
+        '
+        Me.TextBox_L2.Location = New System.Drawing.Point(137, 59)
+        Me.TextBox_L2.Margin = New System.Windows.Forms.Padding(4)
+        Me.TextBox_L2.Name = "TextBox_L2"
+        Me.TextBox_L2.Size = New System.Drawing.Size(131, 25)
+        Me.TextBox_L2.TabIndex = 15
+        '
+        'TextBox_L1
+        '
+        Me.TextBox_L1.Location = New System.Drawing.Point(137, 26)
+        Me.TextBox_L1.Margin = New System.Windows.Forms.Padding(4)
+        Me.TextBox_L1.Name = "TextBox_L1"
+        Me.TextBox_L1.Size = New System.Drawing.Size(131, 25)
+        Me.TextBox_L1.TabIndex = 14
+        '
+        'Label_r2
+        '
+        Me.Label_r2.AutoSize = True
+        Me.Label_r2.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label_r2.Location = New System.Drawing.Point(73, 136)
+        Me.Label_r2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label_r2.Name = "Label_r2"
+        Me.Label_r2.Size = New System.Drawing.Size(40, 35)
+        Me.Label_r2.TabIndex = 13
+        Me.Label_r2.Text = "r :"
+        '
+        'Label_input_L2
+        '
+        Me.Label_input_L2.AutoSize = True
+        Me.Label_input_L2.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label_input_L2.Location = New System.Drawing.Point(8, 54)
+        Me.Label_input_L2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label_input_L2.Name = "Label_input_L2"
+        Me.Label_input_L2.Size = New System.Drawing.Size(113, 35)
+        Me.Label_input_L2.TabIndex = 12
+        Me.Label_input_L2.Text = "輸入L2 :"
+        '
+        'Label_input_L3
+        '
+        Me.Label_input_L3.AutoSize = True
+        Me.Label_input_L3.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label_input_L3.Location = New System.Drawing.Point(8, 86)
+        Me.Label_input_L3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label_input_L3.Name = "Label_input_L3"
+        Me.Label_input_L3.Size = New System.Drawing.Size(113, 35)
+        Me.Label_input_L3.TabIndex = 11
+        Me.Label_input_L3.Text = "輸入L3 :"
+        '
+        'Label_input_L1
+        '
+        Me.Label_input_L1.AutoSize = True
+        Me.Label_input_L1.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label_input_L1.Location = New System.Drawing.Point(8, 21)
+        Me.Label_input_L1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label_input_L1.Name = "Label_input_L1"
+        Me.Label_input_L1.Size = New System.Drawing.Size(113, 35)
+        Me.Label_input_L1.TabIndex = 10
+        Me.Label_input_L1.Text = "輸入L1 :"
+        '
+        'GroupBox_A1_A2_A3
+        '
+        Me.GroupBox_A1_A2_A3.Controls.Add(Me.Button_L_check)
+        Me.GroupBox_A1_A2_A3.Controls.Add(Me.TextBox_r1)
+        Me.GroupBox_A1_A2_A3.Controls.Add(Me.TextBox_L)
+        Me.GroupBox_A1_A2_A3.Controls.Add(Me.Label_r1)
+        Me.GroupBox_A1_A2_A3.Controls.Add(Me.Label_input_L)
+        Me.GroupBox_A1_A2_A3.Location = New System.Drawing.Point(573, 40)
+        Me.GroupBox_A1_A2_A3.Margin = New System.Windows.Forms.Padding(4)
+        Me.GroupBox_A1_A2_A3.Name = "GroupBox_A1_A2_A3"
+        Me.GroupBox_A1_A2_A3.Padding = New System.Windows.Forms.Padding(4)
+        Me.GroupBox_A1_A2_A3.Size = New System.Drawing.Size(371, 118)
+        Me.GroupBox_A1_A2_A3.TabIndex = 10
+        Me.GroupBox_A1_A2_A3.TabStop = False
+        Me.GroupBox_A1_A2_A3.Text = "A1 or A2 or A3"
+        '
+        'Button_L_check
+        '
+        Me.Button_L_check.Location = New System.Drawing.Point(292, 34)
+        Me.Button_L_check.Margin = New System.Windows.Forms.Padding(4)
+        Me.Button_L_check.Name = "Button_L_check"
+        Me.Button_L_check.Size = New System.Drawing.Size(56, 26)
+        Me.Button_L_check.TabIndex = 8
+        Me.Button_L_check.Text = "確認"
+        Me.Button_L_check.UseVisualStyleBackColor = True
+        '
+        'TextBox_r1
+        '
+        Me.TextBox_r1.Location = New System.Drawing.Point(140, 69)
+        Me.TextBox_r1.Margin = New System.Windows.Forms.Padding(4)
+        Me.TextBox_r1.Name = "TextBox_r1"
+        Me.TextBox_r1.Size = New System.Drawing.Size(131, 25)
+        Me.TextBox_r1.TabIndex = 7
+        '
+        'TextBox_L
+        '
+        Me.TextBox_L.Location = New System.Drawing.Point(140, 34)
+        Me.TextBox_L.Margin = New System.Windows.Forms.Padding(4)
+        Me.TextBox_L.Name = "TextBox_L"
+        Me.TextBox_L.Size = New System.Drawing.Size(131, 25)
+        Me.TextBox_L.TabIndex = 6
+        '
+        'Label_r1
+        '
+        Me.Label_r1.AutoSize = True
+        Me.Label_r1.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label_r1.Location = New System.Drawing.Point(76, 64)
+        Me.Label_r1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label_r1.Name = "Label_r1"
+        Me.Label_r1.Size = New System.Drawing.Size(40, 35)
+        Me.Label_r1.TabIndex = 5
+        Me.Label_r1.Text = "r :"
+        '
+        'Label_input_L
+        '
+        Me.Label_input_L.AutoSize = True
+        Me.Label_input_L.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label_input_L.Location = New System.Drawing.Point(16, 29)
+        Me.Label_input_L.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label_input_L.Name = "Label_input_L"
+        Me.Label_input_L.Size = New System.Drawing.Size(97, 35)
+        Me.Label_input_L.TabIndex = 4
+        Me.Label_input_L.Text = "輸入L :"
+        '
+        'Picture_machine
+        '
+        Me.Picture_machine.BackColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.Picture_machine.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Picture_machine.Location = New System.Drawing.Point(11, 99)
+        Me.Picture_machine.Margin = New System.Windows.Forms.Padding(4)
+        Me.Picture_machine.Name = "Picture_machine"
+        Me.Picture_machine.Size = New System.Drawing.Size(485, 274)
+        Me.Picture_machine.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.Picture_machine.TabIndex = 6
+        Me.Picture_machine.TabStop = False
+        '
+        'Label_machine_pic
+        '
+        Me.Label_machine_pic.AutoSize = True
+        Me.Label_machine_pic.Font = New System.Drawing.Font("微軟正黑體", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label_machine_pic.Location = New System.Drawing.Point(8, 65)
+        Me.Label_machine_pic.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label_machine_pic.Name = "Label_machine_pic"
+        Me.Label_machine_pic.Size = New System.Drawing.Size(92, 25)
+        Me.Label_machine_pic.TabIndex = 5
+        Me.Label_machine_pic.Text = "機具圖示"
+        '
+        'ComboBox_machine_list
+        '
+        Me.ComboBox_machine_list.FormattingEnabled = True
+        Me.ComboBox_machine_list.Items.AddRange(New Object() {"A1+A2", "開挖機(Excavator)", "A1+A3", "推土機(Crawler and wheel tractor)", "鐵輪壓路機(Road roller)", "膠輪壓路機(Wheel roller)", "振動式壓路機(Vibrating roller) ", "A1+A2+A3", "裝料機(Crawler and wheel loader)", "裝料開挖機", "A4", "履帶起重機(Crawler crane)", "卡車起重機(Truck crane)", "輪形起重機(Wheel crane)", "振動式樁錘(Vibrating hammer)", "油壓式打樁機(Hydraulic pile driver)", "拔樁機", "油壓式拔樁機", "土壤取樣器(地鑽) (Earth auger)", "全套管鑽掘機", "鑽土機(Earth drill)", "鑽岩機(Rock breaker)", "混凝土泵車(Concrete pump)", "混凝土破碎機(Concrete breaker)", "瀝青混凝土舖築機(Asphalt finisher)", "混凝土割切機(Concrete cutter)", "發電機(Generator)", "空氣壓縮機(Compressor) "})
+        Me.ComboBox_machine_list.Location = New System.Drawing.Point(11, 40)
+        Me.ComboBox_machine_list.Margin = New System.Windows.Forms.Padding(4)
+        Me.ComboBox_machine_list.Name = "ComboBox_machine_list"
+        Me.ComboBox_machine_list.Size = New System.Drawing.Size(381, 23)
+        Me.ComboBox_machine_list.TabIndex = 4
+        Me.ComboBox_machine_list.Text = "請選擇"
+        '
+        'Label_machine_choose
+        '
+        Me.Label_machine_choose.AutoSize = True
+        Me.Label_machine_choose.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label_machine_choose.Location = New System.Drawing.Point(7, 0)
+        Me.Label_machine_choose.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label_machine_choose.Name = "Label_machine_choose"
+        Me.Label_machine_choose.Size = New System.Drawing.Size(123, 35)
+        Me.Label_machine_choose.TabIndex = 2
+        Me.Label_machine_choose.Text = "機具選擇"
         '
         'TabPage2
         '
@@ -1825,7 +2181,7 @@ Partial Class Program
         '
         'TextBox_Lo_A3_av2
         '
-        Me.TextBox_Lo_A3_av2.Location = New System.Drawing.Point(80, 135)
+        Me.TextBox_Lo_A3_av2.Location = New System.Drawing.Point(80, 141)
         Me.TextBox_Lo_A3_av2.Name = "TextBox_Lo_A3_av2"
         Me.TextBox_Lo_A3_av2.Size = New System.Drawing.Size(42, 25)
         Me.TextBox_Lo_A3_av2.TabIndex = 95
@@ -1841,7 +2197,7 @@ Partial Class Program
         '
         'TextBox_Lo_A3_av1
         '
-        Me.TextBox_Lo_A3_av1.Location = New System.Drawing.Point(81, 74)
+        Me.TextBox_Lo_A3_av1.Location = New System.Drawing.Point(80, 51)
         Me.TextBox_Lo_A3_av1.Name = "TextBox_Lo_A3_av1"
         Me.TextBox_Lo_A3_av1.Size = New System.Drawing.Size(42, 25)
         Me.TextBox_Lo_A3_av1.TabIndex = 94
@@ -1957,7 +2313,7 @@ Partial Class Program
         'Panel_LoA3_Fst_bkd
         '
         Me.Panel_LoA3_Fst_bkd.Controls.Add(Me.LinkLabel_LoA3_Fst_bkd)
-        Me.Panel_LoA3_Fst_bkd.Location = New System.Drawing.Point(13, 96)
+        Me.Panel_LoA3_Fst_bkd.Location = New System.Drawing.Point(14, 73)
         Me.Panel_LoA3_Fst_bkd.Name = "Panel_LoA3_Fst_bkd"
         Me.Panel_LoA3_Fst_bkd.Size = New System.Drawing.Size(64, 26)
         Me.Panel_LoA3_Fst_bkd.TabIndex = 84
@@ -1975,7 +2331,7 @@ Partial Class Program
         'Panel_LoA3_Fst_fwd
         '
         Me.Panel_LoA3_Fst_fwd.Controls.Add(Me.LinkLabel_LoA3_Fst_fwd)
-        Me.Panel_LoA3_Fst_fwd.Location = New System.Drawing.Point(13, 69)
+        Me.Panel_LoA3_Fst_fwd.Location = New System.Drawing.Point(14, 46)
         Me.Panel_LoA3_Fst_fwd.Name = "Panel_LoA3_Fst_fwd"
         Me.Panel_LoA3_Fst_fwd.Size = New System.Drawing.Size(64, 26)
         Me.Panel_LoA3_Fst_fwd.TabIndex = 74
@@ -2297,32 +2653,32 @@ Partial Class Program
         '
         'Chart2
         '
-        ChartArea1.Name = "ChartArea1"
-        Me.Chart2.ChartAreas.Add(ChartArea1)
-        Legend1.Name = "Legend1"
-        Me.Chart2.Legends.Add(Legend1)
+        ChartArea3.Name = "ChartArea1"
+        Me.Chart2.ChartAreas.Add(ChartArea3)
+        Legend3.Name = "Legend1"
+        Me.Chart2.Legends.Add(Legend3)
         Me.Chart2.Location = New System.Drawing.Point(396, 103)
         Me.Chart2.Name = "Chart2"
-        Series1.ChartArea = "ChartArea1"
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Me.Chart2.Series.Add(Series1)
+        Series3.ChartArea = "ChartArea1"
+        Series3.Legend = "Legend1"
+        Series3.Name = "Series1"
+        Me.Chart2.Series.Add(Series3)
         Me.Chart2.Size = New System.Drawing.Size(642, 97)
         Me.Chart2.TabIndex = 83
         Me.Chart2.Text = "Chart2"
         '
         'Chart1
         '
-        ChartArea2.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea2)
-        Legend2.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend2)
+        ChartArea4.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea4)
+        Legend4.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend4)
         Me.Chart1.Location = New System.Drawing.Point(10, 3)
         Me.Chart1.Name = "Chart1"
-        Series2.ChartArea = "ChartArea1"
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series1"
-        Me.Chart1.Series.Add(Series2)
+        Series4.ChartArea = "ChartArea1"
+        Series4.Legend = "Legend1"
+        Series4.Name = "Series1"
+        Me.Chart1.Series.Add(Series4)
         Me.Chart1.Size = New System.Drawing.Size(1219, 97)
         Me.Chart1.TabIndex = 82
         Me.Chart1.Text = "Chart1"
@@ -2652,7 +3008,6 @@ Partial Class Program
         '
         'Step10
         '
-        Me.Step10.BackColor = System.Drawing.Color.White
         Me.Step10.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.Step10.Location = New System.Drawing.Point(1081, 626)
         Me.Step10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
@@ -2847,362 +3202,6 @@ Partial Class Program
         Me.startButton.Text = "Start"
         Me.startButton.UseVisualStyleBackColor = True
         '
-        'TabPage1
-        '
-        Me.TabPage1.BackColor = System.Drawing.Color.DarkGray
-        Me.TabPage1.Controls.Add(Me.p6Label)
-        Me.TabPage1.Controls.Add(Me.p5Label)
-        Me.TabPage1.Controls.Add(Me.p4Label)
-        Me.TabPage1.Controls.Add(Me.p3Label)
-        Me.TabPage1.Controls.Add(Me.p2Label)
-        Me.TabPage1.Controls.Add(Me.p1Label)
-        Me.TabPage1.Controls.Add(Me.GroupBox_Plot)
-        Me.TabPage1.Controls.Add(Me.p9Label)
-        Me.TabPage1.Controls.Add(Me.p8Label)
-        Me.TabPage1.Controls.Add(Me.p7Label)
-        Me.TabPage1.Controls.Add(Me.p10Label)
-        Me.TabPage1.Controls.Add(Me.GroupBox_A4)
-        Me.TabPage1.Controls.Add(Me.GroupBox_A1_A2_A3)
-        Me.TabPage1.Controls.Add(Me.Picture_machine)
-        Me.TabPage1.Controls.Add(Me.Label_machine_pic)
-        Me.TabPage1.Controls.Add(Me.ComboBox_machine_list)
-        Me.TabPage1.Controls.Add(Me.Label_machine_choose)
-        Me.TabPage1.Font = New System.Drawing.Font("新細明體", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.TabPage1.Location = New System.Drawing.Point(4, 25)
-        Me.TabPage1.Margin = New System.Windows.Forms.Padding(0)
-        Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Size = New System.Drawing.Size(1413, 778)
-        Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "機具選擇"
-        '
-        'p6Label
-        '
-        Me.p6Label.AutoSize = True
-        Me.p6Label.Location = New System.Drawing.Point(641, 450)
-        Me.p6Label.Name = "p6Label"
-        Me.p6Label.Size = New System.Drawing.Size(0, 15)
-        Me.p6Label.TabIndex = 45
-        '
-        'p5Label
-        '
-        Me.p5Label.AutoSize = True
-        Me.p5Label.Location = New System.Drawing.Point(631, 440)
-        Me.p5Label.Name = "p5Label"
-        Me.p5Label.Size = New System.Drawing.Size(0, 15)
-        Me.p5Label.TabIndex = 44
-        '
-        'p4Label
-        '
-        Me.p4Label.AutoSize = True
-        Me.p4Label.Location = New System.Drawing.Point(620, 430)
-        Me.p4Label.Name = "p4Label"
-        Me.p4Label.Size = New System.Drawing.Size(0, 15)
-        Me.p4Label.TabIndex = 43
-        '
-        'p3Label
-        '
-        Me.p3Label.AutoSize = True
-        Me.p3Label.Location = New System.Drawing.Point(609, 420)
-        Me.p3Label.Name = "p3Label"
-        Me.p3Label.Size = New System.Drawing.Size(0, 15)
-        Me.p3Label.TabIndex = 42
-        '
-        'p2Label
-        '
-        Me.p2Label.AutoSize = True
-        Me.p2Label.Location = New System.Drawing.Point(599, 410)
-        Me.p2Label.Name = "p2Label"
-        Me.p2Label.Size = New System.Drawing.Size(0, 15)
-        Me.p2Label.TabIndex = 41
-        '
-        'p1Label
-        '
-        Me.p1Label.AutoSize = True
-        Me.p1Label.Location = New System.Drawing.Point(588, 400)
-        Me.p1Label.Name = "p1Label"
-        Me.p1Label.Size = New System.Drawing.Size(0, 15)
-        Me.p1Label.TabIndex = 40
-        '
-        'GroupBox_Plot
-        '
-        Me.GroupBox_Plot.BackColor = System.Drawing.Color.DarkGray
-        Me.GroupBox_Plot.Controls.Add(Me.yLabel)
-        Me.GroupBox_Plot.Controls.Add(Me.xLabel)
-        Me.GroupBox_Plot.Location = New System.Drawing.Point(175, 390)
-        Me.GroupBox_Plot.Margin = New System.Windows.Forms.Padding(4)
-        Me.GroupBox_Plot.Name = "GroupBox_Plot"
-        Me.GroupBox_Plot.Padding = New System.Windows.Forms.Padding(4)
-        Me.GroupBox_Plot.Size = New System.Drawing.Size(524, 416)
-        Me.GroupBox_Plot.TabIndex = 39
-        Me.GroupBox_Plot.TabStop = False
-        '
-        'yLabel
-        '
-        Me.yLabel.AutoSize = True
-        Me.yLabel.Location = New System.Drawing.Point(200, 22)
-        Me.yLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.yLabel.Name = "yLabel"
-        Me.yLabel.Size = New System.Drawing.Size(18, 15)
-        Me.yLabel.TabIndex = 1
-        Me.yLabel.Text = "Y"
-        '
-        'xLabel
-        '
-        Me.xLabel.AutoSize = True
-        Me.xLabel.Location = New System.Drawing.Point(392, 174)
-        Me.xLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.xLabel.Name = "xLabel"
-        Me.xLabel.Size = New System.Drawing.Size(18, 15)
-        Me.xLabel.TabIndex = 0
-        Me.xLabel.Text = "X"
-        '
-        'p9Label
-        '
-        Me.p9Label.AutoSize = True
-        Me.p9Label.Location = New System.Drawing.Point(577, 390)
-        Me.p9Label.Name = "p9Label"
-        Me.p9Label.Size = New System.Drawing.Size(0, 15)
-        Me.p9Label.TabIndex = 38
-        '
-        'p8Label
-        '
-        Me.p8Label.AutoSize = True
-        Me.p8Label.Location = New System.Drawing.Point(567, 380)
-        Me.p8Label.Name = "p8Label"
-        Me.p8Label.Size = New System.Drawing.Size(0, 15)
-        Me.p8Label.TabIndex = 37
-        '
-        'p7Label
-        '
-        Me.p7Label.AutoSize = True
-        Me.p7Label.Location = New System.Drawing.Point(556, 370)
-        Me.p7Label.Name = "p7Label"
-        Me.p7Label.Size = New System.Drawing.Size(0, 15)
-        Me.p7Label.TabIndex = 36
-        '
-        'p10Label
-        '
-        Me.p10Label.AutoSize = True
-        Me.p10Label.Location = New System.Drawing.Point(545, 360)
-        Me.p10Label.Name = "p10Label"
-        Me.p10Label.Size = New System.Drawing.Size(0, 15)
-        Me.p10Label.TabIndex = 35
-        '
-        'GroupBox_A4
-        '
-        Me.GroupBox_A4.Controls.Add(Me.Button_L1_L2_L3_check)
-        Me.GroupBox_A4.Controls.Add(Me.TextBox_r2)
-        Me.GroupBox_A4.Controls.Add(Me.TextBox_L3)
-        Me.GroupBox_A4.Controls.Add(Me.TextBox_L2)
-        Me.GroupBox_A4.Controls.Add(Me.TextBox_L1)
-        Me.GroupBox_A4.Controls.Add(Me.Label_r2)
-        Me.GroupBox_A4.Controls.Add(Me.Label_input_L2)
-        Me.GroupBox_A4.Controls.Add(Me.Label_input_L3)
-        Me.GroupBox_A4.Controls.Add(Me.Label_input_L1)
-        Me.GroupBox_A4.Location = New System.Drawing.Point(573, 165)
-        Me.GroupBox_A4.Margin = New System.Windows.Forms.Padding(4)
-        Me.GroupBox_A4.Name = "GroupBox_A4"
-        Me.GroupBox_A4.Padding = New System.Windows.Forms.Padding(4)
-        Me.GroupBox_A4.Size = New System.Drawing.Size(371, 211)
-        Me.GroupBox_A4.TabIndex = 19
-        Me.GroupBox_A4.TabStop = False
-        Me.GroupBox_A4.Text = "A4"
-        '
-        'Button_L1_L2_L3_check
-        '
-        Me.Button_L1_L2_L3_check.Location = New System.Drawing.Point(289, 92)
-        Me.Button_L1_L2_L3_check.Margin = New System.Windows.Forms.Padding(4)
-        Me.Button_L1_L2_L3_check.Name = "Button_L1_L2_L3_check"
-        Me.Button_L1_L2_L3_check.Size = New System.Drawing.Size(56, 26)
-        Me.Button_L1_L2_L3_check.TabIndex = 9
-        Me.Button_L1_L2_L3_check.Text = "確認"
-        Me.Button_L1_L2_L3_check.UseVisualStyleBackColor = True
-        '
-        'TextBox_r2
-        '
-        Me.TextBox_r2.Location = New System.Drawing.Point(137, 141)
-        Me.TextBox_r2.Margin = New System.Windows.Forms.Padding(4)
-        Me.TextBox_r2.Name = "TextBox_r2"
-        Me.TextBox_r2.Size = New System.Drawing.Size(131, 25)
-        Me.TextBox_r2.TabIndex = 17
-        '
-        'TextBox_L3
-        '
-        Me.TextBox_L3.Location = New System.Drawing.Point(137, 91)
-        Me.TextBox_L3.Margin = New System.Windows.Forms.Padding(4)
-        Me.TextBox_L3.Name = "TextBox_L3"
-        Me.TextBox_L3.Size = New System.Drawing.Size(131, 25)
-        Me.TextBox_L3.TabIndex = 16
-        '
-        'TextBox_L2
-        '
-        Me.TextBox_L2.Location = New System.Drawing.Point(137, 59)
-        Me.TextBox_L2.Margin = New System.Windows.Forms.Padding(4)
-        Me.TextBox_L2.Name = "TextBox_L2"
-        Me.TextBox_L2.Size = New System.Drawing.Size(131, 25)
-        Me.TextBox_L2.TabIndex = 15
-        '
-        'TextBox_L1
-        '
-        Me.TextBox_L1.Location = New System.Drawing.Point(137, 26)
-        Me.TextBox_L1.Margin = New System.Windows.Forms.Padding(4)
-        Me.TextBox_L1.Name = "TextBox_L1"
-        Me.TextBox_L1.Size = New System.Drawing.Size(131, 25)
-        Me.TextBox_L1.TabIndex = 14
-        '
-        'Label_r2
-        '
-        Me.Label_r2.AutoSize = True
-        Me.Label_r2.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_r2.Location = New System.Drawing.Point(73, 136)
-        Me.Label_r2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label_r2.Name = "Label_r2"
-        Me.Label_r2.Size = New System.Drawing.Size(40, 35)
-        Me.Label_r2.TabIndex = 13
-        Me.Label_r2.Text = "r :"
-        '
-        'Label_input_L2
-        '
-        Me.Label_input_L2.AutoSize = True
-        Me.Label_input_L2.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_input_L2.Location = New System.Drawing.Point(8, 54)
-        Me.Label_input_L2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label_input_L2.Name = "Label_input_L2"
-        Me.Label_input_L2.Size = New System.Drawing.Size(113, 35)
-        Me.Label_input_L2.TabIndex = 12
-        Me.Label_input_L2.Text = "輸入L2 :"
-        '
-        'Label_input_L3
-        '
-        Me.Label_input_L3.AutoSize = True
-        Me.Label_input_L3.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_input_L3.Location = New System.Drawing.Point(8, 86)
-        Me.Label_input_L3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label_input_L3.Name = "Label_input_L3"
-        Me.Label_input_L3.Size = New System.Drawing.Size(113, 35)
-        Me.Label_input_L3.TabIndex = 11
-        Me.Label_input_L3.Text = "輸入L3 :"
-        '
-        'Label_input_L1
-        '
-        Me.Label_input_L1.AutoSize = True
-        Me.Label_input_L1.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_input_L1.Location = New System.Drawing.Point(8, 21)
-        Me.Label_input_L1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label_input_L1.Name = "Label_input_L1"
-        Me.Label_input_L1.Size = New System.Drawing.Size(113, 35)
-        Me.Label_input_L1.TabIndex = 10
-        Me.Label_input_L1.Text = "輸入L1 :"
-        '
-        'GroupBox_A1_A2_A3
-        '
-        Me.GroupBox_A1_A2_A3.Controls.Add(Me.Button_L_check)
-        Me.GroupBox_A1_A2_A3.Controls.Add(Me.TextBox_r1)
-        Me.GroupBox_A1_A2_A3.Controls.Add(Me.TextBox_L)
-        Me.GroupBox_A1_A2_A3.Controls.Add(Me.Label_r1)
-        Me.GroupBox_A1_A2_A3.Controls.Add(Me.Label_input_L)
-        Me.GroupBox_A1_A2_A3.Location = New System.Drawing.Point(573, 40)
-        Me.GroupBox_A1_A2_A3.Margin = New System.Windows.Forms.Padding(4)
-        Me.GroupBox_A1_A2_A3.Name = "GroupBox_A1_A2_A3"
-        Me.GroupBox_A1_A2_A3.Padding = New System.Windows.Forms.Padding(4)
-        Me.GroupBox_A1_A2_A3.Size = New System.Drawing.Size(371, 118)
-        Me.GroupBox_A1_A2_A3.TabIndex = 10
-        Me.GroupBox_A1_A2_A3.TabStop = False
-        Me.GroupBox_A1_A2_A3.Text = "A1 or A2 or A3"
-        '
-        'Button_L_check
-        '
-        Me.Button_L_check.Location = New System.Drawing.Point(292, 34)
-        Me.Button_L_check.Margin = New System.Windows.Forms.Padding(4)
-        Me.Button_L_check.Name = "Button_L_check"
-        Me.Button_L_check.Size = New System.Drawing.Size(56, 26)
-        Me.Button_L_check.TabIndex = 8
-        Me.Button_L_check.Text = "確認"
-        Me.Button_L_check.UseVisualStyleBackColor = True
-        '
-        'TextBox_r1
-        '
-        Me.TextBox_r1.Location = New System.Drawing.Point(140, 69)
-        Me.TextBox_r1.Margin = New System.Windows.Forms.Padding(4)
-        Me.TextBox_r1.Name = "TextBox_r1"
-        Me.TextBox_r1.Size = New System.Drawing.Size(131, 25)
-        Me.TextBox_r1.TabIndex = 7
-        '
-        'TextBox_L
-        '
-        Me.TextBox_L.Location = New System.Drawing.Point(140, 34)
-        Me.TextBox_L.Margin = New System.Windows.Forms.Padding(4)
-        Me.TextBox_L.Name = "TextBox_L"
-        Me.TextBox_L.Size = New System.Drawing.Size(131, 25)
-        Me.TextBox_L.TabIndex = 6
-        '
-        'Label_r1
-        '
-        Me.Label_r1.AutoSize = True
-        Me.Label_r1.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_r1.Location = New System.Drawing.Point(76, 64)
-        Me.Label_r1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label_r1.Name = "Label_r1"
-        Me.Label_r1.Size = New System.Drawing.Size(40, 35)
-        Me.Label_r1.TabIndex = 5
-        Me.Label_r1.Text = "r :"
-        '
-        'Label_input_L
-        '
-        Me.Label_input_L.AutoSize = True
-        Me.Label_input_L.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_input_L.Location = New System.Drawing.Point(16, 29)
-        Me.Label_input_L.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label_input_L.Name = "Label_input_L"
-        Me.Label_input_L.Size = New System.Drawing.Size(97, 35)
-        Me.Label_input_L.TabIndex = 4
-        Me.Label_input_L.Text = "輸入L :"
-        '
-        'Picture_machine
-        '
-        Me.Picture_machine.BackColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Picture_machine.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Picture_machine.Location = New System.Drawing.Point(11, 99)
-        Me.Picture_machine.Margin = New System.Windows.Forms.Padding(4)
-        Me.Picture_machine.Name = "Picture_machine"
-        Me.Picture_machine.Size = New System.Drawing.Size(485, 274)
-        Me.Picture_machine.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.Picture_machine.TabIndex = 6
-        Me.Picture_machine.TabStop = False
-        '
-        'Label_machine_pic
-        '
-        Me.Label_machine_pic.AutoSize = True
-        Me.Label_machine_pic.Font = New System.Drawing.Font("微軟正黑體", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_machine_pic.Location = New System.Drawing.Point(8, 65)
-        Me.Label_machine_pic.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label_machine_pic.Name = "Label_machine_pic"
-        Me.Label_machine_pic.Size = New System.Drawing.Size(92, 25)
-        Me.Label_machine_pic.TabIndex = 5
-        Me.Label_machine_pic.Text = "機具圖示"
-        '
-        'ComboBox_machine_list
-        '
-        Me.ComboBox_machine_list.FormattingEnabled = True
-        Me.ComboBox_machine_list.Items.AddRange(New Object() {"A1+A2", "開挖機(Excavator)", "A1+A3", "推土機(Crawler and wheel tractor)", "鐵輪壓路機(Road roller)", "膠輪壓路機(Wheel roller)", "振動式壓路機(Vibrating roller) ", "A1+A2+A3", "裝料機(Crawler and wheel loader)", "裝料開挖機", "A4", "履帶起重機(Crawler crane)", "卡車起重機(Truck crane)", "輪形起重機(Wheel crane)", "振動式樁錘(Vibrating hammer)", "油壓式打樁機(Hydraulic pile driver)", "拔樁機", "油壓式拔樁機", "土壤取樣器(地鑽) (Earth auger)", "全套管鑽掘機", "鑽土機(Earth drill)", "鑽岩機(Rock breaker)", "混凝土泵車(Concrete pump)", "混凝土破碎機(Concrete breaker)", "瀝青混凝土舖築機(Asphalt finisher)", "混凝土割切機(Concrete cutter)", "發電機(Generator)", "空氣壓縮機(Compressor) "})
-        Me.ComboBox_machine_list.Location = New System.Drawing.Point(11, 40)
-        Me.ComboBox_machine_list.Margin = New System.Windows.Forms.Padding(4)
-        Me.ComboBox_machine_list.Name = "ComboBox_machine_list"
-        Me.ComboBox_machine_list.Size = New System.Drawing.Size(381, 23)
-        Me.ComboBox_machine_list.TabIndex = 4
-        Me.ComboBox_machine_list.Text = "請選擇"
-        '
-        'Label_machine_choose
-        '
-        Me.Label_machine_choose.AutoSize = True
-        Me.Label_machine_choose.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_machine_choose.Location = New System.Drawing.Point(7, 0)
-        Me.Label_machine_choose.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label_machine_choose.Name = "Label_machine_choose"
-        Me.Label_machine_choose.Size = New System.Drawing.Size(123, 35)
-        Me.Label_machine_choose.TabIndex = 2
-        Me.Label_machine_choose.Text = "機具選擇"
-        '
         'Timer1
         '
         Me.Timer1.Interval = 1000
@@ -3218,6 +3217,15 @@ Partial Class Program
         Me.Name = "Program"
         Me.Text = "Program"
         Me.TabControl1.ResumeLayout(False)
+        Me.TabPage1.ResumeLayout(False)
+        Me.TabPage1.PerformLayout()
+        Me.GroupBox_Plot.ResumeLayout(False)
+        Me.GroupBox_Plot.PerformLayout()
+        Me.GroupBox_A4.ResumeLayout(False)
+        Me.GroupBox_A4.PerformLayout()
+        Me.GroupBox_A1_A2_A3.ResumeLayout(False)
+        Me.GroupBox_A1_A2_A3.PerformLayout()
+        CType(Me.Picture_machine, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
         Me.Panel_PostCal.ResumeLayout(False)
@@ -3406,15 +3414,6 @@ Partial Class Program
         Me.Panel_ExA1_Fst_2nd.PerformLayout()
         Me.Panel_ExA1_Fst_1st.ResumeLayout(False)
         Me.Panel_ExA1_Fst_1st.PerformLayout()
-        Me.TabPage1.ResumeLayout(False)
-        Me.TabPage1.PerformLayout()
-        Me.GroupBox_Plot.ResumeLayout(False)
-        Me.GroupBox_Plot.PerformLayout()
-        Me.GroupBox_A4.ResumeLayout(False)
-        Me.GroupBox_A4.PerformLayout()
-        Me.GroupBox_A1_A2_A3.ResumeLayout(False)
-        Me.GroupBox_A1_A2_A3.PerformLayout()
-        CType(Me.Picture_machine, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

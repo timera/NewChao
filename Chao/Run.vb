@@ -4,7 +4,7 @@
     Dim Data As List(Of Double)
     Public NextUnit As Run_Unit
     Public PrevUnit As Run_Unit
-    Dim Time As Integer
+    Public Time As Integer
     Public Steps As Steps
     Public CurStep As Integer
     Public StartStep As Integer
@@ -16,7 +16,7 @@
         Panel = p
         NextUnit = nu
         PrevUnit = pu
-        Time = sec
+        Time = 1
         Data = New List(Of Double)
         CurStep = cur
         StartStep = start

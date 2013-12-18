@@ -70,13 +70,15 @@ Public Class Program
     'trial represents 1st or 2nd or 3rd
     Dim trial As Integer
 
-    Dim NoisesArray(5) As Label
+    Dim NoisesArray(6) As Label
 
     'temporary constant
     Const seconds As Integer = 3
     Const graphW As Integer = 650
     Const graphH As Integer = 200
     Dim ASize As Size = New Size(128, 405)
+    'used for first time clicking start button
+    Dim NewGraph As Boolean
 
     Public Sub New()
 
@@ -505,7 +507,6 @@ Public Class Program
         PanelExcavatorA2.Controls.Add(TextBox_Ex_A2_av4)
 
 
-
         'Create an object for each step
         Dim tempRun As Run_Unit
 
@@ -531,6 +532,10 @@ Public Class Program
         Set_Panel(Panel_PostCal, LinkLabel_postCal)
         tempRun.NextUnit = New Run_Unit(LinkLabel_postCal, Panel_PostCal, Nothing, tempRun, 30, "PostCal", 0, 0, 0)
         tempRun = tempRun.NextUnit
+
+        MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, 30, 97)
+        MainBarGraph = New BarGraph(New Point(396, 103), New Size(642, 97), TabPage2, CGraph.Modes.A1A2A3)
+
     End Sub
 
     Function Load_Excavator_Helper(ByRef run As Run_Unit)
@@ -1473,14 +1478,47 @@ Public Class Program
         End If
     End Sub
 
+    Private Function GetInstantData()
+        Dim num As Integer
+        If Not Machine = Machines.Others Then
+            num = 6
+        Else
+            num = 4
+        End If
+        Dim r = New Random()
+        Dim result(num - 1) As Double
+        For i = 0 To num - 1
+            result(i) = r.Next(90, 99)
+        Next
+        Return result
+    End Function
 
+    Private Sub SetScreenValuesAndGraphs(ByVal vals() As Double)
+        Dim num As Integer
+        If Not Machine = Machines.Others Then
+            num = 6
+        Else
+            num = 4
+        End If
+        'Set Texts
+        For i = 0 To num - 1
+            NoisesArray(i).Text = vals(i)
+        Next
+        'Set graphs
+        MainBarGraph.Update(vals)
+        MainLineGraphs.Update(vals)
+    End Sub
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
 
         If timeLeft > 0 Then 'counting
             timeLeft = timeLeft - 1
             timeLabel.Text = timeLeft & " s"
 
+            'send values to display as text and graphs
+            SetScreenValuesAndGraphs(GetInstantData())
+
         ElseIf timeLeft = 0 Then 'time's up
+            SetScreenValuesAndGraphs(GetInstantData())
             Timer1.Stop()
             timeLabel.Text = "Time's up!"
             'System.Threading.Thread.Sleep(1000)
@@ -1492,6 +1530,8 @@ Public Class Program
             If CurRun.Name = "PreCal" Then
                 Set_Panel_BackColor()
                 CurRun = CurRun.NextUnit
+                'MainLineGraphs.Dispose()
+                'MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, 30, 97)
             Else
                 If CurRun.CurStep = 0 Then
                     If CurRun.Name = "Background" Then
@@ -1511,7 +1551,6 @@ Public Class Program
                         Next
                     ElseIf CurRun.Name = "PostCal" Then
                         CurRun.Set_BackColor(Color.Green)
-                        MessageBox.Show("此機具所有測量步驟已結束")
                     Else
                         Set_Panel_BackColor()
                         CurRun = CurRun.NextUnit
@@ -1537,6 +1576,8 @@ Public Class Program
                             End If
                         Next
                         array_step(0).BackColor = Color.Yellow
+                        Accept_Button.Enabled = True
+                        startButton.Enabled = False
                     Else
                         Set_Step_BackColor()
                         CurRun.Steps = CurRun.Steps.NextStep
@@ -1569,6 +1610,9 @@ Public Class Program
     Private Sub AcceptButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Accept_Button.Click
         If MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             MessageBox.Show("此機具所有測量步驟已結束")
+            'MainLineGraphs = New LineGraphPanel(New Point(300, 100), New Size(graphW, graphH), TabPage2, mode, eStep, {TimeofStep(0, cStep - 1)}, graphH)
+            'MainBarGraph = New BarGraph(New Point(300, 300), New Size(graphW, graphH), TabPage2, mode)
+            NewGraph = True
             Accept_Button.Enabled = False
             startButton.Enabled = True
         End If

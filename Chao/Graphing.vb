@@ -90,7 +90,7 @@ Public Class LineGraph
         Panel.Controls.Add(SecTextBox)
         SecTextBox.Font = New Font(SecTextBox.Font.FontFamily, SecTextFontSize)
         SecTextBox.Size = SecTextBoxSize
-        SecTextBox.Location = New Point(0, size.Height / 2)
+        SecTextBox.Location = New Point(0, size.Height / 4)
         If time > 0 Then
             SecTextBox.Text = time.ToString()
             SecTextBox.Enabled = False
@@ -103,7 +103,7 @@ Public Class LineGraph
         Panel.Controls.Add(SetTimeButton)
         SetTimeButton.Font = New Font(SetTimeButton.Font.FontFamily, SecTextFontSize)
         SetTimeButton.Size = SetTimeButtonSize
-        SetTimeButton.Location = New Point(0, size.Height / 2 + SecTextBox.Size.Height)
+        SetTimeButton.Location = New Point(0, size.Height / 4 + SecTextBox.Size.Height)
         SetTimeButton.Text = "Set"
 
         'Set Chart zoomability
@@ -234,9 +234,9 @@ Public Class LineGraphPanel
     Public CurrentLineGraph As Integer
     Private cMode As CGraph.Modes
     Private cNumSteps As Integer
-    Private lTime() As Integer
+    Private lTime As Integer
 
-    Public Sub New(ByVal loc As Point, ByVal size As Size, ByVal parent As Control, ByVal mode As CGraph.Modes, ByVal numSteps As Integer, ByVal time() As Integer, ByVal offset As Integer)
+    Public Sub New(ByVal loc As Point, ByVal size As Size, ByVal parent As Control, ByVal mode As CGraph.Modes, ByVal numSteps As Integer, ByVal time As Integer, ByVal offset As Integer)
         LineGraphPanel = New Panel()
         parent.Controls.Add(LineGraphPanel)
         LineGraphPanel.Size = size
@@ -249,7 +249,7 @@ Public Class LineGraphPanel
         Dim temp(numSteps - 1) As LineGraph
         CurrentLineGraph = 0
         For i = 0 To numSteps - 1
-            temp(i) = New LineGraph(New Point(0, i * offset), New Size(800, 200), LineGraphPanel, mode, time(i))
+            temp(i) = New LineGraph(New Point(0, i * offset), New Size(1219, 97), LineGraphPanel, mode, time)
         Next
         LineGraphs = temp
     End Sub

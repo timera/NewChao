@@ -16,7 +16,7 @@
         Panel = p
         NextUnit = nu
         PrevUnit = pu
-        Time = 30
+        Time = sec
         Data = New List(Of Double)
         CurStep = cur
         StartStep = start

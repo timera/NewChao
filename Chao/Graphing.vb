@@ -110,16 +110,17 @@ Public Class LineGraph
         chart.ChartAreas(0).CursorY.IsUserSelectionEnabled = True
         chart.ChartAreas(0).AxisY.IntervalAutoMode = IntervalAutoMode.FixedCount
         chart.ChartAreas(0).AxisY.IsLabelAutoFit = False
-
+        'chart.ChartAreas(0).AxisX.Interval = Int(time / 15) + 1
+        chart.ChartAreas(0).AxisX.IsMarginVisible = True
         'set up series
-        For i As Integer = 2 To NumOfMics * 2 Step 2
-            Dim s As Series = New Series(i.ToString())
-            series.Add(s)
-            s.ChartType = SeriesChartType.Line
-            s.IsVisibleInLegend = False
-            s.IsValueShownAsLabel = False
-            chart.Series.Add(s)
-        Next
+            For i As Integer = 2 To NumOfMics * 2 Step 2
+                Dim s As Series = New Series(i.ToString())
+                series.Add(s)
+                s.ChartType = SeriesChartType.Line
+                s.IsVisibleInLegend = False
+                s.IsValueShownAsLabel = False
+                chart.Series.Add(s)
+            Next
 
     End Sub
 

@@ -23,12 +23,12 @@ Partial Class Program
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea9 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend9 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series9 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea10 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend10 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series10 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.p6Label = New System.Windows.Forms.Label()
@@ -1566,7 +1566,7 @@ Partial Class Program
         Me.Noise_Avg.Location = New System.Drawing.Point(970, 203)
         Me.Noise_Avg.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Noise_Avg.Name = "Noise_Avg"
-        Me.Noise_Avg.Size = New System.Drawing.Size(57, 57)
+        Me.Noise_Avg.Size = New System.Drawing.Size(112, 57)
         Me.Noise_Avg.TabIndex = 99
         Me.Noise_Avg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -2653,16 +2653,16 @@ Partial Class Program
         '
         'Chart2
         '
-        ChartArea1.Name = "ChartArea1"
-        Me.Chart2.ChartAreas.Add(ChartArea1)
-        Legend1.Name = "Legend1"
-        Me.Chart2.Legends.Add(Legend1)
+        ChartArea9.Name = "ChartArea1"
+        Me.Chart2.ChartAreas.Add(ChartArea9)
+        Legend9.Name = "Legend1"
+        Me.Chart2.Legends.Add(Legend9)
         Me.Chart2.Location = New System.Drawing.Point(396, 103)
         Me.Chart2.Name = "Chart2"
-        Series1.ChartArea = "ChartArea1"
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Me.Chart2.Series.Add(Series1)
+        Series9.ChartArea = "ChartArea1"
+        Series9.Legend = "Legend1"
+        Series9.Name = "Series1"
+        Me.Chart2.Series.Add(Series9)
         Me.Chart2.Size = New System.Drawing.Size(642, 97)
         Me.Chart2.TabIndex = 83
         Me.Chart2.Text = "Chart2"
@@ -2670,16 +2670,16 @@ Partial Class Program
         '
         'Chart1
         '
-        ChartArea2.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea2)
-        Legend2.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend2)
+        ChartArea10.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea10)
+        Legend10.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend10)
         Me.Chart1.Location = New System.Drawing.Point(10, 3)
         Me.Chart1.Name = "Chart1"
-        Series2.ChartArea = "ChartArea1"
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series1"
-        Me.Chart1.Series.Add(Series2)
+        Series10.ChartArea = "ChartArea1"
+        Series10.Legend = "Legend1"
+        Series10.Name = "Series1"
+        Me.Chart1.Series.Add(Series10)
         Me.Chart1.Size = New System.Drawing.Size(1219, 97)
         Me.Chart1.TabIndex = 82
         Me.Chart1.Text = "Chart1"
@@ -3034,7 +3034,7 @@ Partial Class Program
         Me.Noise6.Location = New System.Drawing.Point(886, 203)
         Me.Noise6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Noise6.Name = "Noise6"
-        Me.Noise6.Size = New System.Drawing.Size(57, 57)
+        Me.Noise6.Size = New System.Drawing.Size(82, 57)
         Me.Noise6.TabIndex = 50
         Me.Noise6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -3045,7 +3045,7 @@ Partial Class Program
         Me.Noise5.Location = New System.Drawing.Point(789, 203)
         Me.Noise5.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Noise5.Name = "Noise5"
-        Me.Noise5.Size = New System.Drawing.Size(57, 57)
+        Me.Noise5.Size = New System.Drawing.Size(82, 57)
         Me.Noise5.TabIndex = 49
         Me.Noise5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -3056,7 +3056,7 @@ Partial Class Program
         Me.Noise4.Location = New System.Drawing.Point(691, 203)
         Me.Noise4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Noise4.Name = "Noise4"
-        Me.Noise4.Size = New System.Drawing.Size(57, 57)
+        Me.Noise4.Size = New System.Drawing.Size(82, 57)
         Me.Noise4.TabIndex = 48
         Me.Noise4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -3067,7 +3067,7 @@ Partial Class Program
         Me.Noise3.Location = New System.Drawing.Point(594, 203)
         Me.Noise3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Noise3.Name = "Noise3"
-        Me.Noise3.Size = New System.Drawing.Size(57, 57)
+        Me.Noise3.Size = New System.Drawing.Size(82, 57)
         Me.Noise3.TabIndex = 47
         Me.Noise3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -3078,7 +3078,7 @@ Partial Class Program
         Me.Noise2.Location = New System.Drawing.Point(497, 203)
         Me.Noise2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Noise2.Name = "Noise2"
-        Me.Noise2.Size = New System.Drawing.Size(57, 57)
+        Me.Noise2.Size = New System.Drawing.Size(82, 57)
         Me.Noise2.TabIndex = 46
         Me.Noise2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -3089,7 +3089,7 @@ Partial Class Program
         Me.Noise1.Location = New System.Drawing.Point(399, 203)
         Me.Noise1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Noise1.Name = "Noise1"
-        Me.Noise1.Size = New System.Drawing.Size(57, 57)
+        Me.Noise1.Size = New System.Drawing.Size(82, 57)
         Me.Noise1.TabIndex = 45
         Me.Noise1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '

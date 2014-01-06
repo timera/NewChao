@@ -178,6 +178,8 @@ Public Class Program
         Panel_Bkg.Visible = False
         Panel_RSS.Visible = False
         Panel_PostCal.Visible = False
+        Panel_PreCal_Sub.Visible = False
+        Panel_PostCal_Sub.Visible = False
         PanelA4.Visible = False
         PanelExcavatorA1.Visible = False
         PanelExcavatorA2.Visible = False
@@ -277,78 +279,97 @@ Public Class Program
             Picture_machine.Image = My.Resources.Resource1.小型開挖機_compact_excavator_
             Machine = Machines.Excavator
             Load_Excavator()
+            MachChosen = True
         ElseIf choice = "推土機(Crawler and wheel tractor)" Then  'A1+A3
             Picture_machine.Image = My.Resources.Resource1.履帶式推土機_crawler_dozer_
             Machine = Machines.Tractor
             Load_Tractor()
+            MachChosen = True
         ElseIf choice = "鐵輪壓路機(Road roller)" Then
             Picture_machine.Image = My.Resources.Resource1.壓路機_rollers_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "膠輪壓路機(Wheel roller)" Then
             Picture_machine.Image = My.Resources.Resource1.壓路機_rollers_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "振動式壓路機(Vibrating roller)" Then
             Picture_machine.Image = My.Resources.Resource1.壓路機_rollers_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "裝料機(Crawler and wheel loader)" Then
             Picture_machine.Image = My.Resources.Resource1.履帶式裝料機_crawler_loader_
             Machine = Machines.Loader
             Load_Loader()
+            MachChosen = True
         ElseIf choice = "裝料開挖機" Then
             Picture_machine.Image = My.Resources.Resource1.履帶式開挖裝料機_crawler_backhoe_loader_
             Machine = Machines.Loader_Excavator
             Load_Loader_Excavator()
+            MachChosen = True
         ElseIf choice = "履帶起重機(Crawler crane)" Then
             Picture_machine.Image = My.Resources.Resource1.膠輪式推土機_wheeled_dozer_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "卡車起重機(Truck crane)" Then
             Picture_machine.Image = My.Resources.Resource1.膠輪式開挖裝料機_wheeled_backhoe_loader_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "輪形起重機(Wheel crane)" Then
             Picture_machine.Image = My.Resources.Resource1.膠輪式開挖機_wheeled_excavator_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "振動式樁錘(Vibrating hammer)" Then
             Picture_machine.Image = My.Resources.Resource1.膠輪式裝料機_wheeled_loader_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "油壓式打樁機(Hydraulic pile driver)" Then
             Picture_machine.Image = My.Resources.Resource1.壓路機_rollers_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "拔樁機" Then
             Picture_machine.Image = My.Resources.Resource1.小型開挖機_compact_excavator_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "油壓式拔樁機" Then
             Picture_machine.Image = My.Resources.Resource1.小型膠輪式裝料機_compact_loader__wheeled_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "土壤取樣器(地鑽) (Earth auger)" Then
             Picture_machine.Image = My.Resources.Resource1.滑移裝料機_skid_steer_loader_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "全套管鑽掘機" Then
             Picture_machine.Image = My.Resources.Resource1.履帶式開挖裝料機_crawler_backhoe_loader_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "鑽土機(Earth drill)" Then
             Picture_machine.Image = My.Resources.Resource1.履帶式推土機_crawler_dozer_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "鑽岩機(Rock breaker)" Then
             Picture_machine.Image = My.Resources.Resource1.履帶式裝料機_crawler_loader_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "混凝土泵車(Concrete pump)" Then
             Picture_machine.Image = My.Resources.Resource1.履帶式開挖機_crawler_excavator_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "混凝土破碎機(Concrete breaker)" Then
             Picture_machine.Image = My.Resources.Resource1.膠輪式推土機_wheeled_dozer_
             Step1.Text = My.Resources.A4_Concrete_Breaker
@@ -358,20 +379,25 @@ Public Class Program
             Picture_machine.Image = My.Resources.Resource1.膠輪式開挖裝料機_wheeled_backhoe_loader_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "混凝土割切機(Concrete cutter)" Then
             Picture_machine.Image = My.Resources.Resource1.膠輪式開挖機_wheeled_excavator_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "發電機(Generator)" Then
             Picture_machine.Image = My.Resources.Resource1.膠輪式裝料機_wheeled_loader_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "空氣壓縮機(Compressor)" Then
             Picture_machine.Image = My.Resources.Resource1.壓路機_rollers_
             Machine = Machines.Others
             Load_Others(choice)
+            MachChosen = True
         Else
             Machine = Nothing
+            MachChosen = False
         End If
 
 
@@ -386,7 +412,7 @@ Public Class Program
             End If
 
             'if machine chose, then allow to go to the 2nd tab
-            MachChosen = True
+            'MachChosen = True
         End If
     End Sub
 
@@ -473,6 +499,7 @@ Public Class Program
         Panel_Bkg.Visible = True
         Panel_RSS.Visible = True
         Panel_PostCal.Visible = True
+
         PanelA4.Visible = False
         PanelLoaderA3.Visible = False
         PanelLoaderA1.Visible = False
@@ -483,6 +510,14 @@ Public Class Program
         PanelExcavatorA1.Location = New Point(220, 265)
         PanelExcavatorA2.Size = ASize
         PanelExcavatorA2.Location = New Point(284, 265)
+
+        'new add
+        Panel_PreCal_Sub.Visible = True
+        Panel_PostCal_Sub.Visible = True
+        Panel_PreCal_5th.Visible = True
+        Panel_PreCal_6th.Visible = True
+        Panel_PostCal_5th.Visible = True
+        Panel_PostCal_6th.Visible = True
 
         PanelExcavatorA1.Controls.Add(Panel_ExA1_Fst_1st)
         PanelExcavatorA1.Controls.Add(Panel_ExA1_Fst_2nd)
@@ -726,6 +761,14 @@ Public Class Program
         PanelLoaderA3.Size = ASize
         PanelLoaderA3.Location = New Point(341, 265)
 
+        'new add
+        Panel_PreCal_Sub.Visible = True
+        Panel_PostCal_Sub.Visible = True
+        Panel_PreCal_5th.Visible = True
+        Panel_PreCal_6th.Visible = True
+        Panel_PostCal_5th.Visible = True
+        Panel_PostCal_6th.Visible = True
+
         PanelLoaderA1.Controls.Add(Panel_LoA1_Fst_1st)
         PanelLoaderA1.Controls.Add(Panel_LoA1_Fst_2nd)
         PanelLoaderA1.Controls.Add(Panel_LoA1_Fst_3rd)
@@ -764,12 +807,28 @@ Public Class Program
         'Create an object for each step
         Dim tempRun As Run_Unit
         'Precal
-        Set_Panel(Panel_PreCal, LinkLabel_preCal)
-        tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 3, "PreCal", 0, 0, 0)
+        Set_Panel(Panel_PreCal_1st, LinkLabel_PreCal_1st)
+        tempRun = New Run_Unit(LinkLabel_PreCal_1st, Panel_PreCal_1st, Nothing, Nothing, 1, "PreCal", 0, 0, 0)
         HeadRun = tempRun
         CurRun = HeadRun
         timeLeft = CurRun.Time
         timeLabel.Text = timeLeft & " s"
+
+        Set_Panel(Panel_PreCal_2nd, LinkLabel_PreCal_2nd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_2nd, Panel_PreCal_2nd, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PreCal_3rd, LinkLabel_PreCal_3rd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_3rd, Panel_PreCal_3rd, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PreCal_4th, LinkLabel_PreCal_4th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_4th, Panel_PreCal_4th, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PreCal_5th, LinkLabel_PreCal_5th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_5th, Panel_PreCal_5th, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PreCal_6th, LinkLabel_PreCal_6th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_6th, Panel_PreCal_6th, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
         'Background
         Set_Panel(Panel_Bkg, LinkLabel_BG)
         tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, tempRun, 4, "Background", 0, 0, 0)
@@ -782,9 +841,25 @@ Public Class Program
         tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 5, "RSS", 0, 0, 0)
         tempRun = tempRun.NextUnit
         'PostCal
-        Set_Panel(Panel_PostCal, LinkLabel_postCal)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_postCal, Panel_PostCal, Nothing, tempRun, 6, "PostCal", 0, 0, 0)
+        Set_Panel(Panel_PostCal_1st, LinkLabel_PostCal_1st)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_1st, Panel_PostCal_1st, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
         tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_2nd, LinkLabel_PostCal_2nd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_2nd, Panel_PostCal_2nd, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_3rd, LinkLabel_PostCal_3rd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_3rd, Panel_PostCal_3rd, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_4th, LinkLabel_PostCal_4th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_4th, Panel_PostCal_4th, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_5th, LinkLabel_PostCal_5th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_5th, Panel_PostCal_5th, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_6th, LinkLabel_PostCal_6th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_6th, Panel_PostCal_6th, Nothing, tempRun, 1, "PostCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+
 
         MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, HeadRun.Time, 97)
         MainBarGraph = New BarGraph(New Point(508, 106), New Size(390, 539), TabPage2, CGraph.Modes.A1A2A3)
@@ -981,6 +1056,14 @@ Public Class Program
         PanelTractorA1.Visible = False
         PanelTractorA3.Visible = False
 
+        'new add
+        Panel_PreCal_Sub.Visible = True
+        Panel_PostCal_Sub.Visible = True
+        Panel_PreCal_5th.Visible = True
+        Panel_PreCal_6th.Visible = True
+        Panel_PostCal_5th.Visible = True
+        Panel_PostCal_6th.Visible = True
+
         PanelExcavatorA1.Size = ASize
         PanelExcavatorA1.Location = New Point(220, 265)
         PanelExcavatorA2.Size = ASize
@@ -1056,12 +1139,28 @@ Public Class Program
         'Create an object for each step
         Dim tempRun As Run_Unit
         'Precal
-        Set_Panel(Panel_PreCal, LinkLabel_preCal)
-        tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 3, "PreCal", 0, 0, 0)
+        Set_Panel(Panel_PreCal_1st, LinkLabel_PreCal_1st)
+        tempRun = New Run_Unit(LinkLabel_PreCal_1st, Panel_PreCal_1st, Nothing, Nothing, 1, "PreCal", 0, 0, 0)
         HeadRun = tempRun
         CurRun = HeadRun
         timeLeft = CurRun.Time
         timeLabel.Text = timeLeft & " s"
+
+        Set_Panel(Panel_PreCal_2nd, LinkLabel_PreCal_2nd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_2nd, Panel_PreCal_2nd, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PreCal_3rd, LinkLabel_PreCal_3rd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_3rd, Panel_PreCal_3rd, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PreCal_4th, LinkLabel_PreCal_4th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_4th, Panel_PreCal_4th, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PreCal_5th, LinkLabel_PreCal_5th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_5th, Panel_PreCal_5th, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PreCal_6th, LinkLabel_PreCal_6th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_6th, Panel_PreCal_6th, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
         'Background
         Set_Panel(Panel_Bkg, LinkLabel_BG)
         tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, tempRun, 4, "Background", 0, 0, 0)
@@ -1075,8 +1174,23 @@ Public Class Program
         tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 5, "RSS", 0, 0, 0)
         tempRun = tempRun.NextUnit
         'PostCal
-        Set_Panel(Panel_PostCal, LinkLabel_postCal)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_postCal, Panel_PostCal, Nothing, tempRun, 6, "PostCal", 0, 0, 0)
+        Set_Panel(Panel_PostCal_1st, LinkLabel_PostCal_1st)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_1st, Panel_PostCal_1st, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_2nd, LinkLabel_PostCal_2nd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_2nd, Panel_PostCal_2nd, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_3rd, LinkLabel_PostCal_3rd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_3rd, Panel_PostCal_3rd, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_4th, LinkLabel_PostCal_4th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_4th, Panel_PostCal_4th, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_5th, LinkLabel_PostCal_5th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_5th, Panel_PostCal_5th, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_6th, LinkLabel_PostCal_6th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_6th, Panel_PostCal_6th, Nothing, tempRun, 1, "PostCal", 0, 0, 0)
         tempRun = tempRun.NextUnit
 
         MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, HeadRun.Time, 97)
@@ -1101,6 +1215,14 @@ Public Class Program
         PanelTractorA1.Location = New Point(220, 265)
         PanelTractorA3.Size = ASize
         PanelTractorA3.Location = New Point(284, 265)
+
+        'new add
+        Panel_PreCal_Sub.Visible = True
+        Panel_PostCal_Sub.Visible = True
+        Panel_PreCal_5th.Visible = True
+        Panel_PreCal_6th.Visible = True
+        Panel_PostCal_5th.Visible = True
+        Panel_PostCal_6th.Visible = True
 
         PanelTractorA1.Controls.Add(Panel_TrA1_Fst_1st)
         PanelTractorA1.Controls.Add(Panel_TrA1_Fst_2nd)
@@ -1130,12 +1252,28 @@ Public Class Program
         Dim tempRun As Run_Unit
 
         'Precal
-        Set_Panel(Panel_PreCal, LinkLabel_preCal)
-        tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 3, "PreCal", 0, 0, 0)
+        Set_Panel(Panel_PreCal_1st, LinkLabel_PreCal_1st)
+        tempRun = New Run_Unit(LinkLabel_PreCal_1st, Panel_PreCal_1st, Nothing, Nothing, 1, "PreCal", 0, 0, 0)
         HeadRun = tempRun
         CurRun = HeadRun
         timeLeft = CurRun.Time
         timeLabel.Text = timeLeft & " s"
+
+        Set_Panel(Panel_PreCal_2nd, LinkLabel_PreCal_2nd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_2nd, Panel_PreCal_2nd, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PreCal_3rd, LinkLabel_PreCal_3rd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_3rd, Panel_PreCal_3rd, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PreCal_4th, LinkLabel_PreCal_4th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_4th, Panel_PreCal_4th, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PreCal_5th, LinkLabel_PreCal_5th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_5th, Panel_PreCal_5th, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PreCal_6th, LinkLabel_PreCal_6th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_6th, Panel_PreCal_6th, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
         'Background
         Set_Panel(Panel_Bkg, LinkLabel_BG)
         tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, tempRun, 4, "Background", 0, 0, 0)
@@ -1148,8 +1286,23 @@ Public Class Program
         tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 5, "RSS", 0, 0, 0)
         tempRun = tempRun.NextUnit
         'PostCal
-        Set_Panel(Panel_PostCal, LinkLabel_postCal)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_postCal, Panel_PostCal, Nothing, tempRun, 6, "PostCal", 0, 0, 0)
+        Set_Panel(Panel_PostCal_1st, LinkLabel_PostCal_1st)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_1st, Panel_PostCal_1st, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_2nd, LinkLabel_PostCal_2nd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_2nd, Panel_PostCal_2nd, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_3rd, LinkLabel_PostCal_3rd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_3rd, Panel_PostCal_3rd, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_4th, LinkLabel_PostCal_4th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_4th, Panel_PostCal_4th, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_5th, LinkLabel_PostCal_5th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_5th, Panel_PostCal_5th, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_6th, LinkLabel_PostCal_6th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_6th, Panel_PostCal_6th, Nothing, tempRun, 1, "PostCal", 0, 0, 0)
         tempRun = tempRun.NextUnit
 
         MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, HeadRun.Time, 97)
@@ -1292,42 +1445,73 @@ Public Class Program
         PanelA4.Controls.Add(Panel_A4_Thd)
         PanelA4.Controls.Add(Panel_A4_Add)
 
+        'new
+        Panel_PreCal_Sub.Visible = True
+        Panel_PostCal_Sub.Visible = True
+        Panel_PreCal_5th.Visible = False
+        Panel_PreCal_6th.Visible = False
+        Panel_PostCal_5th.Visible = False
+        Panel_PostCal_6th.Visible = False
+
         'Create an object for each step
         Dim tempRun As Run_Unit
         'Precal
-        Set_Panel(Panel_PreCal, LinkLabel_preCal)
-        tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 3, "PreCal", 0, 0, 0)
+        Set_Panel(Panel_PreCal_1st, LinkLabel_PreCal_1st)
+        tempRun = New Run_Unit(LinkLabel_PreCal_1st, Panel_PreCal_1st, Nothing, Nothing, 1, "PreCal", 0, 0, 0)
         HeadRun = tempRun
         CurRun = HeadRun
         timeLeft = CurRun.Time
         timeLabel.Text = timeLeft & " s"
+
+        Set_Panel(Panel_PreCal_2nd, LinkLabel_PreCal_2nd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_2nd, Panel_PreCal_2nd, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PreCal_3rd, LinkLabel_PreCal_3rd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_3rd, Panel_PreCal_3rd, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PreCal_4th, LinkLabel_PreCal_4th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_4th, Panel_PreCal_4th, Nothing, tempRun, 1, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
         'Background
         Set_Panel(Panel_Bkg, LinkLabel_BG)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, Nothing, 3, "Background", 0, 0, 0)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, tempRun, 3, "Background", 0, 0, 0)
         tempRun = tempRun.NextUnit
         'A4 1
         Set_Panel(Panel_A4_Fst, LinkLabel_A4_First)
         tempRun.NextUnit = New Run_Unit(LinkLabel_A4_First, Panel_A4_Fst, Nothing, tempRun, 3, "A4", 1, 1, 1)
         tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
         'A4 2
         Set_Panel(Panel_A4_Sec, LinkLabel_A4_Second)
         tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Second, Panel_A4_Sec, Nothing, tempRun, 3, "A4", 1, 1, 1)
         tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
         'A4 3
         Set_Panel(Panel_A4_Thd, LinkLabel_A4_Third)
         tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Second, Panel_A4_Sec, Nothing, tempRun, 3, "A4", 1, 1, 1)
         tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
         'A4 add
         Set_Panel(Panel_A4_Add, LinkLabel_A4_Additional)
         tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Second, Panel_A4_Sec, Nothing, tempRun, 3, "A4_Add", 1, 1, 1)
         tempRun = tempRun.NextUnit
+        tempRun.Steps = Load_Steps_helper(tempRun)
         'RSS
         Set_Panel(Panel_RSS, LinkLabel_RSS)
         tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 3, "RSS", 0, 0, 0)
         tempRun = tempRun.NextUnit
         'PostCal
-        Set_Panel(Panel_PostCal, LinkLabel_postCal)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_postCal, Panel_PostCal, Nothing, tempRun, 3, "PostCal", 0, 0, 0)
+        Set_Panel(Panel_PostCal_1st, LinkLabel_PostCal_1st)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_1st, Panel_PostCal_1st, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_2nd, LinkLabel_PostCal_2nd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_2nd, Panel_PostCal_2nd, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_3rd, LinkLabel_PostCal_3rd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_3rd, Panel_PostCal_3rd, Nothing, tempRun, 1, "PostCal", 0, 0, 1)
+        tempRun = tempRun.NextUnit
+        Set_Panel(Panel_PostCal_4th, LinkLabel_PostCal_4th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_4th, Panel_PostCal_4th, Nothing, tempRun, 1, "PostCal", 0, 0, 0)
         tempRun = tempRun.NextUnit
 
         MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A4, 1, HeadRun.Time, 97)
@@ -1444,6 +1628,9 @@ Public Class Program
         If tempRun.Name = "TrA3_bkd" Then
             tempRun.Steps = New Steps(My.Resources.A3_Tractor_step4, Step1, Nothing, True, 5)
         End If
+        If tempRun.Name = "A4" Or tempRun.Name = "A4_Add" Then
+            tempRun.Steps = New Steps(My.Resources.A4_Asphalt_Finisher, Step1, Nothing, True, 5)
+        End If
 
         Return tempRun.Steps
 
@@ -1546,37 +1733,35 @@ Public Class Program
                         Accept_Button.Enabled = True
                         startButton.Enabled = False
                     ElseIf CurRun.Name = "PostCal" Then
-                        'If CurRun.HasNext = False Then
-                        'CurRun.Set_BackColor(Color.Green)
-                        'Accept_Button.Enabled = True
-                        'startButton.Enabled = False
-                        'Else
-                        MessageBox.Show(CurRun.HasNext.ToString)
-                        CurRun = CurRun.NextUnit
-                        CurStep = CurRun.Steps
-                        Accept_Button.Enabled = True
-                        startButton.Enabled = False
-                        'End If
+                        If CurRun.CurStep = CurRun.EndStep Then
+                            MessageBox.Show("測試結束")
+                            CurRun.Set_BackColor(Color.Green)
+                            Accept_Button.Enabled = True
+                            startButton.Enabled = False
+                        Else
+                            CurRun = CurRun.NextUnit
+                            CurStep = CurRun.Steps
+                            Accept_Button.Enabled = True
+                            startButton.Enabled = False
+                        End If
                     Else
                         'RSS
                         CurRun = CurRun.NextUnit
-                        timeLeft = CurRun.Time
-                        timeLabel.Text = timeLeft & " s"
                         Accept_Button.Enabled = True
                         startButton.Enabled = False
                     End If
-                ElseIf CurRun.NextUnit.CurStep = 0 Then
-                    'A2 or A3 or A4 to RSS
-                    array_step(CurRun.CurStep).BackColor = Color.Green
-                    CurRun = CurRun.NextUnit
-                    timeLeft = CurRun.Time
-                    timeLabel.Text = timeLeft & " s"
                 Else
                     If CurRun.CurStep = CurRun.EndStep And CurRun.NextUnit.EndStep > 0 Then
                         CurRun = CurRun.NextUnit
                         CurStep = CurRun.Steps
                         Accept_Button.Enabled = True
                         startButton.Enabled = False
+                    ElseIf CurRun.CurStep = CurRun.EndStep And CurRun.NextUnit.CurStep = 0 Then
+                        'A2 or A3 or A4 to RSS
+                        CurRun = CurRun.NextUnit
+                        CurStep = CurRun.Steps
+                        timeLeft = CurRun.Time
+                        timeLabel.Text = timeLeft & " s"
                     Else
                         Set_Step_BackColor()
                         CurRun.Steps = CurRun.Steps.NextStep
@@ -1612,7 +1797,11 @@ Public Class Program
         End If
         If CurRun.PrevUnit.Name = "PreCal" Then
             MainLineGraphs.Dispose()
-            MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, CurRun.Time, 97)
+            If Machine = Machines.Others Then
+                MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A4, 1, CurRun.Time, 97)
+            Else
+                MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, CurRun.Time, 97)
+            End If
             Set_Panel_BackColor()
             timeLeft = CurRun.Time
             timeLabel.Text = timeLeft & " s"
@@ -1620,7 +1809,11 @@ Public Class Program
             If CurRun.PrevUnit.CurStep = 0 Then
                 If CurRun.PrevUnit.Name = "Background" Then
                     MainLineGraphs.Dispose()
-                    MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, sum_steps, 97)
+                    If Machine = Machines.Others Then
+                        MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A4, 1, CurRun.Time, 97)
+                    Else
+                        MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, CurRun.Time, 97)
+                    End If
                     Set_Panel_BackColor()
                     For index = 0 To 9
                         array_step(index).Text = ""
@@ -1639,27 +1832,28 @@ Public Class Program
                     sum_steps = 0
                 ElseIf CurRun.PrevUnit.Name = "PostCal" Then
                     MainLineGraphs.Dispose()
-                    MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, CurRun.Time, 97)
+                    If Machine = Machines.Others Then
+                        MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A4, 1, CurRun.Time, 97)
+                    Else
+                        MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, CurRun.Time, 97)
+                    End If
                     Set_Panel_BackColor()
                     timeLeft = CurRun.Time
                     timeLabel.Text = timeLeft & " s"
                 Else
                     MainLineGraphs.Dispose()
-                    MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, CurRun.Time, 97)
+                    If Machine = Machines.Others Then
+                        MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A4, 1, CurRun.Time, 97)
+                    Else
+                        MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, CurRun.Time, 97)
+                    End If
                     Set_Panel_BackColor()
+                    timeLeft = CurRun.Time
+                    timeLabel.Text = timeLeft & " s"
                 End If
-            ElseIf CurRun.CurStep = 0 Then
-                'A2 or A3 or A4 to RSS
-                For index = 0 To 9
-                    array_step(index).Text = ""
-                    array_step(index).BackColor = Color.DarkGray
-                Next
-                MainLineGraphs.Dispose()
-                MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, CurRun.Time, 97)
-                Set_Panel_BackColor()
             Else
                 If CurRun.PrevUnit.CurStep = CurRun.PrevUnit.EndStep And CurRun.EndStep > 0 Then
-                    If CurRun.Name = "ExA1_Add" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "TrA3_fwd_Add" Then
+                    If CurRun.Name = "ExA1_Add" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "TrA3_fwd_Add" Or CurRun.Name = "A4_Add" Then
                         If MessageBox.Show("是否要加測?", "My application", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
                             CurRun.PrevUnit.Set_BackColor(Color.Green)
                             If CurRun.Name = "ExA1_Add" Or CurRun.Name = "LoA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.NextUnit.NextUnit.NextUnit.Name = "LoA1" Then
@@ -1684,22 +1878,50 @@ Public Class Program
                                 timeLabel.Text = timeLeft & " s"
                                 array_step(0).BackColor = Color.Yellow
                                 sum_steps = 0
+                            ElseIf CurRun.Name = "A4_Add" Then
+                                For index = 0 To 9
+                                    array_step(index).Text = ""
+                                    array_step(index).BackColor = Color.DarkGray
+                                Next
+                                CurRun = CurRun.NextUnit
+                                CurStep = CurRun.Steps
+                                CurRun.Set_BackColor(Color.Yellow)
+                                MainLineGraphs.Dispose()
+                                MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A4, 1, CurRun.Time, 97)
+                                timeLeft = CurRun.Time
+                                timeLabel.Text = timeLeft & " s"
                             ElseIf CurRun.Name = "ExA2_1st_Add" Then
+                                For index = 0 To 9
+                                    array_step(index).Text = ""
+                                    array_step(index).BackColor = Color.DarkGray
+                                Next
                                 CurRun = CurRun.NextUnit.NextUnit.NextUnit
                                 CurStep = CurRun.Steps
                                 CurRun.Set_BackColor(Color.Yellow)
                                 MainLineGraphs.Dispose()
                                 MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, sum_steps, 97)
+                                timeLeft = CurRun.Time
+                                timeLabel.Text = timeLeft & " s"
                             ElseIf CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "TrA3_fwd_Add" Then
+                                For index = 0 To 9
+                                    array_step(index).Text = ""
+                                    array_step(index).BackColor = Color.DarkGray
+                                Next
                                 CurRun = CurRun.NextUnit.NextUnit
                                 CurStep = CurRun.Steps
                                 CurRun.Set_BackColor(Color.Yellow)
                                 MainLineGraphs.Dispose()
                                 MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, sum_steps, 97)
+                                timeLeft = CurRun.Time
+                                timeLabel.Text = timeLeft & " s"
                             End If
                         Else
                             MainLineGraphs.Dispose()
-                            MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, sum_steps, 97)
+                            If Machine = Machines.Others Then
+                                MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A4, 1, CurRun.Time, 97)
+                            Else
+                                MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, CurRun.Time, 97)
+                            End If
                             Set_Panel_BackColor()
                             For index = 0 To 9
                                 array_step(index).Text = ""
@@ -1720,7 +1942,11 @@ Public Class Program
                         End If
                     Else
                         MainLineGraphs.Dispose()
-                        MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, sum_steps, 97)
+                        If Machine = Machines.Others Then
+                            MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A4, 1, CurRun.Time, 97)
+                        Else
+                            MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, CurRun.Time, 97)
+                        End If
                         Set_Panel_BackColor()
                         For index = 0 To 9
                             array_step(index).Text = ""

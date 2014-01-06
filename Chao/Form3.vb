@@ -242,9 +242,11 @@ Public Class Program
         Label4.Location = New Point(136, 602)
 
         Panel_PreCal.Location = New Point(10, 265)
-        Panel_Bkg.Location = New Point(10, 380)
-        Panel_RSS.Location = New Point(10, 410)
-        Panel_PostCal.Location = New Point(10, 440)
+        Panel_PreCal_Sub.Location = New Point(10, 295)
+        Panel_Bkg.Location = New Point(10, 480)
+        Panel_RSS.Location = New Point(10, 510)
+        Panel_PostCal.Location = New Point(10, 540)
+        Panel_PostCal_Sub.Location = New Point(10, 570)
 
         MachChosen = False
     End Sub
@@ -514,6 +516,12 @@ Public Class Program
 
         'Precal
         Set_Panel(Panel_PreCal, LinkLabel_preCal)
+        Set_Panel(Panel_PreCal_1st, LinkLabel_PreCal_1st)
+        Set_Panel(Panel_PreCal_2nd, LinkLabel_PreCal_2nd)
+        Set_Panel(Panel_PreCal_3rd, LinkLabel_PreCal_3rd)
+        Set_Panel(Panel_PreCal_4th, LinkLabel_PreCal_4th)
+        Set_Panel(Panel_PreCal_5th, LinkLabel_PreCal_5th)
+        Set_Panel(Panel_PreCal_6th, LinkLabel_PreCal_6th)
         tempRun = New Run_Unit(LinkLabel_preCal, Panel_PreCal, Nothing, Nothing, 3, "PreCal", 0, 0, 0)
         HeadRun = tempRun
         CurRun = HeadRun
@@ -532,6 +540,12 @@ Public Class Program
         tempRun = tempRun.NextUnit
         'PostCal
         Set_Panel(Panel_PostCal, LinkLabel_postCal)
+        Set_Panel(Panel_PostCal_1st, LinkLabel_PostCal_1st)
+        Set_Panel(Panel_PostCal_2nd, LinkLabel_PostCal_2nd)
+        Set_Panel(Panel_PostCal_3rd, LinkLabel_PostCal_3rd)
+        Set_Panel(Panel_PostCal_4th, LinkLabel_PostCal_4th)
+        Set_Panel(Panel_PostCal_5th, LinkLabel_PostCal_5th)
+        Set_Panel(Panel_PostCal_6th, LinkLabel_PostCal_6th)
         tempRun.NextUnit = New Run_Unit(LinkLabel_postCal, Panel_PostCal, Nothing, tempRun, 6, "PostCal", 0, 0, 0)
         tempRun = tempRun.NextUnit
 
@@ -807,7 +821,7 @@ Public Class Program
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Add 1
         Set_Panel(Panel_LoA1_Add_1st, LinkLabel_LoA1_Add_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Add_1st, Panel_LoA1_Add_1st, Nothing, tempRun, 3, "LoA1", 1, 1, 1)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Add_1st, Panel_LoA1_Add_1st, Nothing, tempRun, 3, "LoA1_Add", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Add 2
@@ -869,7 +883,7 @@ Public Class Program
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Add 1
         Set_Panel(Panel_LoA2_Add_1st, LinkLabel_LoA2_Add_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Add_1st, Panel_LoA2_Add_1st, Nothing, tempRun, 1, "LoA2_1st", 1, 1, 3)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Add_1st, Panel_LoA2_Add_1st, Nothing, tempRun, 1, "LoA2_1st_Add", 1, 1, 3)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A2 Add 2
@@ -919,7 +933,7 @@ Public Class Program
 
         'A3 Add fwd
         Set_Panel(Panel_LoA3_Add_fwd, LinkLabel_LoA3_Add_fwd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Add_fwd, Panel_LoA3_Add_fwd, Nothing, tempRun, 1, "LoA3_fwd", 1, 1, 3)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Add_fwd, Panel_LoA3_Add_fwd, Nothing, tempRun, 1, "LoA3_fwd_Add", 1, 1, 3)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A3 Add bkd
@@ -1173,7 +1187,7 @@ Public Class Program
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Add 1
         Set_Panel(Panel_TrA1_Add_1st, LinkLabel_TrA1_Add_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Add_1st, Panel_TrA1_Add_1st, Nothing, tempRun, 3, "TrA1", 1, 1, 1)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Add_1st, Panel_TrA1_Add_1st, Nothing, tempRun, 3, "TrA1_Add", 1, 1, 1)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A1 Add 2
@@ -1224,7 +1238,7 @@ Public Class Program
 
         'A3 Add fwd
         Set_Panel(Panel_TrA3_Add_fwd, LinkLabel_TrA3_Add_fwd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA3_Add_fwd, Panel_TrA3_Add_fwd, Nothing, tempRun, 3, "TrA3_fwd", 1, 1, 3)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_TrA3_Add_fwd, Panel_TrA3_Add_fwd, Nothing, tempRun, 3, "TrA3_fwd_Add", 1, 1, 3)
         tempRun = tempRun.NextUnit
         tempRun.Steps = Load_Steps_helper(tempRun)
         'A3 Add bkd
@@ -1284,7 +1298,7 @@ Public Class Program
         tempRun = tempRun.NextUnit
         'A4 add
         Set_Panel(Panel_A4_Add, LinkLabel_A4_Additional)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Second, Panel_A4_Sec, Nothing, tempRun, 3, "A4", 1, 1, 1)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Second, Panel_A4_Sec, Nothing, tempRun, 3, "A4_Add", 1, 1, 1)
         tempRun = tempRun.NextUnit
         'RSS
         Set_Panel(Panel_RSS, LinkLabel_RSS)
@@ -1344,7 +1358,7 @@ Public Class Program
     Function Load_Steps_helper(ByRef run As Run_Unit)
         Dim tempRun As Run_Unit = run
         Dim tempStep As Steps
-        If tempRun.Name = "ExA1" Or tempRun.Name = "LoA1" Or tempRun.Name = "TrA1" Or tempRun.Name = "ExA1_Add" Then
+        If tempRun.Name = "ExA1" Or tempRun.Name = "LoA1" Or tempRun.Name = "TrA1" Or tempRun.Name = "ExA1_Add" Or tempRun.Name = "LoA1_Add" Or tempRun.Name = "TrA1_Add" Then
             tempRun.Steps = New Steps(My.Resources.A1_step1, Step1, Nothing, True, 1)
         End If
         If tempRun.Name = "ExA2_1st" Or tempRun.Name = "ExA2_1st_Add" Then
@@ -1365,7 +1379,7 @@ Public Class Program
             tempStep = tempStep.NextStep
             tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step9, Step9, Nothing, True, 4)
         End If
-        If tempRun.Name = "ExA2_2nd_3rd" Or tempRun.Name = "ExA2_2nd_3rd_Add" Then
+        If tempRun.Name = "ExA2_2nd_3rd" Then
             tempRun.Steps = New Steps(My.Resources.A2_Excavator_step2, Step1, Nothing, False, 4)
             tempRun.Steps.NextStep = New Steps(My.Resources.A2_Excavator_step3, Step2, Nothing, False, 5)
             tempStep = tempRun.Steps.NextStep
@@ -1381,17 +1395,17 @@ Public Class Program
             tempStep = tempStep.NextStep
             tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step9, Step8, Nothing, True, 4)
         End If
-        If tempRun.Name = "LoA2_1st" Then
+        If tempRun.Name = "LoA2_1st" Or tempRun.Name = "LoA2_1st_Add" Then
             tempRun.Steps = New Steps(My.Resources.A2_Loader_step1, Step1, Nothing, False, 2)
             tempRun.Steps.NextStep = New Steps(My.Resources.A2_Loader_step2, Step2, Nothing, False, 3)
             tempStep = tempRun.Steps.NextStep
             tempStep.NextStep = New Steps(My.Resources.A2_Loader_step3, Step3, Nothing, True, 4)
         End If
-        If tempRun.Name = "LoA2_2nd_3rd" Then
+        If tempRun.Name = "LoA2_2nd_3rd" Or tempRun.Name = "LoA2_2nd_3rd" Then
             tempRun.Steps = New Steps(My.Resources.A2_Loader_step2, Step1, Nothing, False, 3)
             tempRun.Steps.NextStep = New Steps(My.Resources.A2_Loader_step3, Step2, Nothing, True, 4)
         End If
-        If tempRun.Name = "LoA3_fwd" Then
+        If tempRun.Name = "LoA3_fwd" Or tempRun.Name = "LoA3_fwd_Add" Then
             tempRun.Steps = New Steps(My.Resources.A3_Loader_step1, Step1, Nothing, False, 2)
             tempRun.Steps.NextStep = New Steps(My.Resources.A3_Loader_step2, Step2, Nothing, False, 5)
             tempStep = tempRun.Steps.NextStep
@@ -1400,7 +1414,7 @@ Public Class Program
         If tempRun.Name = "LoA3_bkd" Then
             tempRun.Steps = New Steps(My.Resources.A3_Loader_step4, Step1, Nothing, True, 5)
         End If
-        If tempRun.Name = "TrA3_fwd" Then
+        If tempRun.Name = "TrA3_fwd" Or tempRun.Name = "TrA3_fwd_Add" Then
             tempRun.Steps = New Steps(My.Resources.A3_Tractor_step1, Step1, Nothing, False, 2)
             tempRun.Steps.NextStep = New Steps(My.Resources.A3_Tractor_step2, Step2, Nothing, False, 5)
             tempStep = tempRun.Steps.NextStep
@@ -1563,8 +1577,6 @@ Public Class Program
         startButton.Enabled = False
         stopButton.Enabled = True
 
-        'timeLeft = CurRun.Time
-
         Timer1.Start()
         
     End Sub
@@ -1610,35 +1622,39 @@ Public Class Program
                 Set_Panel_BackColor()
             Else
                 If CurRun.PrevUnit.CurStep = CurRun.PrevUnit.EndStep And CurRun.EndStep > 0 Then
-                    If CurRun.Name = "ExA1_Add" Or CurRun.Name = "ExA2_1st_Add" Then
+                    If CurRun.Name = "ExA1_Add" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "TrA3_fwd_Add" Then
                         If MessageBox.Show("是否要加測?", "My application", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
                             CurRun.PrevUnit.Set_BackColor(Color.Green)
-                            CurRun = CurRun.NextUnit.NextUnit.NextUnit
-                            CurStep = CurRun.Steps
-                            CurRun.Set_BackColor(Color.Yellow)
-                            MainLineGraphs.Dispose()
-                            MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, sum_steps, 97)
-                            For index = 0 To 8
-                                array_step(index).Text = ""
-                                array_step(index).BackColor = Color.DarkGray
-                            Next
-                            For index = CurRun.StartStep To CurRun.EndStep
-                                sum_steps += CurStep.Time
-                                array_step(index - 1).Text = CurStep.step_str
-                                array_step(index - 1).BackColor = Color.White
-                                If CurStep.HasNext() = True Then
-                                    CurStep = CurStep.NextStep
-                                End If
-                            Next
-                            timeLeft = CurRun.Steps.Time
-                            timeLabel.Text = timeLeft & " s"
-                            array_step(0).BackColor = Color.Yellow
-                            sum_steps = 0
+                            If CurRun.Name = "ExA1_Add" Or CurRun.Name = "LoA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.NextUnit.NextUnit.NextUnit.Name = "LoA1" Then
+                                CurRun = CurRun.NextUnit.NextUnit.NextUnit
+                                CurStep = CurRun.Steps
+                                CurRun.Set_BackColor(Color.Yellow)
+                                MainLineGraphs.Dispose()
+                                MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, sum_steps, 97)
+                                For index = 0 To 9
+                                    array_step(index).Text = ""
+                                    array_step(index).BackColor = Color.DarkGray
+                                Next
+                                For index = CurRun.StartStep To CurRun.EndStep
+                                    sum_steps += CurStep.Time
+                                    array_step(index - 1).Text = CurStep.step_str
+                                    array_step(index - 1).BackColor = Color.White
+                                    If CurStep.HasNext() = True Then
+                                        CurStep = CurStep.NextStep
+                                    End If
+                                Next
+                                timeLeft = CurRun.Steps.Time
+                                timeLabel.Text = timeLeft & " s"
+                                array_step(0).BackColor = Color.Yellow
+                                sum_steps = 0
+                            Else
+                                MessageBox.Show("測量結束")
+                            End If
                         Else
                             MainLineGraphs.Dispose()
                             MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, sum_steps, 97)
                             Set_Panel_BackColor()
-                            For index = 0 To 8
+                            For index = 0 To 9
                                 array_step(index).Text = ""
                                 array_step(index).BackColor = Color.DarkGray
                             Next
@@ -1659,7 +1675,7 @@ Public Class Program
                         MainLineGraphs.Dispose()
                         MainLineGraphs = New LineGraphPanel(New Point(10, 3), New Size(1219, 97), TabPage2, CGraph.Modes.A1A2A3, 1, sum_steps, 97)
                         Set_Panel_BackColor()
-                        For index = 0 To 8
+                        For index = 0 To 9
                             array_step(index).Text = ""
                             array_step(index).BackColor = Color.DarkGray
                         Next

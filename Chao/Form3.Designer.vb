@@ -23,12 +23,12 @@ Partial Class Program
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.p6Label = New System.Windows.Forms.Label()
@@ -278,6 +278,32 @@ Partial Class Program
         Me.timeLabel = New System.Windows.Forms.Label()
         Me.startButton = New System.Windows.Forms.Button()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.Panel_PreCal_1st = New System.Windows.Forms.Panel()
+        Me.Panel_PreCal_2nd = New System.Windows.Forms.Panel()
+        Me.Panel_PreCal_3rd = New System.Windows.Forms.Panel()
+        Me.Panel_PreCal_4th = New System.Windows.Forms.Panel()
+        Me.Panel_PreCal_5th = New System.Windows.Forms.Panel()
+        Me.Panel_PreCal_6th = New System.Windows.Forms.Panel()
+        Me.LinkLabel_PreCal_1st = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel_PreCal_2nd = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel_PreCal_3rd = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel_PreCal_4th = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel_PreCal_5th = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel_PreCal_6th = New System.Windows.Forms.LinkLabel()
+        Me.Panel_PreCal_Sub = New System.Windows.Forms.Panel()
+        Me.Panel_PostCal_Sub = New System.Windows.Forms.Panel()
+        Me.Panel_PostCal_6th = New System.Windows.Forms.Panel()
+        Me.LinkLabel_PostCal_6th = New System.Windows.Forms.LinkLabel()
+        Me.Panel_PostCal_5th = New System.Windows.Forms.Panel()
+        Me.LinkLabel_PostCal_5th = New System.Windows.Forms.LinkLabel()
+        Me.Panel_PostCal_4th = New System.Windows.Forms.Panel()
+        Me.LinkLabel_PostCal_4th = New System.Windows.Forms.LinkLabel()
+        Me.Panel_PostCal_3rd = New System.Windows.Forms.Panel()
+        Me.LinkLabel_PostCal_3rd = New System.Windows.Forms.LinkLabel()
+        Me.Panel_PostCal_2nd = New System.Windows.Forms.Panel()
+        Me.LinkLabel_PostCal_2nd = New System.Windows.Forms.LinkLabel()
+        Me.Panel_PostCal_1st = New System.Windows.Forms.Panel()
+        Me.LinkLabel_PostCal_1st = New System.Windows.Forms.LinkLabel()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox_Plot.SuspendLayout()
@@ -379,6 +405,20 @@ Partial Class Program
         Me.Panel_ExA1_Fst_3rd.SuspendLayout()
         Me.Panel_ExA1_Fst_2nd.SuspendLayout()
         Me.Panel_ExA1_Fst_1st.SuspendLayout()
+        Me.Panel_PreCal_1st.SuspendLayout()
+        Me.Panel_PreCal_2nd.SuspendLayout()
+        Me.Panel_PreCal_3rd.SuspendLayout()
+        Me.Panel_PreCal_4th.SuspendLayout()
+        Me.Panel_PreCal_5th.SuspendLayout()
+        Me.Panel_PreCal_6th.SuspendLayout()
+        Me.Panel_PreCal_Sub.SuspendLayout()
+        Me.Panel_PostCal_Sub.SuspendLayout()
+        Me.Panel_PostCal_6th.SuspendLayout()
+        Me.Panel_PostCal_5th.SuspendLayout()
+        Me.Panel_PostCal_4th.SuspendLayout()
+        Me.Panel_PostCal_3rd.SuspendLayout()
+        Me.Panel_PostCal_2nd.SuspendLayout()
+        Me.Panel_PostCal_1st.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -753,6 +793,8 @@ Partial Class Program
         'TabPage2
         '
         Me.TabPage2.BackColor = System.Drawing.Color.DarkGray
+        Me.TabPage2.Controls.Add(Me.Panel_PostCal_Sub)
+        Me.TabPage2.Controls.Add(Me.Panel_PreCal_Sub)
         Me.TabPage2.Controls.Add(Me.Panel_PostCal)
         Me.TabPage2.Controls.Add(Me.Step1)
         Me.TabPage2.Controls.Add(Me.PanelTractorA3)
@@ -804,7 +846,7 @@ Partial Class Program
         'Panel_PostCal
         '
         Me.Panel_PostCal.Controls.Add(Me.LinkLabel_postCal)
-        Me.Panel_PostCal.Location = New System.Drawing.Point(10, 392)
+        Me.Panel_PostCal.Location = New System.Drawing.Point(10, 540)
         Me.Panel_PostCal.Name = "Panel_PostCal"
         Me.Panel_PostCal.Size = New System.Drawing.Size(80, 39)
         Me.Panel_PostCal.TabIndex = 107
@@ -1002,7 +1044,7 @@ Partial Class Program
         'Panel_RSS
         '
         Me.Panel_RSS.Controls.Add(Me.LinkLabel_RSS)
-        Me.Panel_RSS.Location = New System.Drawing.Point(10, 344)
+        Me.Panel_RSS.Location = New System.Drawing.Point(9, 492)
         Me.Panel_RSS.Name = "Panel_RSS"
         Me.Panel_RSS.Size = New System.Drawing.Size(80, 42)
         Me.Panel_RSS.TabIndex = 106
@@ -1021,7 +1063,7 @@ Partial Class Program
         'Panel_Bkg
         '
         Me.Panel_Bkg.Controls.Add(Me.LinkLabel_BG)
-        Me.Panel_Bkg.Location = New System.Drawing.Point(10, 289)
+        Me.Panel_Bkg.Location = New System.Drawing.Point(9, 440)
         Me.Panel_Bkg.Name = "Panel_Bkg"
         Me.Panel_Bkg.Size = New System.Drawing.Size(109, 46)
         Me.Panel_Bkg.TabIndex = 105
@@ -1040,7 +1082,7 @@ Partial Class Program
         'Panel_PreCal
         '
         Me.Panel_PreCal.Controls.Add(Me.LinkLabel_preCal)
-        Me.Panel_PreCal.Location = New System.Drawing.Point(10, 231)
+        Me.Panel_PreCal.Location = New System.Drawing.Point(10, 226)
         Me.Panel_PreCal.Name = "Panel_PreCal"
         Me.Panel_PreCal.Size = New System.Drawing.Size(109, 46)
         Me.Panel_PreCal.TabIndex = 104
@@ -2329,16 +2371,16 @@ Partial Class Program
         '
         'Chart2
         '
-        ChartArea1.Name = "ChartArea1"
-        Me.Chart2.ChartAreas.Add(ChartArea1)
-        Legend1.Name = "Legend1"
-        Me.Chart2.Legends.Add(Legend1)
+        ChartArea3.Name = "ChartArea1"
+        Me.Chart2.ChartAreas.Add(ChartArea3)
+        Legend3.Name = "Legend1"
+        Me.Chart2.Legends.Add(Legend3)
         Me.Chart2.Location = New System.Drawing.Point(512, 109)
         Me.Chart2.Name = "Chart2"
-        Series1.ChartArea = "ChartArea1"
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Me.Chart2.Series.Add(Series1)
+        Series3.ChartArea = "ChartArea1"
+        Series3.Legend = "Legend1"
+        Series3.Name = "Series1"
+        Me.Chart2.Series.Add(Series3)
         Me.Chart2.Size = New System.Drawing.Size(361, 538)
         Me.Chart2.TabIndex = 83
         Me.Chart2.Text = "Chart2"
@@ -2346,16 +2388,16 @@ Partial Class Program
         '
         'Chart1
         '
-        ChartArea2.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea2)
-        Legend2.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend2)
+        ChartArea4.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea4)
+        Legend4.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend4)
         Me.Chart1.Location = New System.Drawing.Point(-55, 6)
         Me.Chart1.Name = "Chart1"
-        Series2.ChartArea = "ChartArea1"
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series1"
-        Me.Chart1.Series.Add(Series2)
+        Series4.ChartArea = "ChartArea1"
+        Series4.Legend = "Legend1"
+        Series4.Name = "Series1"
+        Me.Chart1.Series.Add(Series4)
         Me.Chart1.Size = New System.Drawing.Size(1219, 97)
         Me.Chart1.TabIndex = 82
         Me.Chart1.Text = "Chart1"
@@ -2832,6 +2874,248 @@ Partial Class Program
         '
         Me.Timer1.Interval = 1000
         '
+        'Panel_PreCal_1st
+        '
+        Me.Panel_PreCal_1st.Controls.Add(Me.LinkLabel_PreCal_1st)
+        Me.Panel_PreCal_1st.Location = New System.Drawing.Point(10, 2)
+        Me.Panel_PreCal_1st.Name = "Panel_PreCal_1st"
+        Me.Panel_PreCal_1st.Size = New System.Drawing.Size(72, 26)
+        Me.Panel_PreCal_1st.TabIndex = 108
+        '
+        'Panel_PreCal_2nd
+        '
+        Me.Panel_PreCal_2nd.Controls.Add(Me.LinkLabel_PreCal_2nd)
+        Me.Panel_PreCal_2nd.Location = New System.Drawing.Point(10, 33)
+        Me.Panel_PreCal_2nd.Name = "Panel_PreCal_2nd"
+        Me.Panel_PreCal_2nd.Size = New System.Drawing.Size(72, 26)
+        Me.Panel_PreCal_2nd.TabIndex = 109
+        '
+        'Panel_PreCal_3rd
+        '
+        Me.Panel_PreCal_3rd.Controls.Add(Me.LinkLabel_PreCal_3rd)
+        Me.Panel_PreCal_3rd.Location = New System.Drawing.Point(9, 64)
+        Me.Panel_PreCal_3rd.Name = "Panel_PreCal_3rd"
+        Me.Panel_PreCal_3rd.Size = New System.Drawing.Size(72, 26)
+        Me.Panel_PreCal_3rd.TabIndex = 109
+        '
+        'Panel_PreCal_4th
+        '
+        Me.Panel_PreCal_4th.Controls.Add(Me.LinkLabel_PreCal_4th)
+        Me.Panel_PreCal_4th.Location = New System.Drawing.Point(9, 92)
+        Me.Panel_PreCal_4th.Name = "Panel_PreCal_4th"
+        Me.Panel_PreCal_4th.Size = New System.Drawing.Size(72, 26)
+        Me.Panel_PreCal_4th.TabIndex = 109
+        '
+        'Panel_PreCal_5th
+        '
+        Me.Panel_PreCal_5th.Controls.Add(Me.LinkLabel_PreCal_5th)
+        Me.Panel_PreCal_5th.Location = New System.Drawing.Point(9, 119)
+        Me.Panel_PreCal_5th.Name = "Panel_PreCal_5th"
+        Me.Panel_PreCal_5th.Size = New System.Drawing.Size(72, 26)
+        Me.Panel_PreCal_5th.TabIndex = 109
+        '
+        'Panel_PreCal_6th
+        '
+        Me.Panel_PreCal_6th.Controls.Add(Me.LinkLabel_PreCal_6th)
+        Me.Panel_PreCal_6th.Location = New System.Drawing.Point(9, 148)
+        Me.Panel_PreCal_6th.Name = "Panel_PreCal_6th"
+        Me.Panel_PreCal_6th.Size = New System.Drawing.Size(72, 26)
+        Me.Panel_PreCal_6th.TabIndex = 109
+        '
+        'LinkLabel_PreCal_1st
+        '
+        Me.LinkLabel_PreCal_1st.AutoSize = True
+        Me.LinkLabel_PreCal_1st.Location = New System.Drawing.Point(5, 7)
+        Me.LinkLabel_PreCal_1st.Name = "LinkLabel_PreCal_1st"
+        Me.LinkLabel_PreCal_1st.Size = New System.Drawing.Size(26, 15)
+        Me.LinkLabel_PreCal_1st.TabIndex = 0
+        Me.LinkLabel_PreCal_1st.TabStop = True
+        Me.LinkLabel_PreCal_1st.Text = "1st"
+        '
+        'LinkLabel_PreCal_2nd
+        '
+        Me.LinkLabel_PreCal_2nd.AutoSize = True
+        Me.LinkLabel_PreCal_2nd.Location = New System.Drawing.Point(5, 4)
+        Me.LinkLabel_PreCal_2nd.Name = "LinkLabel_PreCal_2nd"
+        Me.LinkLabel_PreCal_2nd.Size = New System.Drawing.Size(31, 15)
+        Me.LinkLabel_PreCal_2nd.TabIndex = 1
+        Me.LinkLabel_PreCal_2nd.TabStop = True
+        Me.LinkLabel_PreCal_2nd.Text = "2nd"
+        '
+        'LinkLabel_PreCal_3rd
+        '
+        Me.LinkLabel_PreCal_3rd.AutoSize = True
+        Me.LinkLabel_PreCal_3rd.Location = New System.Drawing.Point(5, 2)
+        Me.LinkLabel_PreCal_3rd.Name = "LinkLabel_PreCal_3rd"
+        Me.LinkLabel_PreCal_3rd.Size = New System.Drawing.Size(29, 15)
+        Me.LinkLabel_PreCal_3rd.TabIndex = 1
+        Me.LinkLabel_PreCal_3rd.TabStop = True
+        Me.LinkLabel_PreCal_3rd.Text = "3rd"
+        '
+        'LinkLabel_PreCal_4th
+        '
+        Me.LinkLabel_PreCal_4th.AutoSize = True
+        Me.LinkLabel_PreCal_4th.Location = New System.Drawing.Point(5, 4)
+        Me.LinkLabel_PreCal_4th.Name = "LinkLabel_PreCal_4th"
+        Me.LinkLabel_PreCal_4th.Size = New System.Drawing.Size(28, 15)
+        Me.LinkLabel_PreCal_4th.TabIndex = 1
+        Me.LinkLabel_PreCal_4th.TabStop = True
+        Me.LinkLabel_PreCal_4th.Text = "4th"
+        '
+        'LinkLabel_PreCal_5th
+        '
+        Me.LinkLabel_PreCal_5th.AutoSize = True
+        Me.LinkLabel_PreCal_5th.Location = New System.Drawing.Point(5, 2)
+        Me.LinkLabel_PreCal_5th.Name = "LinkLabel_PreCal_5th"
+        Me.LinkLabel_PreCal_5th.Size = New System.Drawing.Size(28, 15)
+        Me.LinkLabel_PreCal_5th.TabIndex = 1
+        Me.LinkLabel_PreCal_5th.TabStop = True
+        Me.LinkLabel_PreCal_5th.Text = "5th"
+        '
+        'LinkLabel_PreCal_6th
+        '
+        Me.LinkLabel_PreCal_6th.AutoSize = True
+        Me.LinkLabel_PreCal_6th.Location = New System.Drawing.Point(5, 5)
+        Me.LinkLabel_PreCal_6th.Name = "LinkLabel_PreCal_6th"
+        Me.LinkLabel_PreCal_6th.Size = New System.Drawing.Size(28, 15)
+        Me.LinkLabel_PreCal_6th.TabIndex = 1
+        Me.LinkLabel_PreCal_6th.TabStop = True
+        Me.LinkLabel_PreCal_6th.Text = "6th"
+        '
+        'Panel_PreCal_Sub
+        '
+        Me.Panel_PreCal_Sub.Controls.Add(Me.Panel_PreCal_6th)
+        Me.Panel_PreCal_Sub.Controls.Add(Me.Panel_PreCal_5th)
+        Me.Panel_PreCal_Sub.Controls.Add(Me.Panel_PreCal_4th)
+        Me.Panel_PreCal_Sub.Controls.Add(Me.Panel_PreCal_3rd)
+        Me.Panel_PreCal_Sub.Controls.Add(Me.Panel_PreCal_2nd)
+        Me.Panel_PreCal_Sub.Controls.Add(Me.Panel_PreCal_1st)
+        Me.Panel_PreCal_Sub.Location = New System.Drawing.Point(7, 275)
+        Me.Panel_PreCal_Sub.Name = "Panel_PreCal_Sub"
+        Me.Panel_PreCal_Sub.Size = New System.Drawing.Size(90, 180)
+        Me.Panel_PreCal_Sub.TabIndex = 110
+        '
+        'Panel_PostCal_Sub
+        '
+        Me.Panel_PostCal_Sub.Controls.Add(Me.Panel_PostCal_6th)
+        Me.Panel_PostCal_Sub.Controls.Add(Me.Panel_PostCal_5th)
+        Me.Panel_PostCal_Sub.Controls.Add(Me.Panel_PostCal_4th)
+        Me.Panel_PostCal_Sub.Controls.Add(Me.Panel_PostCal_3rd)
+        Me.Panel_PostCal_Sub.Controls.Add(Me.Panel_PostCal_2nd)
+        Me.Panel_PostCal_Sub.Controls.Add(Me.Panel_PostCal_1st)
+        Me.Panel_PostCal_Sub.Location = New System.Drawing.Point(61, 537)
+        Me.Panel_PostCal_Sub.Name = "Panel_PostCal_Sub"
+        Me.Panel_PostCal_Sub.Size = New System.Drawing.Size(90, 180)
+        Me.Panel_PostCal_Sub.TabIndex = 111
+        '
+        'Panel_PostCal_6th
+        '
+        Me.Panel_PostCal_6th.Controls.Add(Me.LinkLabel_PostCal_6th)
+        Me.Panel_PostCal_6th.Location = New System.Drawing.Point(10, 151)
+        Me.Panel_PostCal_6th.Name = "Panel_PostCal_6th"
+        Me.Panel_PostCal_6th.Size = New System.Drawing.Size(72, 26)
+        Me.Panel_PostCal_6th.TabIndex = 109
+        '
+        'LinkLabel_PostCal_6th
+        '
+        Me.LinkLabel_PostCal_6th.AutoSize = True
+        Me.LinkLabel_PostCal_6th.Location = New System.Drawing.Point(5, 5)
+        Me.LinkLabel_PostCal_6th.Name = "LinkLabel_PostCal_6th"
+        Me.LinkLabel_PostCal_6th.Size = New System.Drawing.Size(28, 15)
+        Me.LinkLabel_PostCal_6th.TabIndex = 1
+        Me.LinkLabel_PostCal_6th.TabStop = True
+        Me.LinkLabel_PostCal_6th.Text = "6th"
+        '
+        'Panel_PostCal_5th
+        '
+        Me.Panel_PostCal_5th.Controls.Add(Me.LinkLabel_PostCal_5th)
+        Me.Panel_PostCal_5th.Location = New System.Drawing.Point(10, 119)
+        Me.Panel_PostCal_5th.Name = "Panel_PostCal_5th"
+        Me.Panel_PostCal_5th.Size = New System.Drawing.Size(72, 26)
+        Me.Panel_PostCal_5th.TabIndex = 109
+        '
+        'LinkLabel_PostCal_5th
+        '
+        Me.LinkLabel_PostCal_5th.AutoSize = True
+        Me.LinkLabel_PostCal_5th.Location = New System.Drawing.Point(5, 2)
+        Me.LinkLabel_PostCal_5th.Name = "LinkLabel_PostCal_5th"
+        Me.LinkLabel_PostCal_5th.Size = New System.Drawing.Size(28, 15)
+        Me.LinkLabel_PostCal_5th.TabIndex = 1
+        Me.LinkLabel_PostCal_5th.TabStop = True
+        Me.LinkLabel_PostCal_5th.Text = "5th"
+        '
+        'Panel_PostCal_4th
+        '
+        Me.Panel_PostCal_4th.Controls.Add(Me.LinkLabel_PostCal_4th)
+        Me.Panel_PostCal_4th.Location = New System.Drawing.Point(10, 90)
+        Me.Panel_PostCal_4th.Name = "Panel_PostCal_4th"
+        Me.Panel_PostCal_4th.Size = New System.Drawing.Size(72, 26)
+        Me.Panel_PostCal_4th.TabIndex = 109
+        '
+        'LinkLabel_PostCal_4th
+        '
+        Me.LinkLabel_PostCal_4th.AutoSize = True
+        Me.LinkLabel_PostCal_4th.Location = New System.Drawing.Point(5, 4)
+        Me.LinkLabel_PostCal_4th.Name = "LinkLabel_PostCal_4th"
+        Me.LinkLabel_PostCal_4th.Size = New System.Drawing.Size(28, 15)
+        Me.LinkLabel_PostCal_4th.TabIndex = 1
+        Me.LinkLabel_PostCal_4th.TabStop = True
+        Me.LinkLabel_PostCal_4th.Text = "4th"
+        '
+        'Panel_PostCal_3rd
+        '
+        Me.Panel_PostCal_3rd.Controls.Add(Me.LinkLabel_PostCal_3rd)
+        Me.Panel_PostCal_3rd.Location = New System.Drawing.Point(10, 61)
+        Me.Panel_PostCal_3rd.Name = "Panel_PostCal_3rd"
+        Me.Panel_PostCal_3rd.Size = New System.Drawing.Size(72, 26)
+        Me.Panel_PostCal_3rd.TabIndex = 109
+        '
+        'LinkLabel_PostCal_3rd
+        '
+        Me.LinkLabel_PostCal_3rd.AutoSize = True
+        Me.LinkLabel_PostCal_3rd.Location = New System.Drawing.Point(5, 2)
+        Me.LinkLabel_PostCal_3rd.Name = "LinkLabel_PostCal_3rd"
+        Me.LinkLabel_PostCal_3rd.Size = New System.Drawing.Size(29, 15)
+        Me.LinkLabel_PostCal_3rd.TabIndex = 1
+        Me.LinkLabel_PostCal_3rd.TabStop = True
+        Me.LinkLabel_PostCal_3rd.Text = "3rd"
+        '
+        'Panel_PostCal_2nd
+        '
+        Me.Panel_PostCal_2nd.Controls.Add(Me.LinkLabel_PostCal_2nd)
+        Me.Panel_PostCal_2nd.Location = New System.Drawing.Point(10, 33)
+        Me.Panel_PostCal_2nd.Name = "Panel_PostCal_2nd"
+        Me.Panel_PostCal_2nd.Size = New System.Drawing.Size(72, 26)
+        Me.Panel_PostCal_2nd.TabIndex = 109
+        '
+        'LinkLabel_PostCal_2nd
+        '
+        Me.LinkLabel_PostCal_2nd.AutoSize = True
+        Me.LinkLabel_PostCal_2nd.Location = New System.Drawing.Point(5, 4)
+        Me.LinkLabel_PostCal_2nd.Name = "LinkLabel_PostCal_2nd"
+        Me.LinkLabel_PostCal_2nd.Size = New System.Drawing.Size(31, 15)
+        Me.LinkLabel_PostCal_2nd.TabIndex = 1
+        Me.LinkLabel_PostCal_2nd.TabStop = True
+        Me.LinkLabel_PostCal_2nd.Text = "2nd"
+        '
+        'Panel_PostCal_1st
+        '
+        Me.Panel_PostCal_1st.Controls.Add(Me.LinkLabel_PostCal_1st)
+        Me.Panel_PostCal_1st.Location = New System.Drawing.Point(10, 4)
+        Me.Panel_PostCal_1st.Name = "Panel_PostCal_1st"
+        Me.Panel_PostCal_1st.Size = New System.Drawing.Size(72, 26)
+        Me.Panel_PostCal_1st.TabIndex = 108
+        '
+        'LinkLabel_PostCal_1st
+        '
+        Me.LinkLabel_PostCal_1st.AutoSize = True
+        Me.LinkLabel_PostCal_1st.Location = New System.Drawing.Point(5, 7)
+        Me.LinkLabel_PostCal_1st.Name = "LinkLabel_PostCal_1st"
+        Me.LinkLabel_PostCal_1st.Size = New System.Drawing.Size(26, 15)
+        Me.LinkLabel_PostCal_1st.TabIndex = 0
+        Me.LinkLabel_PostCal_1st.TabStop = True
+        Me.LinkLabel_PostCal_1st.Text = "1st"
+        '
         'Program
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
@@ -3040,6 +3324,32 @@ Partial Class Program
         Me.Panel_ExA1_Fst_2nd.PerformLayout()
         Me.Panel_ExA1_Fst_1st.ResumeLayout(False)
         Me.Panel_ExA1_Fst_1st.PerformLayout()
+        Me.Panel_PreCal_1st.ResumeLayout(False)
+        Me.Panel_PreCal_1st.PerformLayout()
+        Me.Panel_PreCal_2nd.ResumeLayout(False)
+        Me.Panel_PreCal_2nd.PerformLayout()
+        Me.Panel_PreCal_3rd.ResumeLayout(False)
+        Me.Panel_PreCal_3rd.PerformLayout()
+        Me.Panel_PreCal_4th.ResumeLayout(False)
+        Me.Panel_PreCal_4th.PerformLayout()
+        Me.Panel_PreCal_5th.ResumeLayout(False)
+        Me.Panel_PreCal_5th.PerformLayout()
+        Me.Panel_PreCal_6th.ResumeLayout(False)
+        Me.Panel_PreCal_6th.PerformLayout()
+        Me.Panel_PreCal_Sub.ResumeLayout(False)
+        Me.Panel_PostCal_Sub.ResumeLayout(False)
+        Me.Panel_PostCal_6th.ResumeLayout(False)
+        Me.Panel_PostCal_6th.PerformLayout()
+        Me.Panel_PostCal_5th.ResumeLayout(False)
+        Me.Panel_PostCal_5th.PerformLayout()
+        Me.Panel_PostCal_4th.ResumeLayout(False)
+        Me.Panel_PostCal_4th.PerformLayout()
+        Me.Panel_PostCal_3rd.ResumeLayout(False)
+        Me.Panel_PostCal_3rd.PerformLayout()
+        Me.Panel_PostCal_2nd.ResumeLayout(False)
+        Me.Panel_PostCal_2nd.PerformLayout()
+        Me.Panel_PostCal_1st.ResumeLayout(False)
+        Me.Panel_PostCal_1st.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -3292,4 +3602,30 @@ Partial Class Program
     Friend WithEvents LinkLabel_LoA3_Add_bkd As System.Windows.Forms.LinkLabel
     Friend WithEvents Chart2 As System.Windows.Forms.DataVisualization.Charting.Chart
     Friend WithEvents Chart1 As System.Windows.Forms.DataVisualization.Charting.Chart
+    Friend WithEvents Panel_PostCal_Sub As System.Windows.Forms.Panel
+    Friend WithEvents Panel_PostCal_6th As System.Windows.Forms.Panel
+    Friend WithEvents LinkLabel_PostCal_6th As System.Windows.Forms.LinkLabel
+    Friend WithEvents Panel_PostCal_5th As System.Windows.Forms.Panel
+    Friend WithEvents LinkLabel_PostCal_5th As System.Windows.Forms.LinkLabel
+    Friend WithEvents Panel_PostCal_4th As System.Windows.Forms.Panel
+    Friend WithEvents LinkLabel_PostCal_4th As System.Windows.Forms.LinkLabel
+    Friend WithEvents Panel_PostCal_3rd As System.Windows.Forms.Panel
+    Friend WithEvents LinkLabel_PostCal_3rd As System.Windows.Forms.LinkLabel
+    Friend WithEvents Panel_PostCal_2nd As System.Windows.Forms.Panel
+    Friend WithEvents LinkLabel_PostCal_2nd As System.Windows.Forms.LinkLabel
+    Friend WithEvents Panel_PostCal_1st As System.Windows.Forms.Panel
+    Friend WithEvents LinkLabel_PostCal_1st As System.Windows.Forms.LinkLabel
+    Friend WithEvents Panel_PreCal_Sub As System.Windows.Forms.Panel
+    Friend WithEvents Panel_PreCal_6th As System.Windows.Forms.Panel
+    Friend WithEvents LinkLabel_PreCal_6th As System.Windows.Forms.LinkLabel
+    Friend WithEvents Panel_PreCal_5th As System.Windows.Forms.Panel
+    Friend WithEvents LinkLabel_PreCal_5th As System.Windows.Forms.LinkLabel
+    Friend WithEvents Panel_PreCal_4th As System.Windows.Forms.Panel
+    Friend WithEvents LinkLabel_PreCal_4th As System.Windows.Forms.LinkLabel
+    Friend WithEvents Panel_PreCal_3rd As System.Windows.Forms.Panel
+    Friend WithEvents LinkLabel_PreCal_3rd As System.Windows.Forms.LinkLabel
+    Friend WithEvents Panel_PreCal_2nd As System.Windows.Forms.Panel
+    Friend WithEvents LinkLabel_PreCal_2nd As System.Windows.Forms.LinkLabel
+    Friend WithEvents Panel_PreCal_1st As System.Windows.Forms.Panel
+    Friend WithEvents LinkLabel_PreCal_1st As System.Windows.Forms.LinkLabel
 End Class

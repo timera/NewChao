@@ -23,12 +23,12 @@ Partial Class Program
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea7 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend7 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series7 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea8 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend8 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series8 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.p6Label = New System.Windows.Forms.Label()
@@ -854,6 +854,8 @@ Partial Class Program
         'LinkLabel_postCal
         '
         Me.LinkLabel_postCal.AutoSize = True
+        Me.LinkLabel_postCal.Enabled = False
+        Me.LinkLabel_postCal.LinkColor = System.Drawing.Color.Black
         Me.LinkLabel_postCal.Location = New System.Drawing.Point(4, 12)
         Me.LinkLabel_postCal.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LinkLabel_postCal.Name = "LinkLabel_postCal"
@@ -1090,6 +1092,8 @@ Partial Class Program
         'LinkLabel_preCal
         '
         Me.LinkLabel_preCal.AutoSize = True
+        Me.LinkLabel_preCal.Enabled = False
+        Me.LinkLabel_preCal.LinkColor = System.Drawing.Color.Black
         Me.LinkLabel_preCal.Location = New System.Drawing.Point(4, 15)
         Me.LinkLabel_preCal.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LinkLabel_preCal.Name = "LinkLabel_preCal"
@@ -2371,16 +2375,16 @@ Partial Class Program
         '
         'Chart2
         '
-        ChartArea3.Name = "ChartArea1"
-        Me.Chart2.ChartAreas.Add(ChartArea3)
-        Legend3.Name = "Legend1"
-        Me.Chart2.Legends.Add(Legend3)
+        ChartArea7.Name = "ChartArea1"
+        Me.Chart2.ChartAreas.Add(ChartArea7)
+        Legend7.Name = "Legend1"
+        Me.Chart2.Legends.Add(Legend7)
         Me.Chart2.Location = New System.Drawing.Point(512, 109)
         Me.Chart2.Name = "Chart2"
-        Series3.ChartArea = "ChartArea1"
-        Series3.Legend = "Legend1"
-        Series3.Name = "Series1"
-        Me.Chart2.Series.Add(Series3)
+        Series7.ChartArea = "ChartArea1"
+        Series7.Legend = "Legend1"
+        Series7.Name = "Series1"
+        Me.Chart2.Series.Add(Series7)
         Me.Chart2.Size = New System.Drawing.Size(361, 538)
         Me.Chart2.TabIndex = 83
         Me.Chart2.Text = "Chart2"
@@ -2388,16 +2392,16 @@ Partial Class Program
         '
         'Chart1
         '
-        ChartArea4.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea4)
-        Legend4.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend4)
+        ChartArea8.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea8)
+        Legend8.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend8)
         Me.Chart1.Location = New System.Drawing.Point(-55, 6)
         Me.Chart1.Name = "Chart1"
-        Series4.ChartArea = "ChartArea1"
-        Series4.Legend = "Legend1"
-        Series4.Name = "Series1"
-        Me.Chart1.Series.Add(Series4)
+        Series8.ChartArea = "ChartArea1"
+        Series8.Legend = "Legend1"
+        Series8.Name = "Series1"
+        Me.Chart1.Series.Add(Series8)
         Me.Chart1.Size = New System.Drawing.Size(1219, 97)
         Me.Chart1.TabIndex = 82
         Me.Chart1.Text = "Chart1"

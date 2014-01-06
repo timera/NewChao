@@ -1,5 +1,6 @@
 ﻿Public Class Run_Unit
-    Dim Link As LinkLabel
+
+    WithEvents Link As LinkLabel
     Dim Panel As Panel
     Dim Data As List(Of Double)
     Public NextUnit As Run_Unit
@@ -40,6 +41,9 @@
         Panel.BackColor = c
     End Sub
 
+    Private Sub LinkLabel_Clicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles Link.LinkClicked
+
+    End Sub
     'Function L_Average()
 
     'End Function

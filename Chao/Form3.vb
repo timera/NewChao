@@ -78,6 +78,8 @@ Public Class Program
     Dim RandGen As New Random
     Dim RandBool As Boolean
 
+    Dim choice As String
+
     'temporary constant
     Const seconds As Integer = 3
     Const graphW As Integer = 650
@@ -254,6 +256,8 @@ Public Class Program
         Panel_PostCal.Location = New Point(10, 540)
         Panel_PostCal_Sub.Location = New Point(10, 570)
 
+        Button_change_machine.Enabled = False
+
         MachChosen = False
     End Sub
 
@@ -270,6 +274,39 @@ Public Class Program
         End If
     End Sub
 
+    Private Sub Button_change_machine_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_change_machine.Click
+        If MessageBox.Show("是否放棄目前測量數據?", "My application", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            ComboBox_machine_list.Enabled = True
+            Button_change_machine.Enabled = False
+            MainLineGraphs.Dispose()
+            MainBarGraph.Dispose()
+            'Set invisible
+            Panel_PreCal.Visible = False
+            Panel_Bkg.Visible = False
+            Panel_RSS.Visible = False
+            Panel_PostCal.Visible = False
+            Panel_PreCal_Sub.Visible = False
+            Panel_PostCal_Sub.Visible = False
+            PanelA4.Visible = False
+            PanelExcavatorA1.Visible = False
+            PanelExcavatorA2.Visible = False
+            PanelLoaderA3.Visible = False
+            PanelLoaderA1.Visible = False
+            PanelLoaderA2.Visible = False
+            PanelTractorA1.Visible = False
+            PanelTractorA3.Visible = False
+            GroupBox_A1_A2_A3.Enabled = False
+            GroupBox_A4.Enabled = False
+            TextBox_L.Text = Nothing
+            TextBox_L1.Text = Nothing
+            TextBox_L2.Text = Nothing
+            TextBox_L3.Text = Nothing
+            TextBox_r1.Text = Nothing
+            TextBox_r2.Text = Nothing
+            MachChosen = False
+        End If
+    End Sub
+
     Private Sub ComboBox_machine_list_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBox_machine_list.SelectedIndexChanged
 
         'step1~9清空
@@ -277,142 +314,97 @@ Public Class Program
             array_step(index).Text = ""
             array_step(index).BackColor = Color.DarkGray
         Next
-        Dim choice As String = ComboBox_machine_list.Text
+        Dim inner_choice As String = ComboBox_machine_list.Text
 
-        If choice = "開挖機(Excavator)" Then
+        If inner_choice = "開挖機(Excavator)" Then
             Picture_machine.Image = My.Resources.Resource1.小型開挖機_compact_excavator_
             Machine = Machines.Excavator
-            Load_Excavator()
-            MachChosen = True
-        ElseIf choice = "推土機(Crawler and wheel tractor)" Then  'A1+A3
+        ElseIf inner_choice = "推土機(Crawler and wheel tractor)" Then  'A1+A3
             Picture_machine.Image = My.Resources.Resource1.履帶式推土機_crawler_dozer_
             Machine = Machines.Tractor
-            Load_Tractor()
-            MachChosen = True
-        ElseIf choice = "鐵輪壓路機(Road roller)" Then
+        ElseIf inner_choice = "鐵輪壓路機(Road roller)" Then
             Picture_machine.Image = My.Resources.Resource1.壓路機_rollers_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "膠輪壓路機(Wheel roller)" Then
+        ElseIf inner_choice = "膠輪壓路機(Wheel roller)" Then
             Picture_machine.Image = My.Resources.Resource1.壓路機_rollers_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "振動式壓路機(Vibrating roller)" Then
+        ElseIf inner_choice = "振動式壓路機(Vibrating roller)" Then
             Picture_machine.Image = My.Resources.Resource1.壓路機_rollers_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "裝料機(Crawler and wheel loader)" Then
+        ElseIf inner_choice = "裝料機(Crawler and wheel loader)" Then
             Picture_machine.Image = My.Resources.Resource1.履帶式裝料機_crawler_loader_
             Machine = Machines.Loader
-            Load_Loader()
-            MachChosen = True
-        ElseIf choice = "裝料開挖機" Then
+        ElseIf inner_choice = "裝料開挖機" Then
             Picture_machine.Image = My.Resources.Resource1.履帶式開挖裝料機_crawler_backhoe_loader_
             Machine = Machines.Loader_Excavator
-            Load_Loader_Excavator()
-            MachChosen = True
-        ElseIf choice = "履帶起重機(Crawler crane)" Then
+        ElseIf inner_choice = "履帶起重機(Crawler crane)" Then
             Picture_machine.Image = My.Resources.Resource1.膠輪式推土機_wheeled_dozer_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "卡車起重機(Truck crane)" Then
+        ElseIf inner_choice = "卡車起重機(Truck crane)" Then
             Picture_machine.Image = My.Resources.Resource1.膠輪式開挖裝料機_wheeled_backhoe_loader_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "輪形起重機(Wheel crane)" Then
+        ElseIf inner_choice = "輪形起重機(Wheel crane)" Then
             Picture_machine.Image = My.Resources.Resource1.膠輪式開挖機_wheeled_excavator_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "振動式樁錘(Vibrating hammer)" Then
+        ElseIf inner_choice = "振動式樁錘(Vibrating hammer)" Then
             Picture_machine.Image = My.Resources.Resource1.膠輪式裝料機_wheeled_loader_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "油壓式打樁機(Hydraulic pile driver)" Then
+        ElseIf inner_choice = "油壓式打樁機(Hydraulic pile driver)" Then
             Picture_machine.Image = My.Resources.Resource1.壓路機_rollers_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "拔樁機" Then
+        ElseIf inner_choice = "拔樁機" Then
             Picture_machine.Image = My.Resources.Resource1.小型開挖機_compact_excavator_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "油壓式拔樁機" Then
+        ElseIf inner_choice = "油壓式拔樁機" Then
             Picture_machine.Image = My.Resources.Resource1.小型膠輪式裝料機_compact_loader__wheeled_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "土壤取樣器(地鑽) (Earth auger)" Then
+        ElseIf inner_choice = "土壤取樣器(地鑽) (Earth auger)" Then
             Picture_machine.Image = My.Resources.Resource1.滑移裝料機_skid_steer_loader_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "全套管鑽掘機" Then
+        ElseIf inner_choice = "全套管鑽掘機" Then
             Picture_machine.Image = My.Resources.Resource1.履帶式開挖裝料機_crawler_backhoe_loader_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "鑽土機(Earth drill)" Then
+        ElseIf inner_choice = "鑽土機(Earth drill)" Then
             Picture_machine.Image = My.Resources.Resource1.履帶式推土機_crawler_dozer_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "鑽岩機(Rock breaker)" Then
+        ElseIf inner_choice = "鑽岩機(Rock breaker)" Then
             Picture_machine.Image = My.Resources.Resource1.履帶式裝料機_crawler_loader_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "混凝土泵車(Concrete pump)" Then
+        ElseIf inner_choice = "混凝土泵車(Concrete pump)" Then
             Picture_machine.Image = My.Resources.Resource1.履帶式開挖機_crawler_excavator_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "混凝土破碎機(Concrete breaker)" Then
+        ElseIf inner_choice = "混凝土破碎機(Concrete breaker)" Then
             Picture_machine.Image = My.Resources.Resource1.膠輪式推土機_wheeled_dozer_
             Step1.Text = My.Resources.A4_Concrete_Breaker
             Machine = Machines.Others
-            Load_Others(choice)
-        ElseIf choice = "瀝青混凝土舖築機(Asphalt finisher)" Then
+        ElseIf inner_choice = "瀝青混凝土舖築機(Asphalt finisher)" Then
             Picture_machine.Image = My.Resources.Resource1.膠輪式開挖裝料機_wheeled_backhoe_loader_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "混凝土割切機(Concrete cutter)" Then
+        ElseIf inner_choice = "混凝土割切機(Concrete cutter)" Then
             Picture_machine.Image = My.Resources.Resource1.膠輪式開挖機_wheeled_excavator_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "發電機(Generator)" Then
+        ElseIf inner_choice = "發電機(Generator)" Then
             Picture_machine.Image = My.Resources.Resource1.膠輪式裝料機_wheeled_loader_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "空氣壓縮機(Compressor)" Then
+        ElseIf inner_choice = "空氣壓縮機(Compressor)" Then
             Picture_machine.Image = My.Resources.Resource1.壓路機_rollers_
             Machine = Machines.Others
-            Load_Others(choice)
-            MachChosen = True
         Else
             Machine = Nothing
-            MachChosen = False
         End If
 
+        choice = inner_choice
 
         'mach區分要輸入至哪個 groupbox for plotting the coordinates
         If Not IsNothing(Machine) Then
             If Not Machine = Machines.Others Then
                 GroupBox_A1_A2_A3.Enabled = True
+                Button_L_check.Enabled = True
                 GroupBox_A4.Enabled = False
             Else
                 GroupBox_A1_A2_A3.Enabled = False
                 GroupBox_A4.Enabled = True
+                Button_L1_L2_L3_check.Enabled = True
             End If
 
             'if machine chose, then allow to go to the 2nd tab
@@ -448,6 +440,28 @@ Public Class Program
 
         plot(xCor, yCor, GroupBox_Plot, r1, pos)
 
+        If choice = "開挖機(Excavator)" Then
+            Load_Excavator()
+            MachChosen = True
+        ElseIf choice = "推土機(Crawler and wheel tractor)" Then  'A1+A3
+            Load_Tractor()
+            MachChosen = True
+        ElseIf choice = "裝料機(Crawler and wheel loader)" Then
+            Load_Loader()
+            MachChosen = True
+        ElseIf choice = "裝料開挖機" Then
+            Load_Loader_Excavator()
+            MachChosen = True
+        Else
+            MachChosen = False
+        End If
+
+        '選擇機具後可更換
+        If MachChosen = True Then
+            Button_change_machine.Enabled = True
+            ComboBox_machine_list.Enabled = False
+            Button_L_check.Enabled = False
+        End If
     End Sub
 
     Private Sub Button_L1_L2_L3_check_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L1_L2_L3_check.Click
@@ -471,6 +485,75 @@ Public Class Program
 
         plot(xCor, yCor, GroupBox_Plot, r, pos2)
 
+        If choice = "鐵輪壓路機(Road roller)" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "膠輪壓路機(Wheel roller)" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "振動式壓路機(Vibrating roller)" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "履帶起重機(Crawler crane)" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "卡車起重機(Truck crane)" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "輪形起重機(Wheel crane)" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "振動式樁錘(Vibrating hammer)" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "油壓式打樁機(Hydraulic pile driver)" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "拔樁機" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "油壓式拔樁機" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "土壤取樣器(地鑽) (Earth auger)" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "全套管鑽掘機" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "鑽土機(Earth drill)" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "鑽岩機(Rock breaker)" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "混凝土泵車(Concrete pump)" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "混凝土破碎機(Concrete breaker)" Then
+            Load_Others(choice)
+        ElseIf choice = "瀝青混凝土舖築機(Asphalt finisher)" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "混凝土割切機(Concrete cutter)" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "發電機(Generator)" Then
+            Load_Others(choice)
+            MachChosen = True
+        ElseIf choice = "空氣壓縮機(Compressor)" Then
+            Load_Others(choice)
+            MachChosen = True
+        Else
+            MachChosen = False
+        End If
+
+        '選擇機具後可更換
+        If MachChosen = True Then
+            Button_change_machine.Enabled = True
+            ComboBox_machine_list.Enabled = False
+            Button_L1_L2_L3_check.Enabled = False
+        End If
     End Sub
 
     Sub Set_Panel(ByRef p As Panel, ByRef l As Label)

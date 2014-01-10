@@ -23,12 +23,12 @@ Partial Class Program
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea8 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend8 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series8 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea7 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend7 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series7 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.p6Label = New System.Windows.Forms.Label()
@@ -120,13 +120,13 @@ Partial Class Program
         Me.LinkLabel_preCal = New System.Windows.Forms.LinkLabel()
         Me.PanelA4 = New System.Windows.Forms.Panel()
         Me.Panel_A4_Add = New System.Windows.Forms.Panel()
-        Me.LinkLabel_A4_Additional = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel_A4_Add = New System.Windows.Forms.LinkLabel()
         Me.Panel_A4_Thd = New System.Windows.Forms.Panel()
-        Me.LinkLabel_A4_Third = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel_A4_Thd = New System.Windows.Forms.LinkLabel()
         Me.Panel_A4_Sec = New System.Windows.Forms.Panel()
-        Me.LinkLabel_A4_Second = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel_A4_Sec = New System.Windows.Forms.LinkLabel()
         Me.Panel_A4_Fst = New System.Windows.Forms.Panel()
-        Me.LinkLabel_A4_First = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel_A4_Fst = New System.Windows.Forms.LinkLabel()
         Me.Label_A4 = New System.Windows.Forms.Label()
         Me.PanelTractorA1 = New System.Windows.Forms.Panel()
         Me.Panel_TrA1_Add_3rd = New System.Windows.Forms.Panel()
@@ -154,7 +154,6 @@ Partial Class Program
         Me.Label_Tr_A1 = New System.Windows.Forms.Label()
         Me.Panel_TrA1_Fst_1st = New System.Windows.Forms.Panel()
         Me.LinkLabel_TrA1_Fst_1st = New System.Windows.Forms.LinkLabel()
-        Me.testButton = New System.Windows.Forms.Button()
         Me.Noise_Avg = New System.Windows.Forms.Label()
         Me.PanelLoaderA2 = New System.Windows.Forms.Panel()
         Me.Panel_LoA2_Add_3rd = New System.Windows.Forms.Panel()
@@ -253,8 +252,6 @@ Partial Class Program
         Me.Panel_ExA2_Fst_1st = New System.Windows.Forms.Panel()
         Me.LinkLabel_ExA2_Fst_1st = New System.Windows.Forms.LinkLabel()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.Chart2 = New System.Windows.Forms.DataVisualization.Charting.Chart()
-        Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.PanelExcavatorA1 = New System.Windows.Forms.Panel()
         Me.Panel_ExA1_Add_3rd = New System.Windows.Forms.Panel()
@@ -305,6 +302,19 @@ Partial Class Program
         Me.startButton = New System.Windows.Forms.Button()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Button_change_machine = New System.Windows.Forms.Button()
+        Me.Panel_A4_Fst_Mid_Background = New System.Windows.Forms.Panel()
+        Me.LinkLabel_A4_Fst_Mid_Background = New System.Windows.Forms.LinkLabel()
+        Me.Panel_A4_Sec_Mid_Background = New System.Windows.Forms.Panel()
+        Me.LinkLabel_A4_Sec_Mid_Background = New System.Windows.Forms.LinkLabel()
+        Me.Panel_A4_Thd_Mid_Background = New System.Windows.Forms.Panel()
+        Me.LinkLabel_A4_Thd_Mid_Background = New System.Windows.Forms.LinkLabel()
+        Me.Panel_A4_Add_Mid_Background = New System.Windows.Forms.Panel()
+        Me.LinkLabel_A4_Add_Mid_Background = New System.Windows.Forms.LinkLabel()
+        Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
+        Me.Chart2 = New System.Windows.Forms.DataVisualization.Charting.Chart()
+        Me.TabControl2 = New System.Windows.Forms.TabControl()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox_Plot.SuspendLayout()
@@ -405,8 +415,6 @@ Partial Class Program
         Me.Panel_ExA2_Fst_3rd.SuspendLayout()
         Me.Panel_ExA2_Fst_2nd.SuspendLayout()
         Me.Panel_ExA2_Fst_1st.SuspendLayout()
-        CType(Me.Chart2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelExcavatorA1.SuspendLayout()
         Me.Panel_ExA1_Add_3rd.SuspendLayout()
         Me.Panel_ExA1_Add_2nd.SuspendLayout()
@@ -420,6 +428,14 @@ Partial Class Program
         Me.Panel_ExA1_Fst_3rd.SuspendLayout()
         Me.Panel_ExA1_Fst_2nd.SuspendLayout()
         Me.Panel_ExA1_Fst_1st.SuspendLayout()
+        Me.Panel_A4_Fst_Mid_Background.SuspendLayout()
+        Me.Panel_A4_Sec_Mid_Background.SuspendLayout()
+        Me.Panel_A4_Thd_Mid_Background.SuspendLayout()
+        Me.Panel_A4_Add_Mid_Background.SuspendLayout()
+        CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Chart2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabControl2.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -517,11 +533,11 @@ Partial Class Program
         Me.GroupBox_Plot.BackColor = System.Drawing.Color.DarkGray
         Me.GroupBox_Plot.Controls.Add(Me.yLabel)
         Me.GroupBox_Plot.Controls.Add(Me.xLabel)
-        Me.GroupBox_Plot.Location = New System.Drawing.Point(175, 390)
+        Me.GroupBox_Plot.Location = New System.Drawing.Point(427, 76)
         Me.GroupBox_Plot.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox_Plot.Name = "GroupBox_Plot"
         Me.GroupBox_Plot.Padding = New System.Windows.Forms.Padding(4)
-        Me.GroupBox_Plot.Size = New System.Drawing.Size(524, 416)
+        Me.GroupBox_Plot.Size = New System.Drawing.Size(394, 319)
         Me.GroupBox_Plot.TabIndex = 39
         Me.GroupBox_Plot.TabStop = False
         '
@@ -588,11 +604,11 @@ Partial Class Program
         Me.GroupBox_A4.Controls.Add(Me.Label_input_L2)
         Me.GroupBox_A4.Controls.Add(Me.Label_input_L3)
         Me.GroupBox_A4.Controls.Add(Me.Label_input_L1)
-        Me.GroupBox_A4.Location = New System.Drawing.Point(573, 165)
+        Me.GroupBox_A4.Location = New System.Drawing.Point(11, 430)
         Me.GroupBox_A4.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox_A4.Name = "GroupBox_A4"
         Me.GroupBox_A4.Padding = New System.Windows.Forms.Padding(4)
-        Me.GroupBox_A4.Size = New System.Drawing.Size(371, 211)
+        Me.GroupBox_A4.Size = New System.Drawing.Size(366, 168)
         Me.GroupBox_A4.TabIndex = 19
         Me.GroupBox_A4.TabStop = False
         Me.GroupBox_A4.Text = "A4"
@@ -610,7 +626,7 @@ Partial Class Program
         'TextBox_r2
         '
         Me.TextBox_r2.Enabled = False
-        Me.TextBox_r2.Location = New System.Drawing.Point(137, 141)
+        Me.TextBox_r2.Location = New System.Drawing.Point(137, 137)
         Me.TextBox_r2.Margin = New System.Windows.Forms.Padding(4)
         Me.TextBox_r2.Name = "TextBox_r2"
         Me.TextBox_r2.Size = New System.Drawing.Size(131, 25)
@@ -644,7 +660,7 @@ Partial Class Program
         '
         Me.Label_r2.AutoSize = True
         Me.Label_r2.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_r2.Location = New System.Drawing.Point(73, 136)
+        Me.Label_r2.Location = New System.Drawing.Point(72, 128)
         Me.Label_r2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label_r2.Name = "Label_r2"
         Me.Label_r2.Size = New System.Drawing.Size(40, 35)
@@ -691,18 +707,18 @@ Partial Class Program
         Me.GroupBox_A1_A2_A3.Controls.Add(Me.TextBox_L)
         Me.GroupBox_A1_A2_A3.Controls.Add(Me.Label_r1)
         Me.GroupBox_A1_A2_A3.Controls.Add(Me.Label_input_L)
-        Me.GroupBox_A1_A2_A3.Location = New System.Drawing.Point(573, 40)
+        Me.GroupBox_A1_A2_A3.Location = New System.Drawing.Point(11, 322)
         Me.GroupBox_A1_A2_A3.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox_A1_A2_A3.Name = "GroupBox_A1_A2_A3"
         Me.GroupBox_A1_A2_A3.Padding = New System.Windows.Forms.Padding(4)
-        Me.GroupBox_A1_A2_A3.Size = New System.Drawing.Size(371, 118)
+        Me.GroupBox_A1_A2_A3.Size = New System.Drawing.Size(366, 93)
         Me.GroupBox_A1_A2_A3.TabIndex = 10
         Me.GroupBox_A1_A2_A3.TabStop = False
         Me.GroupBox_A1_A2_A3.Text = "A1 or A2 or A3"
         '
         'Button_L_check
         '
-        Me.Button_L_check.Location = New System.Drawing.Point(292, 34)
+        Me.Button_L_check.Location = New System.Drawing.Point(294, 28)
         Me.Button_L_check.Margin = New System.Windows.Forms.Padding(4)
         Me.Button_L_check.Name = "Button_L_check"
         Me.Button_L_check.Size = New System.Drawing.Size(56, 26)
@@ -713,7 +729,7 @@ Partial Class Program
         'TextBox_r1
         '
         Me.TextBox_r1.Enabled = False
-        Me.TextBox_r1.Location = New System.Drawing.Point(140, 69)
+        Me.TextBox_r1.Location = New System.Drawing.Point(140, 64)
         Me.TextBox_r1.Margin = New System.Windows.Forms.Padding(4)
         Me.TextBox_r1.Name = "TextBox_r1"
         Me.TextBox_r1.Size = New System.Drawing.Size(131, 25)
@@ -721,7 +737,7 @@ Partial Class Program
         '
         'TextBox_L
         '
-        Me.TextBox_L.Location = New System.Drawing.Point(140, 34)
+        Me.TextBox_L.Location = New System.Drawing.Point(140, 28)
         Me.TextBox_L.Margin = New System.Windows.Forms.Padding(4)
         Me.TextBox_L.Name = "TextBox_L"
         Me.TextBox_L.Size = New System.Drawing.Size(131, 25)
@@ -731,7 +747,7 @@ Partial Class Program
         '
         Me.Label_r1.AutoSize = True
         Me.Label_r1.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_r1.Location = New System.Drawing.Point(76, 64)
+        Me.Label_r1.Location = New System.Drawing.Point(65, 56)
         Me.Label_r1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label_r1.Name = "Label_r1"
         Me.Label_r1.Size = New System.Drawing.Size(40, 35)
@@ -742,7 +758,7 @@ Partial Class Program
         '
         Me.Label_input_L.AutoSize = True
         Me.Label_input_L.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_input_L.Location = New System.Drawing.Point(16, 29)
+        Me.Label_input_L.Location = New System.Drawing.Point(8, 21)
         Me.Label_input_L.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label_input_L.Name = "Label_input_L"
         Me.Label_input_L.Size = New System.Drawing.Size(97, 35)
@@ -756,7 +772,7 @@ Partial Class Program
         Me.Picture_machine.Location = New System.Drawing.Point(11, 99)
         Me.Picture_machine.Margin = New System.Windows.Forms.Padding(4)
         Me.Picture_machine.Name = "Picture_machine"
-        Me.Picture_machine.Size = New System.Drawing.Size(485, 274)
+        Me.Picture_machine.Size = New System.Drawing.Size(408, 215)
         Me.Picture_machine.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.Picture_machine.TabIndex = 6
         Me.Picture_machine.TabStop = False
@@ -797,30 +813,11 @@ Partial Class Program
         'TabPage2
         '
         Me.TabPage2.BackColor = System.Drawing.Color.DarkGray
-        Me.TabPage2.Controls.Add(Me.Panel_PostCal_Sub)
-        Me.TabPage2.Controls.Add(Me.Panel_PreCal_Sub)
-        Me.TabPage2.Controls.Add(Me.Panel_PostCal)
+        Me.TabPage2.Controls.Add(Me.TabControl2)
         Me.TabPage2.Controls.Add(Me.Step1)
-        Me.TabPage2.Controls.Add(Me.PanelTractorA3)
-        Me.TabPage2.Controls.Add(Me.Panel_RSS)
-        Me.TabPage2.Controls.Add(Me.Panel_Bkg)
-        Me.TabPage2.Controls.Add(Me.Panel_PreCal)
-        Me.TabPage2.Controls.Add(Me.PanelA4)
-        Me.TabPage2.Controls.Add(Me.PanelTractorA1)
-        Me.TabPage2.Controls.Add(Me.testButton)
         Me.TabPage2.Controls.Add(Me.Noise_Avg)
-        Me.TabPage2.Controls.Add(Me.PanelLoaderA2)
-        Me.TabPage2.Controls.Add(Me.PanelLoaderA1)
-        Me.TabPage2.Controls.Add(Me.PanelLoaderA3)
-        Me.TabPage2.Controls.Add(Me.PanelExcavatorA2)
-        Me.TabPage2.Controls.Add(Me.Label2)
         Me.TabPage2.Controls.Add(Me.Chart2)
         Me.TabPage2.Controls.Add(Me.Chart1)
-        Me.TabPage2.Controls.Add(Me.Label4)
-        Me.TabPage2.Controls.Add(Me.PanelExcavatorA1)
-        Me.TabPage2.Controls.Add(Me.Label3)
-        Me.TabPage2.Controls.Add(Me.Label1)
-        Me.TabPage2.Controls.Add(Me.Accept_Button)
         Me.TabPage2.Controls.Add(Me.Step10)
         Me.TabPage2.Controls.Add(Me.Step9)
         Me.TabPage2.Controls.Add(Me.Noise6)
@@ -836,9 +833,6 @@ Partial Class Program
         Me.TabPage2.Controls.Add(Me.Step4)
         Me.TabPage2.Controls.Add(Me.Step3)
         Me.TabPage2.Controls.Add(Me.Step2)
-        Me.TabPage2.Controls.Add(Me.stopButton)
-        Me.TabPage2.Controls.Add(Me.timeLabel)
-        Me.TabPage2.Controls.Add(Me.startButton)
         Me.TabPage2.Font = New System.Drawing.Font("新細明體", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.TabPage2.Location = New System.Drawing.Point(4, 25)
         Me.TabPage2.Margin = New System.Windows.Forms.Padding(0)
@@ -855,7 +849,7 @@ Partial Class Program
         Me.Panel_PostCal_Sub.Controls.Add(Me.Panel_PostCal_3rd)
         Me.Panel_PostCal_Sub.Controls.Add(Me.Panel_PostCal_2nd)
         Me.Panel_PostCal_Sub.Controls.Add(Me.Panel_PostCal_1st)
-        Me.Panel_PostCal_Sub.Location = New System.Drawing.Point(10, 585)
+        Me.Panel_PostCal_Sub.Location = New System.Drawing.Point(96, 396)
         Me.Panel_PostCal_Sub.Name = "Panel_PostCal_Sub"
         Me.Panel_PostCal_Sub.Size = New System.Drawing.Size(90, 180)
         Me.Panel_PostCal_Sub.TabIndex = 111
@@ -976,7 +970,7 @@ Partial Class Program
         Me.Panel_PreCal_Sub.Controls.Add(Me.Panel_PreCal_3rd)
         Me.Panel_PreCal_Sub.Controls.Add(Me.Panel_PreCal_2nd)
         Me.Panel_PreCal_Sub.Controls.Add(Me.Panel_PreCal_1st)
-        Me.Panel_PreCal_Sub.Location = New System.Drawing.Point(7, 275)
+        Me.Panel_PreCal_Sub.Location = New System.Drawing.Point(10, 162)
         Me.Panel_PreCal_Sub.Name = "Panel_PreCal_Sub"
         Me.Panel_PreCal_Sub.Size = New System.Drawing.Size(90, 180)
         Me.Panel_PreCal_Sub.TabIndex = 110
@@ -1092,7 +1086,7 @@ Partial Class Program
         'Panel_PostCal
         '
         Me.Panel_PostCal.Controls.Add(Me.LinkLabel_postCal)
-        Me.Panel_PostCal.Location = New System.Drawing.Point(10, 540)
+        Me.Panel_PostCal.Location = New System.Drawing.Point(10, 442)
         Me.Panel_PostCal.Name = "Panel_PostCal"
         Me.Panel_PostCal.Size = New System.Drawing.Size(80, 39)
         Me.Panel_PostCal.TabIndex = 107
@@ -1117,7 +1111,7 @@ Partial Class Program
         Me.Step1.Location = New System.Drawing.Point(880, 106)
         Me.Step1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Step1.Name = "Step1"
-        Me.Step1.Size = New System.Drawing.Size(320, 60)
+        Me.Step1.Size = New System.Drawing.Size(340, 60)
         Me.Step1.TabIndex = 31
         '
         'PanelTractorA3
@@ -1131,7 +1125,7 @@ Partial Class Program
         Me.PanelTractorA3.Controls.Add(Me.Panel_TrA3_Fst_bkd)
         Me.PanelTractorA3.Controls.Add(Me.Panel_TrA3_Fst_fwd)
         Me.PanelTractorA3.Controls.Add(Me.Label_Tr_A3)
-        Me.PanelTractorA3.Location = New System.Drawing.Point(157, 278)
+        Me.PanelTractorA3.Location = New System.Drawing.Point(339, 169)
         Me.PanelTractorA3.Name = "PanelTractorA3"
         Me.PanelTractorA3.Size = New System.Drawing.Size(70, 387)
         Me.PanelTractorA3.TabIndex = 102
@@ -1292,7 +1286,7 @@ Partial Class Program
         'Panel_RSS
         '
         Me.Panel_RSS.Controls.Add(Me.LinkLabel_RSS)
-        Me.Panel_RSS.Location = New System.Drawing.Point(9, 492)
+        Me.Panel_RSS.Location = New System.Drawing.Point(10, 398)
         Me.Panel_RSS.Name = "Panel_RSS"
         Me.Panel_RSS.Size = New System.Drawing.Size(80, 42)
         Me.Panel_RSS.TabIndex = 106
@@ -1311,7 +1305,7 @@ Partial Class Program
         'Panel_Bkg
         '
         Me.Panel_Bkg.Controls.Add(Me.LinkLabel_BG)
-        Me.Panel_Bkg.Location = New System.Drawing.Point(9, 440)
+        Me.Panel_Bkg.Location = New System.Drawing.Point(10, 348)
         Me.Panel_Bkg.Name = "Panel_Bkg"
         Me.Panel_Bkg.Size = New System.Drawing.Size(109, 46)
         Me.Panel_Bkg.TabIndex = 105
@@ -1330,7 +1324,7 @@ Partial Class Program
         'Panel_PreCal
         '
         Me.Panel_PreCal.Controls.Add(Me.LinkLabel_preCal)
-        Me.Panel_PreCal.Location = New System.Drawing.Point(10, 226)
+        Me.Panel_PreCal.Location = New System.Drawing.Point(10, 110)
         Me.Panel_PreCal.Name = "Panel_PreCal"
         Me.Panel_PreCal.Size = New System.Drawing.Size(109, 46)
         Me.Panel_PreCal.TabIndex = 104
@@ -1350,87 +1344,91 @@ Partial Class Program
         '
         'PanelA4
         '
+        Me.PanelA4.Controls.Add(Me.Panel_A4_Add_Mid_Background)
+        Me.PanelA4.Controls.Add(Me.Panel_A4_Thd_Mid_Background)
+        Me.PanelA4.Controls.Add(Me.Panel_A4_Sec_Mid_Background)
+        Me.PanelA4.Controls.Add(Me.Panel_A4_Fst_Mid_Background)
         Me.PanelA4.Controls.Add(Me.Panel_A4_Add)
         Me.PanelA4.Controls.Add(Me.Panel_A4_Thd)
         Me.PanelA4.Controls.Add(Me.Panel_A4_Sec)
         Me.PanelA4.Controls.Add(Me.Panel_A4_Fst)
         Me.PanelA4.Controls.Add(Me.Label_A4)
-        Me.PanelA4.Location = New System.Drawing.Point(508, 277)
+        Me.PanelA4.Location = New System.Drawing.Point(475, 56)
         Me.PanelA4.Name = "PanelA4"
         Me.PanelA4.Size = New System.Drawing.Size(51, 405)
         Me.PanelA4.TabIndex = 103
         '
         'Panel_A4_Add
         '
-        Me.Panel_A4_Add.Controls.Add(Me.LinkLabel_A4_Additional)
+        Me.Panel_A4_Add.Controls.Add(Me.LinkLabel_A4_Add)
         Me.Panel_A4_Add.Location = New System.Drawing.Point(4, 321)
         Me.Panel_A4_Add.Name = "Panel_A4_Add"
         Me.Panel_A4_Add.Size = New System.Drawing.Size(38, 26)
         Me.Panel_A4_Add.TabIndex = 92
         '
-        'LinkLabel_A4_Additional
+        'LinkLabel_A4_Add
         '
-        Me.LinkLabel_A4_Additional.AutoSize = True
-        Me.LinkLabel_A4_Additional.Location = New System.Drawing.Point(3, 5)
-        Me.LinkLabel_A4_Additional.Name = "LinkLabel_A4_Additional"
-        Me.LinkLabel_A4_Additional.Size = New System.Drawing.Size(33, 15)
-        Me.LinkLabel_A4_Additional.TabIndex = 65
-        Me.LinkLabel_A4_Additional.TabStop = True
-        Me.LinkLabel_A4_Additional.Text = "Run"
+        Me.LinkLabel_A4_Add.AutoSize = True
+        Me.LinkLabel_A4_Add.Location = New System.Drawing.Point(3, 5)
+        Me.LinkLabel_A4_Add.Name = "LinkLabel_A4_Add"
+        Me.LinkLabel_A4_Add.Size = New System.Drawing.Size(33, 15)
+        Me.LinkLabel_A4_Add.TabIndex = 65
+        Me.LinkLabel_A4_Add.TabStop = True
+        Me.LinkLabel_A4_Add.Text = "Run"
         '
         'Panel_A4_Thd
         '
-        Me.Panel_A4_Thd.Controls.Add(Me.LinkLabel_A4_Third)
+        Me.Panel_A4_Thd.Controls.Add(Me.LinkLabel_A4_Thd)
         Me.Panel_A4_Thd.Location = New System.Drawing.Point(4, 226)
         Me.Panel_A4_Thd.Name = "Panel_A4_Thd"
         Me.Panel_A4_Thd.Size = New System.Drawing.Size(38, 26)
         Me.Panel_A4_Thd.TabIndex = 89
         '
-        'LinkLabel_A4_Third
+        'LinkLabel_A4_Thd
         '
-        Me.LinkLabel_A4_Third.AutoSize = True
-        Me.LinkLabel_A4_Third.Location = New System.Drawing.Point(3, 5)
-        Me.LinkLabel_A4_Third.Name = "LinkLabel_A4_Third"
-        Me.LinkLabel_A4_Third.Size = New System.Drawing.Size(33, 15)
-        Me.LinkLabel_A4_Third.TabIndex = 65
-        Me.LinkLabel_A4_Third.TabStop = True
-        Me.LinkLabel_A4_Third.Text = "Run"
+        Me.LinkLabel_A4_Thd.AutoSize = True
+        Me.LinkLabel_A4_Thd.Location = New System.Drawing.Point(3, 5)
+        Me.LinkLabel_A4_Thd.Name = "LinkLabel_A4_Thd"
+        Me.LinkLabel_A4_Thd.Size = New System.Drawing.Size(33, 15)
+        Me.LinkLabel_A4_Thd.TabIndex = 65
+        Me.LinkLabel_A4_Thd.TabStop = True
+        Me.LinkLabel_A4_Thd.Text = "Run"
         '
         'Panel_A4_Sec
         '
-        Me.Panel_A4_Sec.Controls.Add(Me.LinkLabel_A4_Second)
+        Me.Panel_A4_Sec.Controls.Add(Me.LinkLabel_A4_Sec)
         Me.Panel_A4_Sec.Location = New System.Drawing.Point(4, 137)
         Me.Panel_A4_Sec.Name = "Panel_A4_Sec"
         Me.Panel_A4_Sec.Size = New System.Drawing.Size(38, 26)
         Me.Panel_A4_Sec.TabIndex = 86
         '
-        'LinkLabel_A4_Second
+        'LinkLabel_A4_Sec
         '
-        Me.LinkLabel_A4_Second.AutoSize = True
-        Me.LinkLabel_A4_Second.Location = New System.Drawing.Point(3, 5)
-        Me.LinkLabel_A4_Second.Name = "LinkLabel_A4_Second"
-        Me.LinkLabel_A4_Second.Size = New System.Drawing.Size(33, 15)
-        Me.LinkLabel_A4_Second.TabIndex = 65
-        Me.LinkLabel_A4_Second.TabStop = True
-        Me.LinkLabel_A4_Second.Text = "Run"
+        Me.LinkLabel_A4_Sec.AutoSize = True
+        Me.LinkLabel_A4_Sec.Location = New System.Drawing.Point(3, 5)
+        Me.LinkLabel_A4_Sec.Name = "LinkLabel_A4_Sec"
+        Me.LinkLabel_A4_Sec.Size = New System.Drawing.Size(33, 15)
+        Me.LinkLabel_A4_Sec.TabIndex = 65
+        Me.LinkLabel_A4_Sec.TabStop = True
+        Me.LinkLabel_A4_Sec.Text = "Run"
         '
         'Panel_A4_Fst
         '
-        Me.Panel_A4_Fst.Controls.Add(Me.LinkLabel_A4_First)
+        Me.Panel_A4_Fst.Controls.Add(Me.LinkLabel_A4_Fst)
         Me.Panel_A4_Fst.Location = New System.Drawing.Point(4, 47)
         Me.Panel_A4_Fst.Name = "Panel_A4_Fst"
         Me.Panel_A4_Fst.Size = New System.Drawing.Size(38, 26)
         Me.Panel_A4_Fst.TabIndex = 74
         '
-        'LinkLabel_A4_First
+        'LinkLabel_A4_Fst
         '
-        Me.LinkLabel_A4_First.AutoSize = True
-        Me.LinkLabel_A4_First.Location = New System.Drawing.Point(3, 5)
-        Me.LinkLabel_A4_First.Name = "LinkLabel_A4_First"
-        Me.LinkLabel_A4_First.Size = New System.Drawing.Size(33, 15)
-        Me.LinkLabel_A4_First.TabIndex = 65
-        Me.LinkLabel_A4_First.TabStop = True
-        Me.LinkLabel_A4_First.Text = "Run"
+        Me.LinkLabel_A4_Fst.AutoSize = True
+        Me.LinkLabel_A4_Fst.Location = New System.Drawing.Point(3, 5)
+        Me.LinkLabel_A4_Fst.Name = "LinkLabel_A4_Fst"
+        Me.LinkLabel_A4_Fst.Size = New System.Drawing.Size(33, 15)
+        Me.LinkLabel_A4_Fst.TabIndex = 65
+        Me.LinkLabel_A4_Fst.TabStop = True
+        Me.LinkLabel_A4_Fst.Text = "Run"
         '
         'Label_A4
         '
@@ -1456,7 +1454,7 @@ Partial Class Program
         Me.PanelTractorA1.Controls.Add(Me.Panel_TrA1_Fst_2nd)
         Me.PanelTractorA1.Controls.Add(Me.Label_Tr_A1)
         Me.PanelTractorA1.Controls.Add(Me.Panel_TrA1_Fst_1st)
-        Me.PanelTractorA1.Location = New System.Drawing.Point(565, 277)
+        Me.PanelTractorA1.Location = New System.Drawing.Point(161, 159)
         Me.PanelTractorA1.Name = "PanelTractorA1"
         Me.PanelTractorA1.Size = New System.Drawing.Size(51, 405)
         Me.PanelTractorA1.TabIndex = 101
@@ -1686,15 +1684,6 @@ Partial Class Program
         Me.LinkLabel_TrA1_Fst_1st.TabStop = True
         Me.LinkLabel_TrA1_Fst_1st.Text = "1st"
         '
-        'testButton
-        '
-        Me.testButton.Location = New System.Drawing.Point(143, 231)
-        Me.testButton.Name = "testButton"
-        Me.testButton.Size = New System.Drawing.Size(101, 29)
-        Me.testButton.TabIndex = 100
-        Me.testButton.Text = "Test"
-        Me.testButton.UseVisualStyleBackColor = True
-        '
         'Noise_Avg
         '
         Me.Noise_Avg.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
@@ -1721,7 +1710,7 @@ Partial Class Program
         Me.PanelLoaderA2.Controls.Add(Me.Panel_LoA2_Fst_2nd)
         Me.PanelLoaderA2.Controls.Add(Me.Label_Lo_A2)
         Me.PanelLoaderA2.Controls.Add(Me.Panel_LoA2_Fst_1st)
-        Me.PanelLoaderA2.Location = New System.Drawing.Point(455, 278)
+        Me.PanelLoaderA2.Location = New System.Drawing.Point(413, 43)
         Me.PanelLoaderA2.Name = "PanelLoaderA2"
         Me.PanelLoaderA2.Size = New System.Drawing.Size(51, 405)
         Me.PanelLoaderA2.TabIndex = 98
@@ -1966,7 +1955,7 @@ Partial Class Program
         Me.PanelLoaderA1.Controls.Add(Me.Panel_LoA1_Fst_2nd)
         Me.PanelLoaderA1.Controls.Add(Me.Label_Lo_A1)
         Me.PanelLoaderA1.Controls.Add(Me.Panel_LoA1_Fst_1st)
-        Me.PanelLoaderA1.Location = New System.Drawing.Point(398, 277)
+        Me.PanelLoaderA1.Location = New System.Drawing.Point(355, 31)
         Me.PanelLoaderA1.Name = "PanelLoaderA1"
         Me.PanelLoaderA1.Size = New System.Drawing.Size(51, 405)
         Me.PanelLoaderA1.TabIndex = 86
@@ -2207,7 +2196,7 @@ Partial Class Program
         Me.PanelLoaderA3.Controls.Add(Me.Panel_LoA3_Fst_bkd)
         Me.PanelLoaderA3.Controls.Add(Me.Panel_LoA3_Fst_fwd)
         Me.PanelLoaderA3.Controls.Add(Me.Label_Ex_A3)
-        Me.PanelLoaderA3.Location = New System.Drawing.Point(341, 278)
+        Me.PanelLoaderA3.Location = New System.Drawing.Point(430, 168)
         Me.PanelLoaderA3.Name = "PanelLoaderA3"
         Me.PanelLoaderA3.Size = New System.Drawing.Size(51, 405)
         Me.PanelLoaderA3.TabIndex = 85
@@ -2380,7 +2369,7 @@ Partial Class Program
         Me.PanelExcavatorA2.Controls.Add(Me.Panel_ExA2_Fst_2nd)
         Me.PanelExcavatorA2.Controls.Add(Me.Label_Ex_A2)
         Me.PanelExcavatorA2.Controls.Add(Me.Panel_ExA2_Fst_1st)
-        Me.PanelExcavatorA2.Location = New System.Drawing.Point(284, 277)
+        Me.PanelExcavatorA2.Location = New System.Drawing.Point(219, 169)
         Me.PanelExcavatorA2.Name = "PanelExcavatorA2"
         Me.PanelExcavatorA2.Size = New System.Drawing.Size(51, 405)
         Me.PanelExcavatorA2.TabIndex = 84
@@ -2613,50 +2602,16 @@ Partial Class Program
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(133, 416)
+        Me.Label2.Location = New System.Drawing.Point(148, 205)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(54, 15)
         Me.Label2.TabIndex = 61
         Me.Label2.Text = "Second"
         '
-        'Chart2
-        '
-        ChartArea3.Name = "ChartArea1"
-        Me.Chart2.ChartAreas.Add(ChartArea3)
-        Legend3.Name = "Legend1"
-        Me.Chart2.Legends.Add(Legend3)
-        Me.Chart2.Location = New System.Drawing.Point(512, 109)
-        Me.Chart2.Name = "Chart2"
-        Series3.ChartArea = "ChartArea1"
-        Series3.Legend = "Legend1"
-        Series3.Name = "Series1"
-        Me.Chart2.Series.Add(Series3)
-        Me.Chart2.Size = New System.Drawing.Size(361, 538)
-        Me.Chart2.TabIndex = 83
-        Me.Chart2.Text = "Chart2"
-        Me.Chart2.Visible = False
-        '
-        'Chart1
-        '
-        ChartArea4.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea4)
-        Legend4.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend4)
-        Me.Chart1.Location = New System.Drawing.Point(-55, 6)
-        Me.Chart1.Name = "Chart1"
-        Series4.ChartArea = "ChartArea1"
-        Series4.Legend = "Legend1"
-        Series4.Name = "Series1"
-        Me.Chart1.Series.Add(Series4)
-        Me.Chart1.Size = New System.Drawing.Size(1219, 97)
-        Me.Chart1.TabIndex = 82
-        Me.Chart1.Text = "Chart1"
-        Me.Chart1.Visible = False
-        '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(133, 603)
+        Me.Label4.Location = New System.Drawing.Point(141, 254)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(77, 15)
         Me.Label4.TabIndex = 81
@@ -2677,7 +2632,7 @@ Partial Class Program
         Me.PanelExcavatorA1.Controls.Add(Me.Panel_ExA1_Fst_2nd)
         Me.PanelExcavatorA1.Controls.Add(Me.Label_Ex_A1)
         Me.PanelExcavatorA1.Controls.Add(Me.Panel_ExA1_Fst_1st)
-        Me.PanelExcavatorA1.Location = New System.Drawing.Point(228, 278)
+        Me.PanelExcavatorA1.Location = New System.Drawing.Point(276, 164)
         Me.PanelExcavatorA1.Name = "PanelExcavatorA1"
         Me.PanelExcavatorA1.Size = New System.Drawing.Size(50, 387)
         Me.PanelExcavatorA1.TabIndex = 80
@@ -2910,7 +2865,7 @@ Partial Class Program
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(133, 507)
+        Me.Label3.Location = New System.Drawing.Point(158, 228)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(44, 15)
         Me.Label3.TabIndex = 62
@@ -2919,7 +2874,7 @@ Partial Class Program
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(133, 334)
+        Me.Label1.Location = New System.Drawing.Point(148, 175)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(38, 15)
         Me.Label1.TabIndex = 60
@@ -2927,7 +2882,7 @@ Partial Class Program
         '
         'Accept_Button
         '
-        Me.Accept_Button.Location = New System.Drawing.Point(18, 194)
+        Me.Accept_Button.Location = New System.Drawing.Point(10, 75)
         Me.Accept_Button.Name = "Accept_Button"
         Me.Accept_Button.Size = New System.Drawing.Size(101, 29)
         Me.Accept_Button.TabIndex = 59
@@ -2940,7 +2895,7 @@ Partial Class Program
         Me.Step10.Location = New System.Drawing.Point(1269, 695)
         Me.Step10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Step10.Name = "Step10"
-        Me.Step10.Size = New System.Drawing.Size(135, 71)
+        Me.Step10.Size = New System.Drawing.Size(340, 60)
         Me.Step10.TabIndex = 58
         '
         'Step9
@@ -2950,7 +2905,7 @@ Partial Class Program
         Me.Step9.Location = New System.Drawing.Point(880, 618)
         Me.Step9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Step9.Name = "Step9"
-        Me.Step9.Size = New System.Drawing.Size(320, 60)
+        Me.Step9.Size = New System.Drawing.Size(340, 60)
         Me.Step9.TabIndex = 51
         '
         'Noise6
@@ -3026,7 +2981,7 @@ Partial Class Program
         Me.Step8.Location = New System.Drawing.Point(880, 554)
         Me.Step8.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Step8.Name = "Step8"
-        Me.Step8.Size = New System.Drawing.Size(320, 60)
+        Me.Step8.Size = New System.Drawing.Size(340, 60)
         Me.Step8.TabIndex = 38
         '
         'Step7
@@ -3036,7 +2991,7 @@ Partial Class Program
         Me.Step7.Location = New System.Drawing.Point(880, 490)
         Me.Step7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Step7.Name = "Step7"
-        Me.Step7.Size = New System.Drawing.Size(320, 60)
+        Me.Step7.Size = New System.Drawing.Size(340, 60)
         Me.Step7.TabIndex = 37
         '
         'Step6
@@ -3046,7 +3001,7 @@ Partial Class Program
         Me.Step6.Location = New System.Drawing.Point(880, 426)
         Me.Step6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Step6.Name = "Step6"
-        Me.Step6.Size = New System.Drawing.Size(320, 60)
+        Me.Step6.Size = New System.Drawing.Size(340, 60)
         Me.Step6.TabIndex = 36
         '
         'Step5
@@ -3056,7 +3011,7 @@ Partial Class Program
         Me.Step5.Location = New System.Drawing.Point(880, 362)
         Me.Step5.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Step5.Name = "Step5"
-        Me.Step5.Size = New System.Drawing.Size(320, 60)
+        Me.Step5.Size = New System.Drawing.Size(340, 60)
         Me.Step5.TabIndex = 35
         '
         'Step4
@@ -3066,7 +3021,7 @@ Partial Class Program
         Me.Step4.Location = New System.Drawing.Point(880, 298)
         Me.Step4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Step4.Name = "Step4"
-        Me.Step4.Size = New System.Drawing.Size(320, 60)
+        Me.Step4.Size = New System.Drawing.Size(340, 60)
         Me.Step4.TabIndex = 34
         '
         'Step3
@@ -3076,7 +3031,7 @@ Partial Class Program
         Me.Step3.Location = New System.Drawing.Point(880, 234)
         Me.Step3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Step3.Name = "Step3"
-        Me.Step3.Size = New System.Drawing.Size(320, 60)
+        Me.Step3.Size = New System.Drawing.Size(340, 60)
         Me.Step3.TabIndex = 33
         '
         'Step2
@@ -3086,12 +3041,12 @@ Partial Class Program
         Me.Step2.Location = New System.Drawing.Point(880, 170)
         Me.Step2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Step2.Name = "Step2"
-        Me.Step2.Size = New System.Drawing.Size(320, 60)
+        Me.Step2.Size = New System.Drawing.Size(340, 60)
         Me.Step2.TabIndex = 32
         '
         'stopButton
         '
-        Me.stopButton.Location = New System.Drawing.Point(267, 126)
+        Me.stopButton.Location = New System.Drawing.Point(226, 8)
         Me.stopButton.Margin = New System.Windows.Forms.Padding(4)
         Me.stopButton.Name = "stopButton"
         Me.stopButton.Size = New System.Drawing.Size(100, 97)
@@ -3104,7 +3059,7 @@ Partial Class Program
         Me.timeLabel.BackColor = System.Drawing.SystemColors.Info
         Me.timeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.timeLabel.Font = New System.Drawing.Font("微軟正黑體", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.timeLabel.Location = New System.Drawing.Point(142, 126)
+        Me.timeLabel.Location = New System.Drawing.Point(116, 8)
         Me.timeLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.timeLabel.Name = "timeLabel"
         Me.timeLabel.Size = New System.Drawing.Size(102, 97)
@@ -3112,7 +3067,7 @@ Partial Class Program
         '
         'startButton
         '
-        Me.startButton.Location = New System.Drawing.Point(19, 126)
+        Me.startButton.Location = New System.Drawing.Point(10, 7)
         Me.startButton.Margin = New System.Windows.Forms.Padding(4)
         Me.startButton.Name = "startButton"
         Me.startButton.Size = New System.Drawing.Size(100, 61)
@@ -3132,6 +3087,166 @@ Partial Class Program
         Me.Button_change_machine.TabIndex = 46
         Me.Button_change_machine.Text = "更換機具"
         Me.Button_change_machine.UseVisualStyleBackColor = True
+        '
+        'Panel_A4_Fst_Mid_Background
+        '
+        Me.Panel_A4_Fst_Mid_Background.Controls.Add(Me.LinkLabel_A4_Fst_Mid_Background)
+        Me.Panel_A4_Fst_Mid_Background.Location = New System.Drawing.Point(3, 74)
+        Me.Panel_A4_Fst_Mid_Background.Name = "Panel_A4_Fst_Mid_Background"
+        Me.Panel_A4_Fst_Mid_Background.Size = New System.Drawing.Size(44, 26)
+        Me.Panel_A4_Fst_Mid_Background.TabIndex = 75
+        '
+        'LinkLabel_A4_Fst_Mid_Background
+        '
+        Me.LinkLabel_A4_Fst_Mid_Background.AutoSize = True
+        Me.LinkLabel_A4_Fst_Mid_Background.Location = New System.Drawing.Point(3, 5)
+        Me.LinkLabel_A4_Fst_Mid_Background.Name = "LinkLabel_A4_Fst_Mid_Background"
+        Me.LinkLabel_A4_Fst_Mid_Background.Size = New System.Drawing.Size(35, 15)
+        Me.LinkLabel_A4_Fst_Mid_Background.TabIndex = 65
+        Me.LinkLabel_A4_Fst_Mid_Background.TabStop = True
+        Me.LinkLabel_A4_Fst_Mid_Background.Text = "mbg"
+        '
+        'Panel_A4_Sec_Mid_Background
+        '
+        Me.Panel_A4_Sec_Mid_Background.Controls.Add(Me.LinkLabel_A4_Sec_Mid_Background)
+        Me.Panel_A4_Sec_Mid_Background.Location = New System.Drawing.Point(3, 164)
+        Me.Panel_A4_Sec_Mid_Background.Name = "Panel_A4_Sec_Mid_Background"
+        Me.Panel_A4_Sec_Mid_Background.Size = New System.Drawing.Size(44, 26)
+        Me.Panel_A4_Sec_Mid_Background.TabIndex = 75
+        '
+        'LinkLabel_A4_Sec_Mid_Background
+        '
+        Me.LinkLabel_A4_Sec_Mid_Background.AutoSize = True
+        Me.LinkLabel_A4_Sec_Mid_Background.Location = New System.Drawing.Point(3, 5)
+        Me.LinkLabel_A4_Sec_Mid_Background.Name = "LinkLabel_A4_Sec_Mid_Background"
+        Me.LinkLabel_A4_Sec_Mid_Background.Size = New System.Drawing.Size(35, 15)
+        Me.LinkLabel_A4_Sec_Mid_Background.TabIndex = 65
+        Me.LinkLabel_A4_Sec_Mid_Background.TabStop = True
+        Me.LinkLabel_A4_Sec_Mid_Background.Text = "mbg"
+        '
+        'Panel_A4_Thd_Mid_Background
+        '
+        Me.Panel_A4_Thd_Mid_Background.Controls.Add(Me.LinkLabel_A4_Thd_Mid_Background)
+        Me.Panel_A4_Thd_Mid_Background.Location = New System.Drawing.Point(3, 253)
+        Me.Panel_A4_Thd_Mid_Background.Name = "Panel_A4_Thd_Mid_Background"
+        Me.Panel_A4_Thd_Mid_Background.Size = New System.Drawing.Size(44, 26)
+        Me.Panel_A4_Thd_Mid_Background.TabIndex = 75
+        '
+        'LinkLabel_A4_Thd_Mid_Background
+        '
+        Me.LinkLabel_A4_Thd_Mid_Background.AutoSize = True
+        Me.LinkLabel_A4_Thd_Mid_Background.Location = New System.Drawing.Point(3, 5)
+        Me.LinkLabel_A4_Thd_Mid_Background.Name = "LinkLabel_A4_Thd_Mid_Background"
+        Me.LinkLabel_A4_Thd_Mid_Background.Size = New System.Drawing.Size(35, 15)
+        Me.LinkLabel_A4_Thd_Mid_Background.TabIndex = 65
+        Me.LinkLabel_A4_Thd_Mid_Background.TabStop = True
+        Me.LinkLabel_A4_Thd_Mid_Background.Text = "mbg"
+        '
+        'Panel_A4_Add_Mid_Background
+        '
+        Me.Panel_A4_Add_Mid_Background.Controls.Add(Me.LinkLabel_A4_Add_Mid_Background)
+        Me.Panel_A4_Add_Mid_Background.Location = New System.Drawing.Point(3, 348)
+        Me.Panel_A4_Add_Mid_Background.Name = "Panel_A4_Add_Mid_Background"
+        Me.Panel_A4_Add_Mid_Background.Size = New System.Drawing.Size(44, 26)
+        Me.Panel_A4_Add_Mid_Background.TabIndex = 75
+        '
+        'LinkLabel_A4_Add_Mid_Background
+        '
+        Me.LinkLabel_A4_Add_Mid_Background.AutoSize = True
+        Me.LinkLabel_A4_Add_Mid_Background.Location = New System.Drawing.Point(3, 5)
+        Me.LinkLabel_A4_Add_Mid_Background.Name = "LinkLabel_A4_Add_Mid_Background"
+        Me.LinkLabel_A4_Add_Mid_Background.Size = New System.Drawing.Size(35, 15)
+        Me.LinkLabel_A4_Add_Mid_Background.TabIndex = 65
+        Me.LinkLabel_A4_Add_Mid_Background.TabStop = True
+        Me.LinkLabel_A4_Add_Mid_Background.Text = "mbg"
+        '
+        'Chart1
+        '
+        ChartArea8.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea8)
+        Legend8.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend8)
+        Me.Chart1.Location = New System.Drawing.Point(-55, 6)
+        Me.Chart1.Name = "Chart1"
+        Series8.ChartArea = "ChartArea1"
+        Series8.Legend = "Legend1"
+        Series8.Name = "Series1"
+        Me.Chart1.Series.Add(Series8)
+        Me.Chart1.Size = New System.Drawing.Size(1219, 97)
+        Me.Chart1.TabIndex = 82
+        Me.Chart1.Text = "Chart1"
+        Me.Chart1.Visible = False
+        '
+        'Chart2
+        '
+        ChartArea7.Name = "ChartArea1"
+        Me.Chart2.ChartAreas.Add(ChartArea7)
+        Legend7.Name = "Legend1"
+        Me.Chart2.Legends.Add(Legend7)
+        Me.Chart2.Location = New System.Drawing.Point(755, 115)
+        Me.Chart2.Name = "Chart2"
+        Series7.ChartArea = "ChartArea1"
+        Series7.Legend = "Legend1"
+        Series7.Name = "Series1"
+        Me.Chart2.Series.Add(Series7)
+        Me.Chart2.Size = New System.Drawing.Size(361, 538)
+        Me.Chart2.TabIndex = 83
+        Me.Chart2.Text = "Chart2"
+        Me.Chart2.Visible = False
+        '
+        'TabControl2
+        '
+        Me.TabControl2.Controls.Add(Me.TabPage3)
+        Me.TabControl2.Controls.Add(Me.TabPage4)
+        Me.TabControl2.Location = New System.Drawing.Point(8, 106)
+        Me.TabControl2.Name = "TabControl2"
+        Me.TabControl2.SelectedIndex = 0
+        Me.TabControl2.Size = New System.Drawing.Size(489, 593)
+        Me.TabControl2.TabIndex = 112
+        '
+        'TabPage3
+        '
+        Me.TabPage3.BackColor = System.Drawing.Color.DarkGray
+        Me.TabPage3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.TabPage3.Controls.Add(Me.startButton)
+        Me.TabPage3.Controls.Add(Me.Panel_PostCal_Sub)
+        Me.TabPage3.Controls.Add(Me.PanelTractorA1)
+        Me.TabPage3.Controls.Add(Me.PanelA4)
+        Me.TabPage3.Controls.Add(Me.PanelTractorA3)
+        Me.TabPage3.Controls.Add(Me.Accept_Button)
+        Me.TabPage3.Controls.Add(Me.Panel_PostCal)
+        Me.TabPage3.Controls.Add(Me.PanelLoaderA2)
+        Me.TabPage3.Controls.Add(Me.Panel_PreCal_Sub)
+        Me.TabPage3.Controls.Add(Me.PanelLoaderA1)
+        Me.TabPage3.Controls.Add(Me.timeLabel)
+        Me.TabPage3.Controls.Add(Me.PanelLoaderA3)
+        Me.TabPage3.Controls.Add(Me.stopButton)
+        Me.TabPage3.Controls.Add(Me.PanelExcavatorA2)
+        Me.TabPage3.Controls.Add(Me.Panel_RSS)
+        Me.TabPage3.Controls.Add(Me.Label2)
+        Me.TabPage3.Controls.Add(Me.Panel_PreCal)
+        Me.TabPage3.Controls.Add(Me.PanelExcavatorA1)
+        Me.TabPage3.Controls.Add(Me.Label4)
+        Me.TabPage3.Controls.Add(Me.Panel_Bkg)
+        Me.TabPage3.Controls.Add(Me.Label1)
+        Me.TabPage3.Controls.Add(Me.Label3)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(481, 564)
+        Me.TabPage3.TabIndex = 0
+        Me.TabPage3.Text = "TabPage3"
+        '
+        'TabPage4
+        '
+        Me.TabPage4.BackColor = System.Drawing.Color.DarkGray
+        Me.TabPage4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.TabPage4.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage4.Size = New System.Drawing.Size(481, 564)
+        Me.TabPage4.TabIndex = 1
+        Me.TabPage4.Text = "TabPage4"
         '
         'Program
         '
@@ -3154,7 +3269,6 @@ Partial Class Program
         Me.GroupBox_A1_A2_A3.PerformLayout()
         CType(Me.Picture_machine, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage2.ResumeLayout(False)
-        Me.TabPage2.PerformLayout()
         Me.Panel_PostCal_Sub.ResumeLayout(False)
         Me.Panel_PostCal_6th.ResumeLayout(False)
         Me.Panel_PostCal_6th.PerformLayout()
@@ -3339,8 +3453,6 @@ Partial Class Program
         Me.Panel_ExA2_Fst_2nd.PerformLayout()
         Me.Panel_ExA2_Fst_1st.ResumeLayout(False)
         Me.Panel_ExA2_Fst_1st.PerformLayout()
-        CType(Me.Chart2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Chart1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelExcavatorA1.ResumeLayout(False)
         Me.PanelExcavatorA1.PerformLayout()
         Me.Panel_ExA1_Add_3rd.ResumeLayout(False)
@@ -3367,6 +3479,19 @@ Partial Class Program
         Me.Panel_ExA1_Fst_2nd.PerformLayout()
         Me.Panel_ExA1_Fst_1st.ResumeLayout(False)
         Me.Panel_ExA1_Fst_1st.PerformLayout()
+        Me.Panel_A4_Fst_Mid_Background.ResumeLayout(False)
+        Me.Panel_A4_Fst_Mid_Background.PerformLayout()
+        Me.Panel_A4_Sec_Mid_Background.ResumeLayout(False)
+        Me.Panel_A4_Sec_Mid_Background.PerformLayout()
+        Me.Panel_A4_Thd_Mid_Background.ResumeLayout(False)
+        Me.Panel_A4_Thd_Mid_Background.PerformLayout()
+        Me.Panel_A4_Add_Mid_Background.ResumeLayout(False)
+        Me.Panel_A4_Add_Mid_Background.PerformLayout()
+        CType(Me.Chart1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Chart2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabControl2.ResumeLayout(False)
+        Me.TabPage3.ResumeLayout(False)
+        Me.TabPage3.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -3549,7 +3674,6 @@ Partial Class Program
     Friend WithEvents LinkLabel_ExA1_Fst_3rd As System.Windows.Forms.LinkLabel
     Friend WithEvents Panel_ExA1_Fst_2nd As System.Windows.Forms.Panel
     Friend WithEvents LinkLabel_ExA1_Fst_2nd As System.Windows.Forms.LinkLabel
-    Friend WithEvents testButton As System.Windows.Forms.Button
     Friend WithEvents Noise_Avg As System.Windows.Forms.Label
     Friend WithEvents Panel_LoA3_Thd_bkd As System.Windows.Forms.Panel
     Friend WithEvents LinkLabel_LoA3_Thd_bkd As System.Windows.Forms.LinkLabel
@@ -3603,13 +3727,13 @@ Partial Class Program
     Friend WithEvents LinkLabel_TrA1_Fst_1st As System.Windows.Forms.LinkLabel
     Friend WithEvents PanelA4 As System.Windows.Forms.Panel
     Friend WithEvents Panel_A4_Add As System.Windows.Forms.Panel
-    Friend WithEvents LinkLabel_A4_Additional As System.Windows.Forms.LinkLabel
+    Friend WithEvents LinkLabel_A4_Add As System.Windows.Forms.LinkLabel
     Friend WithEvents Panel_A4_Thd As System.Windows.Forms.Panel
-    Friend WithEvents LinkLabel_A4_Third As System.Windows.Forms.LinkLabel
+    Friend WithEvents LinkLabel_A4_Thd As System.Windows.Forms.LinkLabel
     Friend WithEvents Panel_A4_Sec As System.Windows.Forms.Panel
-    Friend WithEvents LinkLabel_A4_Second As System.Windows.Forms.LinkLabel
+    Friend WithEvents LinkLabel_A4_Sec As System.Windows.Forms.LinkLabel
     Friend WithEvents Panel_A4_Fst As System.Windows.Forms.Panel
-    Friend WithEvents LinkLabel_A4_First As System.Windows.Forms.LinkLabel
+    Friend WithEvents LinkLabel_A4_Fst As System.Windows.Forms.LinkLabel
     Friend WithEvents Label_A4 As System.Windows.Forms.Label
     Friend WithEvents Panel_PostCal As System.Windows.Forms.Panel
     Friend WithEvents Panel_RSS As System.Windows.Forms.Panel
@@ -3617,8 +3741,6 @@ Partial Class Program
     Friend WithEvents Panel_PreCal As System.Windows.Forms.Panel
     Friend WithEvents Panel_LoA3_Add_bkd As System.Windows.Forms.Panel
     Friend WithEvents LinkLabel_LoA3_Add_bkd As System.Windows.Forms.LinkLabel
-    Friend WithEvents Chart2 As System.Windows.Forms.DataVisualization.Charting.Chart
-    Friend WithEvents Chart1 As System.Windows.Forms.DataVisualization.Charting.Chart
     Friend WithEvents Panel_PostCal_Sub As System.Windows.Forms.Panel
     Friend WithEvents Panel_PostCal_6th As System.Windows.Forms.Panel
     Friend WithEvents LinkLabel_PostCal_6th As System.Windows.Forms.LinkLabel
@@ -3646,4 +3768,17 @@ Partial Class Program
     Friend WithEvents Panel_PreCal_1st As System.Windows.Forms.Panel
     Friend WithEvents LinkLabel_PreCal_1st As System.Windows.Forms.LinkLabel
     Friend WithEvents Button_change_machine As System.Windows.Forms.Button
+    Friend WithEvents Panel_A4_Add_Mid_Background As System.Windows.Forms.Panel
+    Friend WithEvents LinkLabel_A4_Add_Mid_Background As System.Windows.Forms.LinkLabel
+    Friend WithEvents Panel_A4_Thd_Mid_Background As System.Windows.Forms.Panel
+    Friend WithEvents LinkLabel_A4_Thd_Mid_Background As System.Windows.Forms.LinkLabel
+    Friend WithEvents Panel_A4_Sec_Mid_Background As System.Windows.Forms.Panel
+    Friend WithEvents LinkLabel_A4_Sec_Mid_Background As System.Windows.Forms.LinkLabel
+    Friend WithEvents Panel_A4_Fst_Mid_Background As System.Windows.Forms.Panel
+    Friend WithEvents LinkLabel_A4_Fst_Mid_Background As System.Windows.Forms.LinkLabel
+    Friend WithEvents TabControl2 As System.Windows.Forms.TabControl
+    Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
+    Friend WithEvents TabPage4 As System.Windows.Forms.TabPage
+    Friend WithEvents Chart2 As System.Windows.Forms.DataVisualization.Charting.Chart
+    Friend WithEvents Chart1 As System.Windows.Forms.DataVisualization.Charting.Chart
 End Class

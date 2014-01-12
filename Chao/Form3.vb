@@ -79,7 +79,7 @@ Public Class Program
     Dim RandBool As Boolean
 
     Dim choice As String
-
+    Dim Tabcontrol2_Index_Change As Boolean = False
     'temporary constant
     Const seconds As Integer = 3
     Const graphW As Integer = 650
@@ -276,6 +276,19 @@ Public Class Program
                 MessageBox.Show("還未選機具!", "My application", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 TabControl1.SelectedIndex = 0 ' go back to the machinery choose stage
             End If
+        End If
+    End Sub
+    Sub Tabcontrol_Changed(ByVal index As Boolean)
+        Dim tabpage As TabPage
+        If index = True Then
+            Me.TabControl2.SelectedIndex = 1
+            For Each tabpage In TabControl2.TabPages
+                If tabpage.Text = "TabPage3" Then
+                    tabpage.Enabled = False
+                End If
+            Next
+        ElseIf index = False Then
+            Me.TabControl2.SelectedIndex = 0
         End If
     End Sub
 
@@ -1938,7 +1951,7 @@ Public Class Program
             stopButton.Enabled = True
             Timer1.Start()
         End If
-        
+
     End Sub
     Private Sub stopButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles stopButton.Click
         If Countdown = False Then
@@ -2152,6 +2165,8 @@ Public Class Program
                     Else
                         'False: not add test , jump to ExA2_1st or jump to TrA3_fwd
                         CurRun = CurRun.NextUnit.NextUnit.NextUnit.NextUnit
+                        Tabcontrol2_Index_Change = True
+                        Tabcontrol_Changed(Tabcontrol2_Index_Change)
                         CurRun.Set_BackColor(Color.Yellow)
                     End If
                     CurStep = CurRun.HeadStep
@@ -2213,6 +2228,8 @@ Public Class Program
                         CurRun.Set_BackColor(Color.Green)
                         CurRun.NextUnit.Set_BackColor(Color.Yellow)
                         CurRun = CurRun.NextUnit
+                        Tabcontrol2_Index_Change = True
+                        Tabcontrol_Changed(Tabcontrol2_Index_Change)
                     End If
                     CurStep = CurRun.HeadStep
                     timeLeft = CurRun.Steps.Time
@@ -2811,5 +2828,4 @@ Public Class Program
         Dim y = p1.Y + con2.Y - con3.Y
         Return New System.Drawing.Point(x, y)
     End Function
-
 End Class

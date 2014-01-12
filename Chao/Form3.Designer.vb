@@ -23,12 +23,12 @@ Partial Class Program
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Button_change_machine = New System.Windows.Forms.Button()
@@ -212,7 +212,6 @@ Partial Class Program
         Me.Label_Lo_A1 = New System.Windows.Forms.Label()
         Me.Panel_LoA1_Fst_1st = New System.Windows.Forms.Panel()
         Me.LinkLabel_LoA1_Fst_1st = New System.Windows.Forms.LinkLabel()
-        Me.timeLabel = New System.Windows.Forms.Label()
         Me.PanelLoaderA3 = New System.Windows.Forms.Panel()
         Me.Panel_LoA3_Add_bkd = New System.Windows.Forms.Panel()
         Me.LinkLabel_LoA3_Add_bkd = New System.Windows.Forms.LinkLabel()
@@ -326,6 +325,7 @@ Partial Class Program
         Me.Noise6 = New System.Windows.Forms.Label()
         Me.Noise5 = New System.Windows.Forms.Label()
         Me.Noise4 = New System.Windows.Forms.Label()
+        Me.timeLabel = New System.Windows.Forms.Label()
         Me.Noise3 = New System.Windows.Forms.Label()
         Me.Noise2 = New System.Windows.Forms.Label()
         Me.Noise1 = New System.Windows.Forms.Label()
@@ -840,6 +840,7 @@ Partial Class Program
         Me.TabPage2.Controls.Add(Me.Noise6)
         Me.TabPage2.Controls.Add(Me.Noise5)
         Me.TabPage2.Controls.Add(Me.Noise4)
+        Me.TabPage2.Controls.Add(Me.timeLabel)
         Me.TabPage2.Controls.Add(Me.Noise3)
         Me.TabPage2.Controls.Add(Me.Noise2)
         Me.TabPage2.Controls.Add(Me.Noise1)
@@ -883,7 +884,6 @@ Partial Class Program
         Me.TabPage3.Controls.Add(Me.PanelLoaderA2)
         Me.TabPage3.Controls.Add(Me.Panel_PreCal_Sub)
         Me.TabPage3.Controls.Add(Me.PanelLoaderA1)
-        Me.TabPage3.Controls.Add(Me.timeLabel)
         Me.TabPage3.Controls.Add(Me.PanelLoaderA3)
         Me.TabPage3.Controls.Add(Me.stopButton)
         Me.TabPage3.Controls.Add(Me.PanelExcavatorA2)
@@ -2398,16 +2398,6 @@ Partial Class Program
         Me.LinkLabel_LoA1_Fst_1st.TabStop = True
         Me.LinkLabel_LoA1_Fst_1st.Text = "1st"
         '
-        'timeLabel
-        '
-        Me.timeLabel.BackColor = System.Drawing.SystemColors.Info
-        Me.timeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.timeLabel.Font = New System.Drawing.Font("微軟正黑體", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.timeLabel.Location = New System.Drawing.Point(87, 7)
-        Me.timeLabel.Name = "timeLabel"
-        Me.timeLabel.Size = New System.Drawing.Size(77, 84)
-        Me.timeLabel.TabIndex = 15
-        '
         'PanelLoaderA3
         '
         Me.PanelLoaderA3.Controls.Add(Me.Panel_LoA3_Add_bkd)
@@ -3479,17 +3469,17 @@ Partial Class Program
         '
         'Chart2
         '
-        ChartArea1.Name = "ChartArea1"
-        Me.Chart2.ChartAreas.Add(ChartArea1)
-        Legend1.Name = "Legend1"
-        Me.Chart2.Legends.Add(Legend1)
+        ChartArea3.Name = "ChartArea1"
+        Me.Chart2.ChartAreas.Add(ChartArea3)
+        Legend3.Name = "Legend1"
+        Me.Chart2.Legends.Add(Legend3)
         Me.Chart2.Location = New System.Drawing.Point(566, 100)
         Me.Chart2.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Chart2.Name = "Chart2"
-        Series1.ChartArea = "ChartArea1"
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Me.Chart2.Series.Add(Series1)
+        Series3.ChartArea = "ChartArea1"
+        Series3.Legend = "Legend1"
+        Series3.Name = "Series1"
+        Me.Chart2.Series.Add(Series3)
         Me.Chart2.Size = New System.Drawing.Size(271, 466)
         Me.Chart2.TabIndex = 83
         Me.Chart2.Text = "Chart2"
@@ -3497,17 +3487,17 @@ Partial Class Program
         '
         'Chart1
         '
-        ChartArea2.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea2)
-        Legend2.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend2)
+        ChartArea4.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea4)
+        Legend4.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend4)
         Me.Chart1.Location = New System.Drawing.Point(-41, 5)
         Me.Chart1.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Chart1.Name = "Chart1"
-        Series2.ChartArea = "ChartArea1"
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series1"
-        Me.Chart1.Series.Add(Series2)
+        Series4.ChartArea = "ChartArea1"
+        Series4.Legend = "Legend1"
+        Series4.Name = "Series1"
+        Me.Chart1.Series.Add(Series4)
         Me.Chart1.Size = New System.Drawing.Size(914, 84)
         Me.Chart1.TabIndex = 82
         Me.Chart1.Text = "Chart1"
@@ -3559,6 +3549,16 @@ Partial Class Program
         Me.Noise4.Size = New System.Drawing.Size(45, 39)
         Me.Noise4.TabIndex = 48
         Me.Noise4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'timeLabel
+        '
+        Me.timeLabel.BackColor = System.Drawing.Color.NavajoWhite
+        Me.timeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.timeLabel.Font = New System.Drawing.Font("微軟正黑體", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.timeLabel.Location = New System.Drawing.Point(476, 504)
+        Me.timeLabel.Name = "timeLabel"
+        Me.timeLabel.Size = New System.Drawing.Size(77, 84)
+        Me.timeLabel.TabIndex = 15
         '
         'Noise3
         '

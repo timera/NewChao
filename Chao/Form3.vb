@@ -64,6 +64,7 @@ Public Class Program
     Dim HeadStep As Steps
     Dim CurStep As Steps
     Dim array_step(9) As Label
+    Dim array_step_s(8) As TextBox
 
     Dim Countdown As Boolean = False
 
@@ -88,6 +89,10 @@ Public Class Program
     'used for first time clicking start button
     Dim NewGraph As Boolean
 
+    'doing the test for input s of steps
+    'Dim Test_S As Boolean = False
+    Dim Last_timeLeft As Integer = 0
+    Dim Index_for_Setup_Time = 0
     Public Sub New()
 
         ' 此為設計工具所需的呼叫。
@@ -129,9 +134,14 @@ Public Class Program
         yLabel.Parent = GroupBox_Plot
         GroupBox_Plot.BackColor = Color.Transparent
 
+        Me.TabPage4.Enabled = False
+
         'Set up Buttons
         startButton.Enabled = True
         stopButton.Enabled = False
+        Test_SetButton.Enabled = False
+        Test_StartButton.Enabled = True
+        Test_ConfirmButton.Enabled = False
 
         'Set up Plotting
         Points = New ArrayList
@@ -248,6 +258,19 @@ Public Class Program
         array_step(8) = Step9
         array_step(9) = Step10
 
+        array_step_s(0) = Input_S_Step1
+        array_step_s(1) = Input_S_Step2
+        array_step_s(2) = Input_S_Step3
+        array_step_s(3) = Input_S_Step4
+        array_step_s(4) = Input_S_Step5
+        array_step_s(5) = Input_S_Step6
+        array_step_s(6) = Input_S_Step7
+        array_step_s(7) = Input_S_Step8
+        array_step_s(8) = Input_S_Step9
+        For i = 0 To 8
+            array_step_s(i).Text = 0
+        Next
+
 
         Label1.Location = New Point(106, 203)
         Label2.Location = New Point(106, 291)
@@ -278,17 +301,36 @@ Public Class Program
             End If
         End If
     End Sub
+    'Private Sub TabControl2_IndexChanged(ByVal sender As TabControl, ByVal e As System.EventArgs) Handles TabControl2.SelectedIndexChanged
+    '    If sender.SelectedIndex = 1 Then
+    '        TabControl1.TabPages(TabControl1.SelectedIndex).Focus()
+    '        TabControl1.TabPages(TabControl1.SelectedIndex).CausesValidation = True
+    '        'MessageBox.Show("還未選機具!", "My application", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+    '        TabControl1.SelectedIndex = 0 ' go back to the machinery choose stage
+    '    End If
+    'End Sub
     Sub Tabcontrol_Changed(ByVal index As Boolean)
+        'Tabcontrol_Changed(index=true)=>jump to tabpage4(enable) and tabpage3(disable),use for input seconds
+        'Tabcontrol_Changed(index=false)=>jump to tabpage3(enable) and tabpage4(disable),use for button confirm
         Dim tabpage As TabPage
         If index = True Then
             Me.TabControl2.SelectedIndex = 1
             For Each tabpage In TabControl2.TabPages
                 If tabpage.Text = "TabPage3" Then
                     tabpage.Enabled = False
+                ElseIf tabpage.Text = "TabPage4" Then
+                    tabpage.Enabled = True
                 End If
             Next
         ElseIf index = False Then
             Me.TabControl2.SelectedIndex = 0
+            For Each tabpage In TabControl2.TabPages
+                If tabpage.Text = "TabPage4" Then
+                    tabpage.Enabled = False
+                ElseIf tabpage.Text = "TabPage3" Then
+                    tabpage.Enabled = True
+                End If
+            Next
         End If
     End Sub
 
@@ -1701,40 +1743,40 @@ Public Class Program
             tempRun.HeadStep = tempRun.Steps
         End If
         If tempRun.Name = "ExA2_1st" Or tempRun.Name = "ExA2_1st_Add" Then
-            tempRun.Steps = New Steps(My.Resources.A2_Excavator_step1, Step1, Nothing, False, 1)
+            tempRun.Steps = New Steps(My.Resources.A2_Excavator_step1, Step1, Nothing, False, Input_S_Step1.Text)
             tempRun.HeadStep = tempRun.Steps
-            tempRun.Steps.NextStep = New Steps(My.Resources.A2_Excavator_step2, Step2, Nothing, False, 1)
+            tempRun.Steps.NextStep = New Steps(My.Resources.A2_Excavator_step2, Step2, Nothing, False, Input_S_Step2.Text)
             tempStep = tempRun.Steps.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step3, Step3, Nothing, False, 1)
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step3, Step3, Nothing, False, Input_S_Step3.Text)
             tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step4, Step4, Nothing, False, 1)
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step4, Step4, Nothing, False, Input_S_Step4.Text)
             tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step5, Step5, Nothing, False, 1)
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step5, Step5, Nothing, False, Input_S_Step5.Text)
             tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step6, Step6, Nothing, False, 1)
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step6, Step6, Nothing, False, Input_S_Step6.Text)
             tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step7, Step7, Nothing, False, 1)
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step7, Step7, Nothing, False, Input_S_Step7.Text)
             tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step8, Step8, Nothing, False, 1)
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step8, Step8, Nothing, False, Input_S_Step8.Text)
             tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step9, Step9, Nothing, True, 1)
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step9, Step9, Nothing, True, Input_S_Step9.Text)
         End If
         If tempRun.Name = "ExA2_2nd_3rd" Or tempRun.Name = "ExA2_2nd_3rd_Add" Then
-            tempRun.Steps = New Steps(My.Resources.A2_Excavator_step2, Step1, Nothing, False, 1)
+            tempRun.Steps = New Steps(My.Resources.A2_Excavator_step2, Step1, Nothing, False, Input_S_Step2.Text)
             tempRun.HeadStep = tempRun.Steps
-            tempRun.Steps.NextStep = New Steps(My.Resources.A2_Excavator_step3, Step2, Nothing, False, 1)
+            tempRun.Steps.NextStep = New Steps(My.Resources.A2_Excavator_step3, Step2, Nothing, False, Input_S_Step3.Text)
             tempStep = tempRun.Steps.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step4, Step3, Nothing, False, 1)
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step4, Step3, Nothing, False, Input_S_Step4.Text)
             tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step5, Step4, Nothing, False, 1)
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step5, Step4, Nothing, False, Input_S_Step5.Text)
             tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step6, Step5, Nothing, False, 1)
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step6, Step5, Nothing, False, Input_S_Step6.Text)
             tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step7, Step6, Nothing, False, 1)
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step7, Step6, Nothing, False, Input_S_Step7.Text)
             tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step8, Step7, Nothing, False, 1)
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step8, Step7, Nothing, False, Input_S_Step8.Text)
             tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step9, Step8, Nothing, True, 1)
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step9, Step8, Nothing, True, Input_S_Step9.Text)
         End If
         If tempRun.Name = "LoA2_1st" Or tempRun.Name = "LoA2_1st_Add" Then
             tempRun.Steps = New Steps(My.Resources.A2_Loader_step1, Step1, Nothing, False, 2)
@@ -1856,7 +1898,6 @@ Public Class Program
 
             'send values to display as text and graphs
             SetScreenValuesAndGraphs(GetInstantData())
-
         Else
             If timeLeft > 0 Then 'counting
                 timeLeft = timeLeft - 1
@@ -1965,6 +2006,65 @@ Public Class Program
             Timer1.Stop()
         End If
     End Sub
+
+    Private Sub Test_StartButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_StartButton.Click
+        Test_SetButton.Enabled = True
+        Test_StartButton.Enabled = False
+        Timer1.Start()
+    End Sub
+
+    Private Sub Test_SetButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_SetButton.Click
+        If CurRun.CurStep = CurRun.EndStep Then 'last step (not HasNextStep)
+
+            Test_ConfirmButton.Enabled = True
+            Test_SetButton.Enabled = False
+            Timer1.Stop()
+            array_step(CurRun.CurStep - 1).BackColor = Color.Green
+            CurRun.Steps.Time = timeLeft - Last_timeLeft
+            array_step_s(Index_for_Setup_Time).Text = CurRun.Steps.Time
+            Index_for_Setup_Time += 1
+            CurRun.Steps = CurRun.Steps.NextStep 'jump to next step
+            CurRun.CurStep += 1 'curstep add 1
+            Last_timeLeft = timeLeft
+
+        Else 'HasNextStep
+
+            Set_Step_BackColor()
+            CurRun.Steps.Time = timeLeft - Last_timeLeft
+            array_step_s(Index_for_Setup_Time).Text = CurRun.Steps.Time
+            Index_for_Setup_Time += 1
+            CurRun.Steps = CurRun.Steps.NextStep 'jump to next step
+            CurRun.CurStep += 1 'curstep add 1
+            Last_timeLeft = timeLeft
+        End If
+    End Sub
+    Private Sub Test_ConfirmButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_ConfirmButton.Click
+        If CurRun.EndStep = Index_for_Setup_Time Then
+            Tabcontrol2_Index_Change = False
+            Tabcontrol_Changed(Tabcontrol2_Index_Change)
+            Countdown = True
+            ' change light
+            Set_Panel_BackColor()
+
+            'jump to next Run_Unit
+            CurRun = CurRun.NextUnit
+            CurStep = CurRun.HeadStep
+            timeLeft = CurRun.Steps.Time
+            timeLabel.Text = timeLeft & " s"
+            Load_Steps_helper(CurRun)
+
+            'load A1's steps
+            Clear_Steps()
+            Load_Steps()
+
+            'dispose old graph and create new graph
+            Load_New_Graph_CD_True()
+
+        Else
+            MessageBox.Show("Error")
+        End If
+    End Sub
+
     Private Sub AcceptButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Accept_Button.Click
 
         If Countdown = False Then
@@ -2162,23 +2262,35 @@ Public Class Program
                         'True: add test
                         CurRun = CurRun.NextUnit
                         CurRun.Set_BackColor(Color.Yellow)
+                        CurStep = CurRun.HeadStep
+                        timeLeft = CurRun.Steps.Time
+                        timeLabel.Text = timeLeft & " s"
+
+                        'load A1's steps
+                        Clear_Steps()
+                        Load_Steps()
+
+                        'dispose old graph and create new graph
+                        Load_New_Graph_CD_True()
                     Else
                         'False: not add test , jump to ExA2_1st or jump to TrA3_fwd
                         CurRun = CurRun.NextUnit.NextUnit.NextUnit.NextUnit
                         Tabcontrol2_Index_Change = True
                         Tabcontrol_Changed(Tabcontrol2_Index_Change)
+                        Countdown = False
                         CurRun.Set_BackColor(Color.Yellow)
+                        CurStep = CurRun.HeadStep
+                        timeLeft = 0
+                        timeLabel.Text = timeLeft & " s"
+                        'Test_S = True
+                        'load A2's steps
+                        Clear_Steps()
+                        Load_Steps()
+
+                        'dispose old graph and create new graph
+                        Load_New_Graph_CD_True()
                     End If
-                    CurStep = CurRun.HeadStep
-                    timeLeft = CurRun.Steps.Time
-                    timeLabel.Text = timeLeft & " s"
-
-                    'load A1's steps
-                    Clear_Steps()
-                    Load_Steps()
-
-                    'dispose old graph and create new graph
-                    Load_New_Graph_CD_True()
+                    
                 Else
                     MessageBox.Show("Error")
                 End If
@@ -2223,6 +2335,16 @@ Public Class Program
                         Load_Steps_helper(CurRun)
                         Load_Steps_helper(CurRun.NextUnit)
                         Load_Steps_helper(CurRun.NextUnit.NextUnit)
+                        CurStep = CurRun.HeadStep
+                        timeLeft = CurRun.Steps.Time
+                        timeLabel.Text = timeLeft & " s"
+
+                        'load A2's steps
+                        Clear_Steps()
+                        Load_Steps()
+
+                        'dispose old graph and create new graph
+                        Load_New_Graph_CD_True()
                     Else
                         'False: not add test
                         CurRun.Set_BackColor(Color.Green)
@@ -2230,17 +2352,19 @@ Public Class Program
                         CurRun = CurRun.NextUnit
                         Tabcontrol2_Index_Change = True
                         Tabcontrol_Changed(Tabcontrol2_Index_Change)
+                        Countdown = False
+                        CurStep = CurRun.HeadStep
+                        timeLeft = 0
+                        timeLabel.Text = timeLeft & " s"
+                        'Test_S = True
+                        'load A2's steps
+                        Clear_Steps()
+                        Load_Steps()
+
+                        'dispose old graph and create new graph
+                        Load_New_Graph_CD_True()
                     End If
-                    CurStep = CurRun.HeadStep
-                    timeLeft = CurRun.Steps.Time
-                    timeLabel.Text = timeLeft & " s"
 
-                    'load A2's steps
-                    Clear_Steps()
-                    Load_Steps()
-
-                    'dispose old graph and create new graph
-                    Load_New_Graph_CD_True()
                 Else
                     MessageBox.Show("Error")
                 End If
@@ -2419,6 +2543,9 @@ Public Class Program
                     Else
                         'False: not add test , jump to LoA2_1st
                         CurRun = CurRun.NextUnit.NextUnit.NextUnit.NextUnit
+                        Tabcontrol2_Index_Change = True
+                        Tabcontrol_Changed(Tabcontrol2_Index_Change)
+                        Countdown = False
                         CurRun.Set_BackColor(Color.Yellow)
                     End If
                     CurStep = CurRun.HeadStep
@@ -2478,6 +2605,9 @@ Public Class Program
                         CurRun.Set_BackColor(Color.Green)
                         CurRun.NextUnit.Set_BackColor(Color.Yellow)
                         CurRun = CurRun.NextUnit
+                        Tabcontrol2_Index_Change = True
+                        Tabcontrol_Changed(Tabcontrol2_Index_Change)
+                        Countdown = False
                     End If
                     CurStep = CurRun.HeadStep
                     timeLeft = CurRun.Steps.Time
@@ -2526,6 +2656,9 @@ Public Class Program
                     Else
                         'False: not add test , jump to LoA3_fwd
                         CurRun = CurRun.NextUnit.NextUnit.NextUnit.NextUnit
+                        Tabcontrol2_Index_Change = True
+                        Tabcontrol_Changed(Tabcontrol2_Index_Change)
+                        Countdown = False
                         CurRun.Set_BackColor(Color.Yellow)
                     End If
                     CurStep = CurRun.HeadStep
@@ -2585,6 +2718,9 @@ Public Class Program
                         CurRun.Set_BackColor(Color.Green)
                         CurRun.NextUnit.Set_BackColor(Color.Yellow)
                         CurRun = CurRun.NextUnit
+                        Tabcontrol2_Index_Change = True
+                        Tabcontrol_Changed(Tabcontrol2_Index_Change)
+                        Countdown = False
                     End If
                     CurStep = CurRun.HeadStep
                     timeLeft = CurRun.Steps.Time
@@ -2828,4 +2964,6 @@ Public Class Program
         Dim y = p1.Y + con2.Y - con3.Y
         Return New System.Drawing.Point(x, y)
     End Function
+
+
 End Class

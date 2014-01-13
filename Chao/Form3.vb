@@ -1647,37 +1647,37 @@ Public Class Program
         Set_Panel(Panel_A4_Fst, LinkLabel_A4_Fst)
         tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Fst, Panel_A4_Fst, Nothing, tempRun, 0, "A4", 1, 1, 1)
         tempRun = tempRun.NextUnit
-        'tempRun.Steps = Load_Steps_helper(tempRun)
         'A4 1 Mid_Background
-        Set_Panel(Panel_A4_Fst_Mid_Background, LinkLabel_A4_Fst_Mid_Background)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Fst_Mid_Background, Panel_A4_Fst_Mid_Background, Nothing, tempRun, 0, "A4_Mid_BG", 0, 0, 0)
+        'Set_Panel(Panel_A4_Fst_Mid_Background, LinkLabel_A4_Fst_Mid_Background)
+        'tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Fst_Mid_Background, Panel_A4_Fst_Mid_Background, Nothing, tempRun, 0, "A4_Mid_BG", 0, 0, 0)
+        'tempRun = tempRun.NextUnit
+
+        'A4 2 Mid_Background
+        Set_Panel(Panel_A4_Sec_Mid_Background, LinkLabel_A4_Sec_Mid_Background)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Sec_Mid_Background, Panel_A4_Sec_Mid_Background, Nothing, tempRun, 0, "A4_Mid_BG", 0, 0, 0)
         tempRun = tempRun.NextUnit
         'A4 2
         Set_Panel(Panel_A4_Sec, LinkLabel_A4_Sec)
         tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Sec, Panel_A4_Sec, Nothing, tempRun, 0, "A4", 1, 1, 1)
         tempRun = tempRun.NextUnit
-        'tempRun.Steps = Load_Steps_helper(tempRun)
-        'A4 2 Mid_Background
-        Set_Panel(Panel_A4_Sec_Mid_Background, LinkLabel_A4_Sec_Mid_Background)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Sec_Mid_Background, Panel_A4_Sec_Mid_Background, Nothing, tempRun, 0, "A4_Mid_BG", 0, 0, 0)
+
+        'A4 3 Mid_Background
+        Set_Panel(Panel_A4_Thd_Mid_Background, LinkLabel_A4_Thd_Mid_Background)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Thd_Mid_Background, Panel_A4_Thd_Mid_Background, Nothing, tempRun, 0, "A4_Mid_BG", 0, 0, 0)
         tempRun = tempRun.NextUnit
         'A4 3
         Set_Panel(Panel_A4_Thd, LinkLabel_A4_Thd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Thd, Panel_A4_Thd, Nothing, tempRun, 0, "A4", 1, 1, 1)
         tempRun = tempRun.NextUnit
-        'tempRun.Steps = Load_Steps_helper(tempRun)
-        'A4 3 Mid_Background
-        Set_Panel(Panel_A4_Thd_Mid_Background, LinkLabel_A4_Thd_Mid_Background)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Thd_Mid_Background, Panel_A4_Thd_Mid_Background, Nothing, tempRun, 0, "A4_Mid_BG", 0, 0, 0)
+
+
+        'A4 add Mid_Background
+        Set_Panel(Panel_A4_Add_Mid_Background, LinkLabel_A4_Add_Mid_Background)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Add_Mid_Background, Panel_A4_Add_Mid_Background, Nothing, tempRun, 0, "A4_Mid_BG_Add", 0, 0, 0)
         tempRun = tempRun.NextUnit
         'A4 add
         Set_Panel(Panel_A4_Add, LinkLabel_A4_Add)
         tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Add, Panel_A4_Add, Nothing, tempRun, 0, "A4_Add", 1, 1, 1)
-        tempRun = tempRun.NextUnit
-        'tempRun.Steps = Load_Steps_helper(tempRun)
-        'A4 add Mid_Background
-        Set_Panel(Panel_A4_Add_Mid_Background, LinkLabel_A4_Add_Mid_Background)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Add_Mid_Background, Panel_A4_Add_Mid_Background, Nothing, tempRun, 0, "A4_Mid_BG_Add", 0, 0, 0)
         tempRun = tempRun.NextUnit
 
         'RSS
@@ -2123,49 +2123,49 @@ Public Class Program
     Private Sub Input_S_Step2_changed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Input_S_Step2.ModifiedChanged
         Test_Apply_Button.Enabled = True
         Test_ConfirmButton.Enabled = False
-        Input_S_Step1.Modified = False
+        Input_S_Step2.Modified = False
         Original_Second_Dispose = True
     End Sub
     Private Sub Input_S_Step3_changed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Input_S_Step3.ModifiedChanged
         Test_Apply_Button.Enabled = True
         Test_ConfirmButton.Enabled = False
-        Input_S_Step1.Modified = False
+        Input_S_Step3.Modified = False
         Original_Second_Dispose = True
     End Sub
     Private Sub Input_S_Step4_changed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Input_S_Step4.ModifiedChanged
         Test_Apply_Button.Enabled = True
         Test_ConfirmButton.Enabled = False
-        Input_S_Step1.Modified = False
+        Input_S_Step4.Modified = False
         Original_Second_Dispose = True
     End Sub
     Private Sub Input_S_Step5_changed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Input_S_Step5.ModifiedChanged
         Test_Apply_Button.Enabled = True
         Test_ConfirmButton.Enabled = False
-        Input_S_Step1.Modified = False
+        Input_S_Step5.Modified = False
         Original_Second_Dispose = True
     End Sub
     Private Sub Input_S_Step6_changed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Input_S_Step6.ModifiedChanged
         Test_Apply_Button.Enabled = True
         Test_ConfirmButton.Enabled = False
-        Input_S_Step1.Modified = False
+        Input_S_Step6.Modified = False
         Original_Second_Dispose = True
     End Sub
     Private Sub Input_S_Step7_changed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Input_S_Step7.ModifiedChanged
         Test_Apply_Button.Enabled = True
         Test_ConfirmButton.Enabled = False
-        Input_S_Step1.Modified = False
+        Input_S_Step7.Modified = False
         Original_Second_Dispose = True
     End Sub
     Private Sub Input_S_Step8_changed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Input_S_Step8.ModifiedChanged
         Test_Apply_Button.Enabled = True
         Test_ConfirmButton.Enabled = False
-        Input_S_Step1.Modified = False
+        Input_S_Step8.Modified = False
         Original_Second_Dispose = True
     End Sub
     Private Sub Input_S_Step9_changed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Input_S_Step9.ModifiedChanged
         Test_Apply_Button.Enabled = True
         Test_ConfirmButton.Enabled = False
-        Input_S_Step1.Modified = False
+        Input_S_Step9.Modified = False
         Original_Second_Dispose = True
     End Sub
 
@@ -2176,6 +2176,7 @@ Public Class Program
             If array_step_s(i).Text = "" Then
                 MessageBox.Show("Step" + (i + 1).ToString + "尚未輸入時間")
                 Input_S_Apply = False
+                Test_Apply_Button.Enabled = True
             End If
         Next
         If Input_S_Apply = True Then
@@ -2293,100 +2294,25 @@ Public Class Program
                 startButton.Enabled = False
                 stopButton.Enabled = False
                 Accept_Button.Enabled = False
-            ElseIf CurRun.Name = "A4_Mid_BG" Then
-                If CurRun.NextUnit.Name = "A4" Then
-                    'Case: now is A4_Mid_BG and next is A4
-                    ' change light
-                    Set_Panel_BackColor()
-                    'jump to next Run_Unit
-                    CurRun = CurRun.NextUnit
-                    CurRun.Steps = Load_Steps_helper(CurRun)
-                    Load_Steps_helper(CurRun)
-                    CurStep = CurRun.HeadStep
-                    timeLeft = CurRun.Steps.Time
-                    timeLabel.Text = timeLeft & " s"
-                    Countdown = True
-                    Clear_Steps()
-                    Load_Steps()
+            ElseIf CurRun.Name = "A4_Mid_BG" Or CurRun.Name = "A4_Mid_BG_Add" Then
+                'Case: now is A4_Mid_BG or A4_Mid_BG_Add and next is A4 or A4_Add
+                ' change light
+                Set_Panel_BackColor()
 
-                    'dispose old graph and create new graph
-                    Load_New_Graph_CD_True()
-                ElseIf CurRun.NextUnit.Name = "A4_Add" Then
-                    'Case: now is A4_Mid_BG and next is A4_Add
-                    'have an additional test?
-                    'call a function 
-                    'if want_add()=true then ... elseif want_add()=false then ... endif
+                'jump to next Run_Unit
+                CurRun = CurRun.NextUnit
+                CurRun.Steps = Load_Steps_helper(CurRun)
+                CurStep = CurRun.HeadStep
+                Countdown = True
+                timeLeft = CurRun.Steps.Time
+                timeLabel.Text = timeLeft & " s"
 
-                    CurRun.Set_BackColor(Color.Green)
-                    'jump to next Run_Unit and change light
-                    RandBool = RandGen.Next(0, 2).ToString
-                    If RandBool = True Then
-                        'True: add test
-                        CurRun = CurRun.NextUnit
-                        CurRun.Steps = Load_Steps_helper(CurRun)
-                        CurRun.Set_BackColor(Color.Yellow)
-                        CurStep = CurRun.HeadStep
-                        timeLeft = CurRun.Steps.Time
-                        timeLabel.Text = timeLeft & " s"
-                        Countdown = True
-                        'load A4_Add's steps
-                        Clear_Steps()
-                        Load_Steps()
+                'load A4's steps
+                Clear_Steps()
+                Load_Steps()
 
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_True()
-                    Else
-                        'False: not add test , jump to RSS
-                        CurRun = CurRun.NextUnit.NextUnit.NextUnit
-                        CurRun.Set_BackColor(Color.Yellow)
-                        timeLeft = CurRun.Time
-                        timeLabel.Text = timeLeft & " s"
-                        Clear_Steps()
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_False()
-                    End If
-                Else
-                    MessageBox.Show("Error")
-                End If
-            ElseIf CurRun.Name = "A4_Mid_BG_Add" Then
-                'Case: A4_Mid_BG_Add to RSS 
-                'have an additional test?
-                'call a function 
-                'if want_add()=true then ... elseif want_add()=false then ... endif
-
-                RandBool = RandGen.Next(0, 2).ToString
-                If RandBool = True Then
-                    'True: add test , jump to A4_Add
-                    'True: add test
-                    CurRun.PrevUnit.Set_BackColor(Color.Yellow)
-                    CurRun.Set_BackColor(Color.IndianRed)
-                    CurRun = CurRun.PrevUnit
-                    CurRun.Steps = Load_Steps_helper(CurRun)
-                    CurStep = CurRun.HeadStep
-                    CurRun.CurStep = 1
-                    CurRun.NextUnit.CurStep = 1
-                    Load_Steps_helper(CurRun)
-                    Load_Steps_helper(CurRun.NextUnit)
-                    timeLeft = CurRun.Steps.Time
-                    timeLabel.Text = timeLeft & " s"
-                    Countdown = True
-                    'load A4_Add's steps
-                    Clear_Steps()
-                    Load_Steps()
-
-                    'dispose old graph and create new graph
-                    Load_New_Graph_CD_True()
-                Else
-                    'False: not add test , jump to RSS
-                    CurRun.Set_BackColor(Color.Green)
-                    CurRun = CurRun.NextUnit
-                    CurRun.Set_BackColor(Color.Yellow)
-                    timeLeft = CurRun.Time
-                    timeLabel.Text = timeLeft & " s"
-                    Clear_Steps()
-                    'dispose old graph and create new graph
-                    Load_New_Graph_CD_False()
-                End If
+                'dispose old graph and create new graph
+                Load_New_Graph_CD_True()
             End If
         Else 'countdown = true
             If CurRun.Name = "ExA1" Or CurRun.Name = "TrA1" Then
@@ -3046,27 +2972,98 @@ Public Class Program
                 Else
                     MessageBox.Show("Error")
                 End If
-            ElseIf CurRun.Name = "A4" Or CurRun.Name = "A4_Add" Then
-                'Case: now is A4 or A4_Add and next is A4_Mid_BG
-                ' change light
-                Set_Panel_BackColor()
+            ElseIf CurRun.Name = "A4" Then
+                If CurRun.NextUnit.Name = "A4_Mid_BG" Then
+                    'Case: now is A4 and next is A4_Mid_BG
+                    ' change light
+                    Set_Panel_BackColor()
 
-                'jump to next Run_Unit
-                CurRun = CurRun.NextUnit
-                timeLeft = CurRun.Time
-                timeLabel.Text = timeLeft & " s"
-                Countdown = False
-                Clear_Steps()
-                'dispose old graph and create new graph
-                Load_New_Graph_CD_False()
+                    'jump to next Run_Unit
+                    CurRun = CurRun.NextUnit
+                    timeLeft = CurRun.Time
+                    timeLabel.Text = timeLeft & " s"
+                    Countdown = False
+                    Clear_Steps()
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_False()
+                ElseIf CurRun.NextUnit.Name = "A4_Mid_BG_Add" Then
+                    'have an additional test?
+                    'call a function 
+                    'if want_add()=true then ... elseif want_add()=false then ... endif
+
+                    CurRun.Set_BackColor(Color.Green)
+                    'jump to next Run_Unit and change light
+                    RandBool = RandGen.Next(0, 2).ToString
+                    If RandBool = True Then
+                        'True: add test
+                        ' change light
+                        Set_Panel_BackColor()
+
+                        'jump to next Run_Unit
+                        CurRun = CurRun.NextUnit
+                        timeLeft = CurRun.Time
+                        timeLabel.Text = timeLeft & " s"
+                        Countdown = False
+                        Clear_Steps()
+                        'dispose old graph and create new graph
+                        Load_New_Graph_CD_False()
+                    Else
+                        'False: not add test , jump to RSS
+                        CurRun = CurRun.NextUnit.NextUnit.NextUnit
+                        CurRun.Steps = Load_Steps_helper(CurRun)
+                        CurRun.Set_BackColor(Color.Yellow)
+                        timeLeft = CurRun.Time
+                        timeLabel.Text = timeLeft & " s"
+                        Countdown = False
+                        Clear_Steps()
+                        'dispose old graph and create new graph
+                        Load_New_Graph_CD_False()
+                    End If
+                End If
+                
+            ElseIf CurRun.Name = "A4_Add" Then
+                'have an additional test?
+                'call a function 
+                'if want_add()=true then ... elseif want_add()=false then ... endif
+
+                RandBool = RandGen.Next(0, 2).ToString
+                If RandBool = True Then
+                    'True: add test , jump to A4_Mid_BG_Add
+                    'True: add test
+                    CurRun.PrevUnit.Set_BackColor(Color.Yellow)
+                    CurRun.Set_BackColor(Color.IndianRed)
+                    CurRun = CurRun.PrevUnit
+                    
+                    Load_Steps_helper(CurRun.NextUnit)
+                    timeLeft = CurRun.Time
+                    timeLabel.Text = timeLeft & " s"
+                    Countdown = False
+
+                    Clear_Steps()
+
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_True()
+                Else
+                    'False: not add test , jump to RSS
+                    CurRun.Set_BackColor(Color.Green)
+                    CurRun = CurRun.NextUnit
+                    CurRun.Steps = Load_Steps_helper(CurRun)
+                    CurRun.Set_BackColor(Color.Yellow)
+                    timeLeft = CurRun.Time
+                    timeLabel.Text = timeLeft & " s"
+                    Countdown = False
+                    Clear_Steps()
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_False()
+                End If
             End If
         End If
         Accept_Button.Enabled = False
         startButton.Enabled = True
 
-        'If MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-        'MessageBox.Show("此機具所有測量步驟已結束")
-        'End If
+            'If MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            'MessageBox.Show("此機具所有測量步驟已結束")
+            'End If
 
     End Sub
 

@@ -1,6 +1,6 @@
 ﻿Public Class Run_Unit
 
-    WithEvents Link As LinkLabel
+    Public WithEvents Link As LinkLabel
     Dim Panel As Panel
     Dim Data As List(Of Double)
     Public NextUnit As Run_Unit

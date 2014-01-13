@@ -671,6 +671,22 @@ Public Class Program
         PanelExcavatorA2.Location = New Point(254, 140)
 
         'new add
+        LinkLabel_PreCal_1st.Enabled = False
+        LinkLabel_PreCal_2nd.Enabled = False
+        LinkLabel_PreCal_3rd.Enabled = False
+        LinkLabel_PreCal_4th.Enabled = False
+        LinkLabel_PostCal_1st.Enabled = False
+        LinkLabel_PostCal_2nd.Enabled = False
+        LinkLabel_PostCal_3rd.Enabled = False
+        LinkLabel_PostCal_4th.Enabled = False
+        Panel_Bkg.Enabled = False
+        Panel_RSS.Enabled = False
+
+        LinkLabel_PreCal_5th.Enabled = False
+        LinkLabel_PreCal_6th.Enabled = False
+        LinkLabel_PostCal_5th.Enabled = False
+        LinkLabel_PostCal_6th.Enabled = False
+
         Panel_PreCal_Sub.Visible = True
         Panel_PostCal_Sub.Visible = True
         Panel_PreCal_5th.Visible = True
@@ -1953,6 +1969,7 @@ Public Class Program
     Sub Set_Panel_BackColor()
         CurRun.Set_BackColor(Color.Green)
         CurRun.NextUnit.Set_BackColor(Color.Yellow)
+        CurRun.Link.Enabled = True
     End Sub
     Sub Set_Step_BackColor()
         array_step(CurRun.CurStep - 1).BackColor = Color.Green

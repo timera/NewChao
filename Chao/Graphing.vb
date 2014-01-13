@@ -70,9 +70,9 @@ End Class
 Public Class LineGraph
     Inherits CGraph
     'private global vars
-    Dim SecTextBox As MaskedTextBox
+    'Dim SecTextBox As MaskedTextBox
     Dim TimeInSec As Integer
-    Dim SetTimeButton As Button
+    'Dim SetTimeButton As Button
 
     'constructor
     Public Sub New(ByVal loc As Point,
@@ -83,28 +83,30 @@ Public Class LineGraph
                    )
         MyBase.New(loc, size, parent, mode)
         'Offset the chart a bit to the right to allow room for the button and textbox
-        chart.Location = New Point(SetTimeButtonSize.Width, 0)
-        chart.Size = New Size(size.Width - SecTextBoxSize.Width, size.Height)
+        'chart.Location = New Point(SetTimeButtonSize.Width, 0)
+        'chart.Size = New Size(size.Width - SecTextBoxSize.Width, size.Height)
+        chart.Location = New Point(0, 0)
+        chart.Size = New Size(size.Width, size.Height)
         'Set Time TextBox
-        SecTextBox = New MaskedTextBox()
-        Panel.Controls.Add(SecTextBox)
-        SecTextBox.Font = New Font(SecTextBox.Font.FontFamily, SecTextFontSize)
-        SecTextBox.Size = SecTextBoxSize
-        SecTextBox.Location = New Point(0, size.Height / 4)
-        If time > 0 Then
-            SecTextBox.Text = time.ToString()
-            SecTextBox.Enabled = False
-            SetTime(time)
-        End If
-        SecTextBox.Mask = "999" 'digits including empty spaces
+        'SecTextBox = New MaskedTextBox()
+        'Panel.Controls.Add(SecTextBox)
+        'SecTextBox.Font = New Font(SecTextBox.Font.FontFamily, SecTextFontSize)
+        'SecTextBox.Size = SecTextBoxSize
+        'SecTextBox.Location = New Point(0, size.Height / 4)
+        'If time > 0 Then
+        '    SecTextBox.Text = time.ToString()
+        '    SecTextBox.Enabled = False
+        '    SetTime(time)
+        'End If
+        'SecTextBox.Mask = "999" 'digits including empty spaces
 
-        'Set Time button
-        SetTimeButton = New Button()
-        Panel.Controls.Add(SetTimeButton)
-        SetTimeButton.Font = New Font(SetTimeButton.Font.FontFamily, SecTextFontSize)
-        SetTimeButton.Size = SetTimeButtonSize
-        SetTimeButton.Location = New Point(0, size.Height / 4 + SecTextBox.Size.Height)
-        SetTimeButton.Text = "Set"
+        ''Set Time button
+        'SetTimeButton = New Button()
+        'Panel.Controls.Add(SetTimeButton)
+        'SetTimeButton.Font = New Font(SetTimeButton.Font.FontFamily, SecTextFontSize)
+        'SetTimeButton.Size = SetTimeButtonSize
+        'SetTimeButton.Location = New Point(0, size.Height / 4 + SecTextBox.Size.Height)
+        'SetTimeButton.Text = "Set"
 
         'Set Chart zoomability
         chart.ChartAreas(0).CursorY.IsUserSelectionEnabled = True
@@ -141,11 +143,11 @@ Public Class LineGraph
     End Sub
 
     'Set time from the textbox 
-    Public Sub SetTimeFromBox()
-        If Integer.TryParse(SecTextBox.Text, TimeInSec) Then
-            chart.ChartAreas(0).AxisX.Maximum = TimeInSec
-        End If
-    End Sub
+    'Public Sub SetTimeFromBox()
+    '    If Integer.TryParse(SecTextBox.Text, TimeInSec) Then
+    '        chart.ChartAreas(0).AxisX.Maximum = TimeInSec
+    '    End If
+    'End Sub
     'Set Time
     Public Sub SetTime(ByVal time As Integer)
         TimeInSec = time
@@ -166,8 +168,8 @@ Public Class LineGraph
     End Sub
 
     Public Sub Dispose()
-        SecTextBox.Dispose()
-        SetTimeButton.Dispose()
+        'SecTextBox.Dispose()
+        'SetTimeButton.Dispose()
         chart.Dispose()
         Panel.Dispose()
     End Sub
@@ -255,7 +257,7 @@ Public Class LineGraphPanel
         Dim temp(numSteps - 1) As LineGraph
         CurrentLineGraph = 0
         For i = 0 To numSteps - 1
-            temp(i) = New LineGraph(New Point(0, i * offset), New Size(1219, 97), LineGraphPanel, mode, time)
+            temp(i) = New LineGraph(New Point(0, i * offset), New Size(1119, 97), LineGraphPanel, mode, time)
         Next
         LineGraphs = temp
     End Sub

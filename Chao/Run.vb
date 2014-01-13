@@ -7,6 +7,7 @@
     Public PrevUnit As Run_Unit
     Public Time As Integer
     Public Steps As Steps
+    Public HeadStep As Steps
     Public CurStep As Integer
     Public StartStep As Integer
     Public EndStep As Integer

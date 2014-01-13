@@ -1,6 +1,7 @@
 ﻿Public Class Steps
     Public step_str As String
     Public step_label As Label
+
     Public NextStep As Steps
     Public LastStep As Boolean
     Public Time As Integer

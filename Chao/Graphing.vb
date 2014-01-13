@@ -227,6 +227,11 @@ Public Class BarGraph
         temp(newVal.Length) = sum / newVal.Length
         series(0).Points.DataBindXY(listOfNames, temp)
     End Sub
+
+    Public Sub Dispose()
+        chart.Dispose()
+        Panel.Dispose()
+    End Sub
 End Class
 
 Public Class LineGraphPanel

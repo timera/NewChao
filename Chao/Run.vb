@@ -43,7 +43,288 @@
     End Sub
 
     Private Sub LinkLabel_Clicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles Link.LinkClicked
+        Program.startButton.Enabled = True
+        Program.Accept_Button.Enabled = False
 
+        If Me.Link.Name = "LinkLabel_PreCal_1st" Then
+            Countdown_False_before_Jump()
+            'jump
+            Program.CurRun = Program.PreCal_1st
+            Countdown_False_after_Jump()
+
+        ElseIf Me.Link.Name = "LinkLabel_PreCal_2nd" Then
+            Countdown_False_before_Jump()
+            'jump
+            Program.CurRun = Program.PreCal_2nd
+            Countdown_False_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_PreCal_3rd" Then
+             Countdown_False_before_Jump()
+            'jump
+            Program.CurRun = Program.PreCal_3rd
+            Countdown_False_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_PreCal_4th" Then
+            Countdown_False_before_Jump()
+            'jump
+            Program.CurRun = Program.PreCal_4th
+            Countdown_False_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_PreCal_5th" Then
+             Countdown_False_before_Jump()
+            'jump
+            Program.CurRun = Program.PreCal_5th
+            Countdown_False_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_PreCal_6th" Then
+             Countdown_False_before_Jump()
+            'jump
+            Program.CurRun = Program.PreCal_6th
+            Countdown_False_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_BG" Then
+            Countdown_False_before_Jump()
+            Program.CurRun = Program.BG
+            Countdown_False_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_RSS" Then
+            Countdown_False_before_Jump()
+            Program.CurRun = Program.RSS
+            Countdown_False_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_PostCal_1st" Then
+            Countdown_False_before_Jump()
+            Program.CurRun = Program.PostCal_1st
+            Countdown_False_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_PostCal_2nd" Then
+            Countdown_False_before_Jump()
+            Program.CurRun = Program.PostCal_2nd
+            Countdown_False_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_PostCal_3rd" Then
+            Countdown_False_before_Jump()
+            Program.CurRun = Program.PostCal_3rd
+            Countdown_False_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_PostCal_4th" Then
+            Countdown_False_before_Jump()
+            Program.CurRun = Program.PostCal_4th
+            Countdown_False_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_PostCal_5th" Then
+            Countdown_False_before_Jump()
+            Program.CurRun = Program.PostCal_5th
+            Countdown_False_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_PostCal_6th" Then
+            Countdown_False_before_Jump()
+            Program.CurRun = Program.PostCal_6th
+            Countdown_False_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_ExA1_Fst_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.ExA1_Fst
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_ExA1_Sec_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.ExA1_Sec
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_ExA1_Thd_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.ExA1_Thd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_ExA1_Add_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.ExA1_Add
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_ExA2_Fst_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.ExA2_Fst
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_ExA2_Sec_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.ExA2_Sec
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_ExA2_Thd_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.ExA2_Thd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_ExA2_Add_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.ExA2_Add
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_LoA1_Fst_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.LoA1_Fst
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_LoA1_Sec_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.LoA1_Sec
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_LoA1_Thd_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.LoA1_Thd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_LoA1_Add_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.LoA1_Add
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_LoA2_Fst_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.LoA2_Fst
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_LoA2_Sec_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.LoA2_Sec
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_LoA2_Thd_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.LoA2_Thd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_LoA2_Add_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.LoA2_Add
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_LoA3_Fst_fwd" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.LoA3_Fst_fwd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_LoA3_Fst_bkd" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.LoA3_Fst_bkd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_LoA3_Sec_fwd" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.LoA3_Sec_fwd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_LoA3_Sec_bkd" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.LoA3_Sec_bkd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_LoA3_Thd_fwd" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.LoA3_Thd_fwd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_LoA3_Thd_bkd" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.LoA3_Thd_bkd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_LoA3_Add_fwd" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.LoA3_Add_fwd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_LoA3_Add_bkd" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.LoA3_Add_bkd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_TrA1_Fst_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.TrA1_Fst
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_TrA1_Sec_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.TrA1_Sec
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_TrA1_Thd_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.TrA1_Thd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_TrA1_Add_1st" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.TrA1_Add
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_TrA3_Fst_fwd" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.TrA3_Fst_fwd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_TrA3_Fst_bkd" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.TrA3_Fst_bkd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_TrA3_Sec_fwd" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.TrA3_Sec_fwd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_TrA3_Sec_bkd" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.TrA3_Sec_bkd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_TrA3_Thd_fwd" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.TrA3_Thd_fwd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_TrA3_Thd_bkd" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.TrA3_Thd_bkd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_TrA3_Add_fwd" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.TrA3_Add_fwd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_TrA3_Add_bkd" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.TrA3_Add_bkd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_A4_Fst" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.A4_Fst
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_A4_Sec" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.A4_Sec
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_A4_Thd" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.A4_Thd
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_A4_Add" Then
+            Countdown_True_before_Jump()
+            Program.CurRun = Program.A4_Add
+            Countdown_True_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_A4_Sec_Mid_Background" Then
+            Countdown_False_before_Jump()
+            Program.CurRun = Program.A4_Sec_Mid
+            Countdown_False_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_A4_Thd_Mid_Background" Then
+            Countdown_False_before_Jump()
+            Program.CurRun = Program.A4_Thd_Mid
+            Countdown_False_after_Jump()
+        ElseIf Me.Link.Name = "LinkLabel_A4_Add_Mid_Background" Then
+            Countdown_False_before_Jump()
+            Program.CurRun = Program.A4_Add_Mid
+            Countdown_False_after_Jump()
+        End If
+
+    End Sub
+    Sub Countdown_True_before_Jump()
+        Program.CurRun.Set_BackColor(Color.IndianRed)
+        Program.Temp_CurRun = Program.CurRun
+        Program.Temp_Countdown = Program.Countdown
+    End Sub
+    Sub Countdown_True_after_Jump()
+        Program.Countdown = True
+        Program.CurRun.Steps = Program.Load_Steps_helper(Program.CurRun)
+        Program.CurRun.CurStep = 1
+        Program.CurStep = Program.CurRun.HeadStep
+        Program.timeLeft = Program.CurRun.Steps.Time
+        Program.timeLabel.Text = Program.timeLeft & " s"
+        Program.CurRun.Set_BackColor(Color.Yellow)
+        If Program.CurRun.Name = "ExA2_1st" Or Program.CurRun.Name = "ExA2_1st_Add" Then
+            Program.CurRun.NextUnit.Set_BackColor(Color.IndianRed)
+            Program.CurRun.NextUnit.CurStep = 1
+            Program.CurRun.NextUnit.NextUnit.Set_BackColor(Color.IndianRed)
+            Program.CurRun.NextUnit.NextUnit.CurStep = 1
+        End If
+
+        'load steps
+        Program.Clear_Steps()
+        Program.Load_Steps()
+
+        'dispose old graph and create new graph
+        Program.Load_New_Graph_CD_True()
+    End Sub
+    Sub Countdown_False_before_Jump()
+        'before jump
+        Program.CurRun.Set_BackColor(Color.IndianRed)
+        Program.Temp_CurRun = Program.CurRun
+        Program.Temp_Countdown = Program.Countdown
+    End Sub
+    Sub Countdown_False_after_Jump()
+        Program.Countdown = False
+        Program.Clear_Steps()
+        'dispose old graph and create new graph
+        Program.Load_New_Graph_CD_False()
+        Program.timeLeft = Program.CurRun.Time
+        Program.timeLabel.Text = Program.timeLeft & " s"
+        Program.CurRun.Set_BackColor(Color.Yellow)
     End Sub
     'Function L_Average()
 

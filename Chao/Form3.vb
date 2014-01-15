@@ -2459,60 +2459,65 @@ Public Class Program
     End Sub
 
     Sub Jump_Back_Countdown_True()
-        If MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-            CurRun.Set_BackColor(Color.Green)
-            Temp_CurRun.Set_BackColor(Color.Yellow)
-            If CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_1st_Add" Then
-                CurRun = CurRun.NextUnit
-            ElseIf CurRun.Name = "ExA2_2nd_3rd" And CurRun.NextUnit.Name = "ExA2_2nd_3rd" Then
-                CurRun = CurRun.NextUnit
-            ElseIf CurRun.Name = "ExA2_2nd_3rd_Add" And CurRun.NextUnit.Name = "ExA2_2nd_3rd_Add" Then
-                CurRun = CurRun.NextUnit
-            ElseIf CurRun.Name = "ExA2_2nd_3rd" And CurRun.NextUnit.Name = "ExA2_1st" Then
+        If CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "ExA2_2nd_3rd" And CurRun.NextUnit.Name = "ExA2_2nd_3rd" Or CurRun.Name = "ExA2_2nd_3rd_Add" And CurRun.NextUnit.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_2nd_3rd" And CurRun.NextUnit.Name = "LoA2_2nd_3rd" Or CurRun.Name = "LoA2_2nd_3rd_Add" And CurRun.NextUnit.Name = "LoA2_2nd_3rd_Add" Then
+            'MessageBox.Show("here")
+            Set_Panel_BackColor()
+            CurRun = CurRun.NextUnit
+
+
+            CurRun.Steps = Load_Steps_helper(CurRun)
+            CurStep = CurRun.HeadStep
+            timeLeft = CurRun.Steps.Time
+            timeLabel.Text = timeLeft & " s"
+
+            'load A2's steps
+            Clear_Steps()
+            Load_Steps()
+
+            'dispose old graph and create new graph
+            Load_New_Graph_CD_True()
+            
+        Else
+            If MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                CurRun.Set_BackColor(Color.Green)
+                Temp_CurRun.Set_BackColor(Color.Yellow)
+
                 CurRun = Temp_CurRun
                 Temp_CurRun = Null_CurRun
-            ElseIf CurRun.Name = "ExA2_2nd_3rd" And CurRun.NextUnit.Name = "ExA2_1st_Add" Then
-                CurRun = Temp_CurRun
-                Temp_CurRun = Null_CurRun
-            ElseIf CurRun.Name = "ExA2_2nd_3rd_Add" And CurRun.NextUnit.Name = "RSS" Then
-                CurRun = Temp_CurRun
-                Temp_CurRun = Null_CurRun
+
+                If Temp_Countdown = True Then
+                    Countdown = True
+                    CurRun.Steps = Load_Steps_helper(CurRun)
+                    CurRun.CurStep = 1
+                    CurStep = CurRun.Steps
+                    timeLeft = CurRun.Steps.Time
+                    timeLabel.Text = timeLeft & " s"
+                    Clear_Steps()
+                    Load_Steps()
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_True()
+                Else
+                    Countdown = False
+                    timeLeft = CurRun.Time
+                    timeLabel.Text = timeLeft & " s"
+                    Clear_Steps()
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_False()
+                End If
+                timeLabel.Text = timeLeft & " s"
             Else
-                CurRun = Temp_CurRun
-                Temp_CurRun = Null_CurRun
-            End If
-            CurRun = Temp_CurRun
-            If Temp_Countdown = True Then
-                Countdown = True
+                'dispose data here
+
                 CurRun.Steps = Load_Steps_helper(CurRun)
                 CurRun.CurStep = 1
                 CurStep = CurRun.Steps
                 timeLeft = CurRun.Steps.Time
                 timeLabel.Text = timeLeft & " s"
-                Clear_Steps()
-                Load_Steps()
-                'dispose old graph and create new graph
-                Load_New_Graph_CD_True()
-            Else
-                Countdown = False
-                timeLeft = CurRun.Time
-                timeLabel.Text = timeLeft & " s"
-                Clear_Steps()
                 'dispose old graph and create new graph
                 Load_New_Graph_CD_False()
             End If
-            timeLabel.Text = timeLeft & " s"
-        Else
-            'dispose data here
-
-            CurRun.Steps = Load_Steps_helper(CurRun)
-            CurRun.CurStep = 1
-            CurStep = CurRun.Steps
-            timeLeft = CurRun.Steps.Time
-            timeLabel.Text = timeLeft & " s"
-            'dispose old graph and create new graph
-            Load_New_Graph_CD_False()
         End If
+        
     End Sub
     Sub Jump_Back_Countdown_False()
         If MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then

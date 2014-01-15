@@ -285,8 +285,22 @@
 
     End Sub
     Sub Countdown_True_before_Jump()
-        Program.CurRun.Set_BackColor(Color.IndianRed)
-        Program.Temp_CurRun = Program.CurRun
+        If Program.CurRun.Name = "ExA2_2nd_3rd" Or Program.CurRun.Name = "LoA2_2n_3rd" Or Program.CurRun.Name = "ExA2_2nd_3rd_Add" Or Program.CurRun.Name = "LoA2_2nd_3rd_Add" Then
+            If Program.CurRun.PrevUnit.Name = "ExA2_1st" Or Program.CurRun.PrevUnit.Name = "LoA2_1st" Or Program.CurRun.PrevUnit.Name = "ExA2_1st_Add" Or Program.CurRun.PrevUnit.Name = "LoA2_1st_Add" Then
+                Program.CurRun.Set_BackColor(Color.IndianRed)
+                Program.CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
+                Program.Temp_CurRun = Program.CurRun.PrevUnit
+            ElseIf Program.CurRun.PrevUnit.Name = "ExA2_2nd_3rd" Or Program.CurRun.PrevUnit.Name = "LoA2_2nd_3rd" Or Program.CurRun.PrevUnit.Name = "ExA2_2nd_3rd_Add" Or Program.CurRun.PrevUnit.Name = "LoA2_2nd_3rd_Add" Then
+                Program.CurRun.Set_BackColor(Color.IndianRed)
+                Program.CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
+                Program.CurRun.PrevUnit.PrevUnit.Set_BackColor(Color.IndianRed)
+                Program.Temp_CurRun = Program.CurRun.PrevUnit.PrevUnit
+            End If
+        Else
+            Program.CurRun.Set_BackColor(Color.IndianRed)
+            Program.Temp_CurRun = Program.CurRun
+        End If
+
         Program.Temp_Countdown = Program.Countdown
     End Sub
     Sub Countdown_True_after_Jump()
@@ -297,7 +311,7 @@
         Program.timeLeft = Program.CurRun.Steps.Time
         Program.timeLabel.Text = Program.timeLeft & " s"
         Program.CurRun.Set_BackColor(Color.Yellow)
-        If Program.CurRun.Name = "ExA2_1st" Or Program.CurRun.Name = "ExA2_1st_Add" Then
+        If Program.CurRun.Name = "ExA2_1st" Or Program.CurRun.Name = "ExA2_1st_Add" Or Program.CurRun.Name = "LoA2_1st" Or Program.CurRun.Name = "LoA2_1st_Add" Then
             Program.CurRun.NextUnit.Set_BackColor(Color.IndianRed)
             Program.CurRun.NextUnit.CurStep = 1
             Program.CurRun.NextUnit.NextUnit.Set_BackColor(Color.IndianRed)
@@ -312,9 +326,27 @@
         Program.Load_New_Graph_CD_True()
     End Sub
     Sub Countdown_False_before_Jump()
-        'before jump
-        Program.CurRun.Set_BackColor(Color.IndianRed)
-        Program.Temp_CurRun = Program.CurRun
+        'before jump       
+        If Program.CurRun.Name = "ExA2_2nd_3rd" Or Program.CurRun.Name = "LoA2_2n_3rd" Or Program.CurRun.Name = "ExA2_2nd_3rd_Add" Or Program.CurRun.Name = "LoA2_2nd_3rd_Add" Then
+            If Program.CurRun.PrevUnit.Name = "ExA2_1st" Or Program.CurRun.PrevUnit.Name = "LoA2_1st" Or Program.CurRun.PrevUnit.Name = "ExA2_1st_Add" Or Program.CurRun.PrevUnit.Name = "LoA2_1st_Add" Then
+                Program.CurRun.Set_BackColor(Color.IndianRed)
+                Program.CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
+                Program.CurRun.PrevUnit.Link.Enabled = False
+                Program.CurRun.PrevUnit.CurStep = 1
+                Program.Temp_CurRun = Program.CurRun.PrevUnit
+            ElseIf Program.CurRun.PrevUnit.Name = "ExA2_2nd_3rd" Or Program.CurRun.PrevUnit.Name = "LoA2_2nd_3rd" Or Program.CurRun.PrevUnit.Name = "ExA2_2nd_3rd_Add" Or Program.CurRun.PrevUnit.Name = "LoA2_2nd_3rd_Add" Then
+                Program.CurRun.Set_BackColor(Color.IndianRed)
+                Program.CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
+                Program.CurRun.PrevUnit.PrevUnit.Set_BackColor(Color.IndianRed)
+                Program.CurRun.PrevUnit.PrevUnit.Link.Enabled = False
+                Program.CurRun.PrevUnit.CurStep = 1
+                Program.CurRun.PrevUnit.PrevUnit.CurStep = 1
+                Program.Temp_CurRun = Program.CurRun.PrevUnit.PrevUnit
+            End If
+        Else
+            Program.CurRun.Set_BackColor(Color.IndianRed)
+            Program.Temp_CurRun = Program.CurRun
+        End If
         Program.Temp_Countdown = Program.Countdown
     End Sub
     Sub Countdown_False_after_Jump()

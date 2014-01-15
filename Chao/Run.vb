@@ -285,17 +285,25 @@
 
     End Sub
     Sub Countdown_True_before_Jump()
-        If Program.CurRun.Name = "ExA2_2nd_3rd" Or Program.CurRun.Name = "LoA2_2n_3rd" Or Program.CurRun.Name = "ExA2_2nd_3rd_Add" Or Program.CurRun.Name = "LoA2_2nd_3rd_Add" Then
+        If Program.CurRun.Name = "ExA2_2nd_3rd" Or Program.CurRun.Name = "LoA2_2nd_3rd" Or Program.CurRun.Name = "ExA2_2nd_3rd_Add" Or Program.CurRun.Name = "LoA2_2nd_3rd_Add" Then
             If Program.CurRun.PrevUnit.Name = "ExA2_1st" Or Program.CurRun.PrevUnit.Name = "LoA2_1st" Or Program.CurRun.PrevUnit.Name = "ExA2_1st_Add" Or Program.CurRun.PrevUnit.Name = "LoA2_1st_Add" Then
                 Program.CurRun.Set_BackColor(Color.IndianRed)
                 Program.CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
+                Program.CurRun.CurStep = 1
+                Program.CurRun.PrevUnit.CurStep = 1
                 Program.Temp_CurRun = Program.CurRun.PrevUnit
             ElseIf Program.CurRun.PrevUnit.Name = "ExA2_2nd_3rd" Or Program.CurRun.PrevUnit.Name = "LoA2_2nd_3rd" Or Program.CurRun.PrevUnit.Name = "ExA2_2nd_3rd_Add" Or Program.CurRun.PrevUnit.Name = "LoA2_2nd_3rd_Add" Then
                 Program.CurRun.Set_BackColor(Color.IndianRed)
                 Program.CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
                 Program.CurRun.PrevUnit.PrevUnit.Set_BackColor(Color.IndianRed)
+                Program.CurRun.CurStep = 1
+                Program.CurRun.PrevUnit.CurStep = 1
+                Program.CurRun.PrevUnit.PrevUnit.CurStep = 1
                 Program.Temp_CurRun = Program.CurRun.PrevUnit.PrevUnit
             End If
+        ElseIf Program.CurRun.Name = "ExA2_1st" Or Program.CurRun.Name = "ExA2_1st_Add" Or Program.CurRun.Name = "LoA2_1st" Or Program.CurRun.Name = "LoA2_1st_Add" Then
+            Program.CurRun.Set_BackColor(Color.IndianRed)
+            Program.Temp_CurRun = Program.CurRun
         Else
             Program.CurRun.Set_BackColor(Color.IndianRed)
             Program.Temp_CurRun = Program.CurRun
@@ -327,11 +335,12 @@
     End Sub
     Sub Countdown_False_before_Jump()
         'before jump       
-        If Program.CurRun.Name = "ExA2_2nd_3rd" Or Program.CurRun.Name = "LoA2_2n_3rd" Or Program.CurRun.Name = "ExA2_2nd_3rd_Add" Or Program.CurRun.Name = "LoA2_2nd_3rd_Add" Then
+        If Program.CurRun.Name = "ExA2_2nd_3rd" Or Program.CurRun.Name = "LoA2_2nd_3rd" Or Program.CurRun.Name = "ExA2_2nd_3rd_Add" Or Program.CurRun.Name = "LoA2_2nd_3rd_Add" Then
             If Program.CurRun.PrevUnit.Name = "ExA2_1st" Or Program.CurRun.PrevUnit.Name = "LoA2_1st" Or Program.CurRun.PrevUnit.Name = "ExA2_1st_Add" Or Program.CurRun.PrevUnit.Name = "LoA2_1st_Add" Then
                 Program.CurRun.Set_BackColor(Color.IndianRed)
                 Program.CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
                 Program.CurRun.PrevUnit.Link.Enabled = False
+                Program.CurRun.CurStep = 1
                 Program.CurRun.PrevUnit.CurStep = 1
                 Program.Temp_CurRun = Program.CurRun.PrevUnit
             ElseIf Program.CurRun.PrevUnit.Name = "ExA2_2nd_3rd" Or Program.CurRun.PrevUnit.Name = "LoA2_2nd_3rd" Or Program.CurRun.PrevUnit.Name = "ExA2_2nd_3rd_Add" Or Program.CurRun.PrevUnit.Name = "LoA2_2nd_3rd_Add" Then
@@ -339,14 +348,20 @@
                 Program.CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
                 Program.CurRun.PrevUnit.PrevUnit.Set_BackColor(Color.IndianRed)
                 Program.CurRun.PrevUnit.PrevUnit.Link.Enabled = False
+                Program.CurRun.CurStep = 1
                 Program.CurRun.PrevUnit.CurStep = 1
                 Program.CurRun.PrevUnit.PrevUnit.CurStep = 1
                 Program.Temp_CurRun = Program.CurRun.PrevUnit.PrevUnit
             End If
+        ElseIf Program.CurRun.Name = "ExA2_1st" Or Program.CurRun.Name = "ExA2_1st_Add" Or Program.CurRun.Name = "LoA2_1st" Or Program.CurRun.Name = "LoA2_1st_Add" Then
+            Program.CurRun.Set_BackColor(Color.IndianRed)
+            Program.CurRun.Link.Enabled = False
+            Program.Temp_CurRun = Program.CurRun
         Else
             Program.CurRun.Set_BackColor(Color.IndianRed)
             Program.Temp_CurRun = Program.CurRun
         End If
+
         Program.Temp_Countdown = Program.Countdown
     End Sub
     Sub Countdown_False_after_Jump()

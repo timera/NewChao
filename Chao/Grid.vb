@@ -1,12 +1,17 @@
-﻿Public Class Grid
+﻿Imports System.IO
+Imports System.Text
+
+Public Class Grid
 
 End Class
 
 Public Class A_Unit
     'contains a grid
     Public Grid As DataGridView
+    Private _R As Double
+    Public A As Integer
 
-    Public Sub New(ByRef Parent As Control, ByVal Size As Size, ByVal Position As Point)
+    Public Sub New(ByRef Parent As Control, ByVal Size As Size, ByVal Position As Point, ByVal R As Double, ByVal AWhat As Integer)
         Grid = New DataGridView()
         Grid.Parent = Parent
         Grid.Size = Size
@@ -14,7 +19,8 @@ Public Class A_Unit
         Dim col As New DataGridViewTextBoxColumn
         Grid.Columns.Add(col)
         'need to add a column before rows
-
+        _R = R
+        A = AWhat
         Grid.Rows.Add(16)
         Grid.Rows(1).HeaderCell.Value = "LpAeq2"
         Grid.Rows(2).HeaderCell.Value = "LpAeq4"
@@ -44,12 +50,17 @@ Public Class A_Unit
         RSS
     End Enum
 
+
     Public Sub AddGrid_Run_Unit(ByRef Run As Grid_Run_Unit)
 
         If Run.Header = Run_Modes.RSS.ToString() Then
             RSS = Run
         End If
-
+        'If the first added is not background then throw error message and return
+        If GRUList.Count = 0 And Run.isRegular Then
+            MsgBox("Trying to add a regular record to the first column where it should be a background record!")
+            Return
+        End If
         'If this run is not background
         If Run.isRegular Then
             'see if previous was background then use it as this one's background for A4
@@ -93,16 +104,114 @@ Public Class A_Unit
         'add next column for next record
         Dim col As New DataGridViewTextBoxColumn
         'col.DataPropertyName = "Run"
-        'col.Name = "colWhateverName"
+        col.Name = Run.Header & Run.Subheader
         Grid.Columns.Add(col)
         GRUList.Add(Run)
+
+        If A = 3 And Run.Subheader.Contains("後退") Then
+            AddA3Overall()
+        End If
+
     End Sub
 
-    'contains calculations
+    'function that adds the overall column after forward and backward measurements are in place
+    Private Sub AddA3Overall()
+        If Not IsNothing(GRUList) Then
+            If GRUList.Count > 3 Then
+                Dim forw As Grid_Run_Unit = GRUList(GRUList.Count - 2)
+                Dim backw As Grid_Run_Unit = GRUList(GRUList.Count - 1)
+                Dim subheader = "行走噪音"
+                Dim gru As Grid_Run_Unit = New Grid_Run_Unit(forw.Meter2 + backw.Meter2,
+                                                             forw.Meter4 + backw.Meter4,
+                                                             forw.Meter6 + backw.Meter6,
+                                                             forw.Meter8 + backw.Meter8,
+                                                             forw.Meter10 + backw.Meter10,
+                                                             forw.Meter12 + backw.Meter12,
+                                                             forw.Header, forw.Subheader)
+
+                Dim curColInd As Integer = Grid.Columns.Count - 1
+                Grid.Columns(curColInd).HeaderText = gru.Header
+                'subHeader
+                Grid.Rows(0).Cells(curColInd).Value = gru.Subheader
+
+                'meter 2
+                Grid.Rows(1).Cells(curColInd).Value = gru.LpAeq2
+                'meter 4
+                Grid.Rows(2).Cells(curColInd).Value = gru.LpAeq4
+                'meter 6
+                Grid.Rows(3).Cells(curColInd).Value = gru.LpAeq6
+                'meter 8
+                Grid.Rows(4).Cells(curColInd).Value = gru.LpAeq8
+                'meter 10
+                Grid.Rows(5).Cells(curColInd).Value = gru.LpAeq10
+                'meter 12
+                Grid.Rows(6).Cells(curColInd).Value = gru.LpAeq12
+                'meters average
+                Grid.Rows(7).Cells(curColInd).Value = gru.LpAeqAvg
+                'time
+                Grid.Rows(8).Cells(curColInd).Value = gru.Time
+                'deltaA
+                Grid.Rows(9).Cells(curColInd).Value = gru.deltaLA
+                'K1A
+                Grid.Rows(10).Cells(curColInd).Value = gru.K1A
+                'add next column for next record
+                Dim col As New DataGridViewTextBoxColumn
+                col.Name = gru.Header & gru.Subheader
+                Grid.Columns.Add(col)
+                GRUList.Add(gru)
+            End If
+        End If
+    End Sub
+
+    Public Sub ShowCalculated()
+        Calculate()
+        'A1 and A2
+        'LsW row
+        Grid.Rows(11).Cells(Grid.Columns.Count - 1).Value = _LsW
+        'Lw row
+        Grid.Rows(12).Cells(Grid.Columns.Count - 1).Value = _Lwr
+        'K2A row
+        Grid.Rows(13).Cells(Grid.Columns.Count - 1).Value = _K2A
+        'LWA choice row
+        Grid.Rows(15).Cells(Grid.Columns.Count - 1).Value = _LWA_Final
+
+        'LWA 
+        'A1, A2
+        If A < 3 Then
+            If GRUList.Count > 1 Then
+                For i = 1 To Grid.Columns.Count - 2 'all the regulars
+                    Grid.Rows(14).Cells(i).Value = GRUList(i).LWA
+                Next
+            End If
+        End If
+
+        'A3
+        If A = 3 Then
+            If GRUList.Count > 1 Then
+                For i = 3 To GRUList.Count - 2 Step 3
+                    Grid.Rows(14).Cells(i).Value = GRUList(i).LWA
+                Next
+            End If
+
+        End If
+
+        'A4
+        If A = 4 Then
+            If GRUList.Count > 1 Then
+                For i = 1 To GRUList.Count - 2 Step 2
+                    Grid.Rows(14).Cells(i).Value = GRUList(i).LWA
+                Next
+            End If
+        End If
+    End Sub
+
+    'contains calculations- NeedAdd should be called before (Calc_LWAs)Calculate
     Public Sub Calculate()
-        Calc_LsW()
-        Calc_K2A()
-        Calc_LWA_Final()
+        If Not IsNothing(RSS) Then
+            Calc_LsW()
+            Calc_K2A()
+            Calc_LWAs()
+        End If
     End Sub
 
     Private _LsW As Double
@@ -141,10 +250,31 @@ Public Class A_Unit
         End Get
     End Property
 
-    '###TODO
-    Private _LWA_Final As Double
-    Public Sub Calc_LWA_Final()
-        _LWA_Final = 1
+    Private _LWA_Final As Integer
+    Public Sub Calc_LWAs()
+        'calculating all the LWAs
+        Dim topTwo As Double() = {0.0, 0.0}
+        If Not GRUList.Count > 1 Then
+            For i = 1 To GRUList.Count - 2
+                Dim cur As Grid_Run_Unit = GRUList(i)
+                cur.Calc_LWA(_K2A, _R)
+                If cur.Considered Then
+                    If cur.LWA > topTwo(0) Then
+                        topTwo(0) = cur.LWA
+                    ElseIf cur.LWA > topTwo(1) Then
+                        topTwo(1) = cur.LWA
+                    End If
+                End If
+            Next
+        End If
+
+        'calculating LWA 採用值
+        Dim orig As Double = (topTwo(0) + topTwo(1)) / 2
+        If Int(orig + 0.5) > Int(orig) Then
+            _LWA_Final = Int(orig) + 1
+        Else
+            _LWA_Final = Int(orig)
+        End If
     End Sub
 
     Public ReadOnly Property LWA_Final()
@@ -157,21 +287,36 @@ Public Class A_Unit
 
     'determine whether needing additional measuring or not
     Public Function NeedAdd()
+        Dim result As Boolean = True
         For i = 0 To GRUList.Count - 1
             Dim cur = GRUList(i)
             If cur.isRegular Then
-                For j = 0 To GRUList.Count - 1
-                    Dim temp = GRUList(j)
-                    If temp IsNot cur And temp.isRegular Then
-                        If (Math.Abs(LeqK1A(temp) - LeqK1A(cur)) <= 1) Then
-
-                            Return False
+                If Not A = 3 Then 'A1, A2, and A4
+                    For j = 1 To GRUList.Count - 1
+                        Dim temp = GRUList(j)
+                        If temp IsNot cur And temp.isRegular Then
+                            If (Math.Abs(LeqK1A(temp) - LeqK1A(cur)) <= 1) Then
+                                cur.Considered = True
+                                temp.Considered = True
+                                result = False
+                            End If
                         End If
-                    End If
-                Next
+                    Next
+                Else 'for A3 because it has forward and backward and overall
+                    For j = 3 To GRUList.Count - 1 Step 3
+                        Dim temp = GRUList(j)
+                        If temp IsNot cur And temp.isRegular Then
+                            If (Math.Abs(LeqK1A(temp) - LeqK1A(cur)) <= 1) Then
+                                cur.Considered = True
+                                temp.Considered = True
+                                result = False
+                            End If
+                        End If
+                    Next
+                End If
             End If
         Next
-        Return True
+        Return result
     End Function
 
     Private Function LeqK1A(ByRef Run As Grid_Run_Unit) As Decimal
@@ -179,7 +324,39 @@ Public Class A_Unit
     End Function
 
     'contains recording
+    Public Sub Save()
 
+        Dim saveFileDialog1 As New SaveFileDialog()
+
+        saveFileDialog1.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*"
+        saveFileDialog1.RestoreDirectory = True
+        Dim outfile As StreamWriter
+
+        If saveFileDialog1.ShowDialog() = DialogResult.OK Then
+            outfile = New StreamWriter(saveFileDialog1.OpenFile(), System.Text.Encoding.Unicode)
+            If (outfile IsNot Nothing) Then
+                'write column headers first
+                Dim sb As StringBuilder = New StringBuilder()
+                For i = 0 To Grid.Columns.Count - 1
+                    sb.Append("," & Grid.Columns(i).HeaderText)
+                Next
+                outfile.WriteLine(sb.ToString())
+                sb.Clear()
+
+                'write actual data now
+                For j = 0 To Grid.Rows.Count - 1
+                    sb.Append(Grid.Rows(j).HeaderCell.Value)
+                    For i = 0 To Grid.Columns.Count - 1
+                        sb.Append("," & Grid.Rows(j).Cells(i).Value)
+                    Next
+                    sb.AppendLine()
+                Next
+                outfile.Write(sb.ToString())
+            End If
+            outfile.Close()
+        End If
+
+    End Sub
 
 End Class
 
@@ -195,6 +372,26 @@ Public Class Meter_Measure_Unit
             _Time = Measurements.Count
         End If
     End Sub
+
+    Public Shared Operator +(ByVal m1 As Meter_Measure_Unit,
+                        ByVal m2 As Meter_Measure_Unit) As Meter_Measure_Unit
+        Dim num As Integer = m1.MeterNum
+        Dim list As List(Of Double) = New List(Of Double)
+        Dim enum1 = m1.Measurements.GetEnumerator()
+        list.Add(enum1.Current)
+        While enum1.MoveNext
+            list.Add(enum1.Current)
+        End While
+        enum1 = m2.Measurements.GetEnumerator()
+        list.Add(enum1.Current)
+        While enum1.MoveNext
+            list.Add(enum1.Current)
+        End While
+        Dim t1 = m1.Measurements.Count
+        Dim t2 = m2.Measurements.Count
+        Dim leq = 10 * Math.Log10((t1 * 10 ^ (0.1 * m1.Leq) + (t2 * 10 ^ (0.1 * m2.Leq))) / (t1 + t2))
+        Return New Meter_Measure_Unit(num, list, leq)
+    End Operator
 
     Private _Leq As Double
     Public Property Leq() As Double
@@ -241,13 +438,14 @@ End Class
 
 
 Public Class Grid_Run_Unit
+    Public Considered As Boolean = False
 
-    Public Sub New(ByVal Meter2 As Meter_Measure_Unit,
-                   ByVal Meter4 As Meter_Measure_Unit,
-                   ByVal Meter6 As Meter_Measure_Unit,
-                   ByVal Meter8 As Meter_Measure_Unit,
-                   ByVal Meter10 As Meter_Measure_Unit,
-                   ByVal Meter12 As Meter_Measure_Unit,
+    Public Sub New(ByRef Meter2 As Meter_Measure_Unit,
+                   ByRef Meter4 As Meter_Measure_Unit,
+                   ByRef Meter6 As Meter_Measure_Unit,
+                   ByRef Meter8 As Meter_Measure_Unit,
+                   ByRef Meter10 As Meter_Measure_Unit,
+                   ByRef Meter12 As Meter_Measure_Unit,
                    ByVal Header As String,
                    ByVal Subheader As String
                    )
@@ -275,14 +473,14 @@ Public Class Grid_Run_Unit
         Or _Header = A_Unit.Run_Modes.RSS.ToString() Or _Header = A_Unit.Run_Modes.RSS.ToString() Then
             _isRegular = False
         End If
-        
+
         Calculate()
     End Sub
 
-    Public Sub New(ByVal Meter2 As Meter_Measure_Unit,
-               ByVal Meter4 As Meter_Measure_Unit,
-               ByVal Meter6 As Meter_Measure_Unit,
-               ByVal Meter8 As Meter_Measure_Unit,
+    Public Sub New(ByRef Meter2 As Meter_Measure_Unit,
+               ByRef Meter4 As Meter_Measure_Unit,
+               ByRef Meter6 As Meter_Measure_Unit,
+               ByRef Meter8 As Meter_Measure_Unit,
                ByVal Header As String,
                ByVal Subheader As String
                )
@@ -308,6 +506,9 @@ Public Class Grid_Run_Unit
         End If
         Calculate()
     End Sub
+
+
+
 
     Private _Background As Grid_Run_Unit
     Public Property Background() As Grid_Run_Unit
@@ -351,6 +552,11 @@ Public Class Grid_Run_Unit
     End Property
 
     Private _Meter2 As Meter_Measure_Unit
+    Public ReadOnly Property Meter2() As Meter_Measure_Unit
+        Get
+            Return _Meter2
+        End Get
+    End Property
     Public Property LpAeq2() As Double
         Get
             Return _Meter2.Leq
@@ -360,7 +566,13 @@ Public Class Grid_Run_Unit
         End Set
     End Property
 
+
     Private _Meter4 As Meter_Measure_Unit
+    Public ReadOnly Property Meter4() As Meter_Measure_Unit
+        Get
+            Return _Meter4
+        End Get
+    End Property
     Public Property LpAeq4() As Double
         Get
             Return _Meter4.Leq
@@ -371,6 +583,11 @@ Public Class Grid_Run_Unit
     End Property
 
     Private _Meter6 As Meter_Measure_Unit
+    Public ReadOnly Property Meter6() As Meter_Measure_Unit
+        Get
+            Return _Meter6
+        End Get
+    End Property
     Public Property LpAeq6() As Double
         Get
             Return _Meter6.Leq
@@ -381,6 +598,11 @@ Public Class Grid_Run_Unit
     End Property
 
     Private _Meter8 As Meter_Measure_Unit
+    Public ReadOnly Property Meter8() As Meter_Measure_Unit
+        Get
+            Return _Meter8
+        End Get
+    End Property
     Public Property LpAeq8() As Double
         Get
             Return _Meter8.Leq
@@ -391,6 +613,11 @@ Public Class Grid_Run_Unit
     End Property
 
     Private _Meter10 As Meter_Measure_Unit
+    Public ReadOnly Property Meter10() As Meter_Measure_Unit
+        Get
+            Return _Meter10
+        End Get
+    End Property
     Public Property LpAeq10() As Double
         Get
             Return _Meter10.Leq
@@ -401,6 +628,11 @@ Public Class Grid_Run_Unit
     End Property
 
     Private _Meter12 As Meter_Measure_Unit
+    Public ReadOnly Property Meter12() As Meter_Measure_Unit
+        Get
+            Return _Meter12
+        End Get
+    End Property
     Public Property LpAeq12() As Double
         Get
             Return _Meter12.Leq

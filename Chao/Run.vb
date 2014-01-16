@@ -64,7 +64,7 @@
             Program.CurRun = Program.PreCal_2nd
             Countdown_False_after_Jump()
         ElseIf Me.Link.Name = "LinkLabel_PreCal_3rd" Then
-             Countdown_False_before_Jump()
+            Countdown_False_before_Jump()
             'jump
             Program.CurRun = Program.PreCal_3rd
             Countdown_False_after_Jump()
@@ -74,12 +74,12 @@
             Program.CurRun = Program.PreCal_4th
             Countdown_False_after_Jump()
         ElseIf Me.Link.Name = "LinkLabel_PreCal_5th" Then
-             Countdown_False_before_Jump()
+            Countdown_False_before_Jump()
             'jump
             Program.CurRun = Program.PreCal_5th
             Countdown_False_after_Jump()
         ElseIf Me.Link.Name = "LinkLabel_PreCal_6th" Then
-             Countdown_False_before_Jump()
+            Countdown_False_before_Jump()
             'jump
             Program.CurRun = Program.PreCal_6th
             Countdown_False_after_Jump()

@@ -115,14 +115,21 @@ Public Class LineGraph
         'chart.ChartAreas(0).AxisX.Interval = Int(time / 15) + 1
         chart.ChartAreas(0).AxisX.IsMarginVisible = True
         'set up series
-            For i As Integer = 2 To NumOfMics * 2 Step 2
-                Dim s As Series = New Series(i.ToString())
-                series.Add(s)
-                s.ChartType = SeriesChartType.Line
-                s.IsVisibleInLegend = False
-                s.IsValueShownAsLabel = False
-                chart.Series.Add(s)
-            Next
+        Dim s As Series
+        For i As Integer = 2 To NumOfMics * 2 Step 2
+            s = New Series(i.ToString())
+            series.Add(s)
+            s.ChartType = SeriesChartType.Line
+            s.IsVisibleInLegend = False
+            s.IsValueShownAsLabel = False
+            chart.Series.Add(s)
+        Next
+        s = New Series("Leq")
+        series.Add(s)
+        s.ChartType = SeriesChartType.Line
+        s.IsVisibleInLegend = False
+        s.IsValueShownAsLabel = False
+        chart.Series.Add(s)
 
     End Sub
 
@@ -154,13 +161,12 @@ Public Class LineGraph
         chart.ChartAreas(0).AxisX.Maximum = TimeInSec
     End Sub
 
-    'Update function
+    'Update function newval must contain the avg
     Public Overrides Sub Update(ByVal newVal() As Double)
-        If Not newVal.Length = NumOfMics Then
+        If Not newVal.Length = NumOfMics + 1 Then
             Return
         End If
         For i As Integer = 0 To newVal.Length - 1
-            Dim tag = (i + 1) * 2
             If Not IsNothing(series(i)) Then
                 series(i).Points.Add(newVal(i))
             End If
@@ -173,6 +179,10 @@ Public Class LineGraph
         chart.Dispose()
         Panel.Dispose()
     End Sub
+
+    Public Function GetSeries() As List(Of Series)
+        Return series
+    End Function
 
 End Class
 
@@ -214,19 +224,21 @@ Public Class BarGraph
 
     End Sub
 
-    'Update function
+
+
+    'Update function newval must not contain the avg
     Public Overrides Sub Update(ByVal newVal() As Double)
-        If Not newVal.Length = NumOfMics Then
+        If Not newVal.Length - 1 = NumOfMics Then
             Return
         End If
         'adding average datapoint
-        Dim temp(newVal.Length) As Double
+        Dim temp(newVal.Length - 1) As Double
         Dim sum As Double = 0
-        For i = 0 To newVal.Length - 1
+        For i = 0 To newVal.Length - 2
             temp(i) = newVal(i)
-            sum += newVal(i)
+            sum += 10 ^ (0.1 * newVal(i))
         Next
-        temp(newVal.Length) = sum / newVal.Length
+        temp(newVal.Length - 1) = 10 * Math.Log10(sum / newVal.Length - 1)
         series(0).Points.DataBindXY(listOfNames, temp)
     End Sub
 

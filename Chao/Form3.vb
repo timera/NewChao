@@ -566,17 +566,17 @@ Public Class Program
         End If
     End Sub
 
-    Private Chart As Grid
+    Private DataGrid As Grid
     Private A_Unit_Size As Size = New Size(1000, 450)
     'Create charts for chosen machine
     Private Sub CreateChart(ByVal r As Double)
-        Chart = New Grid(TabPageCharts, A_Unit_Size, New Point(10, 10), r, Machine)
+        DataGrid = New Grid(TabPageCharts, A_Unit_Size, New Point(10, 10), r, Machine)
     End Sub
 
     Private Sub DisposeChart()
-        If Not IsNothing(Chart) Then
-            Chart.Form.Dispose()
-            Chart = Nothing
+        If Not IsNothing(DataGrid) Then
+            DataGrid.Form.Dispose()
+            DataGrid = Nothing
         End If
     End Sub
 
@@ -608,6 +608,8 @@ Public Class Program
 
         plot(xCor, yCor, GroupBox_Plot, r1, pos)
 
+        DisposeChart()
+        CreateChart(r1)
         If choice = "開挖機(Excavator)" Then
             Load_Excavator()
             MachChosen = True
@@ -630,8 +632,7 @@ Public Class Program
             ComboBox_machine_list.Enabled = False
             Button_L_check.Enabled = False
         End If
-        DisposeChart()
-        CreateChart(r1)
+
     End Sub
 
     Private Sub Button_L1_L2_L3_check_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L1_L2_L3_check.Click
@@ -654,7 +655,8 @@ Public Class Program
         pos2(3).Coors = New ThreeDPoint(0, 0, D0_2)
 
         plot(xCor, yCor, GroupBox_Plot, r, pos2)
-
+        DisposeChart()
+        CreateChart(r)
         If choice = "鐵輪壓路機(Road roller)" Then
             Load_Others(choice)
             MachChosen = True
@@ -724,8 +726,7 @@ Public Class Program
             ComboBox_machine_list.Enabled = False
             Button_L1_L2_L3_check.Enabled = False
         End If
-        DisposeChart()
-        CreateChart(r)
+
     End Sub
 
     Sub Set_Panel(ByRef p As Panel, ByRef l As Label)
@@ -748,6 +749,110 @@ Public Class Program
             l.Location = New Point(3, 5)
             l.ForeColor = Color.White
         End If
+
+    End Sub
+
+    Function Load_Precal(ByRef tempRun As Run_Unit) As Run_Unit
+        'Precal
+
+        PreCal_1st = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(Nothing, False)
+
+        HeadRun = tempRun
+        CurRun = HeadRun
+        timeLeft = CurRun.Time
+        timeLabel.Text = timeLeft & " s"
+
+        Set_Panel(Panel_PreCal_2nd, LinkLabel_PreCal_2nd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_2nd, Panel_PreCal_2nd, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        PreCal_2nd = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(Nothing, False)
+
+        Set_Panel(Panel_PreCal_3rd, LinkLabel_PreCal_3rd)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_3rd, Panel_PreCal_3rd, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        PreCal_3rd = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(Nothing, False)
+
+        Set_Panel(Panel_PreCal_4th, LinkLabel_PreCal_4th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_4th, Panel_PreCal_4th, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        PreCal_4th = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(Nothing, False)
+
+        Set_Panel(Panel_PreCal_5th, LinkLabel_PreCal_5th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_5th, Panel_PreCal_5th, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        PreCal_5th = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(Nothing, False)
+
+        Set_Panel(Panel_PreCal_6th, LinkLabel_PreCal_6th)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_6th, Panel_PreCal_6th, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        PreCal_6th = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(Nothing, False)
+
+        'Background
+        Set_Panel(Panel_Bkg, LinkLabel_BG)
+        tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, tempRun, 0, "Background", 0, 0, 0)
+        tempRun = tempRun.NextUnit
+        BG = tempRun
+        '##GRU
+        BG.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(0), False)
+        Return tempRun
+    End Function
+
+    Sub Load_PostCal(ByRef temprun As Run_Unit)
+        'PostCal
+        'Set_Panel(Panel_PostCal, LinkLabel_postCal)
+        Set_Panel(Panel_PostCal_1st, LinkLabel_PostCal_1st)
+        temprun.NextUnit = New Run_Unit(LinkLabel_PostCal_1st, Panel_PostCal_1st, Nothing, temprun, 0, "PostCal", 0, 0, 0)
+        temprun = temprun.NextUnit
+        PostCal_1st = temprun
+        '##GRU
+        temprun.GRU = New Grid_Run_Unit(Nothing, False)
+
+        Set_Panel(Panel_PostCal_2nd, LinkLabel_PostCal_2nd)
+        temprun.NextUnit = New Run_Unit(LinkLabel_PostCal_2nd, Panel_PostCal_2nd, Nothing, temprun, 0, "PostCal", 0, 0, 0)
+        temprun = temprun.NextUnit
+        PostCal_2nd = temprun
+        '##GRU
+        temprun.GRU = New Grid_Run_Unit(Nothing, False)
+
+        Set_Panel(Panel_PostCal_3rd, LinkLabel_PostCal_3rd)
+        temprun.NextUnit = New Run_Unit(LinkLabel_PostCal_3rd, Panel_PostCal_3rd, Nothing, temprun, 0, "PostCal", 0, 0, 0)
+        temprun = temprun.NextUnit
+        PostCal_3rd = temprun
+        '##GRU
+        temprun.GRU = New Grid_Run_Unit(Nothing, False)
+
+        Set_Panel(Panel_PostCal_4th, LinkLabel_PostCal_4th)
+        temprun.NextUnit = New Run_Unit(LinkLabel_PostCal_4th, Panel_PostCal_4th, Nothing, temprun, 0, "PostCal", 0, 0, 0)
+        temprun = temprun.NextUnit
+        PostCal_4th = temprun
+        '##GRU
+        temprun.GRU = New Grid_Run_Unit(Nothing, False)
+
+        Set_Panel(Panel_PostCal_5th, LinkLabel_PostCal_5th)
+        temprun.NextUnit = New Run_Unit(LinkLabel_PostCal_5th, Panel_PostCal_5th, Nothing, temprun, 0, "PostCal", 0, 0, 0)
+        temprun = temprun.NextUnit
+        PostCal_5th = temprun
+        '##GRU
+        temprun.GRU = New Grid_Run_Unit(Nothing, False)
+
+        Set_Panel(Panel_PostCal_6th, LinkLabel_PostCal_6th)
+        temprun.NextUnit = New Run_Unit(LinkLabel_PostCal_6th, Panel_PostCal_6th, Nothing, temprun, 0, "PostCal_Last", 0, 0, 0)
+        temprun = temprun.NextUnit
+        PostCal_6th = temprun
+        '##GRU
+        temprun.GRU = New Grid_Run_Unit(Nothing, False)
 
     End Sub
 
@@ -827,43 +932,11 @@ Public Class Program
 
         'Create an object for each step
         Dim tempRun As Run_Unit
-
-        'Precal
-        'Set_Panel(Panel_PreCal, LinkLabel_preCal)
         Set_Panel(Panel_PreCal_1st, LinkLabel_PreCal_1st)
         tempRun = New Run_Unit(LinkLabel_PreCal_1st, Panel_PreCal_1st, Nothing, Nothing, 0, "PreCal", 0, 0, 0)
-        PreCal_1st = tempRun
-        HeadRun = tempRun
-        CurRun = HeadRun
-        timeLeft = CurRun.Time
-        timeLabel.Text = timeLeft & " s"
+        tempRun = Load_Precal(tempRun)
 
-        Set_Panel(Panel_PreCal_2nd, LinkLabel_PreCal_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_2nd, Panel_PreCal_2nd, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_2nd = tempRun
-        Set_Panel(Panel_PreCal_3rd, LinkLabel_PreCal_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_3rd, Panel_PreCal_3rd, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_3rd = tempRun
-        Set_Panel(Panel_PreCal_4th, LinkLabel_PreCal_4th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_4th, Panel_PreCal_4th, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_4th = tempRun
-        Set_Panel(Panel_PreCal_5th, LinkLabel_PreCal_5th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_5th, Panel_PreCal_5th, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_5th = tempRun
-        Set_Panel(Panel_PreCal_6th, LinkLabel_PreCal_6th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_6th, Panel_PreCal_6th, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_6th = tempRun
-        'Background
-        Set_Panel(Panel_Bkg, LinkLabel_BG)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, tempRun, 0, "Background", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        BG = tempRun
-
+        'Main Steps
         tempRun = Load_Excavator_Helper(tempRun)
 
         'RSS
@@ -871,32 +944,10 @@ Public Class Program
         tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 0, "RSS", 0, 0, 0)
         tempRun = tempRun.NextUnit
         RSS = tempRun
-        'PostCal
-        'Set_Panel(Panel_PostCal, LinkLabel_postCal)
-        Set_Panel(Panel_PostCal_1st, LinkLabel_PostCal_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_1st, Panel_PostCal_1st, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_1st = tempRun
-        Set_Panel(Panel_PostCal_2nd, LinkLabel_PostCal_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_2nd, Panel_PostCal_2nd, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_2nd = tempRun
-        Set_Panel(Panel_PostCal_3rd, LinkLabel_PostCal_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_3rd, Panel_PostCal_3rd, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_3rd = tempRun
-        Set_Panel(Panel_PostCal_4th, LinkLabel_PostCal_4th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_4th, Panel_PostCal_4th, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_4th = tempRun
-        Set_Panel(Panel_PostCal_5th, LinkLabel_PostCal_5th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_5th, Panel_PostCal_5th, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_5th = tempRun
-        Set_Panel(Panel_PostCal_6th, LinkLabel_PostCal_6th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_6th, Panel_PostCal_6th, Nothing, tempRun, 0, "PostCal_Last", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_6th = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(9), False)
+
+        Load_PostCal(tempRun)
 
         MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
         MainBarGraph = New BarGraph(New Point(858, 106), New Size(390, 539), TabPage2, CGraph.Modes.A1A2A3)
@@ -914,21 +965,28 @@ Public Class Program
         tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Fst_1st, Panel_ExA1_Fst_1st, Nothing, tempRun, 5, "ExA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         ExA1_Fst = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(2), True)
         'A1 Second 
         Set_Panel(Panel_ExA1_Sec_1st, LinkLabel_ExA1_Sec_1st)
         tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Sec_1st, Panel_ExA1_Sec_1st, Nothing, tempRun, 5, "ExA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         ExA1_Sec = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(3), True)
         'A1 Third 
         Set_Panel(Panel_ExA1_Thd_1st, LinkLabel_ExA1_Thd_1st)
         tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Thd_1st, Panel_ExA1_Thd_1st, Nothing, tempRun, 5, "ExA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         ExA1_Thd = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(4), True)
         'A1 Add 
         Set_Panel(Panel_ExA1_Add_1st, LinkLabel_ExA1_Add_1st)
         tempRun.NextUnit = New Run_Unit(LinkLabel_ExA1_Add_1st, Panel_ExA1_Add_1st, Nothing, tempRun, 5, "ExA1_Add", 1, 1, 1)
         tempRun = tempRun.NextUnit
         ExA1_Add = tempRun
+        'ExA1_Fst.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(4), True)
 
         ''A2
         'A2 First 1
@@ -936,6 +994,7 @@ Public Class Program
         tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Fst_1st, Panel_ExA2_Fst_1st, Nothing, tempRun, 1, "ExA2_1st", 1, 1, 9)
         tempRun = tempRun.NextUnit
         ExA2_Fst = tempRun
+
         'A2 First 2
         Set_Panel(Panel_ExA2_Fst_2nd, LinkLabel_ExA2_Fst_2nd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Fst_2nd, Panel_ExA2_Fst_2nd, Nothing, tempRun, 1, "ExA2_2nd_3rd", 1, 1, 8)
@@ -944,6 +1003,8 @@ Public Class Program
         Set_Panel(Panel_ExA2_Fst_3rd, LinkLabel_ExA2_Fst_3rd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Fst_3rd, Panel_ExA2_Fst_3rd, Nothing, tempRun, 1, "ExA2_2nd_3rd", 1, 1, 8)
         tempRun = tempRun.NextUnit
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(6), True)
         'A2 Second 1
         Set_Panel(Panel_ExA2_Sec_1st, LinkLabel_ExA2_Sec_1st)
         tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Sec_1st, Panel_ExA2_Sec_1st, Nothing, tempRun, 1, "ExA2_1st", 1, 1, 9)
@@ -957,6 +1018,8 @@ Public Class Program
         Set_Panel(Panel_ExA2_Sec_3rd, LinkLabel_ExA2_Sec_3rd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Sec_3rd, Panel_ExA2_Sec_3rd, Nothing, tempRun, 1, "ExA2_2nd_3rd", 1, 1, 8)
         tempRun = tempRun.NextUnit
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(7), True)
         'A2 Third 1
         Set_Panel(Panel_ExA2_Thd_1st, LinkLabel_ExA2_Thd_1st)
         tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Thd_1st, Panel_ExA2_Thd_1st, Nothing, tempRun, 1, "ExA2_1st", 1, 1, 9)
@@ -970,6 +1033,7 @@ Public Class Program
         Set_Panel(Panel_ExA2_Thd_3rd, LinkLabel_ExA2_Thd_3rd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Thd_3rd, Panel_ExA2_Thd_3rd, Nothing, tempRun, 1, "ExA2_2nd_3rd", 1, 1, 8)
         tempRun = tempRun.NextUnit
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(8), True)
         'A2 Add 1
         Set_Panel(Panel_ExA2_Add_1st, LinkLabel_ExA2_Add_1st)
         tempRun.NextUnit = New Run_Unit(LinkLabel_ExA2_Add_1st, Panel_ExA2_Add_1st, Nothing, tempRun, 1, "ExA2_1st_Add", 1, 1, 9)
@@ -1087,37 +1151,7 @@ Public Class Program
         'Set_Panel(Panel_PreCal, LinkLabel_preCal)
         Set_Panel(Panel_PreCal_1st, LinkLabel_PreCal_1st)
         tempRun = New Run_Unit(LinkLabel_PreCal_1st, Panel_PreCal_1st, Nothing, Nothing, 0, "PreCal", 0, 0, 0)
-        PreCal_1st = tempRun
-        HeadRun = tempRun
-        CurRun = HeadRun
-        timeLeft = CurRun.Time
-        timeLabel.Text = timeLeft & " s"
-
-        Set_Panel(Panel_PreCal_2nd, LinkLabel_PreCal_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_2nd, Panel_PreCal_2nd, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_2nd = tempRun
-        Set_Panel(Panel_PreCal_3rd, LinkLabel_PreCal_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_3rd, Panel_PreCal_3rd, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_3rd = tempRun
-        Set_Panel(Panel_PreCal_4th, LinkLabel_PreCal_4th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_4th, Panel_PreCal_4th, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_4th = tempRun
-        Set_Panel(Panel_PreCal_5th, LinkLabel_PreCal_5th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_5th, Panel_PreCal_5th, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_5th = tempRun
-        Set_Panel(Panel_PreCal_6th, LinkLabel_PreCal_6th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_6th, Panel_PreCal_6th, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_6th = tempRun
-        'Background
-        Set_Panel(Panel_Bkg, LinkLabel_BG)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, tempRun, 0, "Background", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        BG = tempRun
+        tempRun = Load_Precal(tempRun)
 
         tempRun = Load_Loader_Helper(tempRun)
 
@@ -1126,32 +1160,11 @@ Public Class Program
         tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 0, "RSS", 0, 0, 0)
         tempRun = tempRun.NextUnit
         RSS = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(19), False)
+
         'PostCal
-        'Set_Panel(Panel_PostCal, LinkLabel_postCal)
-        Set_Panel(Panel_PostCal_1st, LinkLabel_PostCal_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_1st, Panel_PostCal_1st, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_1st = tempRun
-        Set_Panel(Panel_PostCal_2nd, LinkLabel_PostCal_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_2nd, Panel_PostCal_2nd, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_2nd = tempRun
-        Set_Panel(Panel_PostCal_3rd, LinkLabel_PostCal_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_3rd, Panel_PostCal_3rd, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_3rd = tempRun
-        Set_Panel(Panel_PostCal_4th, LinkLabel_PostCal_4th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_4th, Panel_PostCal_4th, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_4th = tempRun
-        Set_Panel(Panel_PostCal_5th, LinkLabel_PostCal_5th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_5th, Panel_PostCal_5th, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_5th = tempRun
-        Set_Panel(Panel_PostCal_6th, LinkLabel_PostCal_6th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_6th, Panel_PostCal_6th, Nothing, tempRun, 0, "PostCal_Last", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_6th = tempRun
+        Load_PostCal(tempRun)
 
 
         MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
@@ -1170,16 +1183,37 @@ Public Class Program
         tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Fst_1st, Panel_LoA1_Fst_1st, Nothing, tempRun, 3, "LoA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         LoA1_Fst = tempRun
+        '##GRU
+        Dim ind = 2
+        If Machines.Loader_Excavator Then
+            ind = 10
+        End If
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
+
         'A1 Second 
         Set_Panel(Panel_LoA1_Sec_1st, LinkLabel_LoA1_Sec_1st)
         tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Sec_1st, Panel_LoA1_Sec_1st, Nothing, tempRun, 3, "LoA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         LoA1_Sec = tempRun
+        '##GRU
+        ind = 3
+        If Machines.Loader_Excavator Then
+            ind = 11
+        End If
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
+
         'A1 Third 
         Set_Panel(Panel_LoA1_Thd_1st, LinkLabel_LoA1_Thd_1st)
         tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Thd_1st, Panel_LoA1_Thd_1st, Nothing, tempRun, 3, "LoA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         LoA1_Thd = tempRun
+        '##GRU
+        ind = 4
+        If Machines.Loader_Excavator Then
+            ind = 12
+        End If
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
+
         'A1 Add 
         Set_Panel(Panel_LoA1_Add_1st, LinkLabel_LoA1_Add_1st)
         tempRun.NextUnit = New Run_Unit(LinkLabel_LoA1_Add_1st, Panel_LoA1_Add_1st, Nothing, tempRun, 3, "LoA1_Add", 1, 1, 1)
@@ -1200,6 +1234,13 @@ Public Class Program
         Set_Panel(Panel_LoA2_Fst_3rd, LinkLabel_LoA2_Fst_3rd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Fst_3rd, Panel_LoA2_Fst_3rd, Nothing, tempRun, 1, "LoA2_2nd_3rd", 1, 1, 2)
         tempRun = tempRun.NextUnit
+        '##GRU
+        ind = 6
+        If Machines.Loader_Excavator Then
+            ind = 14
+        End If
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(6), True)
+
         'A2 Second 1
         Set_Panel(Panel_LoA2_Sec_1st, LinkLabel_LoA2_Sec_1st)
         tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Sec_1st, Panel_LoA2_Sec_1st, Nothing, tempRun, 1, "LoA2_1st", 1, 1, 3)
@@ -1213,6 +1254,13 @@ Public Class Program
         Set_Panel(Panel_LoA2_Sec_3rd, LinkLabel_LoA2_Sec_3rd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Sec_3rd, Panel_LoA2_Sec_3rd, Nothing, tempRun, 1, "LoA2_2nd_3rd", 1, 1, 2)
         tempRun = tempRun.NextUnit
+        '##GRU
+        ind = 7
+        If Machines.Loader_Excavator Then
+            ind = 15
+        End If
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
+
         'A2 Third 1
         Set_Panel(Panel_LoA2_Thd_1st, LinkLabel_LoA2_Thd_1st)
         tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Thd_1st, Panel_LoA2_Thd_1st, Nothing, tempRun, 1, "LoA2_1st", 1, 1, 3)
@@ -1226,6 +1274,13 @@ Public Class Program
         Set_Panel(Panel_LoA2_Thd_3rd, LinkLabel_LoA2_Thd_3rd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Thd_3rd, Panel_LoA2_Thd_3rd, Nothing, tempRun, 1, "LoA2_2nd_3rd", 1, 1, 2)
         tempRun = tempRun.NextUnit
+        '##GRU
+        ind = 8
+        If Machines.Loader_Excavator Then
+            ind = 16
+        End If
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
+
         'A2 Add 1
         Set_Panel(Panel_LoA2_Add_1st, LinkLabel_LoA2_Add_1st)
         tempRun.NextUnit = New Run_Unit(LinkLabel_LoA2_Add_1st, Panel_LoA2_Add_1st, Nothing, tempRun, 1, "LoA2_1st_Add", 1, 1, 3)
@@ -1246,33 +1301,74 @@ Public Class Program
         tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Fst_fwd, Panel_LoA3_Fst_fwd, Nothing, tempRun, 1, "LoA3_fwd", 1, 1, 3)
         tempRun = tempRun.NextUnit
         LoA3_Fst_fwd = tempRun
+        '##GRU
+
+        ind = 10
+        If Machines.Loader_Excavator Then
+            ind = 18
+        End If
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
+
         'A3 First backward
         Set_Panel(Panel_LoA3_Fst_bkd, LinkLabel_LoA3_Fst_bkd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Fst_bkd, Panel_LoA3_Fst_bkd, Nothing, tempRun, 1, "LoA3_bkd", 1, 1, 1)
         tempRun = tempRun.NextUnit
         LoA3_Fst_bkd = tempRun
+        '##GRU
+        ind = 11
+        If Machines.Loader_Excavator Then
+            ind = 19
+        End If
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
 
         'A3 Second fwd
         Set_Panel(Panel_LoA3_Sec_fwd, LinkLabel_LoA3_Sec_fwd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Sec_fwd, Panel_LoA3_Sec_fwd, Nothing, tempRun, 1, "LoA3_fwd", 1, 1, 3)
         tempRun = tempRun.NextUnit
         LoA3_Sec_fwd = tempRun
+        '##GRU
+        ind = 13
+        If Machines.Loader_Excavator Then
+            ind = 21
+        End If
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
+
         'A3 Second backward
         Set_Panel(Panel_LoA3_Sec_bkd, LinkLabel_LoA3_Sec_bkd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Sec_bkd, Panel_LoA3_Sec_bkd, Nothing, tempRun, 1, "LoA3_bkd", 1, 1, 1)
         tempRun = tempRun.NextUnit
         LoA3_Sec_bkd = tempRun
+        '##GRU
+        ind = 14
+        If Machines.Loader_Excavator Then
+            ind = 22
+        End If
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
+
 
         'A3 Third fwd
         Set_Panel(Panel_LoA3_Thd_fwd, LinkLabel_LoA3_Thd_fwd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Thd_fwd, Panel_LoA3_Thd_fwd, Nothing, tempRun, 1, "LoA3_fwd", 1, 1, 3)
         tempRun = tempRun.NextUnit
         LoA3_Thd_fwd = tempRun
+        '##GRU
+        ind = 16
+        If Machines.Loader_Excavator Then
+            ind = 24
+        End If
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
+
         'A3 Third bkd
         Set_Panel(Panel_LoA3_Thd_bkd, LinkLabel_LoA3_Thd_bkd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_LoA3_Thd_bkd, Panel_LoA3_Thd_bkd, Nothing, tempRun, 1, "LoA3_bkd", 1, 1, 1)
         tempRun = tempRun.NextUnit
         LoA3_Thd_bkd = tempRun
+        '##GRU
+        ind = 17
+        If Machines.Loader_Excavator Then
+            ind = 125
+        End If
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
 
         'A3 Add fwd
         Set_Panel(Panel_LoA3_Add_fwd, LinkLabel_LoA3_Add_fwd)
@@ -1417,37 +1513,7 @@ Public Class Program
         'Set_Panel(Panel_PreCal, LinkLabel_preCal)
         Set_Panel(Panel_PreCal_1st, LinkLabel_PreCal_1st)
         tempRun = New Run_Unit(LinkLabel_PreCal_1st, Panel_PreCal_1st, Nothing, Nothing, 0, "PreCal", 0, 0, 0)
-        PreCal_1st = tempRun
-        HeadRun = tempRun
-        CurRun = HeadRun
-        timeLeft = CurRun.Time
-        timeLabel.Text = timeLeft & " s"
-
-        Set_Panel(Panel_PreCal_2nd, LinkLabel_PreCal_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_2nd, Panel_PreCal_2nd, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_2nd = tempRun
-        Set_Panel(Panel_PreCal_3rd, LinkLabel_PreCal_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_3rd, Panel_PreCal_3rd, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_3rd = tempRun
-        Set_Panel(Panel_PreCal_4th, LinkLabel_PreCal_4th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_4th, Panel_PreCal_4th, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_4th = tempRun
-        Set_Panel(Panel_PreCal_5th, LinkLabel_PreCal_5th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_5th, Panel_PreCal_5th, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_5th = tempRun
-        Set_Panel(Panel_PreCal_6th, LinkLabel_PreCal_6th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_6th, Panel_PreCal_6th, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_6th = tempRun
-        'Background
-        Set_Panel(Panel_Bkg, LinkLabel_BG)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, tempRun, 0, "Background", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        BG = tempRun
+        tempRun = Load_Precal(tempRun)
 
         tempRun = Load_Excavator_Helper(tempRun)
         tempRun = Load_Loader_Helper(tempRun)
@@ -1457,32 +1523,10 @@ Public Class Program
         tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 0, "RSS", 0, 0, 0)
         tempRun = tempRun.NextUnit
         RSS = tempRun
-        'PostCal
-        'Set_Panel(Panel_PostCal, LinkLabel_postCal)
-        Set_Panel(Panel_PostCal_1st, LinkLabel_PostCal_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_1st, Panel_PostCal_1st, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_1st = tempRun
-        Set_Panel(Panel_PostCal_2nd, LinkLabel_PostCal_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_2nd, Panel_PostCal_2nd, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_2nd = tempRun
-        Set_Panel(Panel_PostCal_3rd, LinkLabel_PostCal_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_3rd, Panel_PostCal_3rd, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_3rd = tempRun
-        Set_Panel(Panel_PostCal_4th, LinkLabel_PostCal_4th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_4th, Panel_PostCal_4th, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_4th = tempRun
-        Set_Panel(Panel_PostCal_5th, LinkLabel_PostCal_5th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_5th, Panel_PostCal_5th, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_5th = tempRun
-        Set_Panel(Panel_PostCal_6th, LinkLabel_PostCal_6th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_6th, Panel_PostCal_6th, Nothing, tempRun, 0, "PostCal_Last", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_6th = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(27), False)
+
+        Load_PostCal(tempRun)
 
         MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
         MainBarGraph = New BarGraph(New Point(858, 106), New Size(390, 539), TabPage2, CGraph.Modes.A1A2A3)
@@ -1572,37 +1616,7 @@ Public Class Program
         'Set_Panel(Panel_PreCal, LinkLabel_preCal)
         Set_Panel(Panel_PreCal_1st, LinkLabel_PreCal_1st)
         tempRun = New Run_Unit(LinkLabel_PreCal_1st, Panel_PreCal_1st, Nothing, Nothing, 0, "PreCal", 0, 0, 0)
-        PreCal_1st = tempRun
-        HeadRun = tempRun
-        CurRun = HeadRun
-        timeLeft = CurRun.Time
-        timeLabel.Text = timeLeft & " s"
-
-        Set_Panel(Panel_PreCal_2nd, LinkLabel_PreCal_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_2nd, Panel_PreCal_2nd, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_2nd = tempRun
-        Set_Panel(Panel_PreCal_3rd, LinkLabel_PreCal_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_3rd, Panel_PreCal_3rd, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_3rd = tempRun
-        Set_Panel(Panel_PreCal_4th, LinkLabel_PreCal_4th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_4th, Panel_PreCal_4th, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_4th = tempRun
-        Set_Panel(Panel_PreCal_5th, LinkLabel_PreCal_5th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_5th, Panel_PreCal_5th, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_5th = tempRun
-        Set_Panel(Panel_PreCal_6th, LinkLabel_PreCal_6th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_6th, Panel_PreCal_6th, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PreCal_6th = tempRun
-        'Background
-        Set_Panel(Panel_Bkg, LinkLabel_BG)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, tempRun, 0, "Background", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        BG = tempRun
+        tempRun = Load_Precal(tempRun)
 
         tempRun = Load_Tractor_Helper(tempRun)
 
@@ -1611,32 +1625,11 @@ Public Class Program
         tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 0, "RSS", 0, 0, 0)
         tempRun = tempRun.NextUnit
         RSS = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(15), False)
+
         'PostCal
-        'Set_Panel(Panel_PostCal, LinkLabel_postCal)
-        Set_Panel(Panel_PostCal_1st, LinkLabel_PostCal_1st)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_1st, Panel_PostCal_1st, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_1st = tempRun
-        Set_Panel(Panel_PostCal_2nd, LinkLabel_PostCal_2nd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_2nd, Panel_PostCal_2nd, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_2nd = tempRun
-        Set_Panel(Panel_PostCal_3rd, LinkLabel_PostCal_3rd)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_3rd, Panel_PostCal_3rd, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_3rd = tempRun
-        Set_Panel(Panel_PostCal_4th, LinkLabel_PostCal_4th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_4th, Panel_PostCal_4th, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_4th = tempRun
-        Set_Panel(Panel_PostCal_5th, LinkLabel_PostCal_5th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_5th, Panel_PostCal_5th, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_5th = tempRun
-        Set_Panel(Panel_PostCal_6th, LinkLabel_PostCal_6th)
-        tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_6th, Panel_PostCal_6th, Nothing, tempRun, 0, "PostCal_Last", 0, 0, 0)
-        tempRun = tempRun.NextUnit
-        PostCal_6th = tempRun
+        Load_PostCal(tempRun)
 
         MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
         MainBarGraph = New BarGraph(New Point(858, 106), New Size(390, 539), TabPage2, CGraph.Modes.A1A2A3)
@@ -1654,16 +1647,25 @@ Public Class Program
         tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Fst_1st, Panel_TrA1_Fst_1st, Nothing, tempRun, 3, "TrA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         TrA1_Fst = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(2), True)
+
         'A1 Second 
         Set_Panel(Panel_TrA1_Sec_1st, LinkLabel_TrA1_Sec_1st)
         tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Sec_1st, Panel_TrA1_Sec_1st, Nothing, tempRun, 3, "TrA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         TrA1_Sec = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(3), True)
+
         'A1 Third 
         Set_Panel(Panel_TrA1_Thd_1st, LinkLabel_TrA1_Thd_1st)
         tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Thd_1st, Panel_TrA1_Thd_1st, Nothing, tempRun, 3, "TrA1", 1, 1, 1)
         tempRun = tempRun.NextUnit
         TrA1_Thd = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(4), True)
+
         'A1 Add 
         Set_Panel(Panel_TrA1_Add_1st, LinkLabel_TrA1_Add_1st)
         tempRun.NextUnit = New Run_Unit(LinkLabel_TrA1_Add_1st, Panel_TrA1_Add_1st, Nothing, tempRun, 3, "TrA1_Add", 1, 1, 1)
@@ -1677,6 +1679,8 @@ Public Class Program
         tempRun.NextUnit = New Run_Unit(LinkLabel_TrA3_Fst_fwd, Panel_TrA3_Fst_fwd, Nothing, tempRun, 3, "TrA3_fwd", 1, 1, 3)
         tempRun = tempRun.NextUnit
         TrA3_Fst_fwd = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(6), True)
         'tempRun.Steps = Load_Steps_helper(tempRun)
         'A3 First backward
         Set_Panel(Panel_TrA3_Fst_bkd, LinkLabel_TrA3_Fst_bkd)
@@ -1684,27 +1688,40 @@ Public Class Program
         tempRun = tempRun.NextUnit
         'tempRun.Steps = Load_Steps_helper(tempRun)
         TrA3_Fst_bkd = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(7), True)
+
         'A3 Second fwd
         Set_Panel(Panel_TrA3_Sec_fwd, LinkLabel_TrA3_Sec_fwd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_TrA3_Sec_fwd, Panel_TrA3_Sec_fwd, Nothing, tempRun, 3, "TrA3_fwd", 1, 1, 3)
         tempRun = tempRun.NextUnit
         TrA3_Sec_fwd = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(9), True)
+
         'A3 Second backward
         Set_Panel(Panel_TrA3_Sec_bkd, LinkLabel_TrA3_Sec_bkd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_TrA3_Sec_bkd, Panel_TrA3_Sec_bkd, Nothing, tempRun, 3, "TrA3_bkd", 1, 1, 1)
         tempRun = tempRun.NextUnit
         TrA3_Sec_bkd = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(10), True)
 
         'A3 Third fwd
         Set_Panel(Panel_TrA3_Thd_fwd, LinkLabel_TrA3_Thd_fwd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_TrA3_Thd_fwd, Panel_TrA3_Thd_fwd, Nothing, tempRun, 3, "TrA3_fwd", 1, 1, 3)
         tempRun = tempRun.NextUnit
         TrA3_Thd_fwd = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(12), True)
+
         'A3 Third bkd
         Set_Panel(Panel_TrA3_Thd_bkd, LinkLabel_TrA3_Thd_bkd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_TrA3_Thd_bkd, Panel_TrA3_Thd_bkd, Nothing, tempRun, 3, "TrA3_bkd", 1, 1, 1)
         tempRun = tempRun.NextUnit
         TrA3_Thd_bkd = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(13), True)
 
         'A3 Add fwd
         Set_Panel(Panel_TrA3_Add_fwd, LinkLabel_TrA3_Add_fwd)
@@ -1778,6 +1795,8 @@ Public Class Program
         tempRun = New Run_Unit(LinkLabel_PreCal_1st, Panel_PreCal_1st, Nothing, Nothing, 0, "PreCal", 0, 0, 0)
         PreCal_1st = tempRun
         HeadRun = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(Nothing, False)
         CurRun = HeadRun
         timeLeft = CurRun.Time
         timeLabel.Text = timeLeft & " s"
@@ -1786,45 +1805,70 @@ Public Class Program
         tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_2nd, Panel_PreCal_2nd, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
         tempRun = tempRun.NextUnit
         PreCal_2nd = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(Nothing, False)
+
         Set_Panel(Panel_PreCal_3rd, LinkLabel_PreCal_3rd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_3rd, Panel_PreCal_3rd, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
         tempRun = tempRun.NextUnit
         PreCal_3rd = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(Nothing, False)
+
         Set_Panel(Panel_PreCal_4th, LinkLabel_PreCal_4th)
         tempRun.NextUnit = New Run_Unit(LinkLabel_PreCal_4th, Panel_PreCal_4th, Nothing, tempRun, 0, "PreCal", 0, 0, 0)
         tempRun = tempRun.NextUnit
         PreCal_4th = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(Nothing, False)
+
         'Background
         Set_Panel(Panel_Bkg, LinkLabel_BG)
         tempRun.NextUnit = New Run_Unit(LinkLabel_BG, Panel_Bkg, Nothing, tempRun, 0, "Background", 0, 0, 0)
         tempRun = tempRun.NextUnit
         BG = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(0), False)
+
         'A4 1
         Set_Panel(Panel_A4_Fst, LinkLabel_A4_Fst)
         tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Fst, Panel_A4_Fst, Nothing, tempRun, 0, "A4", 1, 1, 1)
         tempRun = tempRun.NextUnit
         A4_Fst = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(1), True)
 
         'A4 2 Mid_Background
         Set_Panel(Panel_A4_Sec_Mid_Background, LinkLabel_A4_Sec_Mid_Background)
         tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Sec_Mid_Background, Panel_A4_Sec_Mid_Background, Nothing, tempRun, 0, "A4_Mid_BG", 0, 0, 0)
         tempRun = tempRun.NextUnit
         A4_Sec_Mid = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(2), False)
+
         'A4 2
         Set_Panel(Panel_A4_Sec, LinkLabel_A4_Sec)
         tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Sec, Panel_A4_Sec, Nothing, tempRun, 0, "A4", 1, 1, 1)
         tempRun = tempRun.NextUnit
         A4_Sec = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(3), True)
+
         'A4 3 Mid_Background
         Set_Panel(Panel_A4_Thd_Mid_Background, LinkLabel_A4_Thd_Mid_Background)
         tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Thd_Mid_Background, Panel_A4_Thd_Mid_Background, Nothing, tempRun, 0, "A4_Mid_BG", 0, 0, 0)
         tempRun = tempRun.NextUnit
         A4_Thd_Mid = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(4), False)
+
         'A4 3
         Set_Panel(Panel_A4_Thd, LinkLabel_A4_Thd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Thd, Panel_A4_Thd, Nothing, tempRun, 0, "A4", 1, 1, 1)
         tempRun = tempRun.NextUnit
         A4_Thd = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(5), True)
 
 
         'A4 add Mid_Background
@@ -1837,28 +1881,43 @@ Public Class Program
         tempRun.NextUnit = New Run_Unit(LinkLabel_A4_Add, Panel_A4_Add, Nothing, tempRun, 0, "A4_Add", 1, 1, 1)
         tempRun = tempRun.NextUnit
         A4_Add = tempRun
+
         'RSS
         Set_Panel(Panel_RSS, LinkLabel_RSS)
         tempRun.NextUnit = New Run_Unit(LinkLabel_RSS, Panel_RSS, Nothing, tempRun, 0, "RSS", 0, 0, 0)
         tempRun = tempRun.NextUnit
         RSS = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(6), False)
+
         'PostCal
         Set_Panel(Panel_PostCal_1st, LinkLabel_PostCal_1st)
         tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_1st, Panel_PostCal_1st, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
         tempRun = tempRun.NextUnit
         PostCal_1st = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(Nothing, False)
+
         Set_Panel(Panel_PostCal_2nd, LinkLabel_PostCal_2nd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_2nd, Panel_PostCal_2nd, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
         tempRun = tempRun.NextUnit
         PostCal_2nd = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(Nothing, False)
+
         Set_Panel(Panel_PostCal_3rd, LinkLabel_PostCal_3rd)
         tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_3rd, Panel_PostCal_3rd, Nothing, tempRun, 0, "PostCal", 0, 0, 0)
         tempRun = tempRun.NextUnit
         PostCal_3rd = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(Nothing, False)
+
         Set_Panel(Panel_PostCal_4th, LinkLabel_PostCal_4th)
         tempRun.NextUnit = New Run_Unit(LinkLabel_PostCal_4th, Panel_PostCal_4th, Nothing, tempRun, 0, "PostCal_Last", 0, 0, 0)
         tempRun = tempRun.NextUnit
         PostCal_4th = tempRun
+        '##GRU
+        tempRun.GRU = New Grid_Run_Unit(Nothing, False)
 
         MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A4, HeadRun.Time)
         MainBarGraph = New BarGraph(New Point(858, 106), New Size(390, 539), TabPage2, CGraph.Modes.A4)
@@ -2039,8 +2098,8 @@ Public Class Program
             num = 4
         End If
         Dim r = New Random()
-        Dim result(num - 1) As Double
-        For i = 0 To num - 1
+        Dim result(num) As Double
+        For i = 0 To num
             'result(i) = (r.Next(1, 100) / 10) + 90
             result(i) = (r.Next(1, 10) / 10) + r.Next(1, 119)
         Next
@@ -2092,6 +2151,7 @@ Public Class Program
                     If CurRun.CurStep = CurRun.EndStep Then 'last step (not HasNextStep)
                         'stop the timer
                         Timer1.Stop()
+
                         If CurRun.NextUnit.Name = "ExA2_2nd_3rd" Or CurRun.NextUnit.Name = "ExA2_2nd_3rd_Add" Or CurRun.NextUnit.Name = "LoA2_2nd_3rd" Or CurRun.NextUnit.Name = "LoA2_2nd_3rd_Add" Then
                             Accept_Button.Enabled = False
                             startButton.Enabled = True
@@ -2231,10 +2291,34 @@ Public Class Program
             Accept_Button.Enabled = True
             stopButton.Enabled = False
 
+            '####TODO Leq is not right
+
+            Dim series As List(Of DataVisualization.Charting.Series) = MainLineGraph.GetSeries()
+            Dim points As DataVisualization.Charting.DataPointCollection = series(series.Count - 1).Points
+            Dim Leq As Double = points(points.Count - 1).YValues(0)
+            If series.Count = 4 + 1 Then
+                CurRun.GRU.SetMs(Meter_Measure_Unit.SeriesToMMU(series(0), Leq),
+                                Meter_Measure_Unit.SeriesToMMU(series(1), Leq),
+                                Meter_Measure_Unit.SeriesToMMU(series(2), Leq),
+                                Meter_Measure_Unit.SeriesToMMU(series(3), Leq),
+                                "", "")
+            Else
+                CurRun.GRU.SetMs(Meter_Measure_Unit.SeriesToMMU(series(0), Leq),
+                                Meter_Measure_Unit.SeriesToMMU(series(1), Leq),
+                                Meter_Measure_Unit.SeriesToMMU(series(2), Leq),
+                                Meter_Measure_Unit.SeriesToMMU(series(3), Leq),
+                                Meter_Measure_Unit.SeriesToMMU(series(4), Leq),
+                                Meter_Measure_Unit.SeriesToMMU(series(5), Leq),
+                                "", "")
+            End If
+            If Not CurRun.Name.Contains("Cal") Then
+                DataGrid.ShowGRUonForm(CurRun.GRU)
+            End If
         Else
             Timer1.Stop()
             startButton.Enabled = True
             stopButton.Enabled = False
+            'bounce back
             If CurRun.Name = "ExA1" Or CurRun.Name = "LoA1" Or CurRun.Name = "TrA1" Or CurRun.Name = "A4" Or CurRun.Name = "ExA1_Add" Or CurRun.Name = "LoA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "A4_Add" Or CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA3_fwd" Or CurRun.Name = "LoA3_bkd" Or CurRun.Name = "TrA3_fwd" Or CurRun.Name = "TrA3_bkd" Or CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "LoA3_bkd_Add" Or CurRun.Name = "TrA3_fwd_Add" Or CurRun.Name = "TrA3_bkd_Add" Then
                 'dispose data
 
@@ -2250,6 +2334,7 @@ Public Class Program
 
                 'dispose old graph and create new graph
                 Load_New_Graph_CD_True()
+                'bounce back to previous step
             ElseIf CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_2nd_3rd" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
                 If CurRun.PrevUnit.Name = "ExA2_1st" Or CurRun.PrevUnit.Name = "ExA2_1st_Add" Or CurRun.PrevUnit.Name = "LoA2_1st" Or CurRun.PrevUnit.Name = "LoA2_1st_Add" Then
                     'dispose data
@@ -2273,7 +2358,7 @@ Public Class Program
 
                     'dispose old graph and create new graph
                     Load_New_Graph_CD_True()
-                Else
+                Else 'jump back two steps
                     'dispose data
 
                     'reset run_unit

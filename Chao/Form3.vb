@@ -458,10 +458,6 @@ Public Class Program
             TextBox_r1.Text = Nothing
             TextBox_r2.Text = Nothing
             MachChosen = False
-            For i = 0 To A_Units.Count - 1
-                A_Units(i).Grid.Dispose()
-            Next
-            A_Units.Clear()
         End If
     End Sub
 
@@ -570,35 +566,17 @@ Public Class Program
         End If
     End Sub
 
-    Private A_Units As List(Of A_Unit) = New List(Of A_Unit)
-    Private Cur_A_Unit As A_Unit
-    Private A_Unit_Size As Size = New Size(200, 400)
+    Private Chart As Grid
+    Private A_Unit_Size As Size = New Size(1000, 450)
     'Create charts for chosen machine
-    Private Sub CreateCharts(ByVal r As Double)
-        If Machine = Machines.Excavator Then 'Excavator(A1 + A2)
-            Cur_A_Unit = New A_Unit(TabPageCharts, A_Unit_Size, New Point(10, 10), r, 1)
-            A_Units.Add(Cur_A_Unit)
-            A_Units.Add(New A_Unit(TabPageCharts, A_Unit_Size, New Point(220, 10), r, 2))
-        ElseIf Machine = Machines.Tractor Then 'Crawler and wheel tractor A1+A3
-            Cur_A_Unit = New A_Unit(TabPageCharts, A_Unit_Size, New Point(10, 10), r, 1)
-            A_Units.Add(Cur_A_Unit)
-            A_Units.Add(New A_Unit(TabPageCharts, A_Unit_Size, New Point(220, 10), r, 3))
-        ElseIf Machine = Machines.Loader Then 'Crawler and wheel loader A1+A2+A3
-            Cur_A_Unit = New A_Unit(TabPageCharts, A_Unit_Size, New Point(10, 10), r, 1)
-            A_Units.Add(Cur_A_Unit)
-            A_Units.Add(New A_Unit(TabPageCharts, A_Unit_Size, New Point(220, 10), r, 2))
-            A_Units.Add(New A_Unit(TabPageCharts, A_Unit_Size, New Point(430, 10), r, 3))
-        ElseIf Machine = Machines.Loader_Excavator Then 'Excavator Loader A1+A2 + A1+A2+A3
-            Cur_A_Unit = New A_Unit(TabPageCharts, A_Unit_Size, New Point(10, 10), r, 1)
-            A_Units.Add(Cur_A_Unit)
-            A_Units.Add(New A_Unit(TabPageCharts, A_Unit_Size, New Point(220, 10), r, 2))
+    Private Sub CreateChart(ByVal r As Double)
+        Chart = New Grid(TabPageCharts, A_Unit_Size, New Point(10, 10), r, Machine)
+    End Sub
 
-            A_Units.Add(New A_Unit(TabPageCharts, A_Unit_Size, New Point(430, 10), r, 1))
-            A_Units.Add(New A_Unit(TabPageCharts, A_Unit_Size, New Point(640, 10), r, 2))
-            A_Units.Add(New A_Unit(TabPageCharts, A_Unit_Size, New Point(850, 10), r, 3))
-        Else 'A4
-            Cur_A_Unit = New A_Unit(TabPageCharts, A_Unit_Size, New Point(10, 10), r, 4)
-            A_Units.Add(Cur_A_Unit)
+    Private Sub DisposeChart()
+        If Not IsNothing(Chart) Then
+            Chart.Form.Dispose()
+            Chart = Nothing
         End If
     End Sub
 
@@ -652,8 +630,8 @@ Public Class Program
             ComboBox_machine_list.Enabled = False
             Button_L_check.Enabled = False
         End If
-
-        CreateCharts(r1)
+        DisposeChart()
+        CreateChart(r1)
     End Sub
 
     Private Sub Button_L1_L2_L3_check_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L1_L2_L3_check.Click
@@ -746,8 +724,8 @@ Public Class Program
             ComboBox_machine_list.Enabled = False
             Button_L1_L2_L3_check.Enabled = False
         End If
-
-        CreateCharts(r)
+        DisposeChart()
+        CreateChart(r)
     End Sub
 
     Sub Set_Panel(ByRef p As Panel, ByRef l As Label)

@@ -1,43 +1,251 @@
 ﻿Imports System.IO
 Imports System.Text
 
+
 Public Class Grid
-
-End Class
-
-Public Class A_Unit
     'contains a grid
-    Public Grid As DataGridView
+    Public Form As DataGridView
     Private _R As Double
-    Public A As Integer
+    Private _Machine As Program.Machines
+    Private A_s As Integer 'keep track of which A's this one has
+    Private As_Last_Indices() As Integer ' index of last column of each A run
+    Public Cur_Column
 
-    Public Sub New(ByRef Parent As Control, ByVal Size As Size, ByVal Position As Point, ByVal R As Double, ByVal AWhat As Integer)
-        Grid = New DataGridView()
-        Grid.Parent = Parent
-        Grid.Size = Size
-        Grid.Location = Position
+    Enum Excavator_As
+        A1
+        A2
+    End Enum
+
+    Enum Loader_As
+        A1
+        A2
+        A3
+    End Enum
+
+    Enum Tractor_As
+        A1
+        A3
+    End Enum
+
+    Enum LoadExcavator_As
+        A1e
+        A2e
+        A1l
+        A2l
+        A3l
+    End Enum
+
+    Public Sub New(ByRef Parent As Control, ByVal Size As Size, ByVal Position As Point, ByVal R As Double, ByVal Machine As Program.Machines)
+        Form = New DataGridView()
+        Form.Parent = Parent
+        Form.Size = Size
+        Form.Location = Position
         Dim col As New DataGridViewTextBoxColumn
-        Grid.Columns.Add(col)
+        Form.Columns.Add(col)
         'need to add a column before rows
         _R = R
-        A = AWhat
-        Grid.Rows.Add(16)
-        Grid.Rows(1).HeaderCell.Value = "LpAeq2"
-        Grid.Rows(2).HeaderCell.Value = "LpAeq4"
-        Grid.Rows(3).HeaderCell.Value = "LpAeq6"
-        Grid.Rows(4).HeaderCell.Value = "LpAeq8"
-        Grid.Rows(5).HeaderCell.Value = "LpAeq10"
-        Grid.Rows(6).HeaderCell.Value = "LpAeq12"
-        Grid.Rows(7).HeaderCell.Value = "LpAeq avg"
-        Grid.Rows(8).HeaderCell.Value = "Time(sec)"
-        Grid.Rows(9).HeaderCell.Value = "deltaLA"
-        Grid.Rows(10).HeaderCell.Value = "K1A"
-        Grid.Rows(11).HeaderCell.Value = "L*W"
-        Grid.Rows(12).HeaderCell.Value = "LW"
-        Grid.Rows(13).HeaderCell.Value = "K2A"
-        Grid.Rows(14).HeaderCell.Value = "LWA"
-        Grid.Rows(15).HeaderCell.Value = "LWA 採用"
+        _Machine = Machine
+        Form.Rows.Add(16)
+        Form.Rows(1).HeaderCell.Value = "LpAeq2"
+        Form.Rows(2).HeaderCell.Value = "LpAeq4"
+        Form.Rows(3).HeaderCell.Value = "LpAeq6"
+        Form.Rows(4).HeaderCell.Value = "LpAeq8"
+        Form.Rows(5).HeaderCell.Value = "LpAeq10"
+        Form.Rows(6).HeaderCell.Value = "LpAeq12"
+        Form.Rows(7).HeaderCell.Value = "LpAeq avg"
+        Form.Rows(8).HeaderCell.Value = "Time(sec)"
+        Form.Rows(9).HeaderCell.Value = "deltaLA"
+        Form.Rows(10).HeaderCell.Value = "K1A"
+        Form.Rows(11).HeaderCell.Value = "L*W"
+        Form.Rows(12).HeaderCell.Value = "LW"
+        Form.Rows(13).HeaderCell.Value = "K2A"
+        Form.Rows(14).HeaderCell.Value = "LWA"
+        Form.Rows(15).HeaderCell.Value = "LWA 採用"
+
         'Grid.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders)
+
+        'Set A sequence
+        If Machine = Program.Machines.Excavator Then 'A1 A2
+            A_s = 2
+            As_Last_Indices = {3, 7}
+            For i = 0 To 9
+                Form.Columns.Add(New DataGridViewTextBoxColumn())
+            Next
+            Form.Columns(0).HeaderText = "Background"
+            Form.Columns(1).HeaderText = "A1"
+            AddLabelColumn(1)
+            Form.Columns(2).HeaderText = "Run1"
+            Form.Columns(3).HeaderText = "Run2"
+            Form.Columns(4).HeaderText = "Run3"
+
+            Form.Columns(5).HeaderText = "A2"
+            AddLabelColumn(5)
+            Form.Columns(6).HeaderText = "Run1"
+            Form.Columns(7).HeaderText = "Run2"
+            Form.Columns(8).HeaderText = "Run3"
+            Form.Columns(9).HeaderText = "RSS"
+            
+        ElseIf Machine = Program.Machines.Loader Then 'A1 A2 A3
+            A_s = 3
+
+            For i = 0 To 19
+                Form.Columns.Add(New DataGridViewTextBoxColumn())
+            Next
+            Form.Columns(0).HeaderText = "Background"
+            Form.Columns(1).HeaderText = "A1"
+            AddLabelColumn(1)
+            Form.Columns(2).HeaderText = "Run1"
+            Form.Columns(3).HeaderText = "Run2"
+            Form.Columns(4).HeaderText = "Run3"
+
+            Form.Columns(5).HeaderText = "A2"
+            AddLabelColumn(5)
+            Form.Columns(6).HeaderText = "Run1"
+            Form.Columns(7).HeaderText = "Run2"
+            Form.Columns(8).HeaderText = "Run3"
+
+            Form.Columns(9).HeaderText = "A3"
+            AddLabelColumn(9)
+            Form.Columns(10).HeaderText = "Run1"
+            Form.Rows(0).Cells(10).Value = "前進"
+            Form.Columns(11).HeaderText = "Run1"
+            Form.Rows(0).Cells(11).Value = "後退"
+            Form.Columns(12).HeaderText = "Run1"
+            Form.Rows(0).Cells(12).Value = "平均"
+
+            Form.Columns(13).HeaderText = "Run2"
+            Form.Rows(0).Cells(13).Value = "前進"
+            Form.Columns(14).HeaderText = "Run2"
+            Form.Rows(0).Cells(14).Value = "後退"
+            Form.Columns(15).HeaderText = "Run2"
+            Form.Rows(0).Cells(15).Value = "平均"
+
+            Form.Columns(16).HeaderText = "Run3"
+            Form.Rows(0).Cells(16).Value = "前進"
+            Form.Columns(17).HeaderText = "Run3"
+            Form.Rows(0).Cells(17).Value = "後退"
+            Form.Columns(18).HeaderText = "Run3"
+            Form.Rows(0).Cells(18).Value = "平均"
+            Form.Columns(19).HeaderText = "RSS"
+        ElseIf Machine = Program.Machines.Tractor Then 'A1 A3
+            A_s = 2
+            For i = 0 To 15
+                Form.Columns.Add(New DataGridViewTextBoxColumn())
+            Next
+            Form.Columns(0).HeaderText = "Background"
+            Form.Columns(1).HeaderText = "A1"
+            AddLabelColumn(1)
+            Form.Columns(2).HeaderText = "Run1"
+            Form.Columns(3).HeaderText = "Run2"
+            Form.Columns(4).HeaderText = "Run3"
+
+            Form.Columns(5).HeaderText = "A3"
+            AddLabelColumn(5)
+            Form.Columns(6).HeaderText = "Run1"
+            Form.Rows(0).Cells(6).Value = "前進"
+            Form.Columns(7).HeaderText = "Run1"
+            Form.Rows(0).Cells(7).Value = "後退"
+            Form.Columns(8).HeaderText = "Run1"
+            Form.Rows(0).Cells(8).Value = "平均"
+
+            Form.Columns(9).HeaderText = "Run2"
+            Form.Rows(0).Cells(9).Value = "前進"
+            Form.Columns(10).HeaderText = "Run2"
+            Form.Rows(0).Cells(10).Value = "後退"
+            Form.Columns(11).HeaderText = "Run2"
+            Form.Rows(0).Cells(11).Value = "平均"
+
+            Form.Columns(12).HeaderText = "Run3"
+            Form.Rows(0).Cells(12).Value = "前進"
+            Form.Columns(13).HeaderText = "Run3"
+            Form.Rows(0).Cells(13).Value = "後退"
+            Form.Columns(14).HeaderText = "Run3"
+            Form.Rows(0).Cells(14).Value = "平均"
+            Form.Columns(15).HeaderText = "RSS"
+        ElseIf Machine = Program.Machines.Loader_Excavator Then 'A1 A2, A1 A2 A3
+            A_s = 5
+            For i = 0 To 28
+                Form.Columns.Add(New DataGridViewTextBoxColumn())
+            Next
+            Form.Columns(0).HeaderText = "Background"
+            Form.Columns(1).HeaderText = "A1"
+            AddLabelColumn(1)
+            Form.Columns(2).HeaderText = "Run1"
+            Form.Columns(3).HeaderText = "Run2"
+            Form.Columns(4).HeaderText = "Run3"
+
+            Form.Columns(5).HeaderText = "A2"
+            AddLabelColumn(5)
+            Form.Columns(6).HeaderText = "Run1"
+            Form.Columns(7).HeaderText = "Run2"
+            Form.Columns(8).HeaderText = "Run3"
+
+            Form.Columns(9).HeaderText = "A1"
+            AddLabelColumn(9)
+            Form.Columns(10).HeaderText = "Run1"
+            Form.Columns(11).HeaderText = "Run2"
+            Form.Columns(12).HeaderText = "Run3"
+
+            Form.Columns(13).HeaderText = "A2"
+            AddLabelColumn(13)
+            Form.Columns(14).HeaderText = "Run1"
+            Form.Columns(15).HeaderText = "Run2"
+            Form.Columns(16).HeaderText = "Run3"
+
+            Form.Columns(17).HeaderText = "A3"
+            AddLabelColumn(17)
+            Form.Columns(18).HeaderText = "Run1"
+            Form.Rows(0).Cells(19).Value = "前進"
+            Form.Columns(19).HeaderText = "Run1"
+            Form.Rows(0).Cells(20).Value = "後退"
+            Form.Columns(21).HeaderText = "Run1"
+            Form.Rows(0).Cells(21).Value = "平均"
+
+            Form.Columns(22).HeaderText = "Run2"
+            Form.Rows(0).Cells(22).Value = "前進"
+            Form.Columns(23).HeaderText = "Run2"
+            Form.Rows(0).Cells(23).Value = "後退"
+            Form.Columns(24).HeaderText = "Run2"
+            Form.Rows(0).Cells(24).Value = "平均"
+
+            Form.Columns(25).HeaderText = "Run3"
+            Form.Rows(0).Cells(25).Value = "前進"
+            Form.Columns(26).HeaderText = "Run3"
+            Form.Rows(0).Cells(26).Value = "後退"
+            Form.Columns(27).HeaderText = "Run3"
+            Form.Rows(0).Cells(27).Value = "平均"
+            Form.Columns(28).HeaderText = "RSS"
+        ElseIf Machine = Program.Machines.Others Then 'A4
+            A_s = 1
+            For i = 0 To 6
+                Form.Columns.Add(New DataGridViewTextBoxColumn())
+            Next
+            Form.Columns(0).HeaderText = "Background"
+            Form.Columns(1).HeaderText = "Run1"
+            Form.Columns(2).HeaderText = "Background"
+            Form.Columns(3).HeaderText = "Run2"
+            Form.Columns(4).HeaderText = "Background"
+            Form.Columns(5).HeaderText = "Run3"
+            Form.Columns(6).HeaderText = "RSS"
+        End If
+    End Sub
+
+    Private Sub AddLabelColumn(ByRef colInd As Integer)
+        Form.Rows(1).Cells(colInd).Value = "LpAeq2"
+        Form.Rows(2).Cells(colInd).Value = "LpAeq4"
+        Form.Rows(3).Cells(colInd).Value = "LpAeq6"
+        Form.Rows(4).Cells(colInd).Value = "LpAeq8"
+        Form.Rows(5).Cells(colInd).Value = "LpAeq10"
+        Form.Rows(6).Cells(colInd).Value = "LpAeq12"
+        Form.Rows(7).Cells(colInd).Value = "LpAeq avg"
+        Form.Rows(8).Cells(colInd).Value = "Time(sec)"
+        Form.Rows(9).Cells(colInd).Value = "deltaLA"
+        Form.Rows(10).Cells(colInd).Value = "K1A"
+        Form.Rows(11).Cells(colInd).Value = "L*W"
+        Form.Rows(12).Cells(colInd).Value = "LW"
+        Form.Rows(13).Cells(colInd).Value = "K2A"
+        Form.Rows(14).Cells(colInd).Value = "LWA"
+        Form.Rows(15).Cells(colInd).Value = "LWA 採用"
     End Sub
 
     'contains grid_run_units
@@ -51,7 +259,7 @@ Public Class A_Unit
     End Enum
 
 
-    Public Sub AddGrid_Run_Unit(ByRef Run As Grid_Run_Unit)
+    Public Sub LinkGrid_UnitToColumn(ByRef Run As Grid_Run_Unit)
 
         If Run.Header = Run_Modes.RSS.ToString() Then
             RSS = Run
@@ -65,52 +273,54 @@ Public Class A_Unit
         If Run.isRegular Then
             'see if previous was background then use it as this one's background for A4
             If Not GRUList.Count = 0 Then
-                If GRUList(GRUList.Count - 1).isRegular Then
+                If Not GRUList(GRUList.Count - 1).isRegular Then
                     Run.Background = GRUList(GRUList.Count - 1)
+
+                Else 'else we set the background to be the first in line for A1,A2,A3
+                    Run.Background = GRUList(0)
                 End If
-            Else 'else we set the background to be the first in line for A1,A2,A3
-                Run.Background = GRUList(0)
             End If
         End If
 
-        Dim curColInd As Integer = Grid.Columns.Count - 1
-        Grid.Columns(curColInd).HeaderText = Run.Header
-        'subHeader
-        Grid.Rows(0).Cells(curColInd).Value = Run.Subheader
+            Dim curColInd As Integer = Form.Columns.Count - 1
+            Form.Columns(curColInd).HeaderText = Run.Header
+            'subHeader
+            Form.Rows(0).Cells(curColInd).Value = Run.Subheader
 
-        'meter 2
-        Grid.Rows(1).Cells(curColInd).Value = Run.LpAeq2
-        'meter 4
-        Grid.Rows(2).Cells(curColInd).Value = Run.LpAeq4
-        'meter 6
-        Grid.Rows(3).Cells(curColInd).Value = Run.LpAeq6
-        'meter 8
-        Grid.Rows(4).Cells(curColInd).Value = Run.LpAeq8
-        'meter 10
-        Grid.Rows(5).Cells(curColInd).Value = Run.LpAeq10
-        'meter 12
-        Grid.Rows(6).Cells(curColInd).Value = Run.LpAeq12
-        'meters average
-        Grid.Rows(7).Cells(curColInd).Value = Run.LpAeqAvg
-        'time
-        Grid.Rows(8).Cells(curColInd).Value = Run.Time
-        If Run.isRegular Then
-            'deltaA
-            Grid.Rows(9).Cells(curColInd).Value = Run.deltaLA
-            'K1A
-            Grid.Rows(10).Cells(curColInd).Value = Run.K1A
-        End If
+            'meter 2
+            Form.Rows(1).Cells(curColInd).Value = Run.LpAeq2
+            'meter 4
+            Form.Rows(2).Cells(curColInd).Value = Run.LpAeq4
+            'meter 6
+            Form.Rows(3).Cells(curColInd).Value = Run.LpAeq6
+            'meter 8
+            Form.Rows(4).Cells(curColInd).Value = Run.LpAeq8
+            'meter 10
+            Form.Rows(5).Cells(curColInd).Value = Run.LpAeq10
+            'meter 12
+            Form.Rows(6).Cells(curColInd).Value = Run.LpAeq12
+            'meters average
+            Form.Rows(7).Cells(curColInd).Value = Run.LpAeqAvg
+            'time
+            Form.Rows(8).Cells(curColInd).Value = Run.Time
+            If Run.isRegular Then
+                'deltaA
+                Form.Rows(9).Cells(curColInd).Value = Run.deltaLA
+                'K1A
+                Form.Rows(10).Cells(curColInd).Value = Run.K1A
+            End If
 
-        'add next column for next record
-        Dim col As New DataGridViewTextBoxColumn
-        'col.DataPropertyName = "Run"
-        col.Name = Run.Header & Run.Subheader
-        Grid.Columns.Add(col)
-        GRUList.Add(Run)
+            'add next column for next record
+            Dim col As New DataGridViewTextBoxColumn
+            'col.DataPropertyName = "Run"
+            col.Name = Run.Header & Run.Subheader
+            Form.Columns.Add(col)
+            GRUList.Add(Run)
 
-        If A = 3 And Run.Subheader.Contains("後退") Then
-            AddA3Overall()
-        End If
+            '##TODO
+            If Run.Header.Contains("A3") And Run.Subheader.Contains("後退") Then
+                AddA3Overall()
+            End If
 
     End Sub
 
@@ -129,80 +339,81 @@ Public Class A_Unit
                                                              forw.Meter12 + backw.Meter12,
                                                              forw.Header, forw.Subheader)
 
-                Dim curColInd As Integer = Grid.Columns.Count - 1
-                Grid.Columns(curColInd).HeaderText = gru.Header
+                Dim curColInd As Integer = Form.Columns.Count - 1
+                Form.Columns(curColInd).HeaderText = gru.Header
                 'subHeader
-                Grid.Rows(0).Cells(curColInd).Value = gru.Subheader
+                Form.Rows(0).Cells(curColInd).Value = gru.Subheader
 
                 'meter 2
-                Grid.Rows(1).Cells(curColInd).Value = gru.LpAeq2
+                Form.Rows(1).Cells(curColInd).Value = gru.LpAeq2
                 'meter 4
-                Grid.Rows(2).Cells(curColInd).Value = gru.LpAeq4
+                Form.Rows(2).Cells(curColInd).Value = gru.LpAeq4
                 'meter 6
-                Grid.Rows(3).Cells(curColInd).Value = gru.LpAeq6
+                Form.Rows(3).Cells(curColInd).Value = gru.LpAeq6
                 'meter 8
-                Grid.Rows(4).Cells(curColInd).Value = gru.LpAeq8
+                Form.Rows(4).Cells(curColInd).Value = gru.LpAeq8
                 'meter 10
-                Grid.Rows(5).Cells(curColInd).Value = gru.LpAeq10
+                Form.Rows(5).Cells(curColInd).Value = gru.LpAeq10
                 'meter 12
-                Grid.Rows(6).Cells(curColInd).Value = gru.LpAeq12
+                Form.Rows(6).Cells(curColInd).Value = gru.LpAeq12
                 'meters average
-                Grid.Rows(7).Cells(curColInd).Value = gru.LpAeqAvg
+                Form.Rows(7).Cells(curColInd).Value = gru.LpAeqAvg
                 'time
-                Grid.Rows(8).Cells(curColInd).Value = gru.Time
+                Form.Rows(8).Cells(curColInd).Value = gru.Time
                 'deltaA
-                Grid.Rows(9).Cells(curColInd).Value = gru.deltaLA
+                Form.Rows(9).Cells(curColInd).Value = gru.deltaLA
                 'K1A
-                Grid.Rows(10).Cells(curColInd).Value = gru.K1A
+                Form.Rows(10).Cells(curColInd).Value = gru.K1A
                 'add next column for next record
                 Dim col As New DataGridViewTextBoxColumn
                 col.Name = gru.Header & gru.Subheader
-                Grid.Columns.Add(col)
+                Form.Columns.Add(col)
                 GRUList.Add(gru)
             End If
         End If
     End Sub
 
-    Public Sub ShowCalculated()
+    'call this after RSS has been done
+    Public Sub ShowCalculated(ByVal StartIndex As Integer, ByVal Length As Integer)
         Calculate()
         'A1 and A2
         'LsW row
-        Grid.Rows(11).Cells(Grid.Columns.Count - 1).Value = _LsW
+        Form.Rows(11).Cells(Form.Columns.Count - 1).Value = _LsW
         'Lw row
-        Grid.Rows(12).Cells(Grid.Columns.Count - 1).Value = _Lwr
+        Form.Rows(12).Cells(Form.Columns.Count - 1).Value = _Lwr
         'K2A row
-        Grid.Rows(13).Cells(Grid.Columns.Count - 1).Value = _K2A
+        Form.Rows(13).Cells(Form.Columns.Count - 1).Value = _K2A
         'LWA choice row
-        Grid.Rows(15).Cells(Grid.Columns.Count - 1).Value = _LWA_Final
+        Form.Rows(15).Cells(Form.Columns.Count - 1).Value = _LWA_Final
 
         'LWA 
         'A1, A2
-        If A < 3 Then
-            If GRUList.Count > 1 Then
-                For i = 1 To Grid.Columns.Count - 2 'all the regulars
-                    Grid.Rows(14).Cells(i).Value = GRUList(i).LWA
-                Next
-            End If
-        End If
+        'If A < 3 Then
+        '    If GRUList.Count > 1 Then
+        '        For i = 1 To Form.Columns.Count - 2 'all the regulars
+        '            Form.Rows(14).Cells(i).Value = GRUList(i).LWA
+        '        Next
+        '    End If
+        'End If
 
-        'A3
-        If A = 3 Then
-            If GRUList.Count > 1 Then
-                For i = 3 To GRUList.Count - 2 Step 3
-                    Grid.Rows(14).Cells(i).Value = GRUList(i).LWA
-                Next
-            End If
+        ''A3
+        'If A = 3 Then
+        '    If GRUList.Count > 1 Then
+        '        For i = 3 To GRUList.Count - 2 Step 3
+        '            Form.Rows(14).Cells(i).Value = GRUList(i).LWA
+        '        Next
+        '    End If
 
-        End If
+        'End If
 
-        'A4
-        If A = 4 Then
-            If GRUList.Count > 1 Then
-                For i = 1 To GRUList.Count - 2 Step 2
-                    Grid.Rows(14).Cells(i).Value = GRUList(i).LWA
-                Next
-            End If
-        End If
+        ''A4
+        'If A = 4 Then
+        '    If GRUList.Count > 1 Then
+        '        For i = 1 To GRUList.Count - 2 Step 2
+        '            Form.Rows(14).Cells(i).Value = GRUList(i).LWA
+        '        Next
+        '    End If
+        'End If
     End Sub
 
     'contains calculations- NeedAdd should be called before (Calc_LWAs)Calculate
@@ -291,29 +502,29 @@ Public Class A_Unit
         For i = 0 To GRUList.Count - 1
             Dim cur = GRUList(i)
             If cur.isRegular Then
-                If Not A = 3 Then 'A1, A2, and A4
-                    For j = 1 To GRUList.Count - 1
-                        Dim temp = GRUList(j)
-                        If temp IsNot cur And temp.isRegular Then
-                            If (Math.Abs(LeqK1A(temp) - LeqK1A(cur)) <= 1) Then
-                                cur.Considered = True
-                                temp.Considered = True
-                                result = False
-                            End If
-                        End If
-                    Next
-                Else 'for A3 because it has forward and backward and overall
-                    For j = 3 To GRUList.Count - 1 Step 3
-                        Dim temp = GRUList(j)
-                        If temp IsNot cur And temp.isRegular Then
-                            If (Math.Abs(LeqK1A(temp) - LeqK1A(cur)) <= 1) Then
-                                cur.Considered = True
-                                temp.Considered = True
-                                result = False
-                            End If
-                        End If
-                    Next
-                End If
+                'If Not A = 3 Then 'A1, A2, and A4
+                '    For j = 1 To GRUList.Count - 1
+                '        Dim temp = GRUList(j)
+                '        If temp IsNot cur And temp.isRegular Then
+                '            If (Math.Abs(LeqK1A(temp) - LeqK1A(cur)) <= 1) Then
+                '                cur.Considered = True
+                '                temp.Considered = True
+                '                result = False
+                '            End If
+                '        End If
+                '    Next
+                'Else 'for A3 because it has forward and backward and overall
+                '    For j = 3 To GRUList.Count - 1 Step 3
+                '        Dim temp = GRUList(j)
+                '        If temp IsNot cur And temp.isRegular Then
+                '            If (Math.Abs(LeqK1A(temp) - LeqK1A(cur)) <= 1) Then
+                '                cur.Considered = True
+                '                temp.Considered = True
+                '                result = False
+                '            End If
+                '        End If
+                '    Next
+                'End If
             End If
         Next
         Return result
@@ -337,17 +548,17 @@ Public Class A_Unit
             If (outfile IsNot Nothing) Then
                 'write column headers first
                 Dim sb As StringBuilder = New StringBuilder()
-                For i = 0 To Grid.Columns.Count - 1
-                    sb.Append("," & Grid.Columns(i).HeaderText)
+                For i = 0 To Form.Columns.Count - 1
+                    sb.Append("," & Form.Columns(i).HeaderText)
                 Next
                 outfile.WriteLine(sb.ToString())
                 sb.Clear()
 
                 'write actual data now
-                For j = 0 To Grid.Rows.Count - 1
-                    sb.Append(Grid.Rows(j).HeaderCell.Value)
-                    For i = 0 To Grid.Columns.Count - 1
-                        sb.Append("," & Grid.Rows(j).Cells(i).Value)
+                For j = 0 To Form.Rows.Count - 1
+                    sb.Append(Form.Rows(j).HeaderCell.Value)
+                    For i = 0 To Form.Columns.Count - 1
+                        sb.Append("," & Form.Rows(j).Cells(i).Value)
                     Next
                     sb.AppendLine()
                 Next
@@ -439,6 +650,7 @@ End Class
 
 Public Class Grid_Run_Unit
     Public Considered As Boolean = False
+    Public Column As DataGridViewTextBoxColumn
 
     Public Sub New(ByRef Meter2 As Meter_Measure_Unit,
                    ByRef Meter4 As Meter_Measure_Unit,
@@ -469,8 +681,8 @@ Public Class Grid_Run_Unit
             _Time = _Meter2.Time
         End If
         _isRegular = True
-        If _Header = A_Unit.Run_Modes.Background.ToString() Or _Subheader = A_Unit.Run_Modes.Background.ToString() _
-        Or _Header = A_Unit.Run_Modes.RSS.ToString() Or _Header = A_Unit.Run_Modes.RSS.ToString() Then
+        If _Header = Grid.Run_Modes.Background.ToString() Or _Subheader = Grid.Run_Modes.Background.ToString() _
+        Or _Header = Grid.Run_Modes.RSS.ToString() Or _Header = Grid.Run_Modes.RSS.ToString() Then
             _isRegular = False
         End If
 
@@ -500,8 +712,8 @@ Public Class Grid_Run_Unit
             _Time = _Meter2.Time
         End If
         _isRegular = True
-        If _Header = A_Unit.Run_Modes.Background.ToString() Or _Subheader = A_Unit.Run_Modes.Background.ToString() _
-        Or _Header = A_Unit.Run_Modes.RSS.ToString() Or _Header = A_Unit.Run_Modes.RSS.ToString() Then
+        If _Header = Grid.Run_Modes.Background.ToString() Or _Subheader = Grid.Run_Modes.Background.ToString() _
+        Or _Header = Grid.Run_Modes.RSS.ToString() Or _Header = Grid.Run_Modes.RSS.ToString() Then
             _isRegular = False
         End If
         Calculate()

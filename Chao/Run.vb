@@ -2,7 +2,7 @@
 
     Public WithEvents Link As LinkLabel
     Dim Panel As Panel
-    Dim Data As List(Of Double)
+    'Dim Data As List(Of Double)
     Public NextUnit As Run_Unit
     Public PrevUnit As Run_Unit
     Public Time As Integer
@@ -13,13 +13,15 @@
     Public EndStep As Integer
     Public Name As String
 
+    Public GRU As Grid_Run_Unit
+
     Sub New(ByRef l As LinkLabel, ByRef p As Panel, ByRef nu As Run_Unit, ByRef pu As Run_Unit, ByVal sec As Integer, ByRef na As String, ByVal cur As Integer, ByVal start As Integer, ByVal en As Integer)
         Link = l
         Panel = p
         NextUnit = nu
         PrevUnit = pu
         Time = sec
-        Data = New List(Of Double)
+        'Data = New List(Of Double)
         CurStep = cur
         StartStep = start
         EndStep = en
@@ -30,13 +32,17 @@
         Return Not CurStep = EndStep
     End Function
 
-    Sub Append_Data(ByVal d() As Double)
-        If Not IsNothing(d) And d.Length > 0 Then
-            For i = 0 To d.Length - 1
-                Data.Add(d(i))
-            Next
-        End If
+    Public Sub ConnectGRU(ByRef gridrununit As Grid_Run_Unit)
+        GRU = gridrununit
     End Sub
+
+    'Sub Append_Data(ByVal d() As Double)
+    '    If Not IsNothing(d) And d.Length > 0 Then
+    '        For i = 0 To d.Length - 1
+    '            Data.Add(d(i))
+    '        Next
+    '    End If
+    'End Sub
 
     Sub Set_BackColor(ByVal c As Color)
         Panel.BackColor = c

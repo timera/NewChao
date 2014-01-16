@@ -66,8 +66,10 @@ Partial Class Program
         Me.ComboBox_machine_list = New System.Windows.Forms.ComboBox()
         Me.Label_machine_choose = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.LinkLabel_Temp = New System.Windows.Forms.LinkLabel()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.Panel_Temp = New System.Windows.Forms.Panel()
         Me.startButton = New System.Windows.Forms.Button()
         Me.Panel_PostCal_Sub = New System.Windows.Forms.Panel()
         Me.Panel_PostCal_6th = New System.Windows.Forms.Panel()
@@ -288,8 +290,7 @@ Partial Class Program
         Me.Step3 = New System.Windows.Forms.Label()
         Me.Step2 = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.Panel_Temp = New System.Windows.Forms.Panel()
-        Me.LinkLabel_Temp = New System.Windows.Forms.LinkLabel()
+        Me.TabPageCharts = New System.Windows.Forms.TabPage()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox_Plot.SuspendLayout()
@@ -394,6 +395,7 @@ Partial Class Program
         '
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Controls.Add(Me.TabPageCharts)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
@@ -788,6 +790,14 @@ Partial Class Program
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "測試主畫面"
         '
+        'LinkLabel_Temp
+        '
+        Me.LinkLabel_Temp.AutoSize = True
+        Me.LinkLabel_Temp.Location = New System.Drawing.Point(436, 195)
+        Me.LinkLabel_Temp.Name = "LinkLabel_Temp"
+        Me.LinkLabel_Temp.Size = New System.Drawing.Size(0, 12)
+        Me.LinkLabel_Temp.TabIndex = 113
+        '
         'TabControl2
         '
         Me.TabControl2.Controls.Add(Me.TabPage3)
@@ -832,6 +842,15 @@ Partial Class Program
         Me.TabPage3.Size = New System.Drawing.Size(353, 488)
         Me.TabPage3.TabIndex = 0
         Me.TabPage3.Text = "TabPage3"
+        '
+        'Panel_Temp
+        '
+        Me.Panel_Temp.BackColor = System.Drawing.Color.DimGray
+        Me.Panel_Temp.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Panel_Temp.Location = New System.Drawing.Point(436, 60)
+        Me.Panel_Temp.Name = "Panel_Temp"
+        Me.Panel_Temp.Size = New System.Drawing.Size(57, 49)
+        Me.Panel_Temp.TabIndex = 112
         '
         'startButton
         '
@@ -3090,22 +3109,15 @@ Partial Class Program
         '
         Me.Timer1.Interval = 1000
         '
-        'Panel_Temp
+        'TabPageCharts
         '
-        Me.Panel_Temp.BackColor = System.Drawing.Color.DimGray
-        Me.Panel_Temp.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.Panel_Temp.Location = New System.Drawing.Point(436, 60)
-        Me.Panel_Temp.Name = "Panel_Temp"
-        Me.Panel_Temp.Size = New System.Drawing.Size(57, 49)
-        Me.Panel_Temp.TabIndex = 112
-        '
-        'LinkLabel_Temp
-        '
-        Me.LinkLabel_Temp.AutoSize = True
-        Me.LinkLabel_Temp.Location = New System.Drawing.Point(436, 195)
-        Me.LinkLabel_Temp.Name = "LinkLabel_Temp"
-        Me.LinkLabel_Temp.Size = New System.Drawing.Size(0, 12)
-        Me.LinkLabel_Temp.TabIndex = 113
+        Me.TabPageCharts.Location = New System.Drawing.Point(4, 22)
+        Me.TabPageCharts.Name = "TabPageCharts"
+        Me.TabPageCharts.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPageCharts.Size = New System.Drawing.Size(763, 624)
+        Me.TabPageCharts.TabIndex = 2
+        Me.TabPageCharts.Text = "數據"
+        Me.TabPageCharts.UseVisualStyleBackColor = True
         '
         'Program
         '
@@ -3568,4 +3580,5 @@ Partial Class Program
     Friend WithEvents Test_Apply_Button As System.Windows.Forms.Button
     Friend WithEvents LinkLabel_Temp As System.Windows.Forms.LinkLabel
     Friend WithEvents Panel_Temp As System.Windows.Forms.Panel
+    Friend WithEvents TabPageCharts As System.Windows.Forms.TabPage
 End Class

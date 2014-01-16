@@ -51,7 +51,7 @@ Public Class Program
     Dim Machine As Machines
 
     'Graphs for the main screen
-    Dim MainLineGraphs As LineGraphPanel
+    Dim MainLineGraph As LineGraph
     Dim MainBarGraph As BarGraph
 
     Public timeLeft As Integer
@@ -432,7 +432,7 @@ Public Class Program
         If MessageBox.Show("是否放棄目前測量數據?", "My application", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.OK Then
             ComboBox_machine_list.Enabled = True
             Button_change_machine.Enabled = False
-            MainLineGraphs.Dispose()
+            MainLineGraph.Dispose()
             MainBarGraph.Dispose()
             'Set invisible
             Panel_PreCal.Visible = False
@@ -458,6 +458,10 @@ Public Class Program
             TextBox_r1.Text = Nothing
             TextBox_r2.Text = Nothing
             MachChosen = False
+            For i = 0 To A_Units.Count - 1
+                A_Units(i).Grid.Dispose()
+            Next
+            A_Units.Clear()
         End If
     End Sub
 
@@ -566,6 +570,38 @@ Public Class Program
         End If
     End Sub
 
+    Private A_Units As List(Of A_Unit) = New List(Of A_Unit)
+    Private Cur_A_Unit As A_Unit
+    Private A_Unit_Size As Size = New Size(200, 400)
+    'Create charts for chosen machine
+    Private Sub CreateCharts(ByVal r As Double)
+        If Machine = Machines.Excavator Then 'Excavator(A1 + A2)
+            Cur_A_Unit = New A_Unit(TabPageCharts, A_Unit_Size, New Point(10, 10), r, 1)
+            A_Units.Add(Cur_A_Unit)
+            A_Units.Add(New A_Unit(TabPageCharts, A_Unit_Size, New Point(220, 10), r, 2))
+        ElseIf Machine = Machines.Tractor Then 'Crawler and wheel tractor A1+A3
+            Cur_A_Unit = New A_Unit(TabPageCharts, A_Unit_Size, New Point(10, 10), r, 1)
+            A_Units.Add(Cur_A_Unit)
+            A_Units.Add(New A_Unit(TabPageCharts, A_Unit_Size, New Point(220, 10), r, 3))
+        ElseIf Machine = Machines.Loader Then 'Crawler and wheel loader A1+A2+A3
+            Cur_A_Unit = New A_Unit(TabPageCharts, A_Unit_Size, New Point(10, 10), r, 1)
+            A_Units.Add(Cur_A_Unit)
+            A_Units.Add(New A_Unit(TabPageCharts, A_Unit_Size, New Point(220, 10), r, 2))
+            A_Units.Add(New A_Unit(TabPageCharts, A_Unit_Size, New Point(430, 10), r, 3))
+        ElseIf Machine = Machines.Loader_Excavator Then 'Excavator Loader A1+A2 + A1+A2+A3
+            Cur_A_Unit = New A_Unit(TabPageCharts, A_Unit_Size, New Point(10, 10), r, 1)
+            A_Units.Add(Cur_A_Unit)
+            A_Units.Add(New A_Unit(TabPageCharts, A_Unit_Size, New Point(220, 10), r, 2))
+
+            A_Units.Add(New A_Unit(TabPageCharts, A_Unit_Size, New Point(430, 10), r, 1))
+            A_Units.Add(New A_Unit(TabPageCharts, A_Unit_Size, New Point(640, 10), r, 2))
+            A_Units.Add(New A_Unit(TabPageCharts, A_Unit_Size, New Point(850, 10), r, 3))
+        Else 'A4
+            Cur_A_Unit = New A_Unit(TabPageCharts, A_Unit_Size, New Point(10, 10), r, 4)
+            A_Units.Add(Cur_A_Unit)
+        End If
+    End Sub
+
     Private Sub Button_L_check_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L_check.Click
 
         Dim r1 As Integer
@@ -616,6 +652,8 @@ Public Class Program
             ComboBox_machine_list.Enabled = False
             Button_L_check.Enabled = False
         End If
+
+        CreateCharts(r1)
     End Sub
 
     Private Sub Button_L1_L2_L3_check_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L1_L2_L3_check.Click
@@ -708,6 +746,8 @@ Public Class Program
             ComboBox_machine_list.Enabled = False
             Button_L1_L2_L3_check.Enabled = False
         End If
+
+        CreateCharts(r)
     End Sub
 
     Sub Set_Panel(ByRef p As Panel, ByRef l As Label)
@@ -880,7 +920,7 @@ Public Class Program
         tempRun = tempRun.NextUnit
         PostCal_6th = tempRun
 
-        MainLineGraphs = New LineGraphPanel(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, 1, HeadRun.Time, 97)
+        MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
         MainBarGraph = New BarGraph(New Point(858, 106), New Size(390, 539), TabPage2, CGraph.Modes.A1A2A3)
         For i = 0 To 6
             NoisesArray(i).Visible = True
@@ -1136,7 +1176,7 @@ Public Class Program
         PostCal_6th = tempRun
 
 
-        MainLineGraphs = New LineGraphPanel(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, 1, HeadRun.Time, 97)
+        MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
         MainBarGraph = New BarGraph(New Point(858, 106), New Size(390, 539), TabPage2, CGraph.Modes.A1A2A3)
         For i = 0 To 6
             NoisesArray(i).Visible = True
@@ -1466,7 +1506,7 @@ Public Class Program
         tempRun = tempRun.NextUnit
         PostCal_6th = tempRun
 
-        MainLineGraphs = New LineGraphPanel(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, 1, HeadRun.Time, 97)
+        MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
         MainBarGraph = New BarGraph(New Point(858, 106), New Size(390, 539), TabPage2, CGraph.Modes.A1A2A3)
         For i = 0 To 6
             NoisesArray(i).Visible = True
@@ -1620,7 +1660,7 @@ Public Class Program
         tempRun = tempRun.NextUnit
         PostCal_6th = tempRun
 
-        MainLineGraphs = New LineGraphPanel(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, 1, HeadRun.Time, 97)
+        MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
         MainBarGraph = New BarGraph(New Point(858, 106), New Size(390, 539), TabPage2, CGraph.Modes.A1A2A3)
         For i = 0 To 6
             NoisesArray(i).Visible = True
@@ -1704,7 +1744,7 @@ Public Class Program
     End Function
 
     Sub Load_Others(ByVal name As String)
-        
+
 
         PanelA4.Visible = True
         Panel_PreCal.Visible = True
@@ -1842,7 +1882,7 @@ Public Class Program
         tempRun = tempRun.NextUnit
         PostCal_4th = tempRun
 
-        MainLineGraphs = New LineGraphPanel(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A4, 1, HeadRun.Time, 97)
+        MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A4, HeadRun.Time)
         MainBarGraph = New BarGraph(New Point(858, 106), New Size(390, 539), TabPage2, CGraph.Modes.A4)
         For i = 0 To 6
             NoisesArray(i).Visible = True
@@ -2045,7 +2085,7 @@ Public Class Program
         NoisesArray(num).Text = Int((sum / num) * 100 + 0.5) / 100
         'Set graphs
         MainBarGraph.Update(vals)
-        MainLineGraphs.Update(vals)
+        MainLineGraph.Update(vals)
     End Sub
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         If Countdown = False Then
@@ -2100,7 +2140,8 @@ Public Class Program
                             stopButton.Enabled = False
                             array_step(CurRun.CurStep - 1).BackColor = Color.Green
                         End If
-                        
+
+                        'Cur_A_Unit.AddGrid_Run_Unit()
                     Else 'HasNextStep
 
                         Set_Step_BackColor()
@@ -2174,19 +2215,19 @@ Public Class Program
         array_step(0).BackColor = Color.Yellow
     End Sub
     Sub Load_New_Graph_CD_False()
-        MainLineGraphs.Dispose()
+        MainLineGraph.Dispose()
         If Machine = Machines.Others Then
-            MainLineGraphs = New LineGraphPanel(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A4, 1, CurRun.Time, 97)  'A4 mode
+            MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A4, CurRun.Time)  'A4 mode
         Else
-            MainLineGraphs = New LineGraphPanel(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, 1, CurRun.Time, 97) 'A1 A2 A3 mode
+            MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, CurRun.Time) 'A1 A2 A3 mode
         End If
     End Sub
     Sub Load_New_Graph_CD_True()
-        MainLineGraphs.Dispose()
+        MainLineGraph.Dispose()
         If Machine = Machines.Others Then
-            MainLineGraphs = New LineGraphPanel(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A4, 1, sum_steps, 97)  'A4 mode
+            MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A4, sum_steps)  'A4 mode
         Else
-            MainLineGraphs = New LineGraphPanel(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, 1, sum_steps, 97) 'A1 A2 A3 mode
+            MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, sum_steps) 'A1 A2 A3 mode
         End If
         sum_steps = 0
     End Sub
@@ -2211,7 +2252,7 @@ Public Class Program
             'startButton.Enabled = True
             Accept_Button.Enabled = True
             stopButton.Enabled = False
-            
+
         Else
             Timer1.Stop()
             startButton.Enabled = True
@@ -2507,7 +2548,7 @@ Public Class Program
                     CurStep = CurRun.HeadStep.NextStep
                 End If
             Next
-            
+
             Test_ConfirmButton.Enabled = True
         End If
     End Sub
@@ -2530,7 +2571,7 @@ Public Class Program
 
             'dispose old graph and create new graph
             Load_New_Graph_CD_True()
-            
+
         Else
             If MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) = DialogResult.Yes Then
                 All_Panel_Enable()
@@ -2572,7 +2613,7 @@ Public Class Program
                 Load_New_Graph_CD_False()
             End If
         End If
-        
+
     End Sub
     Sub Jump_Back_Countdown_False()
         If MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) = DialogResult.Yes Then
@@ -3001,7 +3042,7 @@ Public Class Program
                         startButton.Enabled = False
                         Accept_Button.Enabled = True
                     End If
-                    
+
 
                 Else
                     Jump_Back_Countdown_True()

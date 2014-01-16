@@ -236,66 +236,66 @@ Public Class BarGraph
     End Sub
 End Class
 
-Public Class LineGraphPanel
-    Public LineGraphPanel As Panel
-    Public LineGraphs
-    Public CurrentLineGraph As Integer
-    Private cMode As CGraph.Modes
-    Private cNumSteps As Integer
-    Private lTime As Integer
+'Public Class LineGraphPanel
+'    Public LineGraphPanel As Panel
+'    Public LineGraphs As LinkedList(Of LineGraph)
+'    Public CurrentLineGraph As Integer
+'    Private cMode As CGraph.Modes
+'    Private cNumSteps As Integer
+'    Private lTime As Integer
 
-    Public Sub New(ByVal loc As Point, ByVal size As Size, ByVal parent As Control, ByVal mode As CGraph.Modes, ByVal numSteps As Integer, ByVal time As Integer, ByVal offset As Integer)
-        LineGraphPanel = New Panel()
-        parent.Controls.Add(LineGraphPanel)
-        LineGraphPanel.Size = size
-        LineGraphPanel.Location = loc
-        LineGraphPanel.AutoScroll = True
-        LineGraphs = New LinkedList(Of LineGraph)
-        cMode = mode
-        cNumSteps = numSteps
-        lTime = time
-        Dim temp(numSteps - 1) As LineGraph
-        CurrentLineGraph = 0
-        For i = 0 To numSteps - 1
-            temp(i) = New LineGraph(New Point(0, i * offset), New Size(1119, 97), LineGraphPanel, mode, time)
-        Next
-        LineGraphs = temp
-    End Sub
+'    Public Sub New(ByVal loc As Point, ByVal size As Size, ByVal parent As Control, ByVal mode As CGraph.Modes, ByVal numSteps As Integer, ByVal time As Integer, ByVal offset As Integer)
+'        LineGraphPanel = New Panel()
+'        parent.Controls.Add(LineGraphPanel)
+'        LineGraphPanel.Size = size
+'        LineGraphPanel.Location = loc
+'        LineGraphPanel.AutoScroll = True
+'        LineGraphs = New LinkedList(Of LineGraph)
+'        cMode = mode
+'        cNumSteps = numSteps
+'        lTime = time
+'        Dim temp(numSteps - 1) As LineGraph
+'        CurrentLineGraph = 0
+'        For i = 0 To numSteps - 1
+'            temp(i) = New LineGraph(New Point(0, i * offset), New Size(1119, 97), LineGraphPanel, mode, time)
+'        Next
+'        LineGraphs = temp
+'    End Sub
 
-    Public Sub MoveToNextGraph()
-        If CurrentLineGraph < cNumSteps - 1 Then
-            CurrentLineGraph += 1
-            'Else ' refresh old graphs to hold new data
-            '    For i = 0 To LineGraphs.Length - 1
-            '        LineGraphs(i).ClearChart()
-            '    Next
-            '    CurrentLineGraph = 0
-        End If
-    End Sub
+'    Public Sub MoveToNextGraph()
+'        If CurrentLineGraph < cNumSteps - 1 Then
+'            CurrentLineGraph += 1
+'            'Else ' refresh old graphs to hold new data
+'            '    For i = 0 To LineGraphs.Length - 1
+'            '        LineGraphs(i).ClearChart()
+'            '    Next
+'            '    CurrentLineGraph = 0
+'        End If
+'    End Sub
 
-    Public Function HasNextGraph()
-        If CurrentLineGraph < cNumSteps - 1 Then
-            Return True
-        End If
-        Return False
-    End Function
+'    Public Function HasNextGraph()
+'        If CurrentLineGraph < cNumSteps - 1 Then
+'            Return True
+'        End If
+'        Return False
+'    End Function
 
-    'mockup for saving data directly from graphs
-    Public Sub SaveData()
+'    'mockup for saving data directly from graphs
+'    Public Sub SaveData()
 
-    End Sub
+'    End Sub
 
-    Public Sub Update(ByVal newVal() As Double)
-        LineGraphs(CurrentLineGraph).Update(newVal)
-    End Sub
+'    Public Sub Update(ByVal newVal() As Double)
+'        LineGraphs(CurrentLineGraph).Update(newVal)
+'    End Sub
 
-    Public Sub Dispose()
-        For i = 0 To LineGraphs.Length - 1
-            LineGraphs(i).Dispose()
-        Next
-        LineGraphPanel.Dispose()
-    End Sub
-End Class
+'    Public Sub Dispose()
+'        For i = 0 To LineGraphs.Length - 1
+'            LineGraphs(i).Dispose()
+'        Next
+'        LineGraphPanel.Dispose()
+'    End Sub
+'End Class
 
 
 'helper classes for keeping track of labels and points

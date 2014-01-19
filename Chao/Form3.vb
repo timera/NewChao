@@ -1185,7 +1185,7 @@ Public Class Program
         LoA1_Fst = tempRun
         '##GRU
         Dim ind = 2
-        If Machines.Loader_Excavator Then
+        If Machine = Machines.Loader_Excavator Then
             ind = 10
         End If
         tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
@@ -1197,7 +1197,7 @@ Public Class Program
         LoA1_Sec = tempRun
         '##GRU
         ind = 3
-        If Machines.Loader_Excavator Then
+        If Machine = Machines.Loader_Excavator Then
             ind = 11
         End If
         tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
@@ -1209,7 +1209,7 @@ Public Class Program
         LoA1_Thd = tempRun
         '##GRU
         ind = 4
-        If Machines.Loader_Excavator Then
+        If Machine = Machines.Loader_Excavator Then
             ind = 12
         End If
         tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
@@ -1236,7 +1236,7 @@ Public Class Program
         tempRun = tempRun.NextUnit
         '##GRU
         ind = 6
-        If Machines.Loader_Excavator Then
+        If Machine = Machines.Loader_Excavator Then
             ind = 14
         End If
         tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(6), True)
@@ -1256,7 +1256,7 @@ Public Class Program
         tempRun = tempRun.NextUnit
         '##GRU
         ind = 7
-        If Machines.Loader_Excavator Then
+        If Machine = Machines.Loader_Excavator Then
             ind = 15
         End If
         tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
@@ -1276,7 +1276,7 @@ Public Class Program
         tempRun = tempRun.NextUnit
         '##GRU
         ind = 8
-        If Machines.Loader_Excavator Then
+        If Machine = Machines.Loader_Excavator Then
             ind = 16
         End If
         tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
@@ -1304,7 +1304,7 @@ Public Class Program
         '##GRU
 
         ind = 10
-        If Machines.Loader_Excavator Then
+        If Machine = Machines.Loader_Excavator Then
             ind = 18
         End If
         tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
@@ -1316,7 +1316,7 @@ Public Class Program
         LoA3_Fst_bkd = tempRun
         '##GRU
         ind = 11
-        If Machines.Loader_Excavator Then
+        If Machine = Machines.Loader_Excavator Then
             ind = 19
         End If
         tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
@@ -1328,7 +1328,7 @@ Public Class Program
         LoA3_Sec_fwd = tempRun
         '##GRU
         ind = 13
-        If Machines.Loader_Excavator Then
+        If Machine = Machines.Loader_Excavator Then
             ind = 21
         End If
         tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
@@ -1340,7 +1340,7 @@ Public Class Program
         LoA3_Sec_bkd = tempRun
         '##GRU
         ind = 14
-        If Machines.Loader_Excavator Then
+        If Machine = Machines.Loader_Excavator Then
             ind = 22
         End If
         tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
@@ -1353,7 +1353,7 @@ Public Class Program
         LoA3_Thd_fwd = tempRun
         '##GRU
         ind = 16
-        If Machines.Loader_Excavator Then
+        If Machine = Machines.Loader_Excavator Then
             ind = 24
         End If
         tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
@@ -1365,8 +1365,8 @@ Public Class Program
         LoA3_Thd_bkd = tempRun
         '##GRU
         ind = 17
-        If Machines.Loader_Excavator Then
-            ind = 125
+        If Machine = Machines.Loader_Excavator Then
+            ind = 25
         End If
         tempRun.GRU = New Grid_Run_Unit(DataGrid.Form.Columns(ind), True)
 

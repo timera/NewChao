@@ -23,12 +23,12 @@ Partial Class Program
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea5 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend5 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series5 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea6 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend6 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series6 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Button_change_machine = New System.Windows.Forms.Button()
@@ -289,8 +289,8 @@ Partial Class Program
         Me.Step4 = New System.Windows.Forms.Label()
         Me.Step3 = New System.Windows.Forms.Label()
         Me.Step2 = New System.Windows.Forms.Label()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.TabPageCharts = New System.Windows.Forms.TabPage()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox_Plot.SuspendLayout()
@@ -400,7 +400,7 @@ Partial Class Program
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(771, 650)
+        Me.TabControl1.Size = New System.Drawing.Size(1171, 650)
         Me.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.TabControl1.TabIndex = 0
         '
@@ -429,7 +429,7 @@ Partial Class Program
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Size = New System.Drawing.Size(763, 624)
+        Me.TabPage1.Size = New System.Drawing.Size(1163, 624)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "機具選擇"
         '
@@ -786,7 +786,7 @@ Partial Class Program
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Size = New System.Drawing.Size(763, 624)
+        Me.TabPage2.Size = New System.Drawing.Size(1163, 624)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "測試主畫面"
         '
@@ -806,7 +806,7 @@ Partial Class Program
         Me.TabControl2.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
-        Me.TabControl2.Size = New System.Drawing.Size(361, 514)
+        Me.TabControl2.Size = New System.Drawing.Size(561, 514)
         Me.TabControl2.TabIndex = 112
         '
         'TabPage3
@@ -839,14 +839,13 @@ Partial Class Program
         Me.TabPage3.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(2, 3, 2, 3)
-        Me.TabPage3.Size = New System.Drawing.Size(353, 488)
+        Me.TabPage3.Size = New System.Drawing.Size(553, 488)
         Me.TabPage3.TabIndex = 0
         Me.TabPage3.Text = "TabPage3"
         '
         'Panel_Temp
         '
-        Me.Panel_Temp.BackColor = System.Drawing.Color.DimGray
-        Me.Panel_Temp.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Panel_Temp.BackColor = System.Drawing.Color.DarkGray
         Me.Panel_Temp.Location = New System.Drawing.Point(436, 60)
         Me.Panel_Temp.Name = "Panel_Temp"
         Me.Panel_Temp.Size = New System.Drawing.Size(57, 49)
@@ -2921,17 +2920,17 @@ Partial Class Program
         '
         'Chart2
         '
-        ChartArea1.Name = "ChartArea1"
-        Me.Chart2.ChartAreas.Add(ChartArea1)
-        Legend1.Name = "Legend1"
-        Me.Chart2.Legends.Add(Legend1)
+        ChartArea5.Name = "ChartArea1"
+        Me.Chart2.ChartAreas.Add(ChartArea5)
+        Legend5.Name = "Legend1"
+        Me.Chart2.Legends.Add(Legend5)
         Me.Chart2.Location = New System.Drawing.Point(566, 100)
         Me.Chart2.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Chart2.Name = "Chart2"
-        Series1.ChartArea = "ChartArea1"
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Me.Chart2.Series.Add(Series1)
+        Series5.ChartArea = "ChartArea1"
+        Series5.Legend = "Legend1"
+        Series5.Name = "Series1"
+        Me.Chart2.Series.Add(Series5)
         Me.Chart2.Size = New System.Drawing.Size(271, 466)
         Me.Chart2.TabIndex = 83
         Me.Chart2.Text = "Chart2"
@@ -2939,17 +2938,17 @@ Partial Class Program
         '
         'Chart1
         '
-        ChartArea2.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea2)
-        Legend2.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend2)
+        ChartArea6.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea6)
+        Legend6.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend6)
         Me.Chart1.Location = New System.Drawing.Point(-41, 5)
         Me.Chart1.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Chart1.Name = "Chart1"
-        Series2.ChartArea = "ChartArea1"
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series1"
-        Me.Chart1.Series.Add(Series2)
+        Series6.ChartArea = "ChartArea1"
+        Series6.Legend = "Legend1"
+        Series6.Name = "Series1"
+        Me.Chart1.Series.Add(Series6)
         Me.Chart1.Size = New System.Drawing.Size(914, 84)
         Me.Chart1.TabIndex = 82
         Me.Chart1.Text = "Chart1"
@@ -3105,26 +3104,26 @@ Partial Class Program
         Me.Step2.Size = New System.Drawing.Size(255, 52)
         Me.Step2.TabIndex = 32
         '
-        'Timer1
-        '
-        Me.Timer1.Interval = 1000
-        '
         'TabPageCharts
         '
         Me.TabPageCharts.Location = New System.Drawing.Point(4, 22)
         Me.TabPageCharts.Name = "TabPageCharts"
         Me.TabPageCharts.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPageCharts.Size = New System.Drawing.Size(763, 624)
+        Me.TabPageCharts.Size = New System.Drawing.Size(1163, 624)
         Me.TabPageCharts.TabIndex = 2
         Me.TabPageCharts.Text = "數據"
         Me.TabPageCharts.UseVisualStyleBackColor = True
+        '
+        'Timer1
+        '
+        Me.Timer1.Interval = 1000
         '
         'Program
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DarkGray
-        Me.ClientSize = New System.Drawing.Size(771, 650)
+        Me.ClientSize = New System.Drawing.Size(1171, 650)
         Me.Controls.Add(Me.TabControl1)
         Me.Name = "Program"
         Me.Text = "Program"

@@ -382,20 +382,12 @@ Public Class Program
     'prevents user from clicking on tab b4 choosing machinery
     Private Sub TabControl1_IndexChanged(ByVal sender As TabControl, ByVal e As System.EventArgs) Handles TabControl1.SelectedIndexChanged
         If Not MachChosen Then
-            If sender.SelectedIndex = 1 Then
+            If sender.SelectedIndex = 1 Or sender.SelectedIndex = 2 Then
                 MessageBox.Show("還未選機具!", "My application", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 TabControl1.SelectedIndex = 0 ' go back to the machinery choose stage
             End If
         End If
     End Sub
-    'Private Sub TabControl2_IndexChanged(ByVal sender As TabControl, ByVal e As System.EventArgs) Handles TabControl2.SelectedIndexChanged
-    '    If sender.SelectedIndex = 1 Then
-    '        TabControl1.TabPages(TabControl1.SelectedIndex).Focus()
-    '        TabControl1.TabPages(TabControl1.SelectedIndex).CausesValidation = True
-    '        'MessageBox.Show("還未選機具!", "My application", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-    '        TabControl1.SelectedIndex = 0 ' go back to the machinery choose stage
-    '    End If
-    'End Sub
     Sub Tabcontrol_Changed(ByVal index As Boolean)
         'Tabcontrol_Changed(index=true)=>jump to tabpage4(enable) and tabpage3(disable),use for input seconds
         'Tabcontrol_Changed(index=false)=>jump to tabpage3(enable) and tabpage4(disable),use for button confirm
@@ -415,6 +407,7 @@ Public Class Program
             Test_Apply_Button.Enabled = False
             For i = 0 To 8
                 array_step_s(i).Text = 0
+                array_step_s(i).Enabled = False
             Next
         ElseIf index = False Then
             Me.TabControl2.SelectedIndex = 0
@@ -430,11 +423,19 @@ Public Class Program
 
     Private Sub Button_change_machine_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_change_machine.Click
         If MessageBox.Show("是否放棄目前測量數據?", "My application", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.OK Then
+
+            'can choose machine again
             ComboBox_machine_list.Enabled = True
             Button_change_machine.Enabled = False
+            MachChosen = False
+            Machine = Nothing
+            choice = Nothing
+
+            'dispose graph
             MainLineGraph.Dispose()
             MainBarGraph.Dispose()
-            'Set invisible
+
+            'Set invisible property
             Panel_PreCal.Visible = False
             Panel_Bkg.Visible = False
             Panel_RSS.Visible = False
@@ -449,25 +450,42 @@ Public Class Program
             PanelLoaderA2.Visible = False
             PanelTractorA1.Visible = False
             PanelTractorA3.Visible = False
+
+            'set groupbox enable property
             GroupBox_A1_A2_A3.Enabled = False
             GroupBox_A4.Enabled = False
+
+            'set button enable property
+            startButton.Enabled = True
+            stopButton.Enabled = False
+            Accept_Button.Enabled = False
+            Test_SetButton.Enabled = False
+            Test_StartButton.Enabled = False
+            Test_ConfirmButton.Enabled = False
+            Test_Apply_Button.Enabled = False
+
+            'clear textbox content
             TextBox_L.Text = Nothing
             TextBox_L1.Text = Nothing
             TextBox_L2.Text = Nothing
             TextBox_L3.Text = Nothing
             TextBox_r1.Text = Nothing
             TextBox_r2.Text = Nothing
-            MachChosen = False
+
+            Countdown = False
+
+            For i = 0 To 8
+                array_step_s(i).Text = 0
+                array_step_s(i).Enabled = False
+            Next
         End If
     End Sub
 
     Private Sub ComboBox_machine_list_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBox_machine_list.SelectedIndexChanged
 
-        'step1~9清空
-        For index = 0 To 8
-            array_step(index).Text = ""
-            array_step(index).BackColor = Color.DarkGray
-        Next
+        'steps text 清空
+        Clear_Steps()
+
         Dim inner_choice As String = ComboBox_machine_list.Text
 
         If inner_choice = "開挖機(Excavator)" Then
@@ -752,7 +770,7 @@ Public Class Program
 
     End Sub
 
-    Function Load_Precal(ByRef tempRun As Run_Unit) As Run_Unit
+    Function Load_PreCal(ByRef tempRun As Run_Unit) As Run_Unit
         'Precal
 
         PreCal_1st = tempRun
@@ -856,6 +874,38 @@ Public Class Program
 
     End Sub
 
+    Sub LinkLabel_PreCal_PostCal_visible()
+        Panel_PreCal_Sub.Visible = True
+        Panel_PostCal_Sub.Visible = True
+
+        If Not Machine = Machines.Others Then
+            Panel_PreCal_5th.Visible = True
+            Panel_PreCal_6th.Visible = True
+            Panel_PostCal_5th.Visible = True
+            Panel_PostCal_6th.Visible = True
+        End If
+    End Sub
+
+    Sub LinkLabel_PreCal_PostCal_BG_RSS_enable()
+        LinkLabel_PreCal_1st.Enabled = False
+        LinkLabel_PreCal_2nd.Enabled = False
+        LinkLabel_PreCal_3rd.Enabled = False
+        LinkLabel_PreCal_4th.Enabled = False
+        LinkLabel_PostCal_1st.Enabled = False
+        LinkLabel_PostCal_2nd.Enabled = False
+        LinkLabel_PostCal_3rd.Enabled = False
+        LinkLabel_PostCal_4th.Enabled = False
+        LinkLabel_BG.Enabled = False
+        LinkLabel_RSS.Enabled = False
+
+        If Not Machine = Machines.Others Then
+            LinkLabel_PreCal_5th.Enabled = False
+            LinkLabel_PreCal_6th.Enabled = False
+            LinkLabel_PostCal_5th.Enabled = False
+            LinkLabel_PostCal_6th.Enabled = False
+        End If
+    End Sub
+
     Sub Load_Excavator()
 
         PanelExcavatorA1.Visible = True
@@ -876,22 +926,8 @@ Public Class Program
         PanelExcavatorA2.Size = ASize
         PanelExcavatorA2.Location = New Point(254, 140)
 
-        'new add
-        LinkLabel_PreCal_1st.Enabled = False
-        LinkLabel_PreCal_2nd.Enabled = False
-        LinkLabel_PreCal_3rd.Enabled = False
-        LinkLabel_PreCal_4th.Enabled = False
-        LinkLabel_PostCal_1st.Enabled = False
-        LinkLabel_PostCal_2nd.Enabled = False
-        LinkLabel_PostCal_3rd.Enabled = False
-        LinkLabel_PostCal_4th.Enabled = False
-        LinkLabel_BG.Enabled = False
-        LinkLabel_RSS.Enabled = False
-
-        LinkLabel_PreCal_5th.Enabled = False
-        LinkLabel_PreCal_6th.Enabled = False
-        LinkLabel_PostCal_5th.Enabled = False
-        LinkLabel_PostCal_6th.Enabled = False
+        LinkLabel_PreCal_PostCal_BG_RSS_enable()
+        LinkLabel_PreCal_PostCal_visible()
 
         'A1's linklabel
         LinkLabel_ExA1_Fst_1st.Enabled = False
@@ -904,12 +940,7 @@ Public Class Program
         LinkLabel_ExA2_Thd_1st.Enabled = False
         LinkLabel_ExA2_Add_1st.Enabled = False
 
-        Panel_PreCal_Sub.Visible = True
-        Panel_PostCal_Sub.Visible = True
-        Panel_PreCal_5th.Visible = True
-        Panel_PreCal_6th.Visible = True
-        Panel_PostCal_5th.Visible = True
-        Panel_PostCal_6th.Visible = True
+       
 
         PanelExcavatorA1.Controls.Add(Panel_ExA1_Fst_1st)
         PanelExcavatorA1.Controls.Add(Panel_ExA1_Sec_1st)
@@ -1073,22 +1104,8 @@ Public Class Program
         PanelLoaderA3.Size = ASize
         PanelLoaderA3.Location = New Point(311, 140)
 
-        'new add
-        LinkLabel_PreCal_1st.Enabled = False
-        LinkLabel_PreCal_2nd.Enabled = False
-        LinkLabel_PreCal_3rd.Enabled = False
-        LinkLabel_PreCal_4th.Enabled = False
-        LinkLabel_PostCal_1st.Enabled = False
-        LinkLabel_PostCal_2nd.Enabled = False
-        LinkLabel_PostCal_3rd.Enabled = False
-        LinkLabel_PostCal_4th.Enabled = False
-        LinkLabel_BG.Enabled = False
-        LinkLabel_RSS.Enabled = False
-
-        LinkLabel_PreCal_5th.Enabled = False
-        LinkLabel_PreCal_6th.Enabled = False
-        LinkLabel_PostCal_5th.Enabled = False
-        LinkLabel_PostCal_6th.Enabled = False
+        LinkLabel_PreCal_PostCal_BG_RSS_enable()
+        LinkLabel_PreCal_PostCal_visible()
 
         'A1's linklabel
         LinkLabel_LoA1_Fst_1st.Enabled = False
@@ -1109,14 +1126,6 @@ Public Class Program
         LinkLabel_LoA3_Thd_bkd.Enabled = False
         LinkLabel_LoA3_Add_fwd.Enabled = False
         LinkLabel_LoA3_Add_bkd.Enabled = False
-
-
-        Panel_PreCal_Sub.Visible = True
-        Panel_PostCal_Sub.Visible = True
-        Panel_PreCal_5th.Visible = True
-        Panel_PreCal_6th.Visible = True
-        Panel_PostCal_5th.Visible = True
-        Panel_PostCal_6th.Visible = True
 
         PanelLoaderA1.Controls.Add(Panel_LoA1_Fst_1st)
         PanelLoaderA1.Controls.Add(Panel_LoA1_Sec_1st)
@@ -1399,22 +1408,8 @@ Public Class Program
         PanelTractorA1.Visible = False
         PanelTractorA3.Visible = False
 
-        'new add
-        LinkLabel_PreCal_1st.Enabled = False
-        LinkLabel_PreCal_2nd.Enabled = False
-        LinkLabel_PreCal_3rd.Enabled = False
-        LinkLabel_PreCal_4th.Enabled = False
-        LinkLabel_PostCal_1st.Enabled = False
-        LinkLabel_PostCal_2nd.Enabled = False
-        LinkLabel_PostCal_3rd.Enabled = False
-        LinkLabel_PostCal_4th.Enabled = False
-        LinkLabel_BG.Enabled = False
-        LinkLabel_RSS.Enabled = False
-
-        LinkLabel_PreCal_5th.Enabled = False
-        LinkLabel_PreCal_6th.Enabled = False
-        LinkLabel_PostCal_5th.Enabled = False
-        LinkLabel_PostCal_6th.Enabled = False
+        LinkLabel_PreCal_PostCal_BG_RSS_enable()
+        LinkLabel_PreCal_PostCal_visible()
 
         'A1's linklabel
         LinkLabel_LoA1_Fst_1st.Enabled = False
@@ -1443,13 +1438,6 @@ Public Class Program
         LinkLabel_LoA3_Thd_bkd.Enabled = False
         LinkLabel_LoA3_Add_fwd.Enabled = False
         LinkLabel_LoA3_Add_bkd.Enabled = False
-
-        Panel_PreCal_Sub.Visible = True
-        Panel_PostCal_Sub.Visible = True
-        Panel_PreCal_5th.Visible = True
-        Panel_PreCal_6th.Visible = True
-        Panel_PostCal_5th.Visible = True
-        Panel_PostCal_6th.Visible = True
 
         PanelExcavatorA1.Size = ASize
         PanelExcavatorA1.Location = New Point(190, 140)
@@ -1554,22 +1542,8 @@ Public Class Program
         PanelTractorA3.Size = ASize
         PanelTractorA3.Location = New Point(254, 140)
 
-        'new add
-        LinkLabel_PreCal_1st.Enabled = False
-        LinkLabel_PreCal_2nd.Enabled = False
-        LinkLabel_PreCal_3rd.Enabled = False
-        LinkLabel_PreCal_4th.Enabled = False
-        LinkLabel_PostCal_1st.Enabled = False
-        LinkLabel_PostCal_2nd.Enabled = False
-        LinkLabel_PostCal_3rd.Enabled = False
-        LinkLabel_PostCal_4th.Enabled = False
-        LinkLabel_BG.Enabled = False
-        LinkLabel_RSS.Enabled = False
-
-        LinkLabel_PreCal_5th.Enabled = False
-        LinkLabel_PreCal_6th.Enabled = False
-        LinkLabel_PostCal_5th.Enabled = False
-        LinkLabel_PostCal_6th.Enabled = False
+        LinkLabel_PreCal_PostCal_BG_RSS_enable()
+        LinkLabel_PreCal_PostCal_visible()
 
         'A1's linklabel
         LinkLabel_TrA1_Fst_1st.Enabled = False
@@ -1585,13 +1559,6 @@ Public Class Program
         LinkLabel_TrA3_Thd_bkd.Enabled = False
         LinkLabel_TrA3_Add_fwd.Enabled = False
         LinkLabel_TrA3_Add_bkd.Enabled = False
-
-        Panel_PreCal_Sub.Visible = True
-        Panel_PostCal_Sub.Visible = True
-        Panel_PreCal_5th.Visible = True
-        Panel_PreCal_6th.Visible = True
-        Panel_PostCal_5th.Visible = True
-        Panel_PostCal_6th.Visible = True
 
         PanelTractorA1.Controls.Add(Panel_TrA1_Fst_1st)
         PanelTractorA1.Controls.Add(Panel_TrA1_Sec_1st)
@@ -1760,17 +1727,8 @@ Public Class Program
         PanelA4.Controls.Add(Panel_A4_Thd)
         PanelA4.Controls.Add(Panel_A4_Add)
 
-        'new
-        LinkLabel_PreCal_1st.Enabled = False
-        LinkLabel_PreCal_2nd.Enabled = False
-        LinkLabel_PreCal_3rd.Enabled = False
-        LinkLabel_PreCal_4th.Enabled = False
-        LinkLabel_PostCal_1st.Enabled = False
-        LinkLabel_PostCal_2nd.Enabled = False
-        LinkLabel_PostCal_3rd.Enabled = False
-        LinkLabel_PostCal_4th.Enabled = False
-        LinkLabel_BG.Enabled = False
-        LinkLabel_RSS.Enabled = False
+        LinkLabel_PreCal_PostCal_BG_RSS_enable()
+        LinkLabel_PreCal_PostCal_visible()
 
         'A4's linklabel
         LinkLabel_A4_Fst.Enabled = False
@@ -1780,13 +1738,6 @@ Public Class Program
         LinkLabel_A4_Sec_Mid_Background.Enabled = False
         LinkLabel_A4_Thd_Mid_Background.Enabled = False
         LinkLabel_A4_Add_Mid_Background.Enabled = False
-
-        Panel_PreCal_Sub.Visible = True
-        Panel_PostCal_Sub.Visible = True
-        Panel_PreCal_5th.Visible = False
-        Panel_PreCal_6th.Visible = False
-        Panel_PostCal_5th.Visible = False
-        Panel_PostCal_6th.Visible = False
 
         'Create an object for each step
         Dim tempRun As Run_Unit
@@ -1963,7 +1914,6 @@ Public Class Program
         End If
         tempRun = HeadRun
         While Not IsNothing(tempRun)
-            'tempRun.Steps = text
             tempRun = tempRun.NextUnit
         End While
     End Sub
@@ -2196,8 +2146,6 @@ Public Class Program
                 End If
             End If
         End If
-
-
     End Sub
     Sub Set_Panel_BackColor()
         CurRun.Set_BackColor(Color.Green)
@@ -2253,6 +2201,7 @@ Public Class Program
         array_step(0).BackColor = Color.Yellow
     End Sub
     Sub Load_New_Graph_CD_False()
+        'load new graph (when variable countdown = false)
         MainLineGraph.Dispose()
         If Machine = Machines.Others Then
             MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A4, CurRun.Time)  'A4 mode
@@ -2261,6 +2210,7 @@ Public Class Program
         End If
     End Sub
     Sub Load_New_Graph_CD_True()
+        'load new graph(when variable countdown = true)
         MainLineGraph.Dispose()
         If Machine = Machines.Others Then
             MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A4, sum_steps)  'A4 mode
@@ -2318,20 +2268,17 @@ Public Class Program
             Timer1.Stop()
             startButton.Enabled = True
             stopButton.Enabled = False
+            All_Panel_Enable()
+
             'bounce back
             If CurRun.Name = "ExA1" Or CurRun.Name = "LoA1" Or CurRun.Name = "TrA1" Or CurRun.Name = "A4" Or CurRun.Name = "ExA1_Add" Or CurRun.Name = "LoA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "A4_Add" Or CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA3_fwd" Or CurRun.Name = "LoA3_bkd" Or CurRun.Name = "TrA3_fwd" Or CurRun.Name = "TrA3_bkd" Or CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "LoA3_bkd_Add" Or CurRun.Name = "TrA3_fwd_Add" Or CurRun.Name = "TrA3_bkd_Add" Then
                 'dispose data
 
                 'reset run_unit
-                CurRun.Steps = Load_Steps_helper(CurRun)
-                CurStep = CurRun.HeadStep
-                timeLeft = CurRun.Steps.Time
-                timeLabel.Text = timeLeft & " s"
-
+                Set_Run_Unit()
                 'load A1's steps
                 Clear_Steps()
                 Load_Steps()
-
                 'dispose old graph and create new graph
                 Load_New_Graph_CD_True()
                 'bounce back to previous step
@@ -2340,54 +2287,64 @@ Public Class Program
                     'dispose data
 
                     'reset run_unit
-                    CurRun.PrevUnit.Set_BackColor(Color.Yellow)
-                    CurRun.Set_BackColor(Color.IndianRed)
-                    CurRun = CurRun.PrevUnit
-                    CurRun.Steps = Load_Steps_helper(CurRun)
-                    CurStep = CurRun.HeadStep
-                    CurRun.CurStep = 1
-                    CurRun.NextUnit.CurStep = 1
-                    Load_Steps_helper(CurRun)
-                    Load_Steps_helper(CurRun.NextUnit)
-                    timeLeft = CurRun.Steps.Time
-                    timeLabel.Text = timeLeft & " s"
-
+                    Restart_from_1st_Previous_Run_Unit()
                     'load LoA3_fwd or TrA3_fwd's steps
                     Clear_Steps()
                     Load_Steps()
-
                     'dispose old graph and create new graph
                     Load_New_Graph_CD_True()
                 Else 'jump back two steps
                     'dispose data
 
                     'reset run_unit
-                    CurRun.PrevUnit.PrevUnit.Set_BackColor(Color.Yellow)
-                    CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
-                    CurRun.Set_BackColor(Color.IndianRed)
-                    CurRun = CurRun.PrevUnit.PrevUnit
-                    CurRun.Steps = Load_Steps_helper(CurRun)
-                    CurRun.CurStep = 1
-                    CurRun.NextUnit.CurStep = 1
-                    CurRun.NextUnit.NextUnit.CurStep = 1
-                    Load_Steps_helper(CurRun)
-                    Load_Steps_helper(CurRun.NextUnit)
-                    Load_Steps_helper(CurRun.NextUnit.NextUnit)
-                    CurStep = CurRun.HeadStep
-                    timeLeft = CurRun.Steps.Time
-                    timeLabel.Text = timeLeft & " s"
-
+                    Restart_from_2nd_Previous_Run_Unit()
                     'load LoA3_fwd or TrA3_fwd's steps
                     Clear_Steps()
                     Load_Steps()
-
                     'dispose old graph and create new graph
                     Load_New_Graph_CD_True()
-
                 End If
             End If
         End If
     End Sub
+
+    Sub Set_Run_Unit()
+        CurRun.Steps = Load_Steps_helper(CurRun)
+        CurStep = CurRun.HeadStep
+        CurRun.CurStep = 1
+        timeLeft = CurRun.Steps.Time
+        timeLabel.Text = timeLeft & " s"
+    End Sub
+    Sub Restart_from_1st_Previous_Run_Unit()
+        CurRun.PrevUnit.Set_BackColor(Color.Yellow)
+        CurRun.Set_BackColor(Color.IndianRed)
+        CurRun = CurRun.PrevUnit
+        CurRun.Steps = Load_Steps_helper(CurRun)
+        CurStep = CurRun.HeadStep
+        CurRun.CurStep = 1
+        CurRun.NextUnit.CurStep = 1
+        Load_Steps_helper(CurRun)
+        Load_Steps_helper(CurRun.NextUnit)
+        timeLeft = CurRun.Steps.Time
+        timeLabel.Text = timeLeft & " s"
+    End Sub
+    Sub Restart_from_2nd_Previous_Run_Unit()
+        CurRun.PrevUnit.PrevUnit.Set_BackColor(Color.Yellow)
+        CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
+        CurRun.Set_BackColor(Color.IndianRed)
+        CurRun = CurRun.PrevUnit.PrevUnit
+        CurRun.Steps = Load_Steps_helper(CurRun)
+        CurRun.CurStep = 1
+        CurRun.NextUnit.CurStep = 1
+        CurRun.NextUnit.NextUnit.CurStep = 1
+        Load_Steps_helper(CurRun)
+        Load_Steps_helper(CurRun.NextUnit)
+        Load_Steps_helper(CurRun.NextUnit.NextUnit)
+        CurStep = CurRun.HeadStep
+        timeLeft = CurRun.Steps.Time
+        timeLabel.Text = timeLeft & " s"
+    End Sub
+
 
     Private Sub Test_StartButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_StartButton.Click
         Test_SetButton.Enabled = True
@@ -2441,13 +2398,9 @@ Public Class Program
             Test_SetButton.Enabled = False
             Test_ConfirmButton.Enabled = False
             Test_Apply_Button.Enabled = False
-            'For i = 0 To 8
-            '    array_step_s(i).Text = 0
-            'Next
             For i = 0 To 8
                 array_step_s(i).Modified = False
             Next
-            'Index_for_Setup_Time = 0
             Last_timeLeft = 0
 
             ' change light
@@ -2592,7 +2545,6 @@ Public Class Program
         Input_S_Step9.Modified = False
         Original_Second_Dispose = True
     End Sub
-
     Private Sub Test_Apply_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_Apply_Button.Click
         Test_Apply_Button.Enabled = False
         Dim Input_S_Apply As Boolean = True
@@ -2616,17 +2568,23 @@ Public Class Program
         End If
     End Sub
 
+    Sub Reset_Test_Time()
+        CurRun.Steps = Load_Steps_helper(CurRun)
+        Tabcontrol2_Index_Change = True
+        Tabcontrol_Changed(Tabcontrol2_Index_Change)
+        Countdown = False
+        CurStep = CurRun.HeadStep
+        timeLeft = 0
+        timeLabel.Text = timeLeft & " s"
+
+    End Sub
+
     Sub Jump_Back_Countdown_True()
         If CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "ExA2_2nd_3rd" And CurRun.NextUnit.Name = "ExA2_2nd_3rd" Or CurRun.Name = "ExA2_2nd_3rd_Add" And CurRun.NextUnit.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_2nd_3rd" And CurRun.NextUnit.Name = "LoA2_2nd_3rd" Or CurRun.Name = "LoA2_2nd_3rd_Add" And CurRun.NextUnit.Name = "LoA2_2nd_3rd_Add" Then
             'MessageBox.Show("here")
             Set_Panel_BackColor()
             CurRun = CurRun.NextUnit
-
-
-            CurRun.Steps = Load_Steps_helper(CurRun)
-            CurStep = CurRun.HeadStep
-            timeLeft = CurRun.Steps.Time
-            timeLabel.Text = timeLeft & " s"
+            Set_Run_Unit()
 
             'load A2's steps
             Clear_Steps()
@@ -2634,9 +2592,9 @@ Public Class Program
 
             'dispose old graph and create new graph
             Load_New_Graph_CD_True()
-
         Else
-            If MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+            If Result = DialogResult.Yes Then
                 All_Panel_Enable()
                 CurRun.Set_BackColor(Color.Green)
                 Temp_CurRun.Set_BackColor(Color.Yellow)
@@ -2646,11 +2604,7 @@ Public Class Program
 
                 If Temp_Countdown = True Then
                     Countdown = True
-                    CurRun.Steps = Load_Steps_helper(CurRun)
-                    CurRun.CurStep = 1
-                    CurStep = CurRun.Steps
-                    timeLeft = CurRun.Steps.Time
-                    timeLabel.Text = timeLeft & " s"
+                    Set_Run_Unit()
                     Clear_Steps()
                     Load_Steps()
                     'dispose old graph and create new graph
@@ -2664,22 +2618,17 @@ Public Class Program
                     Load_New_Graph_CD_False()
                 End If
                 timeLabel.Text = timeLeft & " s"
-            Else
-                'dispose data here
-
-                CurRun.Steps = Load_Steps_helper(CurRun)
-                CurRun.CurStep = 1
-                CurStep = CurRun.Steps
-                timeLeft = CurRun.Steps.Time
-                timeLabel.Text = timeLeft & " s"
-                'dispose old graph and create new graph
-                Load_New_Graph_CD_False()
+            ElseIf Result = DialogResult.No Then
+                Accept_No()
+            ElseIf Result = DialogResult.Cancel Then
+                Accept_Cancel()
             End If
         End If
 
     End Sub
     Sub Jump_Back_Countdown_False()
-        If MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) = DialogResult.Yes Then
+        Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+        If Result = DialogResult.Yes Then
             All_Panel_Enable()
             CurRun.Set_BackColor(Color.Green)
             Temp_CurRun.Set_BackColor(Color.Yellow)
@@ -2704,15 +2653,38 @@ Public Class Program
             End If
             Temp_CurRun = Null_CurRun
             timeLabel.Text = timeLeft & " s"
-        Else
-            'dispose data here
+        ElseIf Result = DialogResult.No Then
+            Accept_No()
+        ElseIf Result = DialogResult.Cancel Then
+            Accept_Cancel()
+        End If
+    End Sub
 
+    Sub Accept_No()
+        If Countdown = False Then
+            All_Panel_Enable()
+            'dispose data here
 
             timeLeft = CurRun.Time
             timeLabel.Text = timeLeft & " s"
             'dispose old graph and create new graph
             Load_New_Graph_CD_False()
+        Else
+            All_Panel_Enable()
+            'dispose data
+
+            'reset run_unit
+            Set_Run_Unit()
+            'load A1's steps
+            Clear_Steps()
+            Load_Steps()
+            'dispose old graph and create new graph
+            Load_New_Graph_CD_True()
         End If
+    End Sub
+    Sub Accept_Cancel()
+        startButton.Enabled = False
+        Accept_Button.Enabled = True
     End Sub
 
     Private Sub AcceptButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Accept_Button.Click
@@ -2741,17 +2713,9 @@ Public Class Program
                         timeLeft = CurRun.Time
                         timeLabel.Text = timeLeft & " s"
                     ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
-                        'dispose data here
-                        MessageBox.Show("no")
-                        timeLeft = CurRun.Time
-                        timeLabel.Text = timeLeft & " s"
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_False()
+                        Accept_No()
                     ElseIf Result = DialogResult.Cancel Then
-                        MessageBox.Show("cancel")
-                        startButton.Enabled = False
-                        Accept_Button.Enabled = True
+                        Accept_Cancel()
                     End If
                 Else
                     'already move
@@ -2769,12 +2733,8 @@ Public Class Program
                         CurRun.Link.Enabled = True
                         'jump to next Run_Unit and change countdown False to True(for A1 A2 A3 A4 test)
                         CurRun = CurRun.NextUnit
-                        CurRun.Steps = Load_Steps_helper(CurRun)
-                        CurStep = CurRun.HeadStep
+                        Set_Run_Unit()
                         Countdown = True
-                        timeLeft = CurRun.Steps.Time
-                        timeLabel.Text = timeLeft & " s"
-
                         'load A1's steps
                         Clear_Steps()
                         Load_Steps()
@@ -2782,16 +2742,9 @@ Public Class Program
                         'dispose old graph and create new graph
                         Load_New_Graph_CD_True()
                     ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
-                        'dispose data here
-
-                        timeLeft = CurRun.Time
-                        timeLabel.Text = timeLeft & " s"
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_False()
+                        Accept_No()
                     ElseIf Result = DialogResult.Cancel Then
-                        Accept_Button.Enabled = True
-                        startButton.Enabled = False
+                        Accept_Cancel()
                     End If
                 Else
                     'already move
@@ -2811,22 +2764,14 @@ Public Class Program
                         Load_New_Graph_CD_False()
 
                         'save info here
-
                         'jump to next Run_Unit and set second to zero(should be zero here)
                         CurRun = CurRun.NextUnit
                         timeLeft = CurRun.Time
                         timeLabel.Text = timeLeft & " s"
                     ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
-                        'dispose data here
-
-                        timeLeft = CurRun.Time
-                        timeLabel.Text = timeLeft & " s"
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_False()
+                        Accept_No()
                     ElseIf Result = DialogResult.Cancel Then
-                        Accept_Button.Enabled = True
-                        startButton.Enabled = False
+                        Accept_Cancel()
                     End If
                 Else
                     'already move
@@ -2853,17 +2798,9 @@ Public Class Program
                         timeLabel.Text = timeLeft & " s"
 
                     ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
-                        'dispose data here
-
-
-                        timeLeft = CurRun.Time
-                        timeLabel.Text = timeLeft & " s"
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_False()
+                        Accept_No()
                     ElseIf Result = DialogResult.Cancel Then
-                        Accept_Button.Enabled = True
-                        startButton.Enabled = False
+                        Accept_Cancel()
                     End If
                 Else
                     'already move
@@ -2881,24 +2818,15 @@ Public Class Program
                         startButton.Enabled = False
                         stopButton.Enabled = False
                         Accept_Button.Enabled = False
-
                     ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
-                        'dispose data here
-
-                        timeLeft = CurRun.Time
-                        timeLabel.Text = timeLeft & " s"
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_False()
+                        Accept_No()
                     ElseIf Result = DialogResult.Cancel Then
-                        Accept_Button.Enabled = True
-                        startButton.Enabled = False
+                        Accept_Cancel()
                     End If
                 Else
                     'already move
                     Jump_Back_Countdown_False()
                 End If
-
 
             ElseIf CurRun.Name = "A4_Mid_BG" Or CurRun.Name = "A4_Mid_BG_Add" Then
                 If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
@@ -2911,12 +2839,8 @@ Public Class Program
                         CurRun.Link.Enabled = True
                         'jump to next Run_Unit
                         CurRun = CurRun.NextUnit
-                        CurRun.Steps = Load_Steps_helper(CurRun)
-                        CurStep = CurRun.HeadStep
+                        Set_Run_Unit()
                         Countdown = True
-                        timeLeft = CurRun.Steps.Time
-                        timeLabel.Text = timeLeft & " s"
-
                         'load A4's steps
                         Clear_Steps()
                         Load_Steps()
@@ -2924,38 +2848,28 @@ Public Class Program
                         'dispose old graph and create new graph
                         Load_New_Graph_CD_True()
                     ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
-                        'dispose data here
-
-                        timeLeft = CurRun.Time
-                        timeLabel.Text = timeLeft & " s"
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_False()
+                        Accept_No()
                     ElseIf Result = DialogResult.Cancel Then
-                        startButton.Enabled = False
-                        Accept_Button.Enabled = True
+                        Accept_Cancel()
                     End If
                 Else
                     Jump_Back_Countdown_False()
                 End If
             End If
         Else 'countdown = true
-            If CurRun.Name = "ExA1" Or CurRun.Name = "TrA1" Then
+            If CurRun.Name = "ExA1" Or CurRun.Name = "TrA1" Or CurRun.Name = "LoA1" Then
                 If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
                     Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
                     If Result = DialogResult.Yes Then
                         All_Panel_Enable()
-                        If CurRun.NextUnit.Name = "ExA1" Or CurRun.NextUnit.Name = "TrA1" Then
-                            'Case1: now is ExA1 and next is also ExA1 or now is TrA1 and next is also TrA1
+                        If CurRun.NextUnit.Name = "ExA1" Or CurRun.NextUnit.Name = "TrA1" Or CurRun.NextUnit.Name = "LoA1" Then
+                            'Case1: now is ExA1 and next is also ExA1 or now is TrA1 and next is also TrA1 or now is LoA1 and next is also LoA1
                             ' change light
                             Set_Panel_BackColor()
                             CurRun.Link.Enabled = True
                             'jump to next Run_Unit
                             CurRun = CurRun.NextUnit
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            CurStep = CurRun.HeadStep
-                            timeLeft = CurRun.Steps.Time
-                            timeLabel.Text = timeLeft & " s"
+                            Set_Run_Unit()
 
                             'load A1's steps
                             Clear_Steps()
@@ -2964,8 +2878,8 @@ Public Class Program
                             'dispose old graph and create new graph
                             Load_New_Graph_CD_True()
 
-                        ElseIf CurRun.NextUnit.Name = "ExA1_Add" Or CurRun.NextUnit.Name = "TrA1_Add" Then
-                            'Case2: now is ExA1 and next is ExA1_Add or now is TrA1 and next is TrA1_Add
+                        ElseIf CurRun.NextUnit.Name = "ExA1_Add" Or CurRun.NextUnit.Name = "TrA1_Add" Or CurRun.NextUnit.Name = "LoA1_Add" Then
+                            'Case2: now is ExA1 and next is ExA1_Add or now is TrA1 and next is TrA1_Add or now is LoA1 and next is LoA1_Add
                             'have an additional test?
                             'call a function 
                             'if want_add()=true then ... elseif want_add()=false then ... endif
@@ -2977,70 +2891,38 @@ Public Class Program
                             If RandBool = True Then
                                 'True: add test
                                 CurRun = CurRun.NextUnit
-                                CurRun.Steps = Load_Steps_helper(CurRun)
                                 CurRun.Set_BackColor(Color.Yellow)
-                                CurStep = CurRun.HeadStep
-                                timeLeft = CurRun.Steps.Time
-                                timeLabel.Text = timeLeft & " s"
-
-                                'load A1's steps
-                                Clear_Steps()
-                                Load_Steps()
-
-                                'dispose old graph and create new graph
-                                Load_New_Graph_CD_True()
+                                Set_Run_Unit()
                             Else
-                                'False: not add test , jump to ExA2_1st or jump to TrA3_fwd
+                                'False: not add test , jump to ExA2_1st or jump to TrA3_fwd or jump to LoA2_1st
                                 CurRun = CurRun.NextUnit.NextUnit
-                                CurRun.Steps = Load_Steps_helper(CurRun)
-                                Tabcontrol2_Index_Change = True
-                                Tabcontrol_Changed(Tabcontrol2_Index_Change)
-                                Countdown = False
                                 CurRun.Set_BackColor(Color.Yellow)
-                                CurStep = CurRun.HeadStep
-                                timeLeft = 0
-                                timeLabel.Text = timeLeft & " s"
-                                'Test_S = True
-                                'load A2's steps
-                                Clear_Steps()
-                                Load_Steps()
-
-                                'dispose old graph and create new graph
-                                Load_New_Graph_CD_True()
+                                Reset_Test_Time()
                             End If
+                            'load steps
+                            Clear_Steps()
+                            Load_Steps()
+
+                            'dispose old graph and create new graph
+                            Load_New_Graph_CD_True()
                         Else
                             MessageBox.Show("Error")
                         End If
                     ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
-                        'dispose data
-
-                        'reset run_unit
-                        CurRun.Steps = Load_Steps_helper(CurRun)
-                        CurStep = CurRun.HeadStep
-                        timeLeft = CurRun.Steps.Time
-                        timeLabel.Text = timeLeft & " s"
-
-                        'load A1's steps
-                        Clear_Steps()
-                        Load_Steps()
-
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_True()
+                        Accept_No()
                     ElseIf Result = DialogResult.Cancel Then
-                        Accept_Button.Enabled = True
-                        startButton.Enabled = False
+                        Accept_Cancel()
                     End If
                 Else
                     Jump_Back_Countdown_True()
                 End If
 
-            ElseIf CurRun.Name = "ExA1_Add" Or CurRun.Name = "TrA1_Add" Then
+            ElseIf CurRun.Name = "ExA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "LoA1_Add" Then
                 If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
                     Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
                     If Result = DialogResult.Yes Then
                         All_Panel_Enable()
-                        'Case2: now is ExA1_Add and next is ExA2_1st or now is TrA1_Add and next is TrA3_fwd
+                        'Case2: now is ExA1_Add and next is ExA2_1st or now is TrA1_Add and next is TrA3_fwd or now is LoA1_Add and next is LoA2_1st
                         'have an additional test?
                         'call a function 
                         'if want_add()=true then ... elseif want_add()=false then ... endif
@@ -3052,73 +2934,36 @@ Public Class Program
                         If RandBool = True Then
                             'True: add test
                             CurRun.Set_BackColor(Color.Yellow)
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            CurRun.CurStep = 1
-                            'Load_Steps_helper(CurRun)
-                            CurStep = CurRun.HeadStep
-                            timeLeft = CurRun.Steps.Time
-                            timeLabel.Text = timeLeft & " s"
-
-                            'load A2's steps
-                            Clear_Steps()
-                            Load_Steps()
-
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_True()
+                            Set_Run_Unit()
                         Else
                             'False: not add test
-                            CurRun.Set_BackColor(Color.Green)
-                            CurRun.NextUnit.Set_BackColor(Color.Yellow)
+                            Set_Panel_BackColor()
                             CurRun = CurRun.NextUnit
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            Tabcontrol2_Index_Change = True
-                            Tabcontrol_Changed(Tabcontrol2_Index_Change)
-                            Countdown = False
-                            CurStep = CurRun.HeadStep
-                            timeLeft = 0
-                            timeLabel.Text = timeLeft & " s"
-                            'Test_S = True
-                            'load A2's steps
-                            Clear_Steps()
-                            Load_Steps()
-
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_True()
+                            Reset_Test_Time()
                         End If
-                    ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
-                        'dispose data
-
-                        'reset run_unit
-                        CurRun.Steps = Load_Steps_helper(CurRun)
-                        CurStep = CurRun.HeadStep
-                        timeLeft = CurRun.Steps.Time
-                        timeLabel.Text = timeLeft & " s"
-
-                        'load A1's steps
+                        'load steps
                         Clear_Steps()
                         Load_Steps()
 
                         'dispose old graph and create new graph
                         Load_New_Graph_CD_True()
+                    ElseIf Result = DialogResult.No Then
+                        Accept_No()
                     ElseIf Result = DialogResult.Cancel Then
-                        startButton.Enabled = False
-                        Accept_Button.Enabled = True
+                        Accept_Cancel()
                     End If
-
-
                 Else
                     Jump_Back_Countdown_True()
                 End If
 
-            ElseIf CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_2nd_3rd" Then
+            ElseIf CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_2nd_3rd" Then
                 If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
                     Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
                     If Result = DialogResult.Yes Then
                         All_Panel_Enable()
                         CurRun.PrevUnit.PrevUnit.Link.Enabled = True
-                        If CurRun.NextUnit.Name = "ExA2_1st_Add" Then
-                            'Case: ExA2_2nd_3rd to ExA2_1st_Add
+                        If CurRun.NextUnit.Name = "ExA2_1st_Add" Or CurRun.NextUnit.Name = "LoA2_1st_Add" Then
+                            'Case: ExA2_2nd_3rd to ExA2_1st_Add or LoA2_2nd_3rd to LoA2_1st_Add
                             'have an additional test?
                             'call a function 
                             'if want_add()=true then ... elseif want_add()=false then ... endif
@@ -3130,49 +2975,43 @@ Public Class Program
                             If RandBool = True Then
                                 'True: add test
                                 CurRun = CurRun.NextUnit
-                                CurRun.Steps = Load_Steps_helper(CurRun)
+                                Set_Run_Unit()
                                 CurRun.Set_BackColor(Color.Yellow)
-                                CurStep = CurRun.HeadStep
-                                timeLeft = CurRun.Steps.Time
-                                timeLabel.Text = timeLeft & " s"
                                 'load A2's steps
                                 Clear_Steps()
                                 Load_Steps()
-
                                 'dispose old graph and create new graph
                                 Load_New_Graph_CD_True()
                             Else
-                                'False: not add test , jump to RSS or LoA1
+                                'False: not add test , jump to RSS(Ex) or LoA1(Ex) or LoA3_fwd(Lo)
                                 CurRun = CurRun.NextUnit.NextUnit.NextUnit.NextUnit
-                                CurRun.Steps = Load_Steps_helper(CurRun)
                                 CurRun.Set_BackColor(Color.Yellow)
                                 If CurRun.Name = "RSS" Then
+                                    CurRun.Steps = Load_Steps_helper(CurRun)
                                     timeLeft = CurRun.Time
                                     timeLabel.Text = timeLeft & " s"
                                     Countdown = False
                                     Load_New_Graph_CD_False()
                                     Clear_Steps()
                                 ElseIf CurRun.Name = "LoA1" Then
-                                    CurStep = CurRun.HeadStep
-                                    timeLeft = CurRun.Steps.Time
-                                    timeLabel.Text = timeLeft & " s"
-
-                                    'load LoA1's steps
+                                    Set_Run_Unit()
+                                    'load steps
                                     Clear_Steps()
                                     Load_Steps()
-
+                                    'dispose old graph and create new graph
+                                    Load_New_Graph_CD_True()
+                                ElseIf CurRun.Name = "LoA3_fwd" Then
+                                    Reset_Test_Time()
+                                    Clear_Steps()
+                                    Load_Steps()
                                     'dispose old graph and create new graph
                                     Load_New_Graph_CD_True()
                                 End If
                             End If
-                        ElseIf CurRun.NextUnit.Name = "ExA2_1st" Then
+                        ElseIf CurRun.NextUnit.Name = "ExA2_1st" Or CurRun.NextUnit.Name = "LoA2_1st" Then
                             Set_Panel_BackColor()
                             CurRun = CurRun.NextUnit
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            CurStep = CurRun.HeadStep
-                            timeLeft = CurRun.Steps.Time
-                            timeLabel.Text = timeLeft & " s"
-
+                            Set_Run_Unit()
                             'load A2's steps
                             Clear_Steps()
                             Load_Steps()
@@ -3184,32 +3023,15 @@ Public Class Program
                         End If
                     ElseIf Result = DialogResult.No Then
                         All_Panel_Enable()
-                        If CurRun.Name = "ExA2_2nd_3rd" Then
-                            'dispose data
+                        'dispose data
 
-                            'reset run_unit
-                            CurRun.PrevUnit.PrevUnit.Set_BackColor(Color.Yellow)
-                            CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
-                            CurRun.Set_BackColor(Color.IndianRed)
-                            CurRun = CurRun.PrevUnit.PrevUnit
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            CurRun.CurStep = 1
-                            CurRun.NextUnit.CurStep = 1
-                            CurRun.NextUnit.NextUnit.CurStep = 1
-                            Load_Steps_helper(CurRun)
-                            Load_Steps_helper(CurRun.NextUnit)
-                            Load_Steps_helper(CurRun.NextUnit.NextUnit)
-                            CurStep = CurRun.HeadStep
-                            timeLeft = CurRun.Steps.Time
-                            timeLabel.Text = timeLeft & " s"
-
-                            'load steps
-                            Clear_Steps()
-                            Load_Steps()
-
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_True()
-                        End If
+                        'reset run_unit
+                        Restart_from_2nd_Previous_Run_Unit()
+                        'load steps
+                        Clear_Steps()
+                        Load_Steps()
+                        'dispose old graph and create new graph
+                        Load_New_Graph_CD_True()
                     ElseIf Result = DialogResult.Cancel Then
                         startButton.Enabled = False
                         Accept_Button.Enabled = True
@@ -3218,13 +3040,13 @@ Public Class Program
                     Jump_Back_Countdown_True()
                 End If
 
-            ElseIf CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "ExA2_2nd_3rd_Add" Then
+            ElseIf CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.NextUnit.Name = "LoA2_2nd_3rd_Add" Then
                 If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
                     Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
                     If Result = DialogResult.Yes Then
                         All_Panel_Enable()
                         CurRun.Link.Enabled = True
-                        If CurRun.NextUnit.Name = "RSS" Or CurRun.NextUnit.Name = "LoA1" Then
+                        If CurRun.NextUnit.Name = "RSS" Or CurRun.NextUnit.Name = "LoA1" Or CurRun.NextUnit.Name = "LoA3_fwd" Then
                             'have an additional test?
                             'call a function 
                             'if want_add()=true then ... elseif want_add()=false then ... endif
@@ -3233,20 +3055,7 @@ Public Class Program
                             RandBool = RandGen.Next(0, 2).ToString
                             If RandBool = True Then
                                 'True: add test
-                                CurRun.PrevUnit.PrevUnit.Set_BackColor(Color.Yellow)
-                                CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
-                                CurRun.Set_BackColor(Color.IndianRed)
-                                CurRun = CurRun.PrevUnit.PrevUnit
-                                CurRun.Steps = Load_Steps_helper(CurRun)
-                                CurStep = CurRun.HeadStep
-                                CurRun.CurStep = 1
-                                CurRun.NextUnit.CurStep = 1
-                                CurRun.NextUnit.NextUnit.CurStep = 1
-                                Load_Steps_helper(CurRun)
-                                Load_Steps_helper(CurRun.NextUnit)
-                                Load_Steps_helper(CurRun.NextUnit.NextUnit)
-                                timeLeft = CurRun.Steps.Time
-                                timeLabel.Text = timeLeft & " s"
+                                Restart_from_2nd_Previous_Run_Unit()
                                 'load A2's steps
                                 Clear_Steps()
                                 Load_Steps()
@@ -3256,27 +3065,29 @@ Public Class Program
                                 Load_New_Graph_CD_True()
                             Else
                                 'False: not add test ,  jump to RSS or LoA1
-                                CurRun.Set_BackColor(Color.Green)
-                                CurRun.NextUnit.Set_BackColor(Color.Yellow)
+                                Set_Panel_BackColor()
                                 CurRun = CurRun.NextUnit
-                                CurRun.Steps = Load_Steps_helper(CurRun)
-                                If CurRun.NextUnit.Name = "RSS" Then
 
+                                If CurRun.Name = "RSS" Then
+                                    CurRun.Steps = Load_Steps_helper(CurRun)
                                     timeLeft = CurRun.Time
                                     timeLabel.Text = timeLeft & " s"
                                     Countdown = False
                                     Load_New_Graph_CD_False()
                                     Clear_Steps()
-                                ElseIf CurRun.NextUnit.Name = "LoA1" Then
-                                    timeLeft = CurRun.Steps.Time
-                                    timeLabel.Text = timeLeft & " s"
-
+                                ElseIf CurRun.Name = "LoA1" Then
+                                    Set_Run_Unit()
                                     'load LoA1's steps
                                     Clear_Steps()
                                     Load_Steps()
-
                                     'dispose old graph and create new graph
-                                    Load_New_Graph_CD_False()
+                                    Load_New_Graph_CD_True()
+                                ElseIf CurRun.Name = "LoA3_fwd" Then
+                                    Reset_Test_Time()
+                                    Clear_Steps()
+                                    Load_Steps()
+                                    'dispose old graph and create new graph
+                                    Load_New_Graph_CD_True()
                                 End If
                             End If
                         Else
@@ -3284,314 +3095,18 @@ Public Class Program
                         End If
                     ElseIf Result = DialogResult.No Then
                         All_Panel_Enable()
-                        If CurRun.Name = "ExA2_2nd_3rd_Add" Then
-                            'dispose data
+                        'dispose data
 
-                            'reset run_unit
-                            CurRun.PrevUnit.PrevUnit.Set_BackColor(Color.Yellow)
-                            CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
-                            CurRun.Set_BackColor(Color.IndianRed)
-                            CurRun = CurRun.PrevUnit.PrevUnit
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            CurRun.CurStep = 1
-                            CurRun.NextUnit.CurStep = 1
-                            CurRun.NextUnit.NextUnit.CurStep = 1
-                            Load_Steps_helper(CurRun)
-                            Load_Steps_helper(CurRun.NextUnit)
-                            Load_Steps_helper(CurRun.NextUnit.NextUnit)
-                            CurStep = CurRun.HeadStep
-                            timeLeft = CurRun.Steps.Time
-                            timeLabel.Text = timeLeft & " s"
+                        'reset run_unit
+                        Restart_from_2nd_Previous_Run_Unit()
+                        'load steps
+                        Clear_Steps()
+                        Load_Steps()
 
-                            'load steps
-                            Clear_Steps()
-                            Load_Steps()
-
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_True()
-                        End If
+                        'dispose old graph and create new graph
+                        Load_New_Graph_CD_True()
                     ElseIf Result = DialogResult.Cancel Then
-                        startButton.Enabled = False
-                        Accept_Button.Enabled = True
-                    End If
-                Else
-                    Jump_Back_Countdown_True()
-                End If
-
-            ElseIf CurRun.Name = "LoA1" Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
-                        All_Panel_Enable()
-                    ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
-                    ElseIf Result = DialogResult.Cancel Then
-                        startButton.Enabled = False
-                        Accept_Button.Enabled = True
-                    End If
-                    If CurRun.NextUnit.Name = "LoA1" Then
-                        'Case1: now is ExA1 and next is also ExA1
-                        ' change light
-                        Set_Panel_BackColor()
-                        CurRun.Link.Enabled = True
-                        'jump to next Run_Unit
-                        CurRun = CurRun.NextUnit
-                        CurRun.Steps = Load_Steps_helper(CurRun)
-                        CurStep = CurRun.HeadStep
-                        timeLeft = CurRun.Steps.Time
-                        timeLabel.Text = timeLeft & " s"
-
-                        'load LoA1's steps
-                        Clear_Steps()
-                        Load_Steps()
-
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_True()
-
-                    ElseIf CurRun.NextUnit.Name = "LoA1_Add" Then
-                        'Case2: now is ExA1 and next is ExA1_Add
-                        'have an additional test?
-                        'call a function 
-                        'if want_add()=true then ... elseif want_add()=false then ... endif
-
-                        CurRun.Set_BackColor(Color.Green)
-                        CurRun.Link.Enabled = True
-                        'jump to next Run_Unit and change light
-                        RandBool = RandGen.Next(0, 2).ToString
-                        If RandBool = True Then
-                            'True: add test
-                            CurRun = CurRun.NextUnit
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            CurRun.Set_BackColor(Color.Yellow)
-                        Else
-                            'False: not add test , jump to LoA2_1st
-                            CurRun = CurRun.NextUnit.NextUnit
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            Tabcontrol2_Index_Change = True
-                            Tabcontrol_Changed(Tabcontrol2_Index_Change)
-                            Countdown = False
-                            CurRun.Set_BackColor(Color.Yellow)
-                        End If
-                        CurStep = CurRun.HeadStep
-                        timeLeft = CurRun.Steps.Time
-                        timeLabel.Text = timeLeft & " s"
-
-                        'load LoA1 or LoA2's steps
-                        Clear_Steps()
-                        Load_Steps()
-
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_True()
-                    Else
-                        MessageBox.Show("Error")
-                    End If
-                Else
-                    Jump_Back_Countdown_True()
-                End If
-
-            ElseIf CurRun.Name = "LoA1_Add" Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
-                        All_Panel_Enable()
-                    ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
-                    ElseIf Result = DialogResult.Cancel Then
-                        startButton.Enabled = False
-                        Accept_Button.Enabled = True
-                    End If
-                    'Case2: now is LoA1_Add and next is also LoA2_1st
-                    'have an additional test?
-                    'call a function 
-                    'if want_add()=true then ... elseif want_add()=false then ... endif
-
-                    CurRun.Link.Enabled = True
-                    'jump to next Run_Unit
-                    RandBool = RandGen.Next(0, 2).ToString
-                    If RandBool = True Then
-                        'True: add test 
-                        CurRun.Set_BackColor(Color.Yellow)
-                        CurRun.Steps = Load_Steps_helper(CurRun)
-                        CurRun.CurStep = 1
-                        Load_Steps_helper(CurRun)
-                    Else
-                        'False: not add test
-                        CurRun.Set_BackColor(Color.Green)
-                        CurRun.NextUnit.Set_BackColor(Color.Yellow)
-                        CurRun = CurRun.NextUnit
-                        CurRun.Steps = Load_Steps_helper(CurRun)
-                        Tabcontrol2_Index_Change = True
-                        Tabcontrol_Changed(Tabcontrol2_Index_Change)
-                        Countdown = False
-                    End If
-                    CurStep = CurRun.HeadStep
-                    timeLeft = CurRun.Steps.Time
-                    timeLabel.Text = timeLeft & " s"
-
-                    'load LoA1_Add or LoA2_1st's steps
-                    Clear_Steps()
-                    Load_Steps()
-
-                    'dispose old graph and create new graph
-                    Load_New_Graph_CD_True()
-
-                Else
-                    Jump_Back_Countdown_True()
-                End If
-
-            ElseIf CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_2nd_3rd" Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
-                        All_Panel_Enable()
-                    ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
-                    ElseIf Result = DialogResult.Cancel Then
-                        startButton.Enabled = False
-                        Accept_Button.Enabled = True
-                    End If
-                    If CurRun.NextUnit.Name = "LoA2_1st" Or CurRun.NextUnit.Name = "LoA2_2nd_3rd" Then
-                        'Case: LoA2_1st to LoA2_2nd_3rd or LoA2_2nd_3rd to LoA2_1st
-                        ' change light
-                        Set_Panel_BackColor()
-                        If CurRun.Name = "LoA2_1st" Then
-                            CurRun.Link.Enabled = True
-                        End If
-                        'jump to next Run_Unit
-                        CurRun = CurRun.NextUnit
-                        CurRun.Steps = Load_Steps_helper(CurRun)
-                        CurStep = CurRun.HeadStep
-                        timeLeft = CurRun.Steps.Time
-                        timeLabel.Text = timeLeft & " s"
-
-                        'load LoA2's steps
-                        Clear_Steps()
-                        Load_Steps()
-
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_True()
-                    ElseIf CurRun.NextUnit.Name = "LoA2_1st_Add" Then
-                        'Case: LoA2_2nd_3rd to LoA2_1st_Add
-                        'have an additional test?
-                        'call a function 
-                        'if want_add()=true then ... elseif want_add()=false then ... endif
-
-                        CurRun.Set_BackColor(Color.Green)
-                        'jump to next Run_Unit and change light
-                        RandBool = RandGen.Next(0, 2).ToString
-                        If RandBool = True Then
-                            'True: add test
-                            CurRun = CurRun.NextUnit
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            CurRun.Set_BackColor(Color.Yellow)
-                            CurStep = CurRun.HeadStep
-                            timeLeft = CurRun.Steps.Time
-                            timeLabel.Text = timeLeft & " s"
-                        Else
-                            'False: not add test , jump to LoA3_fwd
-                            CurRun = CurRun.NextUnit.NextUnit.NextUnit.NextUnit
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            Tabcontrol2_Index_Change = True
-                            Tabcontrol_Changed(Tabcontrol2_Index_Change)
-                            Countdown = False
-                            CurRun.Set_BackColor(Color.Yellow)
-                            CurStep = CurRun.HeadStep
-                            timeLeft = 0
-                            timeLabel.Text = timeLeft & " s"
-                        End If
-
-
-                        'load LoA2_1st_Add or LoA3_fwd's steps
-                        Clear_Steps()
-                        Load_Steps()
-
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_True()
-                    Else
-                        MessageBox.Show("Error")
-                    End If
-                Else
-                    Jump_Back_Countdown_True()
-                End If
-
-            ElseIf CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
-                        All_Panel_Enable()
-                    ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
-                    ElseIf Result = DialogResult.Cancel Then
-                        startButton.Enabled = False
-                        Accept_Button.Enabled = True
-                    End If
-                    If CurRun.NextUnit.Name = "LoA2_2nd_3rd_Add" Then
-                        'Case1: now is LoA2_1st_Add or LoA2_2nd_3rd_Add and next is LoA2_2nd_3rd_Add
-                        ' change light
-                        Set_Panel_BackColor()
-                        If CurRun.Name = "LoA2_1st_Add" Then
-                            CurRun.Link.Enabled = True
-                        End If
-                        'jump to next Run_Unit
-                        CurRun = CurRun.NextUnit
-                        CurRun.Steps = Load_Steps_helper(CurRun)
-                        CurStep = CurRun.HeadStep
-                        timeLeft = CurRun.Steps.Time
-                        timeLabel.Text = timeLeft & " s"
-
-                        'load LoA1's steps
-                        Clear_Steps()
-                        Load_Steps()
-
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_True()
-                    ElseIf CurRun.NextUnit.Name = "LoA3_fwd" Then
-                        'Case2: now is LoA2_2nd_3rd_Add and next is also LoA3_fwd
-                        'have an additional test?
-                        'call a function 
-                        'if want_add()=true then ... elseif want_add()=false then ... endif
-
-                        'jump to next Run_Unit
-                        RandBool = RandGen.Next(0, 2).ToString
-                        If RandBool = True Then
-                            'True: add test
-                            CurRun.PrevUnit.PrevUnit.Set_BackColor(Color.Yellow)
-                            CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
-                            CurRun.Set_BackColor(Color.IndianRed)
-                            CurRun = CurRun.PrevUnit.PrevUnit
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            CurRun.CurStep = 1
-                            CurRun.NextUnit.CurStep = 1
-                            CurRun.NextUnit.NextUnit.CurStep = 1
-                            Load_Steps_helper(CurRun)
-                            Load_Steps_helper(CurRun.NextUnit)
-                            Load_Steps_helper(CurRun.NextUnit.NextUnit)
-                            CurStep = CurRun.HeadStep
-                            timeLeft = CurRun.Steps.Time
-                            timeLabel.Text = timeLeft & " s"
-                        Else
-                            'False: not add test
-                            CurRun.Set_BackColor(Color.Green)
-                            CurRun.NextUnit.Set_BackColor(Color.Yellow)
-                            CurRun = CurRun.NextUnit
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            Tabcontrol2_Index_Change = True
-                            Tabcontrol_Changed(Tabcontrol2_Index_Change)
-                            Countdown = False
-                            CurStep = CurRun.HeadStep
-                            timeLeft = 0
-                            timeLabel.Text = timeLeft & " s"
-                        End If
-
-
-                        'load LoA2_1st_Add or LoA3_fwd's steps
-                        Clear_Steps()
-                        Load_Steps()
-
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_True()
-                    Else
-                        MessageBox.Show("Error")
+                        Accept_Cancel()
                     End If
                 Else
                     Jump_Back_Countdown_True()
@@ -3602,68 +3117,59 @@ Public Class Program
                     Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
                     If Result = DialogResult.Yes Then
                         All_Panel_Enable()
-                    ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
-                    ElseIf Result = DialogResult.Cancel Then
-                        startButton.Enabled = False
-                        Accept_Button.Enabled = True
-                    End If
-                    If CurRun.NextUnit.Name = "LoA3_fwd" Or CurRun.NextUnit.Name = "LoA3_bkd" Or CurRun.NextUnit.Name = "TrA3_fwd" Or CurRun.NextUnit.Name = "TrA3_bkd" Then
-                        'Case: LoA3_fwd to LoA3_bkd or LoA3_bkd to LoA3_fwd or TrA3_bkd to TrA3_fwd or TrA3_bkd to TrA3_fwd
-                        ' change light
-                        Set_Panel_BackColor()
-                        CurRun.Link.Enabled = True
-                        'jump to next Run_Unit
-                        CurRun = CurRun.NextUnit
-                        CurRun.Steps = Load_Steps_helper(CurRun)
-                        CurStep = CurRun.HeadStep
-                        timeLeft = CurRun.Steps.Time
-                        timeLabel.Text = timeLeft & " s"
-
-                        'load LoA3 or TrA3's steps
-                        Clear_Steps()
-                        Load_Steps()
-
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_True()
-                    ElseIf CurRun.NextUnit.Name = "LoA3_fwd_Add" Or CurRun.NextUnit.Name = "TrA3_fwd_Add" Then
-                        'Case: LoA3_bkd to LoA3_fwd_Add or TrA3_bkd to TrA3_fwd_Add
-                        'have an additional test?
-                        'call a function 
-                        'if want_add()=true then ... elseif want_add()=false then ... endif
-
-                        CurRun.Set_BackColor(Color.Green)
-                        CurRun.Link.Enabled = True
-                        'jump to next Run_Unit and change light
-                        RandBool = RandGen.Next(0, 2).ToString
-                        If RandBool = True Then
-                            'True: add test
+                        If CurRun.NextUnit.Name = "LoA3_fwd" Or CurRun.NextUnit.Name = "LoA3_bkd" Or CurRun.NextUnit.Name = "TrA3_fwd" Or CurRun.NextUnit.Name = "TrA3_bkd" Then
+                            'Case: LoA3_fwd to LoA3_bkd or LoA3_bkd to LoA3_fwd or TrA3_bkd to TrA3_fwd or TrA3_bkd to TrA3_fwd
+                            ' change light
+                            Set_Panel_BackColor()
+                            CurRun.Link.Enabled = True
+                            'jump to next Run_Unit
                             CurRun = CurRun.NextUnit
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            CurRun.Set_BackColor(Color.Yellow)
-                            CurStep = CurRun.HeadStep
-                            timeLeft = CurRun.Steps.Time
-                            timeLabel.Text = timeLeft & " s"
-                            'load LoA3_fwd_Add or TrA3_fwd_Add's steps
+                            Set_Run_Unit()
+                            'load LoA3 or TrA3's steps
                             Clear_Steps()
                             Load_Steps()
 
                             'dispose old graph and create new graph
                             Load_New_Graph_CD_True()
+                        ElseIf CurRun.NextUnit.Name = "LoA3_fwd_Add" Or CurRun.NextUnit.Name = "TrA3_fwd_Add" Then
+                            'Case: LoA3_bkd to LoA3_fwd_Add or TrA3_bkd to TrA3_fwd_Add
+                            'have an additional test?
+                            'call a function 
+                            'if want_add()=true then ... elseif want_add()=false then ... endif
+
+                            CurRun.Set_BackColor(Color.Green)
+                            CurRun.Link.Enabled = True
+                            'jump to next Run_Unit and change light
+                            RandBool = RandGen.Next(0, 2).ToString
+                            If RandBool = True Then
+                                'True: add test
+                                CurRun = CurRun.NextUnit
+                                Set_Run_Unit()
+                                CurRun.Set_BackColor(Color.Yellow)
+                                'load LoA3_fwd_Add or TrA3_fwd_Add's steps
+                                Clear_Steps()
+                                Load_Steps()
+
+                                'dispose old graph and create new graph
+                                Load_New_Graph_CD_True()
+                            Else
+                                'False: not add test , jump to RSS
+                                CurRun = CurRun.NextUnit.NextUnit.NextUnit
+                                CurRun.Set_BackColor(Color.Yellow)
+                                timeLeft = CurRun.Time
+                                timeLabel.Text = timeLeft & " s"
+                                Countdown = False
+                                Clear_Steps()
+                                'dispose old graph and create new graph
+                                Load_New_Graph_CD_False()
+                            End If
                         Else
-                            'False: not add test , jump to RSS
-                            CurRun = CurRun.NextUnit.NextUnit.NextUnit
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            CurRun.Set_BackColor(Color.Yellow)
-                            timeLeft = CurRun.Time
-                            timeLabel.Text = timeLeft & " s"
-                            Countdown = False
-                            Clear_Steps()
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_False()
+                            MessageBox.Show("Error")
                         End If
-                    Else
-                        MessageBox.Show("Error")
+                    ElseIf Result = DialogResult.No Then
+                        Accept_No()
+                    ElseIf Result = DialogResult.Cancel Then
+                        Accept_Cancel()
                     End If
                 Else
                     Jump_Back_Countdown_True()
@@ -3674,74 +3180,55 @@ Public Class Program
                     Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
                     If Result = DialogResult.Yes Then
                         All_Panel_Enable()
-                    ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
-                    ElseIf Result = DialogResult.Cancel Then
-                        startButton.Enabled = False
-                        Accept_Button.Enabled = True
-                    End If
-                    If CurRun.NextUnit.Name = "LoA3_bkd_Add" Or CurRun.NextUnit.Name = "TrA3_bkd_Add" Then
-                        'Case: LoA3_fwd_Add to LoA3_bkd_Add 
-                        ' change light
-                        Set_Panel_BackColor()
-                        CurRun.Link.Enabled = True
-                        'jump to next Run_Unit
-                        CurRun = CurRun.NextUnit
-                        CurRun.Steps = Load_Steps_helper(CurRun)
-                        CurStep = CurRun.HeadStep
-                        timeLeft = CurRun.Steps.Time
-                        timeLabel.Text = timeLeft & " s"
-
-                        'load LoA3 or TrA3's steps
-                        Clear_Steps()
-                        Load_Steps()
-
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_True()
-                    ElseIf CurRun.NextUnit.Name = "RSS" Then
-                        'Case: LoA3_bkd_Add to RSS or TrA3_bkd_Add to RSS
-                        'have an additional test?
-                        'call a function 
-                        'if want_add()=true then ... elseif want_add()=false then ... endif
-
-                        CurRun.Link.Enabled = True
-                        RandBool = RandGen.Next(0, 2).ToString
-                        If RandBool = True Then
-                            'True: add test , jump to LoA3_fwd_Add or jump to TrA3_fwd_Add
-                            'True: add test
-                            CurRun.PrevUnit.Set_BackColor(Color.Yellow)
-                            CurRun.Set_BackColor(Color.IndianRed)
-                            CurRun = CurRun.PrevUnit
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            CurStep = CurRun.HeadStep
-                            CurRun.CurStep = 1
-                            CurRun.NextUnit.CurStep = 1
-                            Load_Steps_helper(CurRun)
-                            Load_Steps_helper(CurRun.NextUnit)
-                            timeLeft = CurRun.Steps.Time
-                            timeLabel.Text = timeLeft & " s"
-
-                            'load LoA3_fwd or TrA3_fwd's steps
+                        If CurRun.NextUnit.Name = "LoA3_bkd_Add" Or CurRun.NextUnit.Name = "TrA3_bkd_Add" Then
+                            'Case: LoA3_fwd_Add to LoA3_bkd_Add 
+                            ' change light
+                            Set_Panel_BackColor()
+                            CurRun.Link.Enabled = True
+                            'jump to next Run_Unit
+                            Set_Run_Unit()
+                            'load LoA3 or TrA3's steps
                             Clear_Steps()
                             Load_Steps()
 
                             'dispose old graph and create new graph
                             Load_New_Graph_CD_True()
+                        ElseIf CurRun.NextUnit.Name = "RSS" Then
+                            'Case: LoA3_bkd_Add to RSS or TrA3_bkd_Add to RSS
+                            'have an additional test?
+                            'call a function 
+                            'if want_add()=true then ... elseif want_add()=false then ... endif
+
+                            CurRun.Link.Enabled = True
+                            RandBool = RandGen.Next(0, 2).ToString
+                            If RandBool = True Then
+                                'True: add test , jump to LoA3_fwd_Add or jump to TrA3_fwd_Add
+                                'True: add test
+                                Restart_from_1st_Previous_Run_Unit()
+                                'load LoA3_fwd or TrA3_fwd's steps
+                                Clear_Steps()
+                                Load_Steps()
+
+                                'dispose old graph and create new graph
+                                Load_New_Graph_CD_True()
+                            Else
+                                'False: not add test , jump to RSS
+                                Set_Panel_BackColor()
+                                CurRun = CurRun.NextUnit
+                                timeLeft = CurRun.Time
+                                timeLabel.Text = timeLeft & " s"
+                                Countdown = False
+                                Clear_Steps()
+                                'dispose old graph and create new graph
+                                Load_New_Graph_CD_False()
+                            End If
                         Else
-                            'False: not add test , jump to RSS
-                            CurRun.Set_BackColor(Color.Green)
-                            CurRun = CurRun.NextUnit
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            CurRun.Set_BackColor(Color.Yellow)
-                            timeLeft = CurRun.Time
-                            timeLabel.Text = timeLeft & " s"
-                            Countdown = False
-                            Clear_Steps()
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_False()
+                            MessageBox.Show("Error")
                         End If
-                    Else
-                        MessageBox.Show("Error")
+                    ElseIf Result = DialogResult.No Then
+                        Accept_No()
+                    ElseIf Result = DialogResult.Cancel Then
+                        Accept_Cancel()
                     End If
                 Else
                     Jump_Back_Countdown_True()
@@ -3752,39 +3239,11 @@ Public Class Program
                     Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
                     If Result = DialogResult.Yes Then
                         All_Panel_Enable()
-                    ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
-                    ElseIf Result = DialogResult.Cancel Then
-                        startButton.Enabled = False
-                        Accept_Button.Enabled = True
-                    End If
-                    If CurRun.NextUnit.Name = "A4_Mid_BG" Then
-                        'Case: now is A4 and next is A4_Mid_BG
-                        ' change light
-                        Set_Panel_BackColor()
-                        CurRun.Link.Enabled = True
-                        'jump to next Run_Unit
-                        CurRun = CurRun.NextUnit
-                        timeLeft = CurRun.Time
-                        timeLabel.Text = timeLeft & " s"
-                        Countdown = False
-                        Clear_Steps()
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_False()
-                    ElseIf CurRun.NextUnit.Name = "A4_Mid_BG_Add" Then
-                        'have an additional test?
-                        'call a function 
-                        'if want_add()=true then ... elseif want_add()=false then ... endif
-
-                        CurRun.Set_BackColor(Color.Green)
-                        CurRun.Link.Enabled = True
-                        'jump to next Run_Unit and change light
-                        RandBool = RandGen.Next(0, 2).ToString
-                        If RandBool = True Then
-                            'True: add test
+                        If CurRun.NextUnit.Name = "A4_Mid_BG" Then
+                            'Case: now is A4 and next is A4_Mid_BG
                             ' change light
                             Set_Panel_BackColor()
-
+                            CurRun.Link.Enabled = True
                             'jump to next Run_Unit
                             CurRun = CurRun.NextUnit
                             timeLeft = CurRun.Time
@@ -3793,11 +3252,79 @@ Public Class Program
                             Clear_Steps()
                             'dispose old graph and create new graph
                             Load_New_Graph_CD_False()
+                        ElseIf CurRun.NextUnit.Name = "A4_Mid_BG_Add" Then
+                            'have an additional test?
+                            'call a function 
+                            'if want_add()=true then ... elseif want_add()=false then ... endif
+
+                            CurRun.Set_BackColor(Color.Green)
+                            CurRun.Link.Enabled = True
+                            'jump to next Run_Unit and change light
+                            RandBool = RandGen.Next(0, 2).ToString
+                            If RandBool = True Then
+                                'True: add test
+                                ' change light
+                                Set_Panel_BackColor()
+
+                                'jump to next Run_Unit
+                                CurRun = CurRun.NextUnit
+                                timeLeft = CurRun.Time
+                                timeLabel.Text = timeLeft & " s"
+                                Countdown = False
+                                Clear_Steps()
+                                'dispose old graph and create new graph
+                                Load_New_Graph_CD_False()
+                            Else
+                                'False: not add test , jump to RSS
+                                CurRun = CurRun.NextUnit.NextUnit.NextUnit
+                                CurRun.Set_BackColor(Color.Yellow)
+                                timeLeft = CurRun.Time
+                                timeLabel.Text = timeLeft & " s"
+                                Countdown = False
+                                Clear_Steps()
+                                'dispose old graph and create new graph
+                                Load_New_Graph_CD_False()
+                            End If
+                        End If
+                    ElseIf Result = DialogResult.No Then
+                        Accept_No()
+                    ElseIf Result = DialogResult.Cancel Then
+                        Accept_Cancel()
+                    End If
+                Else
+                    Jump_Back_Countdown_True()
+                End If
+
+            ElseIf CurRun.Name = "A4_Add" Then
+                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
+                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+                    If Result = DialogResult.Yes Then
+                        All_Panel_Enable()
+                        'have an additional test?
+                        'call a function 
+                        'if want_add()=true then ... elseif want_add()=false then ... endif
+
+                        CurRun.Link.Enabled = True
+                        RandBool = RandGen.Next(0, 2).ToString
+                        If RandBool = True Then
+                            'True: add test , jump to A4_Mid_BG_Add
+                            'True: add test
+                            CurRun.PrevUnit.Set_BackColor(Color.Yellow)
+                            CurRun.Set_BackColor(Color.IndianRed)
+                            CurRun = CurRun.PrevUnit
+                            timeLeft = CurRun.Time
+                            timeLabel.Text = timeLeft & " s"
+                            Countdown = False
+
+                            Clear_Steps()
+
+                            'dispose old graph and create new graph
+                            Load_New_Graph_CD_True()
                         Else
                             'False: not add test , jump to RSS
-                            CurRun = CurRun.NextUnit.NextUnit.NextUnit
+                            Set_Panel_BackColor()
+                            CurRun = CurRun.NextUnit
                             CurRun.Steps = Load_Steps_helper(CurRun)
-                            CurRun.Set_BackColor(Color.Yellow)
                             timeLeft = CurRun.Time
                             timeLabel.Text = timeLeft & " s"
                             Countdown = False
@@ -3805,57 +3332,10 @@ Public Class Program
                             'dispose old graph and create new graph
                             Load_New_Graph_CD_False()
                         End If
-                    End If
-                Else
-                    Jump_Back_Countdown_True()
-                End If
-
-
-            ElseIf CurRun.Name = "A4_Add" Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
-                        All_Panel_Enable()
                     ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
+                        Accept_No()
                     ElseIf Result = DialogResult.Cancel Then
-                        startButton.Enabled = False
-                        Accept_Button.Enabled = True
-                    End If
-                    'have an additional test?
-                    'call a function 
-                    'if want_add()=true then ... elseif want_add()=false then ... endif
-
-                    CurRun.Link.Enabled = True
-                    RandBool = RandGen.Next(0, 2).ToString
-                    If RandBool = True Then
-                        'True: add test , jump to A4_Mid_BG_Add
-                        'True: add test
-                        CurRun.PrevUnit.Set_BackColor(Color.Yellow)
-                        CurRun.Set_BackColor(Color.IndianRed)
-                        CurRun = CurRun.PrevUnit
-
-                        Load_Steps_helper(CurRun.NextUnit)
-                        timeLeft = CurRun.Time
-                        timeLabel.Text = timeLeft & " s"
-                        Countdown = False
-
-                        Clear_Steps()
-
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_True()
-                    Else
-                        'False: not add test , jump to RSS
-                        CurRun.Set_BackColor(Color.Green)
-                        CurRun = CurRun.NextUnit
-                        CurRun.Steps = Load_Steps_helper(CurRun)
-                        CurRun.Set_BackColor(Color.Yellow)
-                        timeLeft = CurRun.Time
-                        timeLabel.Text = timeLeft & " s"
-                        Countdown = False
-                        Clear_Steps()
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_False()
+                        Accept_Cancel()
                     End If
                 Else
                     Jump_Back_Countdown_True()
@@ -3863,10 +3343,6 @@ Public Class Program
 
             End If
         End If
-
-        'If MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) = DialogResult.Yes Then
-        'MessageBox.Show("此機具所有測量步驟已結束")
-        'End If
 
     End Sub
 

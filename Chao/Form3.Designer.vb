@@ -23,12 +23,12 @@ Partial Class Program
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim ChartArea5 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend5 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series5 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea6 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend6 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series6 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Button_change_machine = New System.Windows.Forms.Button()
@@ -246,7 +246,7 @@ Partial Class Program
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
-        Me.Test_Apply_Button = New System.Windows.Forms.Button()
+        Me.Test_StopButton = New System.Windows.Forms.Button()
         Me.Test_Input_S_Panel = New System.Windows.Forms.Panel()
         Me.S9 = New System.Windows.Forms.Label()
         Me.S8 = New System.Windows.Forms.Label()
@@ -267,7 +267,7 @@ Partial Class Program
         Me.Input_S_Step6 = New System.Windows.Forms.TextBox()
         Me.Input_S_Step1 = New System.Windows.Forms.TextBox()
         Me.Test_ConfirmButton = New System.Windows.Forms.Button()
-        Me.Test_SetButton = New System.Windows.Forms.Button()
+        Me.Test_NextButton = New System.Windows.Forms.Button()
         Me.Test_StartButton = New System.Windows.Forms.Button()
         Me.Step1 = New System.Windows.Forms.Label()
         Me.Noise_Avg = New System.Windows.Forms.Label()
@@ -2679,28 +2679,27 @@ Partial Class Program
         '
         Me.TabPage4.BackColor = System.Drawing.Color.DarkGray
         Me.TabPage4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.TabPage4.Controls.Add(Me.Test_Apply_Button)
+        Me.TabPage4.Controls.Add(Me.Test_StopButton)
         Me.TabPage4.Controls.Add(Me.Test_Input_S_Panel)
         Me.TabPage4.Controls.Add(Me.Test_ConfirmButton)
-        Me.TabPage4.Controls.Add(Me.Test_SetButton)
+        Me.TabPage4.Controls.Add(Me.Test_NextButton)
         Me.TabPage4.Controls.Add(Me.Test_StartButton)
         Me.TabPage4.Location = New System.Drawing.Point(4, 22)
         Me.TabPage4.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(2, 3, 2, 3)
-        Me.TabPage4.Size = New System.Drawing.Size(353, 488)
+        Me.TabPage4.Size = New System.Drawing.Size(553, 488)
         Me.TabPage4.TabIndex = 1
         Me.TabPage4.Text = "TabPage4"
         '
-        'Test_Apply_Button
+        'Test_StopButton
         '
-        Me.Test_Apply_Button.Location = New System.Drawing.Point(68, 365)
-        Me.Test_Apply_Button.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
-        Me.Test_Apply_Button.Name = "Test_Apply_Button"
-        Me.Test_Apply_Button.Size = New System.Drawing.Size(75, 28)
-        Me.Test_Apply_Button.TabIndex = 18
-        Me.Test_Apply_Button.Text = "Apply"
-        Me.Test_Apply_Button.UseVisualStyleBackColor = True
+        Me.Test_StopButton.Location = New System.Drawing.Point(68, 98)
+        Me.Test_StopButton.Name = "Test_StopButton"
+        Me.Test_StopButton.Size = New System.Drawing.Size(75, 68)
+        Me.Test_StopButton.TabIndex = 19
+        Me.Test_StopButton.Text = "Stop"
+        Me.Test_StopButton.UseVisualStyleBackColor = True
         '
         'Test_Input_S_Panel
         '
@@ -2874,25 +2873,25 @@ Partial Class Program
         '
         'Test_ConfirmButton
         '
-        Me.Test_ConfirmButton.Location = New System.Drawing.Point(68, 294)
+        Me.Test_ConfirmButton.Location = New System.Drawing.Point(68, 364)
         Me.Test_ConfirmButton.Name = "Test_ConfirmButton"
         Me.Test_ConfirmButton.Size = New System.Drawing.Size(75, 63)
         Me.Test_ConfirmButton.TabIndex = 2
         Me.Test_ConfirmButton.Text = "Confirm"
         Me.Test_ConfirmButton.UseVisualStyleBackColor = True
         '
-        'Test_SetButton
+        'Test_NextButton
         '
-        Me.Test_SetButton.Location = New System.Drawing.Point(68, 142)
-        Me.Test_SetButton.Name = "Test_SetButton"
-        Me.Test_SetButton.Size = New System.Drawing.Size(75, 69)
-        Me.Test_SetButton.TabIndex = 1
-        Me.Test_SetButton.Text = "Set"
-        Me.Test_SetButton.UseVisualStyleBackColor = True
+        Me.Test_NextButton.Location = New System.Drawing.Point(68, 326)
+        Me.Test_NextButton.Name = "Test_NextButton"
+        Me.Test_NextButton.Size = New System.Drawing.Size(75, 33)
+        Me.Test_NextButton.TabIndex = 1
+        Me.Test_NextButton.Text = "Next"
+        Me.Test_NextButton.UseVisualStyleBackColor = True
         '
         'Test_StartButton
         '
-        Me.Test_StartButton.Location = New System.Drawing.Point(68, 60)
+        Me.Test_StartButton.Location = New System.Drawing.Point(68, 22)
         Me.Test_StartButton.Name = "Test_StartButton"
         Me.Test_StartButton.Size = New System.Drawing.Size(75, 70)
         Me.Test_StartButton.TabIndex = 0
@@ -2920,17 +2919,17 @@ Partial Class Program
         '
         'Chart2
         '
-        ChartArea5.Name = "ChartArea1"
-        Me.Chart2.ChartAreas.Add(ChartArea5)
-        Legend5.Name = "Legend1"
-        Me.Chart2.Legends.Add(Legend5)
+        ChartArea1.Name = "ChartArea1"
+        Me.Chart2.ChartAreas.Add(ChartArea1)
+        Legend1.Name = "Legend1"
+        Me.Chart2.Legends.Add(Legend1)
         Me.Chart2.Location = New System.Drawing.Point(566, 100)
         Me.Chart2.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Chart2.Name = "Chart2"
-        Series5.ChartArea = "ChartArea1"
-        Series5.Legend = "Legend1"
-        Series5.Name = "Series1"
-        Me.Chart2.Series.Add(Series5)
+        Series1.ChartArea = "ChartArea1"
+        Series1.Legend = "Legend1"
+        Series1.Name = "Series1"
+        Me.Chart2.Series.Add(Series1)
         Me.Chart2.Size = New System.Drawing.Size(271, 466)
         Me.Chart2.TabIndex = 83
         Me.Chart2.Text = "Chart2"
@@ -2938,17 +2937,17 @@ Partial Class Program
         '
         'Chart1
         '
-        ChartArea6.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea6)
-        Legend6.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend6)
+        ChartArea2.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea2)
+        Legend2.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend2)
         Me.Chart1.Location = New System.Drawing.Point(-41, 5)
         Me.Chart1.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Chart1.Name = "Chart1"
-        Series6.ChartArea = "ChartArea1"
-        Series6.Legend = "Legend1"
-        Series6.Name = "Series1"
-        Me.Chart1.Series.Add(Series6)
+        Series2.ChartArea = "ChartArea1"
+        Series2.Legend = "Legend1"
+        Series2.Name = "Series1"
+        Me.Chart1.Series.Add(Series2)
         Me.Chart1.Size = New System.Drawing.Size(914, 84)
         Me.Chart1.TabIndex = 82
         Me.Chart1.Text = "Chart1"
@@ -3574,10 +3573,10 @@ Partial Class Program
     Friend WithEvents Input_S_Step6 As System.Windows.Forms.TextBox
     Friend WithEvents Input_S_Step1 As System.Windows.Forms.TextBox
     Friend WithEvents Test_ConfirmButton As System.Windows.Forms.Button
-    Friend WithEvents Test_SetButton As System.Windows.Forms.Button
+    Friend WithEvents Test_NextButton As System.Windows.Forms.Button
     Friend WithEvents Test_StartButton As System.Windows.Forms.Button
-    Friend WithEvents Test_Apply_Button As System.Windows.Forms.Button
     Friend WithEvents LinkLabel_Temp As System.Windows.Forms.LinkLabel
     Friend WithEvents Panel_Temp As System.Windows.Forms.Panel
     Friend WithEvents TabPageCharts As System.Windows.Forms.TabPage
+    Friend WithEvents Test_StopButton As System.Windows.Forms.Button
 End Class

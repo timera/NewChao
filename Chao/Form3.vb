@@ -220,10 +220,9 @@ Public Class Program
         'Set up Buttons
         startButton.Enabled = True
         stopButton.Enabled = False
-        Test_SetButton.Enabled = False
+        Test_NextButton.Enabled = False
         Test_StartButton.Enabled = True
         Test_ConfirmButton.Enabled = False
-        Test_Apply_Button.Enabled = False
 
         'Set up Plotting
         Points = New ArrayList
@@ -402,12 +401,14 @@ Public Class Program
                 End If
             Next
             Test_StartButton.Enabled = True
-            Test_SetButton.Enabled = False
+            Test_NextButton.Enabled = False
             Test_ConfirmButton.Enabled = False
-            Test_Apply_Button.Enabled = False
             For i = 0 To 8
                 array_step_s(i).Text = 0
                 array_step_s(i).Enabled = False
+            Next
+            For i = 0 To CurRun.EndStep - 1
+                array_step_s(i).Enabled = True
             Next
         ElseIf index = False Then
             Me.TabControl2.SelectedIndex = 0
@@ -459,10 +460,9 @@ Public Class Program
             startButton.Enabled = True
             stopButton.Enabled = False
             Accept_Button.Enabled = False
-            Test_SetButton.Enabled = False
+            Test_NextButton.Enabled = False
             Test_StartButton.Enabled = False
             Test_ConfirmButton.Enabled = False
-            Test_Apply_Button.Enabled = False
 
             'clear textbox content
             TextBox_L.Text = Nothing
@@ -940,7 +940,7 @@ Public Class Program
         LinkLabel_ExA2_Thd_1st.Enabled = False
         LinkLabel_ExA2_Add_1st.Enabled = False
 
-       
+
 
         PanelExcavatorA1.Controls.Add(Panel_ExA1_Fst_1st)
         PanelExcavatorA1.Controls.Add(Panel_ExA1_Sec_1st)
@@ -2127,6 +2127,29 @@ Public Class Program
                             startButton.Enabled = False
                             stopButton.Enabled = False
                             array_step(CurRun.CurStep - 1).BackColor = Color.Green
+                            '####TODO Leq is not right
+
+                            Dim series As List(Of DataVisualization.Charting.Series) = MainLineGraph.GetSeries()
+                            Dim points As DataVisualization.Charting.DataPointCollection = series(series.Count - 1).Points
+                            Dim Leq As Double = points(points.Count - 1).YValues(0)
+                            If series.Count = 4 + 1 Then
+                                CurRun.GRU.SetMs(Meter_Measure_Unit.SeriesToMMU(series(0), Leq),
+                                                Meter_Measure_Unit.SeriesToMMU(series(1), Leq),
+                                                Meter_Measure_Unit.SeriesToMMU(series(2), Leq),
+                                                Meter_Measure_Unit.SeriesToMMU(series(3), Leq),
+                                                "", "")
+                            Else
+                                CurRun.GRU.SetMs(Meter_Measure_Unit.SeriesToMMU(series(0), Leq),
+                                                Meter_Measure_Unit.SeriesToMMU(series(1), Leq),
+                                                Meter_Measure_Unit.SeriesToMMU(series(2), Leq),
+                                                Meter_Measure_Unit.SeriesToMMU(series(3), Leq),
+                                                Meter_Measure_Unit.SeriesToMMU(series(4), Leq),
+                                                Meter_Measure_Unit.SeriesToMMU(series(5), Leq),
+                                                "", "")
+                            End If
+                            If Not CurRun.Name.Contains("Cal") Then
+                                DataGrid.ShowGRUonForm(CurRun.GRU)
+                            End If
                         End If
 
                         'Cur_A_Unit.AddGrid_Run_Unit()
@@ -2269,7 +2292,7 @@ Public Class Program
             startButton.Enabled = True
             stopButton.Enabled = False
             All_Panel_Enable()
-
+            
             'bounce back
             If CurRun.Name = "ExA1" Or CurRun.Name = "LoA1" Or CurRun.Name = "TrA1" Or CurRun.Name = "A4" Or CurRun.Name = "ExA1_Add" Or CurRun.Name = "LoA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "A4_Add" Or CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA3_fwd" Or CurRun.Name = "LoA3_bkd" Or CurRun.Name = "TrA3_fwd" Or CurRun.Name = "TrA3_bkd" Or CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "LoA3_bkd_Add" Or CurRun.Name = "TrA3_fwd_Add" Or CurRun.Name = "TrA3_bkd_Add" Then
                 'dispose data
@@ -2347,100 +2370,74 @@ Public Class Program
 
 
     Private Sub Test_StartButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_StartButton.Click
-        Test_SetButton.Enabled = True
+        Load_New_Graph_CD_True()
+        Test_NextButton.Enabled = False
+        Test_StopButton.Enabled = True
         Test_StartButton.Enabled = False
         Timer1.Start()
     End Sub
-
-    Private Sub Test_SetButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_SetButton.Click
+    Private Sub Test_StopButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_StopButton.Click
+        Test_NextButton.Enabled = True
+        Test_StopButton.Enabled = False
+        Test_StartButton.Enabled = True
+        Timer1.Stop()
+        CurRun.Steps.Time = timeLeft
+        array_step_s(Index_for_Setup_Time).Text = CurRun.Steps.Time
+        array_step_s(Index_for_Setup_Time).Enabled = True
+        timeLeft = 0
+        timeLabel.Text = timeLeft & " s"
         If CurRun.CurStep = CurRun.EndStep Then 'last step (not HasNextStep)
-
             Test_ConfirmButton.Enabled = True
             'Test_Apply_Button.Enabled = True
-            Test_SetButton.Enabled = False
-            Timer1.Stop()
-            array_step(CurRun.CurStep - 1).BackColor = Color.Green
-            CurRun.Steps.Time = timeLeft - Last_timeLeft
-            array_step_s(Index_for_Setup_Time).Text = CurRun.Steps.Time
-            Index_for_Setup_Time += 1
-            CurRun.Steps = CurRun.Steps.NextStep 'jump to next step
-            CurRun.CurStep += 1 'curstep add 1
-            Last_timeLeft = timeLeft
-
-            If CurRun.Name = "LoA3_bkd" Or CurRun.Name = "TrA3_bkd" Then
-                For i = CurRun.PrevUnit.EndStep To CurRun.PrevUnit.EndStep + CurRun.EndStep - 1
-                    array_step_s(i).Enabled = True
-                Next
-            Else
-                For i = 0 To CurRun.EndStep - 1
-                    array_step_s(i).Enabled = True
-                Next
-            End If
-        Else 'HasNextStep
-
-            Set_Step_BackColor()
-            CurRun.Steps.Time = timeLeft - Last_timeLeft
-            array_step_s(Index_for_Setup_Time).Text = CurRun.Steps.Time
-            Index_for_Setup_Time += 1
-            CurRun.Steps = CurRun.Steps.NextStep 'jump to next step
-            CurRun.CurStep += 1 'curstep add 1
-            Last_timeLeft = timeLeft
+            Test_NextButton.Enabled = False
         End If
     End Sub
+    Private Sub Test_NextButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_NextButton.Click
+        Test_NextButton.Enabled = False
+        If CurRun.CurStep = CurRun.EndStep Then 'last step (not HasNextStep)
+            array_step(CurRun.CurStep - 1).BackColor = Color.Green
+        Else 'HasNextStep
+            Set_Step_BackColor()
+        End If
+        Index_for_Setup_Time += 1
+        CurRun.Steps = CurRun.Steps.NextStep 'jump to next step
+        CurRun.CurStep += 1 'curstep add 1
+    End Sub
     Private Sub Test_ConfirmButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_ConfirmButton.Click
-        If CurRun.NextUnit.Name = "LoA3_bkd" Or CurRun.NextUnit.Name = "TrA3_bkd" Then
-            MessageBox.Show("next is A3bkd")
-            'back to initial test condition
+        Dim Input_S_Apply As Boolean = True
+        For i = 0 To CurRun.EndStep - 1
+            If array_step_s(i).Text = "" Or array_step_s(i).Text = "0" Then
+                MessageBox.Show("Step" + (i + 1).ToString + "尚未輸入時間")
+                Input_S_Apply = False
+                Test_ConfirmButton.Enabled = True
+            End If
+        Next
+        If Input_S_Apply = True Then
+            Load_Steps_helper(CurRun)
             For i = 0 To CurRun.EndStep - 1
-                array_step_s(i).Enabled = False
+                'If array_step_s(i).Modified = True Then
+                CurRun.HeadStep.Time = array_step_s(i).Text
+                CurStep = CurRun.HeadStep.NextStep
+                'End If
             Next
-            Test_StartButton.Enabled = True
-            Test_SetButton.Enabled = False
-            Test_ConfirmButton.Enabled = False
-            Test_Apply_Button.Enabled = False
-            For i = 0 To 8
-                array_step_s(i).Modified = False
-            Next
-            Last_timeLeft = 0
-
-            ' change light
-            Set_Panel_BackColor()
-
-            'jump to next Run_Unit
-            CurRun = CurRun.NextUnit
-            CurRun.Steps = Load_Steps_helper(CurRun)
-            CurStep = CurRun.HeadStep
-            timeLeft = 0
-            timeLabel.Text = timeLeft & " s"
-            'Load_Steps_helper(CurRun)
-
-            'load A1's steps
-            Clear_Steps()
-            Load_Steps()
-
-            'dispose old graph and create new graph
-            Load_New_Graph_CD_True()
-        Else
-            'If CurRun.EndStep = Index_for_Setup_Time Then
-            If Original_Second_Dispose = False Then
-                Tabcontrol2_Index_Change = False
-                Tabcontrol_Changed(Tabcontrol2_Index_Change)
-                Countdown = True
-                Index_for_Setup_Time = 0
-                Last_timeLeft = 0
+            If CurRun.NextUnit.Name = "LoA3_bkd" Or CurRun.NextUnit.Name = "TrA3_bkd" Then
+                'back to initial test condition
+                For i = 0 To CurRun.EndStep - 1
+                    array_step_s(i).Enabled = False
+                Next
+                Test_StartButton.Enabled = True
+                Test_NextButton.Enabled = False
+                Test_ConfirmButton.Enabled = False
                 ' change light
                 Set_Panel_BackColor()
-                CurRun.Link.Enabled = True
-                If CurRun.PrevUnit.Name = "LoA3_fwd" Or CurRun.PrevUnit.Name = "TrA3_fwd" Then
-                    CurRun.PrevUnit.Link.Enabled = True
-                End If
+                Index_for_Setup_Time += 1
                 'jump to next Run_Unit
                 CurRun = CurRun.NextUnit
                 CurRun.Steps = Load_Steps_helper(CurRun)
                 CurStep = CurRun.HeadStep
-                timeLeft = CurRun.Steps.Time
+                timeLeft = 0
                 timeLabel.Text = timeLeft & " s"
-                Load_Steps_helper(CurRun)
+                'Load_Steps_helper(CurRun)
 
                 'load A1's steps
                 Clear_Steps()
@@ -2448,34 +2445,18 @@ Public Class Program
 
                 'dispose old graph and create new graph
                 Load_New_Graph_CD_True()
-            ElseIf Original_Second_Dispose = True Then
+            Else
                 Tabcontrol2_Index_Change = False
                 Tabcontrol_Changed(Tabcontrol2_Index_Change)
-                Original_Second_Dispose = False
-                'MessageBox.Show("original dispose")
                 Countdown = True
                 Index_for_Setup_Time = 0
                 Last_timeLeft = 0
 
                 If CurRun.Name = "LoA3_bkd" Or CurRun.Name = "TrA3_bkd" Then
-                    CurRun.PrevUnit.Set_BackColor(Color.Yellow)
-                    CurRun.Set_BackColor(Color.IndianRed)
-                    CurRun = CurRun.PrevUnit
-                    CurRun.Steps = Load_Steps_helper(CurRun)
-                    CurStep = CurRun.HeadStep
-                    CurRun.CurStep = 1
-                    CurRun.NextUnit.CurStep = 1
-                    Load_Steps_helper(CurRun)
-                    Load_Steps_helper(CurRun.NextUnit)
-                    timeLeft = CurRun.Steps.Time
-                    timeLabel.Text = timeLeft & " s"
+                    Restart_from_1st_Previous_Run_Unit()
                 Else
                     'don't jump to next Run_Unit
-                    CurRun.Steps = Load_Steps_helper(CurRun)
-                    CurStep = CurRun.HeadStep
-                    CurRun.CurStep = 1
-                    timeLeft = CurRun.Steps.Time
-                    timeLabel.Text = timeLeft & " s"
+                    Set_Run_Unit()
                 End If
 
                 'load steps
@@ -2485,88 +2466,12 @@ Public Class Program
                 'dispose old graph and create new graph
                 Load_New_Graph_CD_True()
             End If
-            'Else
-            'MessageBox.Show("Error")
-            'End If
         End If
 
-    End Sub
-    Private Sub Input_S_Step1_changed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Input_S_Step1.ModifiedChanged
-        Test_Apply_Button.Enabled = True
-        Test_ConfirmButton.Enabled = False
-        Input_S_Step1.Modified = False
-        Original_Second_Dispose = True
-    End Sub
-    Private Sub Input_S_Step2_changed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Input_S_Step2.ModifiedChanged
-        Test_Apply_Button.Enabled = True
-        Test_ConfirmButton.Enabled = False
-        Input_S_Step2.Modified = False
-        Original_Second_Dispose = True
-    End Sub
-    Private Sub Input_S_Step3_changed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Input_S_Step3.ModifiedChanged
-        Test_Apply_Button.Enabled = True
-        Test_ConfirmButton.Enabled = False
-        Input_S_Step3.Modified = False
-        Original_Second_Dispose = True
-    End Sub
-    Private Sub Input_S_Step4_changed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Input_S_Step4.ModifiedChanged
-        Test_Apply_Button.Enabled = True
-        Test_ConfirmButton.Enabled = False
-        Input_S_Step4.Modified = False
-        Original_Second_Dispose = True
-    End Sub
-    Private Sub Input_S_Step5_changed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Input_S_Step5.ModifiedChanged
-        Test_Apply_Button.Enabled = True
-        Test_ConfirmButton.Enabled = False
-        Input_S_Step5.Modified = False
-        Original_Second_Dispose = True
-    End Sub
-    Private Sub Input_S_Step6_changed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Input_S_Step6.ModifiedChanged
-        Test_Apply_Button.Enabled = True
-        Test_ConfirmButton.Enabled = False
-        Input_S_Step6.Modified = False
-        Original_Second_Dispose = True
-    End Sub
-    Private Sub Input_S_Step7_changed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Input_S_Step7.ModifiedChanged
-        Test_Apply_Button.Enabled = True
-        Test_ConfirmButton.Enabled = False
-        Input_S_Step7.Modified = False
-        Original_Second_Dispose = True
-    End Sub
-    Private Sub Input_S_Step8_changed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Input_S_Step8.ModifiedChanged
-        Test_Apply_Button.Enabled = True
-        Test_ConfirmButton.Enabled = False
-        Input_S_Step8.Modified = False
-        Original_Second_Dispose = True
-    End Sub
-    Private Sub Input_S_Step9_changed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Input_S_Step9.ModifiedChanged
-        Test_Apply_Button.Enabled = True
-        Test_ConfirmButton.Enabled = False
-        Input_S_Step9.Modified = False
-        Original_Second_Dispose = True
-    End Sub
-    Private Sub Test_Apply_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_Apply_Button.Click
-        Test_Apply_Button.Enabled = False
-        Dim Input_S_Apply As Boolean = True
-        For i = 0 To CurRun.EndStep - 1
-            If array_step_s(i).Text = "" Or array_step_s(i).Text = "0" Then
-                MessageBox.Show("Step" + (i + 1).ToString + "尚未輸入時間")
-                Input_S_Apply = False
-                Test_Apply_Button.Enabled = True
-            End If
-        Next
-        If Input_S_Apply = True Then
-            Load_Steps_helper(CurRun)
-            For i = 0 To CurRun.EndStep - 1
-                If array_step_s(i).Modified = True Then
-                    CurRun.HeadStep.Time = array_step_s(i).Text
-                    CurStep = CurRun.HeadStep.NextStep
-                End If
-            Next
 
-            Test_ConfirmButton.Enabled = True
-        End If
+
     End Sub
+  
 
     Sub Reset_Test_Time()
         CurRun.Steps = Load_Steps_helper(CurRun)
@@ -3437,6 +3342,5 @@ Public Class Program
         Dim y = p1.Y + con2.Y - con3.Y
         Return New System.Drawing.Point(x, y)
     End Function
-
 
 End Class

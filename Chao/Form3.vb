@@ -2127,6 +2127,7 @@ Public Class Program
                             startButton.Enabled = False
                             stopButton.Enabled = False
                             array_step(CurRun.CurStep - 1).BackColor = Color.Green
+
                             '####TODO Leq is not right
 
                             Dim series As List(Of DataVisualization.Charting.Series) = MainLineGraph.GetSeries()
@@ -2500,6 +2501,8 @@ Public Class Program
         Else
             Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
             If Result = DialogResult.Yes Then
+                'save data
+
                 All_Panel_Enable()
                 CurRun.Set_BackColor(Color.Green)
                 Temp_CurRun.Set_BackColor(Color.Yellow)
@@ -2524,7 +2527,32 @@ Public Class Program
                 End If
                 timeLabel.Text = timeLeft & " s"
             ElseIf Result = DialogResult.No Then
-                Accept_No()
+                'Accept_No()
+                'don't save data
+
+                All_Panel_Enable()
+                CurRun.Set_BackColor(Color.Green)
+                Temp_CurRun.Set_BackColor(Color.Yellow)
+
+                CurRun = Temp_CurRun
+                Temp_CurRun = Null_CurRun
+
+                If Temp_Countdown = True Then
+                    Countdown = True
+                    Set_Run_Unit()
+                    Clear_Steps()
+                    Load_Steps()
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_True()
+                Else
+                    Countdown = False
+                    timeLeft = CurRun.Time
+                    timeLabel.Text = timeLeft & " s"
+                    Clear_Steps()
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_False()
+                End If
+                timeLabel.Text = timeLeft & " s"
             ElseIf Result = DialogResult.Cancel Then
                 Accept_Cancel()
             End If
@@ -2534,6 +2562,8 @@ Public Class Program
     Sub Jump_Back_Countdown_False()
         Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
         If Result = DialogResult.Yes Then
+            'save data
+
             All_Panel_Enable()
             CurRun.Set_BackColor(Color.Green)
             Temp_CurRun.Set_BackColor(Color.Yellow)
@@ -2559,7 +2589,32 @@ Public Class Program
             Temp_CurRun = Null_CurRun
             timeLabel.Text = timeLeft & " s"
         ElseIf Result = DialogResult.No Then
-            Accept_No()
+            'Accept_No()
+            'don't save data
+            All_Panel_Enable()
+            CurRun.Set_BackColor(Color.Green)
+            Temp_CurRun.Set_BackColor(Color.Yellow)
+            CurRun = Temp_CurRun
+            If Temp_Countdown = True Then
+                Countdown = True
+                CurRun.Steps = Load_Steps_helper(CurRun)
+                CurRun.CurStep = 1
+                CurStep = CurRun.Steps
+                timeLeft = CurRun.Steps.Time
+                timeLabel.Text = timeLeft & " s"
+                Clear_Steps()
+                Load_Steps()
+                'dispose old graph and create new graph
+                Load_New_Graph_CD_True()
+            Else
+                Countdown = False
+                timeLeft = CurRun.Time
+                timeLabel.Text = timeLeft & " s"
+                'dispose old graph and create new graph
+                Load_New_Graph_CD_False()
+            End If
+            Temp_CurRun = Null_CurRun
+            timeLabel.Text = timeLeft & " s"
         ElseIf Result = DialogResult.Cancel Then
             Accept_Cancel()
         End If
@@ -2793,6 +2848,7 @@ Public Class Program
                             CurRun.Link.Enabled = True
                             'jump to next Run_Unit and change light
                             RandBool = RandGen.Next(0, 2).ToString
+                            RandBool = False
                             If RandBool = True Then
                                 'True: add test
                                 CurRun = CurRun.NextUnit

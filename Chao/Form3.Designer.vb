@@ -23,12 +23,12 @@ Partial Class Program
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Button_change_machine = New System.Windows.Forms.Button()
@@ -889,10 +889,10 @@ Partial Class Program
         Me.LinkLabel_PostCal_6th.Location = New System.Drawing.Point(4, 4)
         Me.LinkLabel_PostCal_6th.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PostCal_6th.Name = "LinkLabel_PostCal_6th"
-        Me.LinkLabel_PostCal_6th.Size = New System.Drawing.Size(23, 12)
+        Me.LinkLabel_PostCal_6th.Size = New System.Drawing.Size(26, 12)
         Me.LinkLabel_PostCal_6th.TabIndex = 1
         Me.LinkLabel_PostCal_6th.TabStop = True
-        Me.LinkLabel_PostCal_6th.Text = "6th"
+        Me.LinkLabel_PostCal_6th.Text = "p12"
         '
         'Panel_PostCal_5th
         '
@@ -909,10 +909,10 @@ Partial Class Program
         Me.LinkLabel_PostCal_5th.Location = New System.Drawing.Point(4, 2)
         Me.LinkLabel_PostCal_5th.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PostCal_5th.Name = "LinkLabel_PostCal_5th"
-        Me.LinkLabel_PostCal_5th.Size = New System.Drawing.Size(23, 12)
+        Me.LinkLabel_PostCal_5th.Size = New System.Drawing.Size(26, 12)
         Me.LinkLabel_PostCal_5th.TabIndex = 1
         Me.LinkLabel_PostCal_5th.TabStop = True
-        Me.LinkLabel_PostCal_5th.Text = "5th"
+        Me.LinkLabel_PostCal_5th.Text = "P10"
         '
         'Panel_PostCal_4th
         '
@@ -929,10 +929,10 @@ Partial Class Program
         Me.LinkLabel_PostCal_4th.Location = New System.Drawing.Point(4, 3)
         Me.LinkLabel_PostCal_4th.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PostCal_4th.Name = "LinkLabel_PostCal_4th"
-        Me.LinkLabel_PostCal_4th.Size = New System.Drawing.Size(23, 12)
+        Me.LinkLabel_PostCal_4th.Size = New System.Drawing.Size(19, 12)
         Me.LinkLabel_PostCal_4th.TabIndex = 1
         Me.LinkLabel_PostCal_4th.TabStop = True
-        Me.LinkLabel_PostCal_4th.Text = "4th"
+        Me.LinkLabel_PostCal_4th.Text = "P8"
         '
         'Panel_PostCal_3rd
         '
@@ -949,10 +949,10 @@ Partial Class Program
         Me.LinkLabel_PostCal_3rd.Location = New System.Drawing.Point(4, 2)
         Me.LinkLabel_PostCal_3rd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PostCal_3rd.Name = "LinkLabel_PostCal_3rd"
-        Me.LinkLabel_PostCal_3rd.Size = New System.Drawing.Size(24, 12)
+        Me.LinkLabel_PostCal_3rd.Size = New System.Drawing.Size(19, 12)
         Me.LinkLabel_PostCal_3rd.TabIndex = 1
         Me.LinkLabel_PostCal_3rd.TabStop = True
-        Me.LinkLabel_PostCal_3rd.Text = "3rd"
+        Me.LinkLabel_PostCal_3rd.Text = "P6"
         '
         'Panel_PostCal_2nd
         '
@@ -969,10 +969,10 @@ Partial Class Program
         Me.LinkLabel_PostCal_2nd.Location = New System.Drawing.Point(4, 3)
         Me.LinkLabel_PostCal_2nd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PostCal_2nd.Name = "LinkLabel_PostCal_2nd"
-        Me.LinkLabel_PostCal_2nd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_PostCal_2nd.Size = New System.Drawing.Size(19, 12)
         Me.LinkLabel_PostCal_2nd.TabIndex = 1
         Me.LinkLabel_PostCal_2nd.TabStop = True
-        Me.LinkLabel_PostCal_2nd.Text = "2nd"
+        Me.LinkLabel_PostCal_2nd.Text = "P4"
         '
         'Panel_PostCal_1st
         '
@@ -989,10 +989,10 @@ Partial Class Program
         Me.LinkLabel_PostCal_1st.Location = New System.Drawing.Point(4, 6)
         Me.LinkLabel_PostCal_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PostCal_1st.Name = "LinkLabel_PostCal_1st"
-        Me.LinkLabel_PostCal_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_PostCal_1st.Size = New System.Drawing.Size(19, 12)
         Me.LinkLabel_PostCal_1st.TabIndex = 0
         Me.LinkLabel_PostCal_1st.TabStop = True
-        Me.LinkLabel_PostCal_1st.Text = "1st"
+        Me.LinkLabel_PostCal_1st.Text = "P2"
         '
         'PanelTractorA1
         '
@@ -1022,10 +1022,10 @@ Partial Class Program
         Me.LinkLabel_TrA1_Add_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_TrA1_Add_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_TrA1_Add_1st.Name = "LinkLabel_TrA1_Add_1st"
-        Me.LinkLabel_TrA1_Add_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_TrA1_Add_1st.Size = New System.Drawing.Size(28, 12)
         Me.LinkLabel_TrA1_Add_1st.TabIndex = 65
         Me.LinkLabel_TrA1_Add_1st.TabStop = True
-        Me.LinkLabel_TrA1_Add_1st.Text = "1st"
+        Me.LinkLabel_TrA1_Add_1st.Text = "Run"
         '
         'Panel_TrA1_Thd_1st
         '
@@ -1042,10 +1042,10 @@ Partial Class Program
         Me.LinkLabel_TrA1_Thd_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_TrA1_Thd_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_TrA1_Thd_1st.Name = "LinkLabel_TrA1_Thd_1st"
-        Me.LinkLabel_TrA1_Thd_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_TrA1_Thd_1st.Size = New System.Drawing.Size(28, 12)
         Me.LinkLabel_TrA1_Thd_1st.TabIndex = 65
         Me.LinkLabel_TrA1_Thd_1st.TabStop = True
-        Me.LinkLabel_TrA1_Thd_1st.Text = "1st"
+        Me.LinkLabel_TrA1_Thd_1st.Text = "Run"
         '
         'Panel_TrA1_Sec_1st
         '
@@ -1062,10 +1062,10 @@ Partial Class Program
         Me.LinkLabel_TrA1_Sec_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_TrA1_Sec_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_TrA1_Sec_1st.Name = "LinkLabel_TrA1_Sec_1st"
-        Me.LinkLabel_TrA1_Sec_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_TrA1_Sec_1st.Size = New System.Drawing.Size(28, 12)
         Me.LinkLabel_TrA1_Sec_1st.TabIndex = 65
         Me.LinkLabel_TrA1_Sec_1st.TabStop = True
-        Me.LinkLabel_TrA1_Sec_1st.Text = "1st"
+        Me.LinkLabel_TrA1_Sec_1st.Text = "Run"
         '
         'Label_Tr_A1
         '
@@ -1092,10 +1092,10 @@ Partial Class Program
         Me.LinkLabel_TrA1_Fst_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_TrA1_Fst_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_TrA1_Fst_1st.Name = "LinkLabel_TrA1_Fst_1st"
-        Me.LinkLabel_TrA1_Fst_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_TrA1_Fst_1st.Size = New System.Drawing.Size(28, 12)
         Me.LinkLabel_TrA1_Fst_1st.TabIndex = 65
         Me.LinkLabel_TrA1_Fst_1st.TabStop = True
-        Me.LinkLabel_TrA1_Fst_1st.Text = "1st"
+        Me.LinkLabel_TrA1_Fst_1st.Text = "Run"
         '
         'PanelA4
         '
@@ -1789,10 +1789,10 @@ Partial Class Program
         Me.LinkLabel_PreCal_6th.Location = New System.Drawing.Point(4, 4)
         Me.LinkLabel_PreCal_6th.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PreCal_6th.Name = "LinkLabel_PreCal_6th"
-        Me.LinkLabel_PreCal_6th.Size = New System.Drawing.Size(23, 12)
+        Me.LinkLabel_PreCal_6th.Size = New System.Drawing.Size(26, 12)
         Me.LinkLabel_PreCal_6th.TabIndex = 1
         Me.LinkLabel_PreCal_6th.TabStop = True
-        Me.LinkLabel_PreCal_6th.Text = "6th"
+        Me.LinkLabel_PreCal_6th.Text = "P12"
         '
         'Panel_PreCal_5th
         '
@@ -1809,10 +1809,10 @@ Partial Class Program
         Me.LinkLabel_PreCal_5th.Location = New System.Drawing.Point(4, 2)
         Me.LinkLabel_PreCal_5th.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PreCal_5th.Name = "LinkLabel_PreCal_5th"
-        Me.LinkLabel_PreCal_5th.Size = New System.Drawing.Size(23, 12)
+        Me.LinkLabel_PreCal_5th.Size = New System.Drawing.Size(26, 12)
         Me.LinkLabel_PreCal_5th.TabIndex = 1
         Me.LinkLabel_PreCal_5th.TabStop = True
-        Me.LinkLabel_PreCal_5th.Text = "5th"
+        Me.LinkLabel_PreCal_5th.Text = "P10"
         '
         'Panel_PreCal_4th
         '
@@ -1829,10 +1829,10 @@ Partial Class Program
         Me.LinkLabel_PreCal_4th.Location = New System.Drawing.Point(4, 3)
         Me.LinkLabel_PreCal_4th.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PreCal_4th.Name = "LinkLabel_PreCal_4th"
-        Me.LinkLabel_PreCal_4th.Size = New System.Drawing.Size(23, 12)
+        Me.LinkLabel_PreCal_4th.Size = New System.Drawing.Size(19, 12)
         Me.LinkLabel_PreCal_4th.TabIndex = 1
         Me.LinkLabel_PreCal_4th.TabStop = True
-        Me.LinkLabel_PreCal_4th.Text = "4th"
+        Me.LinkLabel_PreCal_4th.Text = "P8"
         '
         'Panel_PreCal_3rd
         '
@@ -1849,10 +1849,10 @@ Partial Class Program
         Me.LinkLabel_PreCal_3rd.Location = New System.Drawing.Point(4, 2)
         Me.LinkLabel_PreCal_3rd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PreCal_3rd.Name = "LinkLabel_PreCal_3rd"
-        Me.LinkLabel_PreCal_3rd.Size = New System.Drawing.Size(24, 12)
+        Me.LinkLabel_PreCal_3rd.Size = New System.Drawing.Size(19, 12)
         Me.LinkLabel_PreCal_3rd.TabIndex = 1
         Me.LinkLabel_PreCal_3rd.TabStop = True
-        Me.LinkLabel_PreCal_3rd.Text = "3rd"
+        Me.LinkLabel_PreCal_3rd.Text = "P6"
         '
         'Panel_PreCal_2nd
         '
@@ -1869,10 +1869,10 @@ Partial Class Program
         Me.LinkLabel_PreCal_2nd.Location = New System.Drawing.Point(4, 3)
         Me.LinkLabel_PreCal_2nd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PreCal_2nd.Name = "LinkLabel_PreCal_2nd"
-        Me.LinkLabel_PreCal_2nd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_PreCal_2nd.Size = New System.Drawing.Size(19, 12)
         Me.LinkLabel_PreCal_2nd.TabIndex = 1
         Me.LinkLabel_PreCal_2nd.TabStop = True
-        Me.LinkLabel_PreCal_2nd.Text = "2nd"
+        Me.LinkLabel_PreCal_2nd.Text = "P4"
         '
         'Panel_PreCal_1st
         '
@@ -1889,10 +1889,10 @@ Partial Class Program
         Me.LinkLabel_PreCal_1st.Location = New System.Drawing.Point(4, 6)
         Me.LinkLabel_PreCal_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PreCal_1st.Name = "LinkLabel_PreCal_1st"
-        Me.LinkLabel_PreCal_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_PreCal_1st.Size = New System.Drawing.Size(19, 12)
         Me.LinkLabel_PreCal_1st.TabIndex = 0
         Me.LinkLabel_PreCal_1st.TabStop = True
-        Me.LinkLabel_PreCal_1st.Text = "1st"
+        Me.LinkLabel_PreCal_1st.Text = "P2"
         '
         'PanelLoaderA1
         '
@@ -1901,7 +1901,7 @@ Partial Class Program
         Me.PanelLoaderA1.Controls.Add(Me.Panel_LoA1_Sec_1st)
         Me.PanelLoaderA1.Controls.Add(Me.Label_Lo_A1)
         Me.PanelLoaderA1.Controls.Add(Me.Panel_LoA1_Fst_1st)
-        Me.PanelLoaderA1.Location = New System.Drawing.Point(281, 21)
+        Me.PanelLoaderA1.Location = New System.Drawing.Point(415, 36)
         Me.PanelLoaderA1.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.PanelLoaderA1.Name = "PanelLoaderA1"
         Me.PanelLoaderA1.Size = New System.Drawing.Size(38, 351)
@@ -1922,10 +1922,10 @@ Partial Class Program
         Me.LinkLabel_LoA1_Add_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA1_Add_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA1_Add_1st.Name = "LinkLabel_LoA1_Add_1st"
-        Me.LinkLabel_LoA1_Add_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_LoA1_Add_1st.Size = New System.Drawing.Size(28, 12)
         Me.LinkLabel_LoA1_Add_1st.TabIndex = 65
         Me.LinkLabel_LoA1_Add_1st.TabStop = True
-        Me.LinkLabel_LoA1_Add_1st.Text = "1st"
+        Me.LinkLabel_LoA1_Add_1st.Text = "Run"
         '
         'Panel_LoA1_Thd_1st
         '
@@ -1942,10 +1942,10 @@ Partial Class Program
         Me.LinkLabel_LoA1_Thd_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA1_Thd_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA1_Thd_1st.Name = "LinkLabel_LoA1_Thd_1st"
-        Me.LinkLabel_LoA1_Thd_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_LoA1_Thd_1st.Size = New System.Drawing.Size(28, 12)
         Me.LinkLabel_LoA1_Thd_1st.TabIndex = 65
         Me.LinkLabel_LoA1_Thd_1st.TabStop = True
-        Me.LinkLabel_LoA1_Thd_1st.Text = "1st"
+        Me.LinkLabel_LoA1_Thd_1st.Text = "Run"
         '
         'Panel_LoA1_Sec_1st
         '
@@ -1962,10 +1962,10 @@ Partial Class Program
         Me.LinkLabel_LoA1_Sec_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA1_Sec_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA1_Sec_1st.Name = "LinkLabel_LoA1_Sec_1st"
-        Me.LinkLabel_LoA1_Sec_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_LoA1_Sec_1st.Size = New System.Drawing.Size(28, 12)
         Me.LinkLabel_LoA1_Sec_1st.TabIndex = 65
         Me.LinkLabel_LoA1_Sec_1st.TabStop = True
-        Me.LinkLabel_LoA1_Sec_1st.Text = "1st"
+        Me.LinkLabel_LoA1_Sec_1st.Text = "Run"
         '
         'Label_Lo_A1
         '
@@ -1992,10 +1992,10 @@ Partial Class Program
         Me.LinkLabel_LoA1_Fst_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA1_Fst_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA1_Fst_1st.Name = "LinkLabel_LoA1_Fst_1st"
-        Me.LinkLabel_LoA1_Fst_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_LoA1_Fst_1st.Size = New System.Drawing.Size(28, 12)
         Me.LinkLabel_LoA1_Fst_1st.TabIndex = 65
         Me.LinkLabel_LoA1_Fst_1st.TabStop = True
-        Me.LinkLabel_LoA1_Fst_1st.Text = "1st"
+        Me.LinkLabel_LoA1_Fst_1st.Text = "Run"
         '
         'PanelLoaderA3
         '
@@ -2550,10 +2550,10 @@ Partial Class Program
         Me.LinkLabel_ExA1_Add_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA1_Add_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA1_Add_1st.Name = "LinkLabel_ExA1_Add_1st"
-        Me.LinkLabel_ExA1_Add_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_ExA1_Add_1st.Size = New System.Drawing.Size(28, 12)
         Me.LinkLabel_ExA1_Add_1st.TabIndex = 65
         Me.LinkLabel_ExA1_Add_1st.TabStop = True
-        Me.LinkLabel_ExA1_Add_1st.Text = "1st"
+        Me.LinkLabel_ExA1_Add_1st.Text = "Run"
         '
         'Panel_ExA1_Thd_1st
         '
@@ -2570,10 +2570,10 @@ Partial Class Program
         Me.LinkLabel_ExA1_Thd_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA1_Thd_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA1_Thd_1st.Name = "LinkLabel_ExA1_Thd_1st"
-        Me.LinkLabel_ExA1_Thd_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_ExA1_Thd_1st.Size = New System.Drawing.Size(28, 12)
         Me.LinkLabel_ExA1_Thd_1st.TabIndex = 65
         Me.LinkLabel_ExA1_Thd_1st.TabStop = True
-        Me.LinkLabel_ExA1_Thd_1st.Text = "1st"
+        Me.LinkLabel_ExA1_Thd_1st.Text = "Run"
         '
         'Panel_ExA1_Sec_1st
         '
@@ -2591,10 +2591,10 @@ Partial Class Program
         Me.LinkLabel_ExA1_Sec_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA1_Sec_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA1_Sec_1st.Name = "LinkLabel_ExA1_Sec_1st"
-        Me.LinkLabel_ExA1_Sec_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_ExA1_Sec_1st.Size = New System.Drawing.Size(28, 12)
         Me.LinkLabel_ExA1_Sec_1st.TabIndex = 65
         Me.LinkLabel_ExA1_Sec_1st.TabStop = True
-        Me.LinkLabel_ExA1_Sec_1st.Text = "1st"
+        Me.LinkLabel_ExA1_Sec_1st.Text = "Run"
         '
         'Label_Ex_A1
         '
@@ -2621,10 +2621,10 @@ Partial Class Program
         Me.LinkLabel_ExA1_Fst_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA1_Fst_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA1_Fst_1st.Name = "LinkLabel_ExA1_Fst_1st"
-        Me.LinkLabel_ExA1_Fst_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_ExA1_Fst_1st.Size = New System.Drawing.Size(28, 12)
         Me.LinkLabel_ExA1_Fst_1st.TabIndex = 65
         Me.LinkLabel_ExA1_Fst_1st.TabStop = True
-        Me.LinkLabel_ExA1_Fst_1st.Text = "1st"
+        Me.LinkLabel_ExA1_Fst_1st.Text = "Run"
         '
         'Label4
         '
@@ -2919,17 +2919,17 @@ Partial Class Program
         '
         'Chart2
         '
-        ChartArea1.Name = "ChartArea1"
-        Me.Chart2.ChartAreas.Add(ChartArea1)
-        Legend1.Name = "Legend1"
-        Me.Chart2.Legends.Add(Legend1)
+        ChartArea3.Name = "ChartArea1"
+        Me.Chart2.ChartAreas.Add(ChartArea3)
+        Legend3.Name = "Legend1"
+        Me.Chart2.Legends.Add(Legend3)
         Me.Chart2.Location = New System.Drawing.Point(566, 100)
         Me.Chart2.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Chart2.Name = "Chart2"
-        Series1.ChartArea = "ChartArea1"
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Me.Chart2.Series.Add(Series1)
+        Series3.ChartArea = "ChartArea1"
+        Series3.Legend = "Legend1"
+        Series3.Name = "Series1"
+        Me.Chart2.Series.Add(Series3)
         Me.Chart2.Size = New System.Drawing.Size(271, 466)
         Me.Chart2.TabIndex = 83
         Me.Chart2.Text = "Chart2"
@@ -2937,17 +2937,17 @@ Partial Class Program
         '
         'Chart1
         '
-        ChartArea2.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea2)
-        Legend2.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend2)
+        ChartArea4.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea4)
+        Legend4.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend4)
         Me.Chart1.Location = New System.Drawing.Point(-41, 5)
         Me.Chart1.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Chart1.Name = "Chart1"
-        Series2.ChartArea = "ChartArea1"
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series1"
-        Me.Chart1.Series.Add(Series2)
+        Series4.ChartArea = "ChartArea1"
+        Series4.Legend = "Legend1"
+        Series4.Name = "Series1"
+        Me.Chart1.Series.Add(Series4)
         Me.Chart1.Size = New System.Drawing.Size(914, 84)
         Me.Chart1.TabIndex = 82
         Me.Chart1.Text = "Chart1"

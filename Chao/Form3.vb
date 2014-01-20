@@ -174,6 +174,11 @@ Public Class Program
 
     Dim Result
 
+    Public array_ExA2_time(8) As Integer
+    Public array_LoA2_time(2) As Integer
+    Public array_LoA3_time(3) As Integer
+    Public array_TrA3_time(3) As Integer
+
     Public Sub New()
 
         ' 此為設計工具所需的呼叫。
@@ -882,11 +887,11 @@ Public Class Program
         Panel_PreCal_Sub.Visible = True
         Panel_PostCal_Sub.Visible = True
 
-        If Not Machine = Machines.Others Then
-            Panel_PreCal_5th.Visible = True
-            Panel_PreCal_6th.Visible = True
-            Panel_PostCal_5th.Visible = True
-            Panel_PostCal_6th.Visible = True
+        If Machine = Machines.Others Then
+            Panel_PreCal_5th.Visible = False
+            Panel_PreCal_6th.Visible = False
+            Panel_PostCal_5th.Visible = False
+            Panel_PostCal_6th.Visible = False
         End If
     End Sub
 
@@ -1928,78 +1933,60 @@ Public Class Program
         If tempRun.Name = "ExA1" Or tempRun.Name = "LoA1" Or tempRun.Name = "TrA1" Or tempRun.Name = "ExA1_Add" Or tempRun.Name = "LoA1_Add" Or tempRun.Name = "TrA1_Add" Then
             tempRun.Steps = New Steps(My.Resources.A1_step1, Step1, Nothing, True, 5)
             tempRun.HeadStep = tempRun.Steps
-        End If
-        If tempRun.Name = "ExA2_1st" Or tempRun.Name = "ExA2_1st_Add" Then
-            tempRun.Steps = New Steps(My.Resources.A2_Excavator_step1, Step1, Nothing, False, -1)
-            tempRun.HeadStep = tempRun.Steps
-            tempRun.Steps.NextStep = New Steps(My.Resources.A2_Excavator_step2, Step2, Nothing, False, -1)
-            tempStep = tempRun.Steps.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step3, Step3, Nothing, False, Input_S_Step3.Text)
+        ElseIf tempRun.Name = "ExA2_1st" Or tempRun.Name = "ExA2_1st_Add" Or tempRun.Name = "ExA2_2nd_3rd" Or tempRun.Name = "ExA2_2nd_3rd_Add" Then
+            If tempRun.Name = "ExA2_1st" Or tempRun.Name = "ExA2_1st_Add" Then
+                tempRun.Steps = New Steps(My.Resources.A2_Excavator_step1, Step1, Nothing, False, -1)
+                tempRun.HeadStep = tempRun.Steps
+                tempRun.Steps.NextStep = New Steps(My.Resources.A2_Excavator_step2, Step2, Nothing, False, -1)
+                tempStep = tempRun.Steps.NextStep
+                tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step3, Step3, Nothing, False, array_ExA2_time(2))
+                tempStep = tempStep.NextStep
+            ElseIf tempRun.Name = "ExA2_2nd_3rd" Or tempRun.Name = "ExA2_2nd_3rd_Add" Then
+                tempRun.Steps = New Steps(My.Resources.A2_Excavator_step2, Step1, Nothing, False, -1)
+                tempRun.HeadStep = tempRun.Steps
+                tempRun.Steps.NextStep = New Steps(My.Resources.A2_Excavator_step3, Step2, Nothing, False, array_ExA2_time(2))
+                tempStep = tempRun.Steps.NextStep
+            End If
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step4, Step4, Nothing, False, array_ExA2_time(3))
             tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step4, Step4, Nothing, False, Input_S_Step4.Text)
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step5, Step5, Nothing, False, array_ExA2_time(4))
             tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step5, Step5, Nothing, False, Input_S_Step5.Text)
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step6, Step6, Nothing, False, array_ExA2_time(5))
             tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step6, Step6, Nothing, False, Input_S_Step6.Text)
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step7, Step7, Nothing, False, array_ExA2_time(6))
             tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step7, Step7, Nothing, False, Input_S_Step7.Text)
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step8, Step8, Nothing, False, array_ExA2_time(7))
             tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step8, Step8, Nothing, False, Input_S_Step8.Text)
-            tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step9, Step9, Nothing, True, Input_S_Step9.Text)
-        End If
-        If tempRun.Name = "ExA2_2nd_3rd" Or tempRun.Name = "ExA2_2nd_3rd_Add" Then
-            tempRun.Steps = New Steps(My.Resources.A2_Excavator_step2, Step1, Nothing, False, -1)
-            tempRun.HeadStep = tempRun.Steps
-            tempRun.Steps.NextStep = New Steps(My.Resources.A2_Excavator_step3, Step2, Nothing, False, Input_S_Step3.Text)
-            tempStep = tempRun.Steps.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step4, Step3, Nothing, False, Input_S_Step4.Text)
-            tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step5, Step4, Nothing, False, Input_S_Step5.Text)
-            tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step6, Step5, Nothing, False, Input_S_Step6.Text)
-            tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step7, Step6, Nothing, False, Input_S_Step7.Text)
-            tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step8, Step7, Nothing, False, Input_S_Step8.Text)
-            tempStep = tempStep.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step9, Step8, Nothing, True, Input_S_Step9.Text)
-        End If
-        If tempRun.Name = "LoA2_1st" Or tempRun.Name = "LoA2_1st_Add" Then
+            tempStep.NextStep = New Steps(My.Resources.A2_Excavator_step9, Step9, Nothing, True, array_ExA2_time(8))
+        ElseIf tempRun.Name = "LoA2_1st" Or tempRun.Name = "LoA2_1st_Add" Then
             tempRun.Steps = New Steps(My.Resources.A2_Loader_step1, Step1, Nothing, False, -1)
             tempRun.HeadStep = tempRun.Steps
-            tempRun.Steps.NextStep = New Steps(My.Resources.A2_Loader_step2, Step2, Nothing, False, Input_S_Step2.Text)
+            tempRun.Steps.NextStep = New Steps(My.Resources.A2_Loader_step2, Step2, Nothing, False, array_LoA2_time(1))
             tempStep = tempRun.Steps.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A2_Loader_step3, Step3, Nothing, True, Input_S_Step3.Text)
-        End If
-        If tempRun.Name = "LoA2_2nd_3rd" Or tempRun.Name = "LoA2_2nd_3rd_Add" Then
-            tempRun.Steps = New Steps(My.Resources.A2_Loader_step2, Step1, Nothing, False, Input_S_Step2.Text)
+            tempStep.NextStep = New Steps(My.Resources.A2_Loader_step3, Step3, Nothing, True, array_LoA2_time(2))
+        ElseIf tempRun.Name = "LoA2_2nd_3rd" Or tempRun.Name = "LoA2_2nd_3rd_Add" Then
+            tempRun.Steps = New Steps(My.Resources.A2_Loader_step2, Step1, Nothing, False, array_LoA2_time(1))
             tempRun.HeadStep = tempRun.Steps
-            tempRun.Steps.NextStep = New Steps(My.Resources.A2_Loader_step3, Step2, Nothing, True, Input_S_Step3.Text)
-        End If
-        If tempRun.Name = "LoA3_fwd" Or tempRun.Name = "LoA3_fwd_Add" Then
+            tempRun.Steps.NextStep = New Steps(My.Resources.A2_Loader_step3, Step2, Nothing, True, array_LoA2_time(2))
+        ElseIf tempRun.Name = "LoA3_fwd" Or tempRun.Name = "LoA3_fwd_Add" Then
             tempRun.Steps = New Steps(My.Resources.A3_Loader_step1, Step1, Nothing, False, -1)
             tempRun.HeadStep = tempRun.Steps
             tempRun.Steps.NextStep = New Steps(My.Resources.A3_Loader_step2, Step2, Nothing, False, -1)
             tempStep = tempRun.Steps.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A3_Loader_step3, Step3, Nothing, True, Input_S_Step3.Text)
-        End If
-        If tempRun.Name = "LoA3_bkd" Or tempRun.Name = "LoA3_bkd_Add" Then
-            tempRun.Steps = New Steps(My.Resources.A3_Loader_step4, Step1, Nothing, True, Input_S_Step4.Text)
+            tempStep.NextStep = New Steps(My.Resources.A3_Loader_step3, Step3, Nothing, True, array_LoA3_time(2))
+        ElseIf tempRun.Name = "LoA3_bkd" Or tempRun.Name = "LoA3_bkd_Add" Then
+            tempRun.Steps = New Steps(My.Resources.A3_Loader_step4, Step1, Nothing, True, array_LoA3_time(3))
             tempRun.HeadStep = tempRun.Steps
-        End If
-        If tempRun.Name = "TrA3_fwd" Or tempRun.Name = "TrA3_fwd_Add" Then
+        ElseIf tempRun.Name = "TrA3_fwd" Or tempRun.Name = "TrA3_fwd_Add" Then
             tempRun.Steps = New Steps(My.Resources.A3_Tractor_step1, Step1, Nothing, False, -1)
             tempRun.HeadStep = tempRun.Steps
             tempRun.Steps.NextStep = New Steps(My.Resources.A3_Tractor_step2, Step2, Nothing, False, -1)
             tempStep = tempRun.Steps.NextStep
-            tempStep.NextStep = New Steps(My.Resources.A3_Tractor_step3, Step3, Nothing, True, Input_S_Step3.Text)
-        End If
-        If tempRun.Name = "TrA3_bkd" Or tempRun.Name = "TrA3_bkd_Add" Then
-            tempRun.Steps = New Steps(My.Resources.A3_Tractor_step4, Step1, Nothing, True, Input_S_Step4.Text)
+            tempStep.NextStep = New Steps(My.Resources.A3_Tractor_step3, Step3, Nothing, True, array_TrA3_time(2))
+        ElseIf tempRun.Name = "TrA3_bkd" Or tempRun.Name = "TrA3_bkd_Add" Then
+            tempRun.Steps = New Steps(My.Resources.A3_Tractor_step4, Step1, Nothing, True, array_TrA3_time(3))
             tempRun.HeadStep = tempRun.Steps
-        End If
-        If tempRun.Name = "A4" Or tempRun.Name = "A4_Add" Then
+        ElseIf tempRun.Name = "A4" Or tempRun.Name = "A4_Add" Then
             tempRun.Steps = New Steps(My.Resources.A4_Asphalt_Finisher, Step1, Nothing, True, 5)
             tempRun.HeadStep = tempRun.Steps
         End If
@@ -2111,7 +2098,6 @@ Public Class Program
                             startButton.Enabled = True
                             stopButton.Enabled = False
                             array_step(CurRun.CurStep - 1).BackColor = Color.Green
-
                             Set_Panel_BackColor()
                             CurRun = CurRun.NextUnit
                             Set_Run_Unit()
@@ -2122,7 +2108,6 @@ Public Class Program
 
                             'dispose old graph and create new graph
                             Load_New_Graph_CD_True()
-
                         Else
                             Accept_Button.Enabled = True
                             startButton.Enabled = False
@@ -2198,7 +2183,7 @@ Public Class Program
             If CurStep.Time = -1 Then
                 array_step(index - 1).BackColor = Color.Green
             Else
-                If CurRun.EndStep = 1 Then
+                If CurRun.EndStep = 1 Or index = 1 Then
                     array_step(index - 1).BackColor = Color.Yellow
                 Else
                     If array_step(index - 2).BackColor = Color.Green Then
@@ -2257,27 +2242,27 @@ Public Class Program
 
             '####TODO Leq is not right
 
-            Dim series As List(Of DataVisualization.Charting.Series) = MainLineGraph.GetSeries()
-            Dim points As DataVisualization.Charting.DataPointCollection = series(series.Count - 1).Points
-            Dim Leq As Double = points(points.Count - 1).YValues(0)
-            If series.Count = 4 + 1 Then
-                CurRun.GRU.SetMs(Meter_Measure_Unit.SeriesToMMU(series(0), Leq),
-                                Meter_Measure_Unit.SeriesToMMU(series(1), Leq),
-                                Meter_Measure_Unit.SeriesToMMU(series(2), Leq),
-                                Meter_Measure_Unit.SeriesToMMU(series(3), Leq),
-                                "", "")
-            Else
-                CurRun.GRU.SetMs(Meter_Measure_Unit.SeriesToMMU(series(0), Leq),
-                                Meter_Measure_Unit.SeriesToMMU(series(1), Leq),
-                                Meter_Measure_Unit.SeriesToMMU(series(2), Leq),
-                                Meter_Measure_Unit.SeriesToMMU(series(3), Leq),
-                                Meter_Measure_Unit.SeriesToMMU(series(4), Leq),
-                                Meter_Measure_Unit.SeriesToMMU(series(5), Leq),
-                                "", "")
-            End If
-            If Not CurRun.Name.Contains("Cal") Then
-                DataGrid.ShowGRUonForm(CurRun.GRU)
-            End If
+            'Dim series As List(Of DataVisualization.Charting.Series) = MainLineGraph.GetSeries()
+            'Dim points As DataVisualization.Charting.DataPointCollection = series(series.Count - 1).Points
+            'Dim Leq As Double = points(points.Count - 1).YValues(0)
+            'If series.Count = 4 + 1 Then
+            '    CurRun.GRU.SetMs(Meter_Measure_Unit.SeriesToMMU(series(0), Leq),
+            '                    Meter_Measure_Unit.SeriesToMMU(series(1), Leq),
+            '                    Meter_Measure_Unit.SeriesToMMU(series(2), Leq),
+            '                    Meter_Measure_Unit.SeriesToMMU(series(3), Leq),
+            '                    "", "")
+            'Else
+            '    CurRun.GRU.SetMs(Meter_Measure_Unit.SeriesToMMU(series(0), Leq),
+            '                    Meter_Measure_Unit.SeriesToMMU(series(1), Leq),
+            '                    Meter_Measure_Unit.SeriesToMMU(series(2), Leq),
+            '                    Meter_Measure_Unit.SeriesToMMU(series(3), Leq),
+            '                    Meter_Measure_Unit.SeriesToMMU(series(4), Leq),
+            '                    Meter_Measure_Unit.SeriesToMMU(series(5), Leq),
+            '                    "", "")
+            'End If
+            'If Not CurRun.Name.Contains("Cal") Then
+            '    DataGrid.ShowGRUonForm(CurRun.GRU)
+            'End If
         Else
             Timer1.Stop()
             startButton.Enabled = True
@@ -2352,7 +2337,6 @@ Public Class Program
         CurStep = CurRun.HeadStep
         CurRun.CurStep = 1
         For index = CurRun.StartStep To CurRun.EndStep
-            MessageBox.Show(CurRun.Steps.Time)
             If CurRun.Steps.Time = -1 Then
                 CurRun.Steps = CurRun.Steps.NextStep
                 CurRun.CurStep += 1
@@ -2368,8 +2352,14 @@ Public Class Program
         CurRun.Steps = Load_Steps_helper(CurRun)
         CurStep = CurRun.HeadStep
         CurRun.CurStep = 1
+        For index = CurRun.StartStep To CurRun.EndStep
+            If CurRun.Steps.Time = -1 Then
+                CurRun.Steps = CurRun.Steps.NextStep
+                CurRun.CurStep += 1
+            End If
+        Next
         CurRun.NextUnit.CurStep = 1
-        Load_Steps_helper(CurRun)
+        'Load_Steps_helper(CurRun)
         Load_Steps_helper(CurRun.NextUnit)
         timeLeft = CurRun.Steps.Time
         timeLabel.Text = timeLeft & " s"
@@ -2380,10 +2370,17 @@ Public Class Program
         CurRun.Set_BackColor(Color.IndianRed)
         CurRun = CurRun.PrevUnit.PrevUnit
         CurRun.Steps = Load_Steps_helper(CurRun)
+        CurStep = CurRun.HeadStep
         CurRun.CurStep = 1
+        For index = CurRun.StartStep To CurRun.EndStep
+            If CurRun.Steps.Time = -1 Then
+                CurRun.Steps = CurRun.Steps.NextStep
+                CurRun.CurStep += 1
+            End If
+        Next
         CurRun.NextUnit.CurStep = 1
         CurRun.NextUnit.NextUnit.CurStep = 1
-        Load_Steps_helper(CurRun)
+        'Load_Steps_helper(CurRun)
         Load_Steps_helper(CurRun.NextUnit)
         Load_Steps_helper(CurRun.NextUnit.NextUnit)
         CurStep = CurRun.HeadStep
@@ -2429,30 +2426,52 @@ Public Class Program
     Private Sub Test_ConfirmButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_ConfirmButton.Click
         Dim Input_S_Apply As Boolean = True
         CurStep = Load_Steps_helper(CurRun)
-        For i = 0 To CurRun.EndStep - 1
-            If Not CurStep.Time = -1 Then
-                If array_step_s(i).Text = "" Or array_step_s(i).Text = "0" Then
-                    MessageBox.Show("Step" + (i + 1).ToString + "尚未輸入時間")
-                    Input_S_Apply = False
-                    Test_ConfirmButton.Enabled = True
-                End If
-                CurStep = CurStep.NextStep
-            Else
-                CurStep = CurStep.NextStep
-            End If
-        Next
-        If Input_S_Apply = True Then
-            CurStep = Load_Steps_helper(CurRun)
+        If Not (CurRun.Name = "TrA3_bkd" Or CurRun.Name = "LoA3_bkd") Then
             For i = 0 To CurRun.EndStep - 1
                 If Not CurStep.Time = -1 Then
-                    CurStep.Time = array_step_s(i).Text
+                    If array_step_s(i).Text = "" Or array_step_s(i).Text = "0" Then
+                        MessageBox.Show("Step" + (i + 1).ToString + "尚未輸入時間")
+                        Input_S_Apply = False
+                        Test_ConfirmButton.Enabled = True
+                    End If
                     CurStep = CurStep.NextStep
                 Else
                     CurStep = CurStep.NextStep
                 End If
-                'If array_step_s(i).Modified = True Then
+            Next
+        ElseIf array_step_s(CurRun.PrevUnit.EndStep).Text = "" Or array_step_s(CurRun.PrevUnit.EndStep).Text = "0" Then
+            MessageBox.Show("Step" + (CurRun.PrevUnit.EndStep).ToString + "尚未輸入時間")
+            Input_S_Apply = False
+            Test_ConfirmButton.Enabled = True
+        End If
 
-                'End If
+        If Input_S_Apply = True Then
+            CurStep = Load_Steps_helper(CurRun)
+            For i = 0 To CurRun.EndStep - 1
+                If Not CurStep.Time = -1 Then
+                    If CurRun.Name = "ExA2_1st" Then
+                        array_ExA2_time(i) = array_step_s(i).Text
+                    ElseIf CurRun.Name = "LoA2_1st" Then
+                        array_LoA2_time(i) = array_step_s(i).Text
+                    ElseIf CurRun.Name = "LoA3_fwd" Then
+                        array_LoA3_time(i) = array_step_s(i).Text
+                    ElseIf CurRun.Name = "TrA3_fwd" Then
+                        array_TrA3_time(i) = array_step_s(i).Text
+                    End If
+                    CurStep.Time = array_step_s(i).Text
+                    CurStep = CurStep.NextStep
+                Else
+                    If CurRun.Name = "ExA2_1st" Then
+                        array_ExA2_time(i) = -1
+                    ElseIf CurRun.Name = "LoA2_1st" Then
+                        array_LoA2_time(i) = -1
+                    ElseIf CurRun.Name = "LoA3_fwd" Then
+                        array_LoA3_time(i) = -1
+                    ElseIf CurRun.Name = "TrA3_fwd" Then
+                        array_TrA3_time(i) = -1
+                    End If
+                    CurStep = CurStep.NextStep
+                End If
             Next
             If CurRun.NextUnit.Name = "LoA3_bkd" Or CurRun.NextUnit.Name = "TrA3_bkd" Then
                 'back to initial test condition
@@ -3035,7 +3054,7 @@ Public Class Program
                     Jump_Back_Countdown_True()
                 End If
 
-            ElseIf CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.NextUnit.Name = "LoA2_2nd_3rd_Add" Then
+            ElseIf CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
                 If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
                     Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
                     If Result = DialogResult.Yes Then

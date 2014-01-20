@@ -296,6 +296,12 @@
                 Program.CurRun.Set_BackColor(Color.IndianRed)
                 Program.CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
                 Program.CurRun.CurStep = 1
+                'For index = Program.CurRun.StartStep To Program.CurRun.EndStep
+                '    If Program.CurRun.Steps.Time = -1 Then
+                '        Program.CurRun.Steps = Program.CurRun.Steps.NextStep
+                '        Program.CurRun.CurStep += 1
+                '    End If
+                'Next
                 Program.CurRun.PrevUnit.CurStep = 1
                 Program.Temp_CurRun = Program.CurRun.PrevUnit
             ElseIf Program.CurRun.PrevUnit.Name = "ExA2_2nd_3rd" Or Program.CurRun.PrevUnit.Name = "LoA2_2nd_3rd" Or Program.CurRun.PrevUnit.Name = "ExA2_2nd_3rd_Add" Or Program.CurRun.PrevUnit.Name = "LoA2_2nd_3rd_Add" Then
@@ -303,6 +309,12 @@
                 Program.CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
                 Program.CurRun.PrevUnit.PrevUnit.Set_BackColor(Color.IndianRed)
                 Program.CurRun.CurStep = 1
+                'For index = Program.CurRun.StartStep To Program.CurRun.EndStep
+                '    If Program.CurRun.Steps.Time = -1 Then
+                '        Program.CurRun.Steps = Program.CurRun.Steps.NextStep
+                '        Program.CurRun.CurStep += 1
+                '    End If
+                'Next
                 Program.CurRun.PrevUnit.CurStep = 1
                 Program.CurRun.PrevUnit.PrevUnit.CurStep = 1
                 Program.Temp_CurRun = Program.CurRun.PrevUnit.PrevUnit
@@ -321,6 +333,18 @@
         Program.Countdown = True
         Program.CurRun.Steps = Program.Load_Steps_helper(Program.CurRun)
         Program.CurRun.CurStep = 1
+        For index = Program.CurRun.StartStep To Program.CurRun.EndStep
+            'If Program.CurRun.Name = "ExA2_1st" Or Program.CurRun.Name = "ExA2_1st_Add" Then
+            '    Program.CurRun.Steps.Time = Program.array_ExA2_time(index - 1)
+            'ElseIf Program.CurRun.Name = "LoA2_1st" Or Program.CurRun.Name = "LoA2_1st_Add" Then
+            '    Program.CurRun.Steps.Time = Program.array_LoA2_time(index - 1)
+            'End If
+            If Program.CurRun.Steps.Time = -1 Then
+                Program.CurRun.Steps = Program.CurRun.Steps.NextStep
+                Program.CurRun.CurStep += 1
+            End If
+        Next
+
         Program.CurStep = Program.CurRun.HeadStep
         Program.timeLeft = Program.CurRun.Steps.Time
         Program.timeLabel.Text = Program.timeLeft & " s"

@@ -1897,7 +1897,7 @@ Public Class Program
 
         'display them on screen-set position and size
         Dim text As String
-        Step1.BackColor = Color.MistyRose
+        Step1.BackColor = Color.Yellow
         If name = "空氣壓縮機(Compressor)" Then
             text = My.Resources.A4_Compressor
         ElseIf name = "混凝土割切機(Concrete cutter)" Then
@@ -2316,17 +2316,14 @@ Public Class Program
                 End If
             Else
                 If CurRun.Name = "ExA2_1st" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st_Add" Then
-                    CurRun.Set_BackColor(Color.Green)
                     CurRun.NextUnit.Set_BackColor(Color.Green)
                     CurRun.NextUnit.NextUnit.Set_BackColor(Color.Green)
                 ElseIf CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_2nd_3rd" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
-                    If CurRun.PrevUnit.Name = "ExA2_2nd_3rd" Or CurRun.PrevUnit.Name = "LoA2_2nd_3rd" Or CurRun.PrevUnit.Name = "ExA2_2nd_3rd_Add" Or CurRun.PrevUnit.Name = "LoA2_2nd_3rd_Add" Then
-                        CurRun.Set_BackColor(Color.Green)
+                    If CurRun.NextUnit.Name.Contains("_2nd_3rd") Then
                         CurRun.NextUnit.Set_BackColor(Color.Green)
-                    Else
-                        CurRun.Set_BackColor(Color.Green)
                     End If
                 End If
+                CurRun.Set_BackColor(Color.Green)
                 Temp_CurRun.Set_BackColor(Color.Yellow)
 
                 CurRun = Temp_CurRun
@@ -2438,6 +2435,8 @@ Public Class Program
     End Sub
     Private Sub Test_ConfirmButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_ConfirmButton.Click
         Dim Input_S_Apply As Boolean = True
+        Dim array_time As Array
+
         CurStep = Load_Steps_helper(CurRun)
         If Not (CurRun.Name = "TrA3_bkd" Or CurRun.Name = "LoA3_bkd") Then
             For i = 0 To CurRun.EndStep - 1
@@ -2461,33 +2460,27 @@ Public Class Program
         If Input_S_Apply = True Then
             CurStep = Load_Steps_helper(CurRun)
             If Not (CurRun.Name = "TrA3_bkd" Or CurRun.Name = "LoA3_bkd") Then
+                If CurRun.Name = "ExA2_1st" Then
+                    array_time = array_ExA2_time
+                ElseIf CurRun.Name = "LoA2_1st" Then
+                    array_time = array_LoA2_time
+                ElseIf CurRun.Name = "LoA3_fwd" Then
+                    array_time = array_LoA3_time
+                ElseIf CurRun.Name = "TrA3_fwd" Then
+                    array_time = array_TrA3_time
+                End If
                 For i = 0 To CurRun.EndStep - 1
                     If Not CurStep.Time = -1 Then
-                        If CurRun.Name = "ExA2_1st" Then
-                            array_ExA2_time(i) = array_step_s(i).Text
-                        ElseIf CurRun.Name = "LoA2_1st" Then
-                            array_LoA2_time(i) = array_step_s(i).Text
-                        ElseIf CurRun.Name = "LoA3_fwd" Then
-                            array_LoA3_time(i) = array_step_s(i).Text
-                        ElseIf CurRun.Name = "TrA3_fwd" Then
-                            array_TrA3_time(i) = array_step_s(i).Text
-                        End If
+                        array_time(i) = array_step_s(i).Text
                         CurStep.Time = array_step_s(i).Text
                         CurStep = CurStep.NextStep
                     Else
-                        If CurRun.Name = "ExA2_1st" Then
-                            array_ExA2_time(i) = -1
-                        ElseIf CurRun.Name = "LoA2_1st" Then
-                            array_LoA2_time(i) = -1
-                        ElseIf CurRun.Name = "LoA3_fwd" Then
-                            array_LoA3_time(i) = -1
-                        ElseIf CurRun.Name = "TrA3_fwd" Then
-                            array_TrA3_time(i) = -1
-                        End If
+                        array_time(i) = -1
                         CurStep = CurStep.NextStep
                     End If
                 Next
             Else
+                'bkd 的時間和 fwd的時間都放在同一個array裡
                 If CurRun.Name = "TrA3_bkd" Then
                     array_TrA3_time(CurRun.PrevUnit.EndStep) = array_step_s(CurRun.PrevUnit.EndStep).Text
                 ElseIf CurRun.Name = "LoA3_bkd" Then
@@ -3215,6 +3208,7 @@ Public Class Program
                             Set_Panel_BackColor()
                             CurRun.Link.Enabled = True
                             'jump to next Run_Unit
+                            CurRun = CurRun.NextUnit
                             Set_Run_Unit()
                             'load LoA3 or TrA3's steps
                             Clear_Steps()

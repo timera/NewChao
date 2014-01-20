@@ -23,12 +23,12 @@ Partial Class Program
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea13 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend13 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series13 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea14 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend14 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series14 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Button_change_machine = New System.Windows.Forms.Button()
@@ -273,7 +273,6 @@ Partial Class Program
         Me.Noise_Avg = New System.Windows.Forms.Label()
         Me.Chart2 = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
-        Me.Step10 = New System.Windows.Forms.Label()
         Me.Step9 = New System.Windows.Forms.Label()
         Me.Noise6 = New System.Windows.Forms.Label()
         Me.Noise5 = New System.Windows.Forms.Label()
@@ -291,6 +290,7 @@ Partial Class Program
         Me.Step2 = New System.Windows.Forms.Label()
         Me.TabPageCharts = New System.Windows.Forms.TabPage()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.Step10 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox_Plot.SuspendLayout()
@@ -2540,7 +2540,7 @@ Partial Class Program
         Me.TabPage4.Location = New System.Drawing.Point(4, 25)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
-        Me.TabPage4.Size = New System.Drawing.Size(740, 564)
+        Me.TabPage4.Size = New System.Drawing.Size(474, 564)
         Me.TabPage4.TabIndex = 1
         Me.TabPage4.Text = "TabPage4"
         '
@@ -2782,6 +2782,7 @@ Partial Class Program
         Me.Step1.Name = "Step1"
         Me.Step1.Size = New System.Drawing.Size(340, 60)
         Me.Step1.TabIndex = 31
+        Me.Step1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Noise_Avg
         '
@@ -2796,16 +2797,16 @@ Partial Class Program
         '
         'Chart2
         '
-        ChartArea3.Name = "ChartArea1"
-        Me.Chart2.ChartAreas.Add(ChartArea3)
-        Legend3.Name = "Legend1"
-        Me.Chart2.Legends.Add(Legend3)
+        ChartArea13.Name = "ChartArea1"
+        Me.Chart2.ChartAreas.Add(ChartArea13)
+        Legend13.Name = "Legend1"
+        Me.Chart2.Legends.Add(Legend13)
         Me.Chart2.Location = New System.Drawing.Point(803, 113)
         Me.Chart2.Name = "Chart2"
-        Series3.ChartArea = "ChartArea1"
-        Series3.Legend = "Legend1"
-        Series3.Name = "Series1"
-        Me.Chart2.Series.Add(Series3)
+        Series13.ChartArea = "ChartArea1"
+        Series13.Legend = "Legend1"
+        Series13.Name = "Series1"
+        Me.Chart2.Series.Add(Series13)
         Me.Chart2.Size = New System.Drawing.Size(361, 538)
         Me.Chart2.TabIndex = 83
         Me.Chart2.Text = "Chart2"
@@ -2813,29 +2814,20 @@ Partial Class Program
         '
         'Chart1
         '
-        ChartArea4.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea4)
-        Legend4.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend4)
+        ChartArea14.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea14)
+        Legend14.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend14)
         Me.Chart1.Location = New System.Drawing.Point(-55, 6)
         Me.Chart1.Name = "Chart1"
-        Series4.ChartArea = "ChartArea1"
-        Series4.Legend = "Legend1"
-        Series4.Name = "Series1"
-        Me.Chart1.Series.Add(Series4)
+        Series14.ChartArea = "ChartArea1"
+        Series14.Legend = "Legend1"
+        Series14.Name = "Series1"
+        Me.Chart1.Series.Add(Series14)
         Me.Chart1.Size = New System.Drawing.Size(1219, 97)
         Me.Chart1.TabIndex = 82
         Me.Chart1.Text = "Chart1"
         Me.Chart1.Visible = False
-        '
-        'Step10
-        '
-        Me.Step10.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Step10.Location = New System.Drawing.Point(1269, 695)
-        Me.Step10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Step10.Name = "Step10"
-        Me.Step10.Size = New System.Drawing.Size(340, 60)
-        Me.Step10.TabIndex = 58
         '
         'Step9
         '
@@ -2846,6 +2838,7 @@ Partial Class Program
         Me.Step9.Name = "Step9"
         Me.Step9.Size = New System.Drawing.Size(340, 60)
         Me.Step9.TabIndex = 51
+        Me.Step9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Noise6
         '
@@ -2933,6 +2926,7 @@ Partial Class Program
         Me.Step8.Name = "Step8"
         Me.Step8.Size = New System.Drawing.Size(340, 60)
         Me.Step8.TabIndex = 38
+        Me.Step8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Step7
         '
@@ -2943,6 +2937,7 @@ Partial Class Program
         Me.Step7.Name = "Step7"
         Me.Step7.Size = New System.Drawing.Size(340, 60)
         Me.Step7.TabIndex = 37
+        Me.Step7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Step6
         '
@@ -2953,6 +2948,7 @@ Partial Class Program
         Me.Step6.Name = "Step6"
         Me.Step6.Size = New System.Drawing.Size(340, 60)
         Me.Step6.TabIndex = 36
+        Me.Step6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Step5
         '
@@ -2963,6 +2959,7 @@ Partial Class Program
         Me.Step5.Name = "Step5"
         Me.Step5.Size = New System.Drawing.Size(340, 60)
         Me.Step5.TabIndex = 35
+        Me.Step5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Step4
         '
@@ -2973,6 +2970,7 @@ Partial Class Program
         Me.Step4.Name = "Step4"
         Me.Step4.Size = New System.Drawing.Size(340, 60)
         Me.Step4.TabIndex = 34
+        Me.Step4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Step3
         '
@@ -2983,6 +2981,7 @@ Partial Class Program
         Me.Step3.Name = "Step3"
         Me.Step3.Size = New System.Drawing.Size(340, 60)
         Me.Step3.TabIndex = 33
+        Me.Step3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Step2
         '
@@ -2993,6 +2992,7 @@ Partial Class Program
         Me.Step2.Name = "Step2"
         Me.Step2.Size = New System.Drawing.Size(340, 60)
         Me.Step2.TabIndex = 32
+        Me.Step2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'TabPageCharts
         '
@@ -3008,6 +3008,15 @@ Partial Class Program
         'Timer1
         '
         Me.Timer1.Interval = 1000
+        '
+        'Step10
+        '
+        Me.Step10.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Step10.Location = New System.Drawing.Point(1269, 695)
+        Me.Step10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Step10.Name = "Step10"
+        Me.Step10.Size = New System.Drawing.Size(340, 60)
+        Me.Step10.TabIndex = 58
         '
         'Program
         '
@@ -3269,7 +3278,6 @@ Partial Class Program
     Friend WithEvents Step9 As System.Windows.Forms.Label
     Friend WithEvents LinkLabel_postCal As System.Windows.Forms.LinkLabel
     Friend WithEvents LinkLabel_preCal As System.Windows.Forms.LinkLabel
-    Friend WithEvents Step10 As System.Windows.Forms.Label
     Friend WithEvents Accept_Button As System.Windows.Forms.Button
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents PanelExcavatorA1 As System.Windows.Forms.Panel
@@ -3472,4 +3480,5 @@ Partial Class Program
     Friend WithEvents Panel_Temp As System.Windows.Forms.Panel
     Friend WithEvents TabPageCharts As System.Windows.Forms.TabPage
     Friend WithEvents Test_StopButton As System.Windows.Forms.Button
+    Friend WithEvents Step10 As System.Windows.Forms.Label
 End Class

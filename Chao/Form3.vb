@@ -762,19 +762,19 @@ Public Class Program
             p.BackColor = Color.Yellow
             p.Controls.Add(l)
             l.Location = New Point(3, 5)
-            l.ForeColor = Color.White
+            l.ForeColor = Color.IndianRed
         ElseIf p.Name = "Panel_Bkg" Or p.Name = "Panel_RSS" Or p.Name = "Panel_PostCal" Then
             p.Size = New Size(85, 26)
             p.BackColor = Color.IndianRed
             p.Controls.Add(l)
             l.Location = New Point(3, 5)
-            l.ForeColor = Color.White
+            l.ForeColor = Color.IndianRed
         Else
             p.Size = New Size(33, 26)
             p.BackColor = Color.IndianRed
             p.Controls.Add(l)
             l.Location = New Point(3, 5)
-            l.ForeColor = Color.White
+            l.ForeColor = Color.IndianRed
         End If
 
     End Sub
@@ -2103,7 +2103,7 @@ Public Class Program
                         'stop the timer
                         Timer1.Stop()
 
-                        If CurRun.NextUnit.Name = "ExA2_2nd_3rd" Or CurRun.NextUnit.Name = "ExA2_2nd_3rd_Add" Or CurRun.NextUnit.Name = "LoA2_2nd_3rd" Or CurRun.NextUnit.Name = "LoA2_2nd_3rd_Add" Then
+                        If CurRun.NextUnit.Name.Contains("_2nd_3rd") Then
                             Accept_Button.Enabled = False
                             startButton.Enabled = True
                             stopButton.Enabled = False
@@ -2117,7 +2117,8 @@ Public Class Program
                             Load_Steps()
 
                             'dispose old graph and create new graph
-                            Load_New_Graph_CD_True()
+                            'A2三個round的圖要連續所以不load新的圖
+                            'Load_New_Graph_CD_True()
                         Else
                             Accept_Button.Enabled = True
                             startButton.Enabled = False
@@ -2199,7 +2200,7 @@ Public Class Program
                     If array_step(index - 2).BackColor = Color.Green Then
                         array_step(index - 1).BackColor = Color.Yellow
                     Else
-                        array_step(index - 1).BackColor = Color.White
+                        array_step(index - 1).BackColor = Color.IndianRed
                     End If
                 End If
             End If

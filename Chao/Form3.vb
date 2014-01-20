@@ -2359,8 +2359,6 @@ Public Class Program
             End If
         Next
         CurRun.NextUnit.CurStep = 1
-        'Load_Steps_helper(CurRun)
-        Load_Steps_helper(CurRun.NextUnit)
         timeLeft = CurRun.Steps.Time
         timeLabel.Text = timeLeft & " s"
     End Sub
@@ -2380,14 +2378,9 @@ Public Class Program
         Next
         CurRun.NextUnit.CurStep = 1
         CurRun.NextUnit.NextUnit.CurStep = 1
-        'Load_Steps_helper(CurRun)
-        Load_Steps_helper(CurRun.NextUnit)
-        Load_Steps_helper(CurRun.NextUnit.NextUnit)
-        CurStep = CurRun.HeadStep
         timeLeft = CurRun.Steps.Time
         timeLabel.Text = timeLeft & " s"
     End Sub
-
 
     Private Sub Test_StartButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_StartButton.Click
         Load_New_Graph_CD_True()
@@ -2408,7 +2401,6 @@ Public Class Program
         timeLabel.Text = timeLeft & " s"
         If CurRun.CurStep = CurRun.EndStep Then 'last step (not HasNextStep)
             Test_ConfirmButton.Enabled = True
-            'Test_Apply_Button.Enabled = True
             Test_NextButton.Enabled = False
         End If
     End Sub
@@ -2447,32 +2439,41 @@ Public Class Program
 
         If Input_S_Apply = True Then
             CurStep = Load_Steps_helper(CurRun)
-            For i = 0 To CurRun.EndStep - 1
-                If Not CurStep.Time = -1 Then
-                    If CurRun.Name = "ExA2_1st" Then
-                        array_ExA2_time(i) = array_step_s(i).Text
-                    ElseIf CurRun.Name = "LoA2_1st" Then
-                        array_LoA2_time(i) = array_step_s(i).Text
-                    ElseIf CurRun.Name = "LoA3_fwd" Then
-                        array_LoA3_time(i) = array_step_s(i).Text
-                    ElseIf CurRun.Name = "TrA3_fwd" Then
-                        array_TrA3_time(i) = array_step_s(i).Text
+            If Not (CurRun.Name = "TrA3_bkd" Or CurRun.Name = "LoA3_bkd") Then
+                For i = 0 To CurRun.EndStep - 1
+                    If Not CurStep.Time = -1 Then
+                        If CurRun.Name = "ExA2_1st" Then
+                            array_ExA2_time(i) = array_step_s(i).Text
+                        ElseIf CurRun.Name = "LoA2_1st" Then
+                            array_LoA2_time(i) = array_step_s(i).Text
+                        ElseIf CurRun.Name = "LoA3_fwd" Then
+                            array_LoA3_time(i) = array_step_s(i).Text
+                        ElseIf CurRun.Name = "TrA3_fwd" Then
+                            array_TrA3_time(i) = array_step_s(i).Text
+                        End If
+                        CurStep.Time = array_step_s(i).Text
+                        CurStep = CurStep.NextStep
+                    Else
+                        If CurRun.Name = "ExA2_1st" Then
+                            array_ExA2_time(i) = -1
+                        ElseIf CurRun.Name = "LoA2_1st" Then
+                            array_LoA2_time(i) = -1
+                        ElseIf CurRun.Name = "LoA3_fwd" Then
+                            array_LoA3_time(i) = -1
+                        ElseIf CurRun.Name = "TrA3_fwd" Then
+                            array_TrA3_time(i) = -1
+                        End If
+                        CurStep = CurStep.NextStep
                     End If
-                    CurStep.Time = array_step_s(i).Text
-                    CurStep = CurStep.NextStep
-                Else
-                    If CurRun.Name = "ExA2_1st" Then
-                        array_ExA2_time(i) = -1
-                    ElseIf CurRun.Name = "LoA2_1st" Then
-                        array_LoA2_time(i) = -1
-                    ElseIf CurRun.Name = "LoA3_fwd" Then
-                        array_LoA3_time(i) = -1
-                    ElseIf CurRun.Name = "TrA3_fwd" Then
-                        array_TrA3_time(i) = -1
-                    End If
-                    CurStep = CurStep.NextStep
+                Next
+            Else
+                If CurRun.Name = "TrA3_bkd" Then
+                    array_TrA3_time(CurRun.PrevUnit.EndStep) = array_step_s(CurRun.PrevUnit.EndStep).Text
+                ElseIf CurRun.Name = "LoA3_bkd" Then
+                    array_LoA3_time(CurRun.PrevUnit.EndStep) = array_step_s(CurRun.PrevUnit.EndStep).Text
                 End If
-            Next
+            End If
+
             If CurRun.NextUnit.Name = "LoA3_bkd" Or CurRun.NextUnit.Name = "TrA3_bkd" Then
                 'back to initial test condition
                 For i = 0 To CurRun.EndStep - 1
@@ -2919,8 +2920,6 @@ Public Class Program
 
                             'dispose old graph and create new graph
                             Load_New_Graph_CD_True()
-                        Else
-                            MessageBox.Show("Error")
                         End If
                     ElseIf Result = DialogResult.No Then
                         Accept_No()
@@ -3032,8 +3031,6 @@ Public Class Program
 
                             'dispose old graph and create new graph
                             Load_New_Graph_CD_True()
-                        Else
-                            MessageBox.Show("Error")
                         End If
                     ElseIf Result = DialogResult.No Then
                         All_Panel_Enable()
@@ -3059,7 +3056,7 @@ Public Class Program
                     Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
                     If Result = DialogResult.Yes Then
                         All_Panel_Enable()
-                        CurRun.Link.Enabled = True
+                        CurRun.PrevUnit.PrevUnit.Link.Enabled = True
                         If CurRun.NextUnit.Name = "RSS" Or CurRun.NextUnit.Name = "LoA1" Or CurRun.NextUnit.Name = "LoA3_fwd" Then
                             'have an additional test?
                             'call a function 
@@ -3074,7 +3071,6 @@ Public Class Program
                                 Clear_Steps()
                                 Load_Steps()
 
-                                array_step(0).BackColor = Color.Yellow
                                 'dispose old graph and create new graph
                                 Load_New_Graph_CD_True()
                             Else
@@ -3104,8 +3100,6 @@ Public Class Program
                                     Load_New_Graph_CD_True()
                                 End If
                             End If
-                        Else
-                            MessageBox.Show("Error")
                         End If
                     ElseIf Result = DialogResult.No Then
                         All_Panel_Enable()
@@ -3177,8 +3171,6 @@ Public Class Program
                                 'dispose old graph and create new graph
                                 Load_New_Graph_CD_False()
                             End If
-                        Else
-                            MessageBox.Show("Error")
                         End If
                     ElseIf Result = DialogResult.No Then
                         Accept_No()
@@ -3236,8 +3228,6 @@ Public Class Program
                                 'dispose old graph and create new graph
                                 Load_New_Graph_CD_False()
                             End If
-                        Else
-                            MessageBox.Show("Error")
                         End If
                     ElseIf Result = DialogResult.No Then
                         Accept_No()

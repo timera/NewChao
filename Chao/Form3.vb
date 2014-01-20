@@ -580,11 +580,15 @@ Public Class Program
         If Not IsNothing(Machine) Then
             If Not Machine = Machines.Others Then
                 GroupBox_A1_A2_A3.Enabled = True
+                TextBox_L.Enabled = True
                 Button_L_check.Enabled = True
                 GroupBox_A4.Enabled = False
             Else
                 GroupBox_A1_A2_A3.Enabled = False
                 GroupBox_A4.Enabled = True
+                TextBox_L1.Enabled = True
+                TextBox_L2.Enabled = True
+                TextBox_L3.Enabled = True
                 Button_L1_L2_L3_check.Enabled = True
             End If
 
@@ -608,6 +612,8 @@ Public Class Program
     End Sub
 
     Private Sub Button_L_check_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L_check.Click
+
+        TextBox_L.Enabled = False
 
         Dim r1 As Integer
         If String.IsNullOrWhiteSpace(TextBox_L.Text) Then
@@ -663,6 +669,11 @@ Public Class Program
     End Sub
 
     Private Sub Button_L1_L2_L3_check_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L1_L2_L3_check.Click
+
+        TextBox_L1.Enabled = False
+        TextBox_L2.Enabled = False
+        TextBox_L3.Enabled = False
+
         If String.IsNullOrWhiteSpace(TextBox_L1.Text) Or String.IsNullOrWhiteSpace(TextBox_L2.Text) Or String.IsNullOrWhiteSpace(TextBox_L3.Text) Then
             Return
         End If

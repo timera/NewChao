@@ -23,12 +23,12 @@ Partial Class Program
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim ChartArea13 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend13 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series13 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea14 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend14 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series14 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea15 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend15 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series15 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea16 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend16 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series16 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Button_change_machine = New System.Windows.Forms.Button()
@@ -48,9 +48,9 @@ Partial Class Program
         Me.GroupBox_A4 = New System.Windows.Forms.GroupBox()
         Me.Button_L1_L2_L3_check = New System.Windows.Forms.Button()
         Me.TextBox_r2 = New System.Windows.Forms.TextBox()
-        Me.TextBox_L3 = New System.Windows.Forms.TextBox()
-        Me.TextBox_L2 = New System.Windows.Forms.TextBox()
-        Me.TextBox_L1 = New System.Windows.Forms.TextBox()
+        Me.TextBox_L3 = New ChaoTextBox()
+        Me.TextBox_L2 = New ChaoTextBox()
+        Me.TextBox_L1 = New ChaoTextBox()
         Me.Label_r2 = New System.Windows.Forms.Label()
         Me.Label_input_L2 = New System.Windows.Forms.Label()
         Me.Label_input_L3 = New System.Windows.Forms.Label()
@@ -58,7 +58,7 @@ Partial Class Program
         Me.GroupBox_A1_A2_A3 = New System.Windows.Forms.GroupBox()
         Me.Button_L_check = New System.Windows.Forms.Button()
         Me.TextBox_r1 = New System.Windows.Forms.TextBox()
-        Me.TextBox_L = New System.Windows.Forms.TextBox()
+        Me.TextBox_L = New ChaoTextBox()
         Me.Label_r1 = New System.Windows.Forms.Label()
         Me.Label_input_L = New System.Windows.Forms.Label()
         Me.Picture_machine = New System.Windows.Forms.PictureBox()
@@ -257,15 +257,15 @@ Partial Class Program
         Me.S3 = New System.Windows.Forms.Label()
         Me.S2 = New System.Windows.Forms.Label()
         Me.S1 = New System.Windows.Forms.Label()
-        Me.Input_S_Step2 = New System.Windows.Forms.TextBox()
-        Me.Input_S_Step3 = New System.Windows.Forms.TextBox()
-        Me.Input_S_Step4 = New System.Windows.Forms.TextBox()
-        Me.Input_S_Step5 = New System.Windows.Forms.TextBox()
-        Me.Input_S_Step9 = New System.Windows.Forms.TextBox()
-        Me.Input_S_Step8 = New System.Windows.Forms.TextBox()
-        Me.Input_S_Step7 = New System.Windows.Forms.TextBox()
-        Me.Input_S_Step6 = New System.Windows.Forms.TextBox()
-        Me.Input_S_Step1 = New System.Windows.Forms.TextBox()
+        Me.Input_S_Step2 = New ChaoTextBox()
+        Me.Input_S_Step3 = New ChaoTextBox()
+        Me.Input_S_Step4 = New ChaoTextBox()
+        Me.Input_S_Step5 = New ChaoTextBox()
+        Me.Input_S_Step9 = New ChaoTextBox()
+        Me.Input_S_Step8 = New ChaoTextBox()
+        Me.Input_S_Step7 = New ChaoTextBox()
+        Me.Input_S_Step6 = New ChaoTextBox()
+        Me.Input_S_Step1 = New ChaoTextBox()
         Me.Test_ConfirmButton = New System.Windows.Forms.Button()
         Me.Test_NextButton = New System.Windows.Forms.Button()
         Me.Test_StartButton = New System.Windows.Forms.Button()
@@ -2797,16 +2797,16 @@ Partial Class Program
         '
         'Chart2
         '
-        ChartArea13.Name = "ChartArea1"
-        Me.Chart2.ChartAreas.Add(ChartArea13)
-        Legend13.Name = "Legend1"
-        Me.Chart2.Legends.Add(Legend13)
+        ChartArea15.Name = "ChartArea1"
+        Me.Chart2.ChartAreas.Add(ChartArea15)
+        Legend15.Name = "Legend1"
+        Me.Chart2.Legends.Add(Legend15)
         Me.Chart2.Location = New System.Drawing.Point(803, 113)
         Me.Chart2.Name = "Chart2"
-        Series13.ChartArea = "ChartArea1"
-        Series13.Legend = "Legend1"
-        Series13.Name = "Series1"
-        Me.Chart2.Series.Add(Series13)
+        Series15.ChartArea = "ChartArea1"
+        Series15.Legend = "Legend1"
+        Series15.Name = "Series1"
+        Me.Chart2.Series.Add(Series15)
         Me.Chart2.Size = New System.Drawing.Size(361, 538)
         Me.Chart2.TabIndex = 83
         Me.Chart2.Text = "Chart2"
@@ -2814,16 +2814,16 @@ Partial Class Program
         '
         'Chart1
         '
-        ChartArea14.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea14)
-        Legend14.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend14)
+        ChartArea16.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea16)
+        Legend16.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend16)
         Me.Chart1.Location = New System.Drawing.Point(-55, 6)
         Me.Chart1.Name = "Chart1"
-        Series14.ChartArea = "ChartArea1"
-        Series14.Legend = "Legend1"
-        Series14.Name = "Series1"
-        Me.Chart1.Series.Add(Series14)
+        Series16.ChartArea = "ChartArea1"
+        Series16.Legend = "Legend1"
+        Series16.Name = "Series1"
+        Me.Chart1.Series.Add(Series16)
         Me.Chart1.Size = New System.Drawing.Size(1219, 97)
         Me.Chart1.TabIndex = 82
         Me.Chart1.Text = "Chart1"

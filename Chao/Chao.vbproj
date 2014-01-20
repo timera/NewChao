@@ -103,7 +103,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
-    <Compile Include="Run.vb" />
+    <Compile Include="Run.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Steps.vb" />
   </ItemGroup>
   <ItemGroup>

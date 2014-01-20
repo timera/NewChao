@@ -394,3 +394,34 @@
 
     'End Function
 End Class
+
+Class ChaoTextBox
+    Inherits TextBox
+
+    Public Sub New()
+        MyBase.New()
+    End Sub
+
+    Public Sub ChaoTextBox_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
+        Dim nonNumberEntered = False
+
+        ' Determine whether the keystroke is a number from the top of the keyboard. 
+        If e.KeyCode < Keys.D0 OrElse e.KeyCode > Keys.D9 And Not e.KeyCode = Keys.Decimal And Not e.KeyCode = Keys.OemPeriod Then
+            ' Determine whether the keystroke is a number from the keypad. 
+            If e.KeyCode < Keys.NumPad0 OrElse e.KeyCode > Keys.NumPad9 Then
+                ' Determine whether the keystroke is a backspace. 
+                If e.KeyCode <> Keys.Back Then
+                    ' A non-numerical keystroke was pressed.  
+                    ' Set the flag to true and evaluate in KeyPress event.
+                    MsgBox("只能輸入數字!")
+                    Me.Text = ""
+                End If
+            End If
+        End If
+        'If shift key was pressed, it's not a number. 
+        If Control.ModifierKeys = Keys.Shift Then
+            MsgBox("只能輸入數字!")
+            Me.Text = ""
+        End If
+    End Sub
+End Class

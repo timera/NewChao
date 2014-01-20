@@ -892,6 +892,11 @@ Public Class Program
             Panel_PreCal_6th.Visible = False
             Panel_PostCal_5th.Visible = False
             Panel_PostCal_6th.Visible = False
+        Else
+            Panel_PreCal_5th.Visible = True
+            Panel_PreCal_6th.Visible = True
+            Panel_PostCal_5th.Visible = True
+            Panel_PostCal_6th.Visible = True
         End If
     End Sub
 
@@ -912,6 +917,11 @@ Public Class Program
             LinkLabel_PreCal_6th.Enabled = False
             LinkLabel_PostCal_5th.Enabled = False
             LinkLabel_PostCal_6th.Enabled = False
+        Else
+            LinkLabel_PreCal_5th.Enabled = True
+            LinkLabel_PreCal_6th.Enabled = True
+            LinkLabel_PostCal_5th.Enabled = True
+            LinkLabel_PostCal_6th.Enabled = True
         End If
     End Sub
 
@@ -2305,7 +2315,18 @@ Public Class Program
                     End If
                 End If
             Else
-                CurRun.Set_BackColor(Color.Green)
+                If CurRun.Name = "ExA2_1st" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st_Add" Then
+                    CurRun.Set_BackColor(Color.Green)
+                    CurRun.NextUnit.Set_BackColor(Color.Green)
+                    CurRun.NextUnit.NextUnit.Set_BackColor(Color.Green)
+                ElseIf CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_2nd_3rd" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
+                    If CurRun.PrevUnit.Name = "ExA2_2nd_3rd" Or CurRun.PrevUnit.Name = "LoA2_2nd_3rd" Or CurRun.PrevUnit.Name = "ExA2_2nd_3rd_Add" Or CurRun.PrevUnit.Name = "LoA2_2nd_3rd_Add" Then
+                        CurRun.Set_BackColor(Color.Green)
+                        CurRun.NextUnit.Set_BackColor(Color.Green)
+                    Else
+                        CurRun.Set_BackColor(Color.Green)
+                    End If
+                End If
                 Temp_CurRun.Set_BackColor(Color.Yellow)
 
                 CurRun = Temp_CurRun
@@ -2586,6 +2607,7 @@ Public Class Program
                 'don't save data
 
                 All_Panel_Enable()
+                
                 CurRun.Set_BackColor(Color.Green)
                 Temp_CurRun.Set_BackColor(Color.Yellow)
 
@@ -2608,6 +2630,7 @@ Public Class Program
                     Load_New_Graph_CD_False()
                 End If
                 timeLabel.Text = timeLeft & " s"
+
             ElseIf Result = DialogResult.Cancel Then
                 Accept_Cancel()
             End If

@@ -65,6 +65,9 @@ Public Class CGraph
     Public Overridable Sub Update(ByVal newVal() As Double)
     End Sub
 
+    Public Function GetSeries() As List(Of Series)
+        Return series
+    End Function
 End Class
 
 Public Class LineGraph
@@ -163,7 +166,7 @@ Public Class LineGraph
 
     'Update function newval must contain the avg
     Public Overrides Sub Update(ByVal newVal() As Double)
-        If Not newVal.Length = NumOfMics + 1 Then
+        If Not newVal.Length = NumOfMics Then
             Return
         End If
         For i As Integer = 0 To newVal.Length - 1
@@ -180,9 +183,6 @@ Public Class LineGraph
         Panel.Dispose()
     End Sub
 
-    Public Function GetSeries() As List(Of Series)
-        Return series
-    End Function
 
 End Class
 
@@ -226,19 +226,19 @@ Public Class BarGraph
 
 
 
-    'Update function newval must not contain the avg
+    'Update, feed in values, add an avg
     Public Overrides Sub Update(ByVal newVal() As Double)
-        If Not newVal.Length - 1 = NumOfMics Then
+        If Not newVal.Length = NumOfMics Then
             Return
         End If
         'adding average datapoint
-        Dim temp(newVal.Length - 1) As Double
+        Dim temp(newVal.Length) As Double
         Dim sum As Double = 0
-        For i = 0 To newVal.Length - 2
+        For i = 0 To newVal.Length - 1
             temp(i) = newVal(i)
             sum += 10 ^ (0.1 * newVal(i))
         Next
-        temp(newVal.Length - 1) = 10 * Math.Log10(sum / newVal.Length - 1)
+        temp(newVal.Length) = 10 * Math.Log10(sum / newVal.Length)
         series(0).Points.DataBindXY(listOfNames, temp)
     End Sub
 

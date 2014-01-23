@@ -7,6 +7,7 @@ Public Class Grid
     Public Form As DataGridView
     Private _R As Double
     Private _Machine As Program.Machines
+    Private Background As Grid_Run_Unit
     'Public Cur_Column
 
     'Private A_s As Integer 'keep track of which A's this one has
@@ -35,7 +36,11 @@ Public Class Grid
     '    A3l
     'End Enum
 
-    Public Sub New(ByRef Parent As Control, ByVal Size As Size, ByVal Position As Point, ByVal R As Double, ByVal Machine As Program.Machines)
+    Public Sub New(ByRef Parent As Control, ByVal Size As Size, ByVal Position As Point, ByVal R As Double, ByVal Machine As Program.Machines, ByVal headRU As Run_Unit)
+        If IsNothing(headRU) Then
+            MsgBox("Cannot create chart because given head run_unit is null!")
+            Return
+        End If
         Form = New DataGridView()
         Form.Parent = Parent
         Form.Size = Size
@@ -65,170 +70,313 @@ Public Class Grid
         'Grid.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders)
 
         'Set A sequence
+        Dim tempRU As Run_Unit = headRU
+
         If Machine = Program.Machines.Excavator Then 'A1 A2
-            'A_s = 2
-            'As_Last_Indices = {3, 7}
-            For i = 0 To 9
+            For i = 0 To 11
                 Form.Columns.Add(New DataGridViewTextBoxColumn())
             Next
-            Form.Columns(0).HeaderText = "Background"
-            Form.Columns(1).HeaderText = "A1"
-            AddLabelColumn(1)
-            Form.Columns(2).HeaderText = "Run1"
-            Form.Columns(3).HeaderText = "Run2"
-            Form.Columns(4).HeaderText = "Run3"
 
-            Form.Columns(5).HeaderText = "A2"
-            AddLabelColumn(5)
-            Form.Columns(6).HeaderText = "Run1"
-            Form.Columns(7).HeaderText = "Run2"
-            Form.Columns(8).HeaderText = "Run3"
-            Form.Columns(9).HeaderText = "RSS"
-            
+            tempRU = PreCalConnect(tempRU)
+            Form.Columns(2).HeaderText = "A1"
+            AddLabelColumn(2)
+
+            tempRU = ConnectGRU_RU_COL("Run1", "", 3, tempRU)
+            tempRU = ConnectGRU_RU_COL("Run2", "", 4, tempRU)
+            tempRU = ConnectGRU_RU_COL("Run3", "", 5, tempRU)
+            tempRU = tempRU.NextUnit ' skipping additional
+
+            Form.Columns(6).HeaderText = "A2"
+            AddLabelColumn(6)
+
+            tempRU = tempRU.NextUnit.NextUnit 'skipping the first two small runs
+            tempRU = ConnectGRU_RU_COL("Run1", "", 7, tempRU)
+
+            tempRU = tempRU.NextUnit.NextUnit 'skipping the first two small runs
+            tempRU = ConnectGRU_RU_COL("Run2", "", 8, tempRU)
+
+            tempRU = tempRU.NextUnit.NextUnit 'skipping the first two small runs
+            tempRU = ConnectGRU_RU_COL("Run3", "", 9, tempRU)
+            tempRU = tempRU.NextUnit.NextUnit.NextUnit 'skipping add units
+
+            tempRU = ConnectGRU_RU_COL("RSS", "", 10, tempRU)
+
+            tempRU = PostCalConnect(11, tempRU)
+
         ElseIf Machine = Program.Machines.Loader Then 'A1 A2 A3
             'A_s = 3
 
-            For i = 0 To 19
+            For i = 0 To 21
                 Form.Columns.Add(New DataGridViewTextBoxColumn())
             Next
-            Form.Columns(0).HeaderText = "Background"
-            Form.Columns(1).HeaderText = "A1"
-            AddLabelColumn(1)
-            Form.Columns(2).HeaderText = "Run1"
-            Form.Columns(3).HeaderText = "Run2"
-            Form.Columns(4).HeaderText = "Run3"
 
-            Form.Columns(5).HeaderText = "A2"
-            AddLabelColumn(5)
-            Form.Columns(6).HeaderText = "Run1"
-            Form.Columns(7).HeaderText = "Run2"
-            Form.Columns(8).HeaderText = "Run3"
+            tempRU = PreCalConnect(tempRU)
+            Form.Columns(2).HeaderText = "A1"
+            AddLabelColumn(2)
 
-            Form.Columns(9).HeaderText = "A3"
-            AddLabelColumn(9)
-            Form.Columns(10).HeaderText = "Run1"
-            Form.Rows(0).Cells(10).Value = "前進"
-            Form.Columns(11).HeaderText = "Run1"
-            Form.Rows(0).Cells(11).Value = "後退"
-            Form.Columns(12).HeaderText = "Run1"
-            Form.Rows(0).Cells(12).Value = "平均"
+            tempRU = ConnectGRU_RU_COL("Run1", "", 3, tempRU)
 
-            Form.Columns(13).HeaderText = "Run2"
-            Form.Rows(0).Cells(13).Value = "前進"
-            Form.Columns(14).HeaderText = "Run2"
-            Form.Rows(0).Cells(14).Value = "後退"
-            Form.Columns(15).HeaderText = "Run2"
-            Form.Rows(0).Cells(15).Value = "平均"
+            tempRU = ConnectGRU_RU_COL("Run2", "", 4, tempRU)
 
-            Form.Columns(16).HeaderText = "Run3"
-            Form.Rows(0).Cells(16).Value = "前進"
-            Form.Columns(17).HeaderText = "Run3"
-            Form.Rows(0).Cells(17).Value = "後退"
-            Form.Columns(18).HeaderText = "Run3"
-            Form.Rows(0).Cells(18).Value = "平均"
-            Form.Columns(19).HeaderText = "RSS"
+            tempRU = ConnectGRU_RU_COL("Run3", "", 5, tempRU)
+            tempRU = tempRU.NextUnit 'skipping add unit
+
+            Form.Columns(6).HeaderText = "A2"
+            AddLabelColumn(6)
+
+            tempRU = tempRU.NextUnit.NextUnit
+            tempRU = ConnectGRU_RU_COL("Run1", "", 7, tempRU)
+
+            tempRU = tempRU.NextUnit.NextUnit
+            tempRU = ConnectGRU_RU_COL("Run2", "", 8, tempRU)
+
+            tempRU = tempRU.NextUnit.NextUnit
+            tempRU = ConnectGRU_RU_COL("Run3", "", 9, tempRU)
+
+            tempRU = tempRU.NextUnit.NextUnit.NextUnit 'skipping A2 add
+
+
+            Form.Columns(10).HeaderText = "A3"
+            AddLabelColumn(10)
+
+            tempRU = ConnectGRU_RU_COL("Run1", "前進", 11, tempRU)
+
+            tempRU = ConnectGRU_RU_COL("Run1", "後退", 12, tempRU)
+
+            Form.Columns(13).HeaderText = "Run1"
+            Form.Rows(0).Cells(13).Value = "平均"
+
+            tempRU = ConnectGRU_RU_COL("Run2", "前進", 14, tempRU)
+
+            tempRU = ConnectGRU_RU_COL("Run2", "後退", 15, tempRU)
+
+            Form.Columns(16).HeaderText = "Run2"
+            Form.Rows(0).Cells(16).Value = "平均"
+
+
+            tempRU = ConnectGRU_RU_COL("Run3", "前進", 17, tempRU)
+
+            tempRU = ConnectGRU_RU_COL("Run3", "後退", 18, tempRU)
+
+            Form.Columns(19).HeaderText = "Run3"
+            Form.Rows(0).Cells(19).Value = "平均"
+
+            tempRU = tempRU.NextUnit.NextUnit 'skipping add
+
+            tempRU = ConnectGRU_RU_COL("RSS", "", 20, tempRU)
+
+            tempRU = PostCalConnect(21, tempRU)
+
         ElseIf Machine = Program.Machines.Tractor Then 'A1 A3
             'A_s = 2
-            For i = 0 To 15
+            For i = 0 To 17
                 Form.Columns.Add(New DataGridViewTextBoxColumn())
             Next
-            Form.Columns(0).HeaderText = "Background"
-            Form.Columns(1).HeaderText = "A1"
-            AddLabelColumn(1)
-            Form.Columns(2).HeaderText = "Run1"
-            Form.Columns(3).HeaderText = "Run2"
-            Form.Columns(4).HeaderText = "Run3"
+            tempRU = PreCalConnect(tempRU)
 
-            Form.Columns(5).HeaderText = "A3"
-            AddLabelColumn(5)
-            Form.Columns(6).HeaderText = "Run1"
-            Form.Rows(0).Cells(6).Value = "前進"
-            Form.Columns(7).HeaderText = "Run1"
-            Form.Rows(0).Cells(7).Value = "後退"
-            Form.Columns(8).HeaderText = "Run1"
-            Form.Rows(0).Cells(8).Value = "平均"
+            Form.Columns(2).HeaderText = "A1"
+            AddLabelColumn(2)
 
-            Form.Columns(9).HeaderText = "Run2"
-            Form.Rows(0).Cells(9).Value = "前進"
-            Form.Columns(10).HeaderText = "Run2"
-            Form.Rows(0).Cells(10).Value = "後退"
-            Form.Columns(11).HeaderText = "Run2"
-            Form.Rows(0).Cells(11).Value = "平均"
+            tempRU = ConnectGRU_RU_COL("Run1", "", 3, tempRU)
 
-            Form.Columns(12).HeaderText = "Run3"
-            Form.Rows(0).Cells(12).Value = "前進"
-            Form.Columns(13).HeaderText = "Run3"
-            Form.Rows(0).Cells(13).Value = "後退"
-            Form.Columns(14).HeaderText = "Run3"
-            Form.Rows(0).Cells(14).Value = "平均"
-            Form.Columns(15).HeaderText = "RSS"
+            tempRU = ConnectGRU_RU_COL("Run2", "", 4, tempRU)
+
+            tempRU = ConnectGRU_RU_COL("Run3", "", 5, tempRU)
+            tempRU = tempRU.NextUnit 'skipping additional
+
+            Form.Columns(6).HeaderText = "A3"
+            AddLabelColumn(6)
+
+            tempRU = ConnectGRU_RU_COL("Run1", "前進", 7, tempRU)
+
+            tempRU = ConnectGRU_RU_COL("Run1", "後退", 8, tempRU)
+
+            Form.Columns(9).HeaderText = "Run1"
+            Form.Rows(0).Cells(9).Value = "平均"
+
+            tempRU = ConnectGRU_RU_COL("Run2", "前進", 10, tempRU)
+
+            tempRU = ConnectGRU_RU_COL("Run2", "後退", 11, tempRU)
+
+            Form.Columns(12).HeaderText = "Run2"
+            Form.Rows(0).Cells(12).Value = "平均"
+
+            tempRU = ConnectGRU_RU_COL("Run3", "前進", 13, tempRU)
+
+
+            tempRU = ConnectGRU_RU_COL("Run3", "後退", 14, tempRU)
+
+            tempRU = tempRU.NextUnit.NextUnit 'skipping add
+
+            Form.Columns(15).HeaderText = "Run3"
+            Form.Rows(0).Cells(15).Value = "平均"
+
+            tempRU = ConnectGRU_RU_COL("RSS", "", 16, tempRU)
+            tempRU = PostCalConnect(17, tempRU)
+
         ElseIf Machine = Program.Machines.Loader_Excavator Then 'A1 A2, A1 A2 A3
             'A_s = 5
             For i = 0 To 28
                 Form.Columns.Add(New DataGridViewTextBoxColumn())
             Next
-            Form.Columns(0).HeaderText = "Background"
-            Form.Columns(1).HeaderText = "A1"
-            AddLabelColumn(1)
-            Form.Columns(2).HeaderText = "Run1"
-            Form.Columns(3).HeaderText = "Run2"
-            Form.Columns(4).HeaderText = "Run3"
+            tempRU = PreCalConnect(tempRU)
 
-            Form.Columns(5).HeaderText = "A2"
-            AddLabelColumn(5)
-            Form.Columns(6).HeaderText = "Run1"
-            Form.Columns(7).HeaderText = "Run2"
-            Form.Columns(8).HeaderText = "Run3"
+            Form.Columns(2).HeaderText = "A1"
+            AddLabelColumn(2)
 
-            Form.Columns(9).HeaderText = "A1"
-            AddLabelColumn(9)
-            Form.Columns(10).HeaderText = "Run1"
-            Form.Columns(11).HeaderText = "Run2"
-            Form.Columns(12).HeaderText = "Run3"
+            tempRU = ConnectGRU_RU_COL("Run1", "", 3, tempRU)
+            tempRU = ConnectGRU_RU_COL("Run2", "", 4, tempRU)
 
-            Form.Columns(13).HeaderText = "A2"
-            AddLabelColumn(13)
-            Form.Columns(14).HeaderText = "Run1"
-            Form.Columns(15).HeaderText = "Run2"
-            Form.Columns(16).HeaderText = "Run3"
+            tempRU = ConnectGRU_RU_COL("Run3", "", 5, tempRU)
+            tempRU = tempRU.NextUnit 'skipping add
 
-            Form.Columns(17).HeaderText = "A3"
-            AddLabelColumn(17)
-            Form.Columns(18).HeaderText = "Run1"
-            Form.Rows(0).Cells(19).Value = "前進"
-            Form.Columns(19).HeaderText = "Run1"
-            Form.Rows(0).Cells(20).Value = "後退"
+            Form.Columns(6).HeaderText = "A2"
+            AddLabelColumn(6)
+
+            tempRU = tempRU.NextUnit.NextUnit 'skipping first two
+            tempRU = ConnectGRU_RU_COL("Run1", "", 7, tempRU)
+
+            tempRU = tempRU.NextUnit.NextUnit 'skipping first two
+            tempRU = ConnectGRU_RU_COL("Run2", "", 8, tempRU)
+
+            tempRU = tempRU.NextUnit.NextUnit 'skipping first two
+            tempRU = ConnectGRU_RU_COL("Run3", "", 9, tempRU)
+            tempRU = tempRU.NextUnit.NextUnit.NextUnit 'skipping A2 add
+
+
+            Form.Columns(10).HeaderText = "A1"
+            AddLabelColumn(10)
+
+            tempRU = ConnectGRU_RU_COL("Run1", "", 11, tempRU)
+
+            tempRU = ConnectGRU_RU_COL("Run2", "", 12, tempRU)
+
+            tempRU = ConnectGRU_RU_COL("Run3", "", 13, tempRU)
+            tempRU = tempRU.NextUnit 'skipping A1 add
+
+            Form.Columns(14).HeaderText = "A2"
+            AddLabelColumn(14)
+
+            tempRU = tempRU.NextUnit.NextUnit 'skipping first two
+            tempRU = ConnectGRU_RU_COL("Run1", "", 15, tempRU)
+
+            tempRU = tempRU.NextUnit.NextUnit 'skipping first two
+            tempRU = ConnectGRU_RU_COL("Run2", "", 16, tempRU)
+
+            tempRU = tempRU.NextUnit.NextUnit 'skipping first two
+            tempRU = ConnectGRU_RU_COL("Run3", "", 17, tempRU)
+            tempRU = tempRU.NextUnit.NextUnit.NextUnit 'skipping A2 add
+
+            Form.Columns(18).HeaderText = "A3"
+            AddLabelColumn(18)
+
+            tempRU = ConnectGRU_RU_COL("Run1", "前進", 19, tempRU)
+
+            tempRU = ConnectGRU_RU_COL("Run1", "後退", 20, tempRU)
+
             Form.Columns(21).HeaderText = "Run1"
             Form.Rows(0).Cells(21).Value = "平均"
 
-            Form.Columns(22).HeaderText = "Run2"
-            Form.Rows(0).Cells(22).Value = "前進"
-            Form.Columns(23).HeaderText = "Run2"
-            Form.Rows(0).Cells(23).Value = "後退"
+            tempRU = ConnectGRU_RU_COL("Run2", "前進", 22, tempRU)
+
+            tempRU = ConnectGRU_RU_COL("Run2", "後退", 23, tempRU)
+
             Form.Columns(24).HeaderText = "Run2"
             Form.Rows(0).Cells(24).Value = "平均"
 
-            Form.Columns(25).HeaderText = "Run3"
-            Form.Rows(0).Cells(25).Value = "前進"
-            Form.Columns(26).HeaderText = "Run3"
-            Form.Rows(0).Cells(26).Value = "後退"
+            tempRU = ConnectGRU_RU_COL("Run3", "前進", 25, tempRU)
+
+            tempRU = ConnectGRU_RU_COL("Run3", "後退", 26, tempRU)
+            tempRU = tempRU.NextUnit.NextUnit 'skipping add
+
             Form.Columns(27).HeaderText = "Run3"
             Form.Rows(0).Cells(27).Value = "平均"
-            Form.Columns(28).HeaderText = "RSS"
+
+            tempRU = ConnectGRU_RU_COL("RSS", "", 28, tempRU)
+
+            tempRU = PostCalConnect(29, tempRU)
+
         ElseIf Machine = Program.Machines.Others Then 'A4
             'A_s = 1
-            For i = 0 To 6
+            For i = 0 To 8
                 Form.Columns.Add(New DataGridViewTextBoxColumn())
             Next
-            Form.Columns(0).HeaderText = "Background"
-            Form.Columns(1).HeaderText = "Run1"
-            Form.Columns(2).HeaderText = "Background"
-            Form.Columns(3).HeaderText = "Run2"
-            Form.Columns(4).HeaderText = "Background"
-            Form.Columns(5).HeaderText = "Run3"
-            Form.Columns(6).HeaderText = "RSS"
+            Form.Columns(0).HeaderText = "PreCal"
+            'p2-p12
+            For i = 1 To 4
+                tempRU.GRU = New Grid_Run_Unit("PreCal_P" & i * 2)
+                tempRU.GRU.Column = Form.Columns(0)
+                tempRU.GRU.ParentRU = tempRU
+                tempRU = tempRU.NextUnit
+            Next
+
+            tempRU = ConnectGRU_RU_COL("Background", "", 1, tempRU)
+
+            tempRU = ConnectGRU_RU_COL("Run1", "", 2, tempRU)
+
+            tempRU = ConnectGRU_RU_COL("Background", "", 3, tempRU)
+
+            tempRU = ConnectGRU_RU_COL("Run2", "", 4, tempRU)
+
+            tempRU = ConnectGRU_RU_COL("Background", "", 5, tempRU)
+
+            tempRU = ConnectGRU_RU_COL("Run3", "", 6, tempRU)
+
+            tempRU = tempRU.NextUnit.NextUnit 'skipping add
+
+            tempRU = ConnectGRU_RU_COL("RSS", "", 7, tempRU)
+
+            Form.Columns(8).HeaderText = "PostCal"
+            'p2
+            Dim postcalGRU = New Grid_Run_Unit("PostCal")
+            'p2-p12
+            For i = 1 To 4
+                tempRU.GRU = New Grid_Run_Unit("PostCal_P" & i * 2)
+                tempRU.GRU.Column = Form.Columns(8)
+                tempRU.GRU.ParentRU = tempRU
+                tempRU = tempRU.NextUnit
+            Next
         End If
     End Sub
+
+    Function ConnectGRU_RU_COL(ByVal colName As String, ByVal subHeader As String, ByVal colNum As Integer, ByRef tempRU As Run_Unit) As Run_Unit
+        Form.Columns(colNum).HeaderText = colName
+        Form.Rows(0).Cells(colNum).Value = subHeader
+        tempRU.GRU = New Grid_Run_Unit(colName)
+        tempRU.GRU.Column = Form.Columns(colNum)
+        tempRU.GRU.ParentRU = tempRU
+        tempRU = tempRU.NextUnit
+        Return tempRU
+    End Function
+
+    Function PreCalConnect(ByRef tempRU As Run_Unit) As Run_Unit
+        Form.Columns(0).HeaderText = "PreCal"
+        'p2-p12
+        For i = 1 To 6
+            tempRU.GRU = New Grid_Run_Unit("PreCal_P" & i * 2)
+            tempRU.GRU.Column = Form.Columns(0)
+            tempRU.GRU.ParentRU = tempRU
+            tempRU = tempRU.NextUnit
+        Next
+
+        tempRU = ConnectGRU_RU_COL("Background", "", 1, tempRU)
+        Background = tempRU.GRU
+        Return tempRU
+    End Function
+
+    Function PostCalConnect(ByVal colNum As Integer, ByRef tempRU As Run_Unit) As Run_Unit
+        Form.Columns(colNum).HeaderText = "PostCal"
+        'p2-p12
+        For i = 1 To 6
+            tempRU.GRU = New Grid_Run_Unit("PostCal_P" & i * 2)
+            tempRU.GRU.Column = Form.Columns(colNum)
+            tempRU.GRU.ParentRU = tempRU
+            tempRU = tempRU.NextUnit
+        Next
+
+        Return tempRU
+    End Function
+
 
     Private Sub AddLabelColumn(ByRef colInd As Integer)
         Form.Rows(1).Cells(colInd).Value = "LpAeq2"
@@ -249,7 +397,8 @@ Public Class Grid
     End Sub
 
     'contains grid_run_units
-    Private GRUList As New List(Of Grid_Run_Unit)
+    'Private GRUList As New List(Of Grid_Run_Unit)
+    'Private GRUMap As New Dictionary(Of String, Grid_Run_Unit)
     Private RSS As Grid_Run_Unit
 
     Public Enum Run_Modes
@@ -259,8 +408,8 @@ Public Class Grid
     End Enum
 
     'link the grid_run_unit's column to the column indexed in form
-    Public Sub LinkGrid_Run_Unit(ByRef run As Grid_Run_Unit, ByVal index As Integer)
-        run.Column = Form.Columns(index)
+    Public Sub LinkGrid_Run_Unit(ByRef gru As Grid_Run_Unit, ByVal index As Integer)
+        gru.Column = Form.Columns(index)
     End Sub
 
     'show GRU on the Form so we can see figures
@@ -269,49 +418,52 @@ Public Class Grid
         If Run.Header = Run_Modes.RSS.ToString() Then
             RSS = Run
         End If
-        'If the first added is not background then throw error message and return
-        If GRUList.Count = 0 And Run.isRegular Then
-            MsgBox("Trying to add a regular record to the first column where it should be a background record!")
-            Return
-        End If
         'If this run is not background
         If Run.isRegular Then
             'see if previous was background then use it as this one's background for A4
-            If Not GRUList.Count = 0 Then
-                If GRUList(GRUList.Count - 1).isRegular Then
-                    Run.Background = GRUList(GRUList.Count - 1)
-                End If
-            Else 'else we set the background to be the first in line for A1,A2,A3
-                Run.Background = GRUList(0)
+            If Not IsNothing(Background) Then
+                Run.Background = Background
             End If
         End If
 
         Dim curColInd As Integer = Run.Column.Index
-        'Form.Columns(curColInd).HeaderText = Run.Header
-        ''subHeader
-        'Form.Rows(0).Cells(curColInd).Value = Run.Subheader
 
-        'meter 2
-        Form.Rows(1).Cells(curColInd).Value = Run.LpAeq2
-        'meter 4
-        Form.Rows(2).Cells(curColInd).Value = Run.LpAeq4
-        'meter 6
-        Form.Rows(3).Cells(curColInd).Value = Run.LpAeq6
-        'meter 8
-        Form.Rows(4).Cells(curColInd).Value = Run.LpAeq8
-        'meter 10
-        Form.Rows(5).Cells(curColInd).Value = Run.LpAeq10
-        'meter 12
-        Form.Rows(6).Cells(curColInd).Value = Run.LpAeq12
-        'meters average
-        Form.Rows(7).Cells(curColInd).Value = Run.LpAeqAvg
-        'time
-        Form.Rows(8).Cells(curColInd).Value = Run.Time
-        If Run.isRegular Then
-            'deltaA
-            Form.Rows(9).Cells(curColInd).Value = Run.deltaLA
-            'K1A
-            Form.Rows(10).Cells(curColInd).Value = Run.K1A
+        If Run.ParentRU.Name.Contains("P2") Then
+            Form.Rows(1).Cells(curColInd).Value = Run.LpAeq2
+        ElseIf Run.ParentRU.Name.Contains("P4") Then
+            Form.Rows(2).Cells(curColInd).Value = Run.LpAeq4
+        ElseIf Run.ParentRU.Name.Contains("P6") Then
+            Form.Rows(3).Cells(curColInd).Value = Run.LpAeq6
+        ElseIf Run.ParentRU.Name.Contains("P8") Then
+            Form.Rows(4).Cells(curColInd).Value = Run.LpAeq8
+        ElseIf Run.ParentRU.Name.Contains("P10") Then
+            Form.Rows(5).Cells(curColInd).Value = Run.LpAeq10
+        ElseIf Run.ParentRU.Name.Contains("P12") Then
+            Form.Rows(6).Cells(curColInd).Value = Run.LpAeq12
+        Else
+            'meter 2
+            Form.Rows(1).Cells(curColInd).Value = Run.LpAeq2
+            'meter 4
+            Form.Rows(2).Cells(curColInd).Value = Run.LpAeq4
+            'meter 6
+            Form.Rows(3).Cells(curColInd).Value = Run.LpAeq6
+            'meter 8
+            Form.Rows(4).Cells(curColInd).Value = Run.LpAeq8
+            'meter 10
+            Form.Rows(5).Cells(curColInd).Value = Run.LpAeq10
+            'meter 12
+            Form.Rows(6).Cells(curColInd).Value = Run.LpAeq12
+            'meters average
+            Form.Rows(7).Cells(curColInd).Value = Run.LpAeqAvg
+            'time
+            Form.Rows(8).Cells(curColInd).Value = Run.Time
+            If Run.isRegular Then
+                'deltaA
+                Form.Rows(9).Cells(curColInd).Value = Run.deltaLA
+                'K1A
+                Form.Rows(10).Cells(curColInd).Value = Run.K1A
+            End If
+
         End If
 
         'add next column for next record
@@ -319,7 +471,7 @@ Public Class Grid
         'col.DataPropertyName = "Run"
         'col.Name = Run.Header & Run.Subheader
         'Form.Columns.Add(col)
-        GRUList.Add(Run)
+        'GRUMap.Add(Run.Column.HeaderText & Form.Rows(0).Cells(curColInd).Value, Run)
 
         '##TODO
         Dim value = Form.Rows(0).Cells(Run.Column.Index).Value
@@ -333,51 +485,50 @@ Public Class Grid
 
     'function that adds the overall column after forward and backward measurements are in place
     Private Sub AddA3Overall(ByRef Run As Grid_Run_Unit)
-        If Not IsNothing(GRUList) Then
-            If GRUList.Count > 3 Then
-                Dim forw As Grid_Run_Unit = GRUList(GRUList.Count - 2)
-                Dim backw As Grid_Run_Unit = GRUList(GRUList.Count - 1)
-                Dim subheader = "平均"
-                Dim gru As Grid_Run_Unit = New Grid_Run_Unit(forw.Meter2 + backw.Meter2,
-                                                             forw.Meter4 + backw.Meter4,
-                                                             forw.Meter6 + backw.Meter6,
-                                                             forw.Meter8 + backw.Meter8,
-                                                             forw.Meter10 + backw.Meter10,
-                                                             forw.Meter12 + backw.Meter12,
-                                                             forw.Header, forw.Subheader)
+        'If GRUMap.Count > 3 Then
+        '    Dim forw As Grid_Run_Unit = GRUMap(GRUList.Count - 2)
+        '    Dim backw As Grid_Run_Unit = GRUList(GRUList.Count - 1)
+        '    Dim subheader = "平均"
+        '    Dim gru As Grid_Run_Unit = New Grid_Run_Unit(forw.Meter2 + backw.Meter2,
+        '                                                 forw.Meter4 + backw.Meter4,
+        '                                                 forw.Meter6 + backw.Meter6,
+        '                                                 forw.Meter8 + backw.Meter8,
+        '                                                 forw.Meter10 + backw.Meter10,
+        '                                                 forw.Meter12 + backw.Meter12,
+        '                                                 forw.Header, forw.Subheader)
 
-                Dim curColInd As Integer = Run.Column.Index
-                'Form.Columns(curColInd).HeaderText = gru.Header
-                ''subHeader
-                'Form.Rows(0).Cells(curColInd).Value = gru.Subheader
+        '    Dim curColInd As Integer = Run.Column.Index
+        '    'Form.Columns(curColInd).HeaderText = gru.Header
+        '    ''subHeader
+        '    'Form.Rows(0).Cells(curColInd).Value = gru.Subheader
 
-                'meter 2
-                Form.Rows(1).Cells(curColInd).Value = gru.LpAeq2
-                'meter 4
-                Form.Rows(2).Cells(curColInd).Value = gru.LpAeq4
-                'meter 6
-                Form.Rows(3).Cells(curColInd).Value = gru.LpAeq6
-                'meter 8
-                Form.Rows(4).Cells(curColInd).Value = gru.LpAeq8
-                'meter 10
-                Form.Rows(5).Cells(curColInd).Value = gru.LpAeq10
-                'meter 12
-                Form.Rows(6).Cells(curColInd).Value = gru.LpAeq12
-                'meters average
-                Form.Rows(7).Cells(curColInd).Value = gru.LpAeqAvg
-                'time
-                Form.Rows(8).Cells(curColInd).Value = gru.Time
-                'deltaA
-                Form.Rows(9).Cells(curColInd).Value = gru.deltaLA
-                'K1A
-                Form.Rows(10).Cells(curColInd).Value = gru.K1A
-                'add next column for next record
-                'Dim col As New DataGridViewTextBoxColumn
-                'col.Name = gru.Header & gru.Subheader
-                'Form.Columns.Add(col)
-                GRUList.Add(gru)
-            End If
-        End If
+        '    'meter 2
+        '    Form.Rows(1).Cells(curColInd).Value = gru.LpAeq2
+        '    'meter 4
+        '    Form.Rows(2).Cells(curColInd).Value = gru.LpAeq4
+        '    'meter 6
+        '    Form.Rows(3).Cells(curColInd).Value = gru.LpAeq6
+        '    'meter 8
+        '    Form.Rows(4).Cells(curColInd).Value = gru.LpAeq8
+        '    'meter 10
+        '    Form.Rows(5).Cells(curColInd).Value = gru.LpAeq10
+        '    'meter 12
+        '    Form.Rows(6).Cells(curColInd).Value = gru.LpAeq12
+        '    'meters average
+        '    Form.Rows(7).Cells(curColInd).Value = gru.LpAeqAvg
+        '    'time
+        '    Form.Rows(8).Cells(curColInd).Value = gru.Time
+        '    'deltaA
+        '    Form.Rows(9).Cells(curColInd).Value = gru.deltaLA
+        '    'K1A
+        '    Form.Rows(10).Cells(curColInd).Value = gru.K1A
+        '    'add next column for next record
+        '    'Dim col As New DataGridViewTextBoxColumn
+        '    'col.Name = gru.Header & gru.Subheader
+        '    'Form.Columns.Add(col)
+        '    GRUList.Add(gru)
+        'End If
+
     End Sub
 
     'call this after RSS has been done
@@ -471,28 +622,28 @@ Public Class Grid
     Private _LWA_Final As Integer
     Public Sub Calc_LWAs()
         'calculating all the LWAs
-        Dim topTwo As Double() = {0.0, 0.0}
-        If Not GRUList.Count > 1 Then
-            For i = 1 To GRUList.Count - 2
-                Dim cur As Grid_Run_Unit = GRUList(i)
-                cur.Calc_LWA(_K2A, _R)
-                If cur.Considered Then
-                    If cur.LWA > topTwo(0) Then
-                        topTwo(0) = cur.LWA
-                    ElseIf cur.LWA > topTwo(1) Then
-                        topTwo(1) = cur.LWA
-                    End If
-                End If
-            Next
-        End If
+        'Dim topTwo As Double() = {0.0, 0.0}
+        'If Not GRUList.Count > 1 Then
+        '    For i = 1 To GRUList.Count - 2
+        '        Dim cur As Grid_Run_Unit = GRUList(i)
+        '        cur.Calc_LWA(_K2A, _R)
+        '        If cur.Considered Then
+        '            If cur.LWA > topTwo(0) Then
+        '                topTwo(0) = cur.LWA
+        '            ElseIf cur.LWA > topTwo(1) Then
+        '                topTwo(1) = cur.LWA
+        '            End If
+        '        End If
+        '    Next
+        'End If
 
-        'calculating LWA 採用值
-        Dim orig As Double = (topTwo(0) + topTwo(1)) / 2
-        If Int(orig + 0.5) > Int(orig) Then
-            _LWA_Final = Int(orig) + 1
-        Else
-            _LWA_Final = Int(orig)
-        End If
+        ''calculating LWA 採用值
+        'Dim orig As Double = (topTwo(0) + topTwo(1)) / 2
+        'If Int(orig + 0.5) > Int(orig) Then
+        '    _LWA_Final = Int(orig) + 1
+        'Else
+        '    _LWA_Final = Int(orig)
+        'End If
     End Sub
 
     Public ReadOnly Property LWA_Final()
@@ -505,36 +656,37 @@ Public Class Grid
 
     'determine whether needing additional measuring or not
     Public Function NeedAdd()
-        Dim result As Boolean = True
-        For i = 0 To GRUList.Count - 1
-            Dim cur = GRUList(i)
-            If cur.isRegular Then
-                'If Not A = 3 Then 'A1, A2, and A4
-                '    For j = 1 To GRUList.Count - 1
-                '        Dim temp = GRUList(j)
-                '        If temp IsNot cur And temp.isRegular Then
-                '            If (Math.Abs(LeqK1A(temp) - LeqK1A(cur)) <= 1) Then
-                '                cur.Considered = True
-                '                temp.Considered = True
-                '                result = False
-                '            End If
-                '        End If
-                '    Next
-                'Else 'for A3 because it has forward and backward and overall
-                '    For j = 3 To GRUList.Count - 1 Step 3
-                '        Dim temp = GRUList(j)
-                '        If temp IsNot cur And temp.isRegular Then
-                '            If (Math.Abs(LeqK1A(temp) - LeqK1A(cur)) <= 1) Then
-                '                cur.Considered = True
-                '                temp.Considered = True
-                '                result = False
-                '            End If
-                '        End If
-                '    Next
-                'End If
-            End If
-        Next
-        Return result
+        'Dim result As Boolean = True
+        'For i = 0 To GRUList.Count - 1
+        '    Dim cur = GRUList(i)
+        '    If cur.isRegular Then
+        'If Not A = 3 Then 'A1, A2, and A4
+        '    For j = 1 To GRUList.Count - 1
+        '        Dim temp = GRUList(j)
+        '        If temp IsNot cur And temp.isRegular Then
+        '            If (Math.Abs(LeqK1A(temp) - LeqK1A(cur)) <= 1) Then
+        '                cur.Considered = True
+        '                temp.Considered = True
+        '                result = False
+        '            End If
+        '        End If
+        '    Next
+        'Else 'for A3 because it has forward and backward and overall
+        '    For j = 3 To GRUList.Count - 1 Step 3
+        '        Dim temp = GRUList(j)
+        '        If temp IsNot cur And temp.isRegular Then
+        '            If (Math.Abs(LeqK1A(temp) - LeqK1A(cur)) <= 1) Then
+        '                cur.Considered = True
+        '                temp.Considered = True
+        '                result = False
+        '            End If
+        '        End If
+        '    Next
+        'End If
+        '    End If
+        'Next
+        'Return result
+        Return False
     End Function
 
     Private Function LeqK1A(ByRef Run As Grid_Run_Unit) As Decimal
@@ -669,78 +821,16 @@ End Class
 Public Class Grid_Run_Unit
     Public Considered As Boolean = False
     Public Column As DataGridViewTextBoxColumn
+    Public ParentRU As Run_Unit
+    Public NextGRU As Grid_Run_Unit
 
-    '
-    Public Sub New(ByVal Col As DataGridViewTextBoxColumn, ByVal isReg As Boolean)
-        Column = Col
-        _isRegular = isReg
-    End Sub
-
-    Public Sub New(ByRef Meter2 As Meter_Measure_Unit,
-                   ByRef Meter4 As Meter_Measure_Unit,
-                   ByRef Meter6 As Meter_Measure_Unit,
-                   ByRef Meter8 As Meter_Measure_Unit,
-                   ByRef Meter10 As Meter_Measure_Unit,
-                   ByRef Meter12 As Meter_Measure_Unit,
-                   ByVal Header As String,
-                   ByVal Subheader As String
-                   )
-        _Meter2 = Meter2
-        MeterList.Add(_Meter2)
-        _Meter4 = Meter4
-        MeterList.Add(_Meter4)
-        _Meter6 = Meter6
-        MeterList.Add(_Meter6)
-        _Meter8 = Meter8
-        MeterList.Add(_Meter8)
-        _Meter10 = Meter10
-        MeterList.Add(_Meter10)
-        _Meter12 = Meter12
-        MeterList.Add(_Meter12)
-        A4 = False
-
+    Public Sub New(ByVal Header As String)
         _Header = Header
-        _Subheader = Subheader
-        If Not IsNothing(_Meter2) Then
-            _Time = _Meter2.Time
-        End If
-        _isRegular = True
-        If _Header = Grid.Run_Modes.Background.ToString() Or _Subheader = Grid.Run_Modes.Background.ToString() _
-        Or _Header = Grid.Run_Modes.RSS.ToString() Or _Header = Grid.Run_Modes.RSS.ToString() Then
+        If _Header.Contains("Background") Or _Header.Contains("RSS") Then
             _isRegular = False
+        Else
+            _isRegular = True
         End If
-
-        Calculate()
-    End Sub
-
-    Public Sub New(ByRef Meter2 As Meter_Measure_Unit,
-               ByRef Meter4 As Meter_Measure_Unit,
-               ByRef Meter6 As Meter_Measure_Unit,
-               ByRef Meter8 As Meter_Measure_Unit,
-               ByVal Header As String,
-               ByVal Subheader As String
-               )
-        _Meter2 = Meter2
-        MeterList.Add(_Meter2)
-        _Meter4 = Meter4
-        MeterList.Add(_Meter4)
-        _Meter6 = Meter6
-        MeterList.Add(_Meter6)
-        _Meter8 = Meter8
-        MeterList.Add(_Meter8)
-        A4 = True
-
-        _Header = Header
-        _Subheader = Subheader
-        If Not IsNothing(_Meter2) Then
-            _Time = _Meter2.Time
-        End If
-        _isRegular = True
-        If _Header = Grid.Run_Modes.Background.ToString() Or _Subheader = Grid.Run_Modes.Background.ToString() _
-        Or _Header = Grid.Run_Modes.RSS.ToString() Or _Header = Grid.Run_Modes.RSS.ToString() Then
-            _isRegular = False
-        End If
-        Calculate()
     End Sub
 
     Public Sub SetMs(ByRef Meter2 As Meter_Measure_Unit,
@@ -748,10 +838,11 @@ Public Class Grid_Run_Unit
                    ByRef Meter6 As Meter_Measure_Unit,
                    ByRef Meter8 As Meter_Measure_Unit,
                    ByRef Meter10 As Meter_Measure_Unit,
-                   ByRef Meter12 As Meter_Measure_Unit,
-                   ByVal Header As String,
-                   ByVal Subheader As String
+                   ByRef Meter12 As Meter_Measure_Unit
                    )
+        If IsNothing(Meter2) Or IsNothing(Meter4) Or IsNothing(Meter6) Or IsNothing(Meter8) Then
+            _isRegular = False
+        End If
         _Meter2 = Meter2
         MeterList.Add(_Meter2)
         _Meter4 = Meter4
@@ -767,18 +858,30 @@ Public Class Grid_Run_Unit
         A4 = False
         If Not IsNothing(_Meter2) Then
             _Time = _Meter2.Time
+        ElseIf Not IsNothing(_Meter4) Then
+            _Time = _Meter4.Time
+        ElseIf Not IsNothing(_Meter6) Then
+            _Time = _Meter6.Time
+        ElseIf Not IsNothing(_Meter8) Then
+            _Time = _Meter8.Time
+        ElseIf Not IsNothing(_Meter10) Then
+            _Time = _Meter10.Time
+        ElseIf Not IsNothing(_Meter12) Then
+            _Time = _Meter12.Time
         End If
-        _Header = Header
-        _Subheader = Subheader
+        If _isRegular Then
+            Calculate()
+        End If
     End Sub
 
     Public Sub SetMs(ByRef Meter2 As Meter_Measure_Unit,
                ByRef Meter4 As Meter_Measure_Unit,
                ByRef Meter6 As Meter_Measure_Unit,
-               ByRef Meter8 As Meter_Measure_Unit,
-               ByVal Header As String,
-               ByVal Subheader As String
+               ByRef Meter8 As Meter_Measure_Unit
                )
+        If IsNothing(Meter2) Or IsNothing(Meter4) Or IsNothing(Meter6) Or IsNothing(Meter8) Then
+            _isRegular = False
+        End If
         _Meter2 = Meter2
         MeterList.Add(_Meter2)
         _Meter4 = Meter4
@@ -790,9 +893,32 @@ Public Class Grid_Run_Unit
         A4 = True
         If Not IsNothing(_Meter2) Then
             _Time = _Meter2.Time
+        ElseIf Not IsNothing(_Meter4) Then
+            _Time = _Meter4.Time
+        ElseIf Not IsNothing(_Meter6) Then
+            _Time = _Meter6.Time
+        ElseIf Not IsNothing(_Meter8) Then
+            _Time = _Meter8.Time
         End If
-        _Header = Header
-        _Subheader = Subheader
+        If _isRegular Then
+            Calculate()
+        End If
+    End Sub
+
+    Public Sub SetM(ByRef Meter As Meter_Measure_Unit, ByVal num As Integer)
+        If num = 2 Then
+            _Meter2 = Meter
+        ElseIf num = 4 Then
+            _Meter4 = Meter
+        ElseIf num = 6 Then
+            _Meter6 = Meter
+        ElseIf num = 8 Then
+            _Meter8 = Meter
+        ElseIf num = 10 Then
+            _Meter10 = Meter
+        ElseIf num = 12 Then
+            _Meter12 = Meter
+        End If
     End Sub
 
     Private _Background As Grid_Run_Unit
@@ -808,13 +934,6 @@ Public Class Grid_Run_Unit
     Private MeterList As New List(Of Meter_Measure_Unit)
 
     Public A4 As Boolean
-
-    Private _isRegular As Boolean
-    Public ReadOnly Property isRegular() As Boolean
-        Get
-            Return _isRegular
-        End Get
-    End Property
 
     Private _Header As String
     Public Property Header() As String
@@ -960,22 +1079,20 @@ Public Class Grid_Run_Unit
 
     Private _deltaLA As Double
     Public Sub Calc_deltaLA()
-        If isRegular Then
-            Try
-                If IsNothing(_Background) Then
-                    _deltaLA = 0
-                    Return
-                End If
-                If _Background._LpAeqAvg = 0 Then
-                    _deltaLA = 0
-                    Return
-                End If
-                _deltaLA = Me._LpAeqAvg - _Background._LpAeqAvg
-            Catch ex As Exception
-                MsgBox("In Calc_deltaLA():" & ex.Message)
-                _deltaLA = -1
-            End Try
-        End If
+        Try
+            If IsNothing(_Background) Then
+                _deltaLA = 0
+                Return
+            End If
+            If _Background._LpAeqAvg = 0 Then
+                _deltaLA = 0
+                Return
+            End If
+            _deltaLA = Me._LpAeqAvg - _Background._LpAeqAvg
+        Catch ex As Exception
+            MsgBox("In Calc_deltaLA():" & ex.Message)
+            _deltaLA = -1
+        End Try
     End Sub
 
     Public ReadOnly Property deltaLA() As Double
@@ -1007,6 +1124,13 @@ Public Class Grid_Run_Unit
     Public ReadOnly Property K1A() As Double
         Get
             Return _K1A
+        End Get
+    End Property
+
+    Private _isRegular As Boolean
+    Public ReadOnly Property isRegular() As Boolean
+        Get
+            Return _isRegular
         End Get
     End Property
 

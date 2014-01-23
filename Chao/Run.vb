@@ -32,9 +32,9 @@
         Return Not CurStep = EndStep
     End Function
 
-    Public Sub ConnectGRU(ByRef gridrununit As Grid_Run_Unit)
-        GRU = gridrununit
-    End Sub
+    'Public Sub ConnectGRU(ByRef gridrununit As Grid_Run_Unit)
+    '    GRU = gridrununit
+    'End Sub
 
     'Sub Append_Data(ByVal d() As Double)
     '    If Not IsNothing(d) And d.Length > 0 Then

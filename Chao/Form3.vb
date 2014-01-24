@@ -2120,6 +2120,7 @@ Public Class Program
             Accept_Button.Enabled = False
             stopButton.Enabled = True
             Timer1.Start()
+            Comm.StartMeasure()
         Else
             startButton.Enabled = False
             stopButton.Enabled = True

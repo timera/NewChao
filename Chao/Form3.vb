@@ -697,8 +697,6 @@ Public Class Program
         pos2(3).Coors = New ThreeDPoint(0, 0, D0_2)
 
         plot(xCor, yCor, GroupBox_Plot, r, pos2)
-        DisposeChart()
-        CreateChart(r)
         If choice = "鐵輪壓路機(Road roller)" Then
             Load_Others(choice)
             MachChosen = True
@@ -761,6 +759,9 @@ Public Class Program
         Else
             MachChosen = False
         End If
+
+        DisposeChart()
+        CreateChart(r)
 
         '選擇機具後可更換
         If MachChosen = True Then
@@ -2161,6 +2162,7 @@ Public Class Program
 
     End Sub
 
+    '##BUTTON CLICKS
     Private Sub stopButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles stopButton.Click
         If Countdown = False Then
             Timer1.Stop()
@@ -2196,6 +2198,7 @@ Public Class Program
                 End If
             End If
 
+            'RSS background
             If series.Count = 4 + 1 Then
                 CurRun.GRU.SetMs(Meter_Measure_Unit.SeriesToMMU(series(0), Leqpoints(0).YValues(0)),
                                 Meter_Measure_Unit.SeriesToMMU(series(1), Leqpoints(1).YValues(0)),

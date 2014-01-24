@@ -871,6 +871,8 @@ Public Class Grid_Run_Unit
         End If
         If _isRegular Then
             Calculate()
+        Else
+            Calc_LpAeqAvg()
         End If
     End Sub
 
@@ -902,6 +904,8 @@ Public Class Grid_Run_Unit
         End If
         If _isRegular Then
             Calculate()
+        Else
+            Calc_LpAeqAvg()
         End If
     End Sub
 
@@ -1024,7 +1028,10 @@ Public Class Grid_Run_Unit
     End Property
     Public Property LpAeq10() As Double
         Get
-            Return _Meter10.Leq
+            If Not IsNothing(_Meter10) Then
+                Return _Meter10.Leq
+            End If
+            Return Nothing
         End Get
         Set(ByVal value As Double)
             _Meter10.Leq = value
@@ -1039,7 +1046,10 @@ Public Class Grid_Run_Unit
     End Property
     Public Property LpAeq12() As Double
         Get
-            Return _Meter12.Leq
+            If Not IsNothing(_Meter12) Then
+                Return _Meter12.Leq
+            End If
+            Return Nothing
         End Get
         Set(ByVal value As Double)
             _Meter12.Leq = value

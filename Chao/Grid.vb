@@ -345,6 +345,11 @@ Public Class Grid
         tempRU.GRU = New Grid_Run_Unit(colName)
         tempRU.GRU.Column = Form.Columns(colNum)
         tempRU.GRU.ParentRU = tempRU
+        If colName.Contains("Background") Or subHeader.Contains("Background") Then
+            Background = tempRU.GRU
+        Else
+            tempRU.GRU.Background = Background
+        End If
         tempRU = tempRU.NextUnit
         Return tempRU
     End Function
@@ -360,7 +365,6 @@ Public Class Grid
         Next
 
         tempRU = ConnectGRU_RU_COL("Background", "", 1, tempRU)
-        Background = tempRU.GRU
         Return tempRU
     End Function
 
@@ -473,62 +477,26 @@ Public Class Grid
         'Form.Columns.Add(col)
         'GRUMap.Add(Run.Column.HeaderText & Form.Rows(0).Cells(curColInd).Value, Run)
 
-        '##TODO
-        Dim value = Form.Rows(0).Cells(Run.Column.Index).Value
-        If Not IsNothing(value) Then
-            If value.Contains("後退") Then
-                AddA3Overall(Run)
-            End If
-        End If
-
     End Sub
 
-    'function that adds the overall column after forward and backward measurements are in place
-    Private Sub AddA3Overall(ByRef Run As Grid_Run_Unit)
-        'If GRUMap.Count > 3 Then
-        '    Dim forw As Grid_Run_Unit = GRUMap(GRUList.Count - 2)
-        '    Dim backw As Grid_Run_Unit = GRUList(GRUList.Count - 1)
-        '    Dim subheader = "平均"
-        '    Dim gru As Grid_Run_Unit = New Grid_Run_Unit(forw.Meter2 + backw.Meter2,
-        '                                                 forw.Meter4 + backw.Meter4,
-        '                                                 forw.Meter6 + backw.Meter6,
-        '                                                 forw.Meter8 + backw.Meter8,
-        '                                                 forw.Meter10 + backw.Meter10,
-        '                                                 forw.Meter12 + backw.Meter12,
-        '                                                 forw.Header, forw.Subheader)
+    'function that adds the overall column after runFwdard and runBwdard measurements are in place
+    Public Sub AddA3Overall(ByRef runFwd As Grid_Run_Unit, ByRef runBwd As Grid_Run_Unit)
 
-        '    Dim curColInd As Integer = Run.Column.Index
-        '    'Form.Columns(curColInd).HeaderText = gru.Header
-        '    ''subHeader
-        '    'Form.Rows(0).Cells(curColInd).Value = gru.Subheader
+        Dim col As DataGridViewTextBoxColumn = New DataGridViewTextBoxColumn()
+        col.HeaderText = "平均"
 
-        '    'meter 2
-        '    Form.Rows(1).Cells(curColInd).Value = gru.LpAeq2
-        '    'meter 4
-        '    Form.Rows(2).Cells(curColInd).Value = gru.LpAeq4
-        '    'meter 6
-        '    Form.Rows(3).Cells(curColInd).Value = gru.LpAeq6
-        '    'meter 8
-        '    Form.Rows(4).Cells(curColInd).Value = gru.LpAeq8
-        '    'meter 10
-        '    Form.Rows(5).Cells(curColInd).Value = gru.LpAeq10
-        '    'meter 12
-        '    Form.Rows(6).Cells(curColInd).Value = gru.LpAeq12
-        '    'meters average
-        '    Form.Rows(7).Cells(curColInd).Value = gru.LpAeqAvg
-        '    'time
-        '    Form.Rows(8).Cells(curColInd).Value = gru.Time
-        '    'deltaA
-        '    Form.Rows(9).Cells(curColInd).Value = gru.deltaLA
-        '    'K1A
-        '    Form.Rows(10).Cells(curColInd).Value = gru.K1A
-        '    'add next column for next record
-        '    'Dim col As New DataGridViewTextBoxColumn
-        '    'col.Name = gru.Header & gru.Subheader
-        '    'Form.Columns.Add(col)
-        '    GRUList.Add(gru)
-        'End If
-
+        Dim gru As Grid_Run_Unit = New Grid_Run_Unit("Overall")
+        ' the only way to access the overall GRU is through the previous backward GRU
+        runBwd.NextGRU = gru
+        gru.Column = col
+        gru.SetMs(runFwd.Meter2 + runBwd.Meter2,
+                runFwd.Meter4 + runBwd.Meter4,
+                runFwd.Meter6 + runBwd.Meter6,
+                runFwd.Meter8 + runBwd.Meter8,
+                runFwd.Meter10 + runBwd.Meter10,
+                runFwd.Meter12 + runBwd.Meter12)
+        Me.Form.Columns.Insert(runBwd.Column.Index + 1, col)
+        ShowGRUonForm(gru)
     End Sub
 
     'call this after RSS has been done
@@ -654,39 +622,33 @@ Public Class Grid
 
 
 
-    'determine whether needing additional measuring or not
-    Public Function NeedAdd()
-        'Dim result As Boolean = True
-        'For i = 0 To GRUList.Count - 1
-        '    Dim cur = GRUList(i)
-        '    If cur.isRegular Then
-        'If Not A = 3 Then 'A1, A2, and A4
-        '    For j = 1 To GRUList.Count - 1
-        '        Dim temp = GRUList(j)
-        '        If temp IsNot cur And temp.isRegular Then
-        '            If (Math.Abs(LeqK1A(temp) - LeqK1A(cur)) <= 1) Then
-        '                cur.Considered = True
-        '                temp.Considered = True
-        '                result = False
-        '            End If
-        '        End If
-        '    Next
-        'Else 'for A3 because it has forward and backward and overall
-        '    For j = 3 To GRUList.Count - 1 Step 3
-        '        Dim temp = GRUList(j)
-        '        If temp IsNot cur And temp.isRegular Then
-        '            If (Math.Abs(LeqK1A(temp) - LeqK1A(cur)) <= 1) Then
-        '                cur.Considered = True
-        '                temp.Considered = True
-        '                result = False
-        '            End If
-        '        End If
-        '    Next
-        'End If
-        '    End If
-        'Next
-        'Return result
+    'given a list of GRUs, determine whether needing additional measuring or not
+    Public Function NeedAdd(ByRef grus As List(Of Grid_Run_Unit)) As Boolean
+        Dim r = New Random()
+        If r.Next() Then
+            MsgBox("即將多增加一次測試，因為前幾次差距大於1!")
+            Return True
+        End If
         Return False
+        'Dim result As Boolean = True
+        'For i = 0 To grus.Count - 1
+        '    Dim cur = grus(i)
+        '    For j = 0 To grus.Count - 1
+        '        Dim temp = grus(j)
+        '        If temp IsNot cur Then
+        '            If (Math.Abs(LeqK1A(temp) - LeqK1A(cur)) <= 1) Then
+        '                cur.Considered = True
+        '                temp.Considered = True
+        '                result = False
+        '            End If
+        '        End If
+        '    Next
+        'Next
+        'if result then
+        'msgbox("即將多增加一次測試，因為前幾次差距大於1!")
+        'end if
+        '
+        'Return result
     End Function
 
     Private Function LeqK1A(ByRef Run As Grid_Run_Unit) As Decimal
@@ -823,10 +785,11 @@ Public Class Grid_Run_Unit
     Public Column As DataGridViewTextBoxColumn
     Public ParentRU As Run_Unit
     Public NextGRU As Grid_Run_Unit
+    Public OverallGRU As Grid_Run_Unit 'only used in A3
 
     Public Sub New(ByVal Header As String)
         _Header = Header
-        If _Header.Contains("Background") Or _Header.Contains("RSS") Then
+        If _Header.Contains("Background") Or _Header.Contains("RSS") Or _Header.Contains("Cal") Then
             _isRegular = False
         Else
             _isRegular = True

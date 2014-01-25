@@ -75,10 +75,6 @@ Public Class Program
 
     Dim sum_steps As Integer = 0
 
-    'set a random boolean
-    Dim RandGen As New Random
-    Dim RandBool As Boolean
-
     Dim choice As String
     Dim TimerTesting As Boolean = False 'if set to true, it's currently timer testing
     'temporary constant
@@ -1978,15 +1974,16 @@ Public Class Program
                     timeLeft = timeLeft - 1
                     timeLabel.Text = timeLeft & " s"
                     'send values to display as text and graphs
-                    updateFinalBarGraph()
+
                     SetScreenValuesAndGraphs(GetInstantData())
+                    
                     'if HasNextStep
                     'change step color , seconds 
                     'do next step
                     If CurRun.CurStep = CurRun.EndStep Then 'last step (not HasNextStep)
                         'stop the timer
                         Timer1.Stop()
-
+                        'Continuing on for A2's unfinished runs
                         If CurRun.NextUnit.Name.Contains("_2nd_3rd") Then
                             Accept_Button.Enabled = False
                             startButton.Enabled = True
@@ -2003,12 +2000,14 @@ Public Class Program
                             'dispose old graph and create new graph
                             'A2三個round的圖要連續所以不load新的圖
                             'Load_New_Graph_CD_True()
-                        Else
+
+                        Else 'Countdown finally stop for entire run
                             Accept_Button.Enabled = True
                             startButton.Enabled = False
                             stopButton.Enabled = False
                             array_step(CurRun.CurStep - 1).BackColor = Color.Green
-
+                            updateFinalBarGraph()
+                            ShowResultsOnForm()
                         End If
 
                         'Cur_A_Unit.AddGrid_Run_Unit()
@@ -2029,6 +2028,7 @@ Public Class Program
             End If
         End If
     End Sub
+
     Sub Set_Panel_BackColor()
         CurRun.Set_BackColor(Color.Green)
         CurRun.NextUnit.Set_BackColor(Color.Yellow)
@@ -2162,6 +2162,53 @@ Public Class Program
 
     End Sub
 
+    Private Sub ShowResultsOnForm()
+
+        'Precal,postcal,RSS,background
+        Dim series As List(Of DataVisualization.Charting.Series) = MainLineGraph.GetSeries()
+
+        Dim Leqpoints As DataVisualization.Charting.DataPointCollection = MainBarGraph.GetSeries(0).Points()
+
+        'precal and postcal
+        If CurRun.Name.Contains("Cal") Then
+            If CurRun.Name.Contains("2") Then
+                CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(0), Leqpoints(0).YValues(0)), 2)
+            ElseIf CurRun.Name.Contains("4") Then
+                CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(1), Leqpoints(1).YValues(0)), 4)
+            ElseIf CurRun.Name.Contains("6") Then
+                CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(2), Leqpoints(2).YValues(0)), 6)
+            ElseIf CurRun.Name.Contains("8") Then
+                CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(3), Leqpoints(3).YValues(0)), 8)
+            ElseIf CurRun.Name.Contains("10") Then
+                CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(4), Leqpoints(4).YValues(0)), 10)
+            ElseIf CurRun.Name.Contains("12") Then
+                CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(5), Leqpoints(5).YValues(0)), 12)
+
+            End If
+        End If
+
+        
+        'everything else
+        Dim tempGRU As Grid_Run_Unit = CurRun.GRU
+        While Not IsNothing(tempGRU.NextGRU)
+            tempGRU = tempGRU.NextGRU
+        End While
+        If series.Count = 4 + 1 Then
+            tempGRU.SetMs(Meter_Measure_Unit.SeriesToMMU(series(0), Leqpoints(0).YValues(0)),
+                            Meter_Measure_Unit.SeriesToMMU(series(1), Leqpoints(1).YValues(0)),
+                            Meter_Measure_Unit.SeriesToMMU(series(2), Leqpoints(2).YValues(0)),
+                            Meter_Measure_Unit.SeriesToMMU(series(3), Leqpoints(3).YValues(0)))
+        Else
+            tempGRU.SetMs(Meter_Measure_Unit.SeriesToMMU(series(0), Leqpoints(0).YValues(0)),
+                            Meter_Measure_Unit.SeriesToMMU(series(1), Leqpoints(1).YValues(0)),
+                            Meter_Measure_Unit.SeriesToMMU(series(2), Leqpoints(2).YValues(0)),
+                            Meter_Measure_Unit.SeriesToMMU(series(3), Leqpoints(3).YValues(0)),
+                            Meter_Measure_Unit.SeriesToMMU(series(4), Leqpoints(4).YValues(0)),
+                            Meter_Measure_Unit.SeriesToMMU(series(5), Leqpoints(5).YValues(0)))
+        End If
+        DataGrid.ShowGRUonForm(tempGRU)
+    End Sub
+
     '##BUTTON CLICKS
     Private Sub stopButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles stopButton.Click
         If Countdown = False Then
@@ -2172,47 +2219,7 @@ Public Class Program
 
             'final Leq
             updateFinalBarGraph()
-        
-            'Precal,postcal,RSS,backgroun,A4
-            '
-
-            Dim series As List(Of DataVisualization.Charting.Series) = MainLineGraph.GetSeries()
-
-            Dim Leqpoints As DataVisualization.Charting.DataPointCollection = MainBarGraph.GetSeries(0).Points()
-
-            'precal and postcal
-            If CurRun.Name.Contains("Cal") Then
-                If CurRun.Name.Contains("2") Then
-                    CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(0), Leqpoints(0).YValues(0)), 2)
-                ElseIf CurRun.Name.Contains("4") Then
-                    CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(1), Leqpoints(1).YValues(0)), 4)
-                ElseIf CurRun.Name.Contains("6") Then
-                    CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(2), Leqpoints(2).YValues(0)), 6)
-                ElseIf CurRun.Name.Contains("8") Then
-                    CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(3), Leqpoints(3).YValues(0)), 8)
-                ElseIf CurRun.Name.Contains("10") Then
-                    CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(4), Leqpoints(4).YValues(0)), 10)
-                ElseIf CurRun.Name.Contains("12") Then
-                    CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(5), Leqpoints(5).YValues(0)), 12)
-
-                End If
-            End If
-
-            'RSS background
-            If series.Count = 4 + 1 Then
-                CurRun.GRU.SetMs(Meter_Measure_Unit.SeriesToMMU(series(0), Leqpoints(0).YValues(0)),
-                                Meter_Measure_Unit.SeriesToMMU(series(1), Leqpoints(1).YValues(0)),
-                                Meter_Measure_Unit.SeriesToMMU(series(2), Leqpoints(2).YValues(0)),
-                                Meter_Measure_Unit.SeriesToMMU(series(3), Leqpoints(3).YValues(0)))
-            Else
-                CurRun.GRU.SetMs(Meter_Measure_Unit.SeriesToMMU(series(0), Leqpoints(0).YValues(0)),
-                                Meter_Measure_Unit.SeriesToMMU(series(1), Leqpoints(1).YValues(0)),
-                                Meter_Measure_Unit.SeriesToMMU(series(2), Leqpoints(2).YValues(0)),
-                                Meter_Measure_Unit.SeriesToMMU(series(3), Leqpoints(3).YValues(0)),
-                                Meter_Measure_Unit.SeriesToMMU(series(4), Leqpoints(4).YValues(0)),
-                                Meter_Measure_Unit.SeriesToMMU(series(5), Leqpoints(5).YValues(0)))
-            End If
-            DataGrid.ShowGRUonForm(CurRun.GRU)
+            ShowResultsOnForm()
         Else
             Timer1.Stop()
             startButton.Enabled = True
@@ -2289,6 +2296,40 @@ Public Class Program
             End If
         End If
     End Sub
+
+    'two approaches, if there's already a GRU existent, add as next GRU, if not, attach to the RU
+    Sub Set_Add_GRU(ByVal whichA As Integer, ByVal colName As String, ByVal subHeader As String)
+        Dim tempGRU = New Grid_Run_Unit(colName)
+
+        Dim tempCol As DataGridViewTextBoxColumn = New DataGridViewTextBoxColumn()
+        Dim lastGRU As Grid_Run_Unit
+        Dim firstAdd As Boolean = False 'only used for A3, check if it's the first add, if not it will help jump 3 columns at a time
+
+        If IsNothing(CurRun.GRU) Then
+            CurRun.GRU = tempGRU
+            lastGRU = CurRun.PrevUnit.GRU
+            firstAdd = True
+        Else
+            lastGRU = CurRun.GRU
+            While Not IsNothing(lastGRU.NextGRU)
+                lastGRU = lastGRU.NextGRU
+            End While
+            lastGRU.NextGRU = tempGRU
+        End If
+        Dim i = 1
+        If whichA = 3 And Not firstAdd Then
+            i = 3
+        ElseIf whichA = 2 And Not firstAdd Then
+            i = 2
+        End If
+
+        DataGrid.Form.Columns.Insert(lastGRU.Column.Index + i, tempCol)
+        DataGrid.Form.Rows(0).Cells(tempCol.Index).Value = subHeader
+        tempGRU.Column = tempCol
+        tempCol.HeaderText = colName
+        tempGRU.ParentRU = CurRun
+    End Sub
+
 
     Sub Set_Run_Unit()
         CurRun.Steps = Load_Steps_helper(CurRun)
@@ -2540,7 +2581,7 @@ Public Class Program
                 'don't save data
 
                 All_Panel_Enable()
-                
+
                 CurRun.Set_BackColor(Color.Green)
                 Temp_CurRun.Set_BackColor(Color.Yellow)
 
@@ -2749,7 +2790,7 @@ Public Class Program
                     Jump_Back_Countdown_False()
                 End If
 
-            ElseIf CurRun.Name = "PostCal" Then
+            ElseIf CurRun.Name.Contains("PostCal") Then
                 If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
                     Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
                     If Result = DialogResult.Yes Then
@@ -2799,6 +2840,7 @@ Public Class Program
                     Jump_Back_Countdown_False()
                 End If
 
+
             ElseIf CurRun.Name = "A4_Mid_BG" Or CurRun.Name = "A4_Mid_BG_Add" Then
                 If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
                     Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
@@ -2808,8 +2850,17 @@ Public Class Program
                         ' change light
                         Set_Panel_BackColor()
                         CurRun.Link.Enabled = True
+
                         'jump to next Run_Unit
                         CurRun = CurRun.NextUnit
+                        Dim tempGRU = CurRun.GRU
+                        Dim i As Integer = 4
+                        While Not IsNothing(tempGRU)
+                            tempGRU = tempGRU.NextGRU
+                            i += 1
+                        End While
+
+                        Set_Add_GRU(4, "Run " & i, "")
                         Set_Run_Unit()
                         Countdown = True
                         'load A4's steps
@@ -2853,15 +2904,20 @@ Public Class Program
                             'Case2: now is ExA1 and next is ExA1_Add or now is TrA1 and next is TrA1_Add or now is LoA1 and next is LoA1_Add
                             'have an additional test?
                             'call a function 
-                            'if want_add()=true then ... elseif want_add()=false then ... endif
 
                             CurRun.Set_BackColor(Color.Green)
                             CurRun.Link.Enabled = True
                             'jump to next Run_Unit and change light
-                            RandBool = RandGen.Next(0, 2).ToString
-                            If RandBool = True Then
+
+                            'Add?
+                            Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                            list.Add(CurRun.GRU) 'adding test 3
+                            list.Add(CurRun.PrevUnit.GRU) 'adding testing 2
+                            list.Add(CurRun.PrevUnit.PrevUnit.GRU) 'adding test 1
+                            If DataGrid.NeedAdd(list) Then
                                 'True: add test
                                 CurRun = CurRun.NextUnit
+                                Set_Add_GRU(0, "Run 4", "")
                                 CurRun.Set_BackColor(Color.Yellow)
                                 Set_Run_Unit()
                             Else
@@ -2898,11 +2954,22 @@ Public Class Program
 
 
                         CurRun.Link.Enabled = True
-                        'jump to next Run_Unit
-                        RandBool = RandGen.Next(0, 2).ToString
-                        If RandBool = True Then
+                        'Add?
+                        Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                        list.Add(CurRun.PrevUnit.GRU) 'adding test 3
+                        list.Add(CurRun.PrevUnit.PrevUnit.GRU) 'adding testing 2
+                        list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
+                        Dim tempGRU = CurRun.GRU
+                        Dim i As Integer = 4
+                        While Not IsNothing(tempGRU)
+                            list.Add(tempGRU)
+                            tempGRU = tempGRU.NextGRU
+                            i += 1
+                        End While
+                        If DataGrid.NeedAdd(list) Then
                             'True: add test
                             CurRun.Set_BackColor(Color.Yellow)
+                            Set_Add_GRU(0, "Run " & i, "")
                             Set_Run_Unit()
                         Else
                             'False: not add test
@@ -2940,10 +3007,15 @@ Public Class Program
                             CurRun.Set_BackColor(Color.Green)
 
                             'jump to next Run_Unit and change light
-                            RandBool = RandGen.Next(0, 2).ToString
-                            If RandBool = True Then
+                            'Add?
+                            Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                            list.Add(CurRun.GRU) 'adding test 3
+                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding testing 2
+                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
+                            If DataGrid.NeedAdd(list) Then
                                 'True: add test
                                 CurRun = CurRun.NextUnit
+                                Set_Add_GRU(0, "Run 4", "")    'True: add test
                                 Set_Run_Unit()
                                 CurRun.Set_BackColor(Color.Yellow)
                                 'load A2's steps
@@ -3019,10 +3091,22 @@ Public Class Program
                             'if want_add()=true then ... elseif want_add()=false then ... endif
 
                             'jump to next Run_Unit
-                            RandBool = RandGen.Next(0, 2).ToString
-                            If RandBool = True Then
+                            'Add?
+                            Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 3
+                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding testing 2
+                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
+                            Dim tempGRU = CurRun.GRU
+                            Dim i As Integer = 4
+                            While Not IsNothing(tempGRU)
+                                list.Add(tempGRU)
+                                tempGRU = tempGRU.NextGRU
+                                i += 1
+                            End While
+                            If DataGrid.NeedAdd(list) Then
                                 'True: add test
                                 Restart_from_2nd_Previous_Run_Unit()
+                                Set_Add_GRU(0, "Run " & i, "")
                                 'load A2's steps
                                 Clear_Steps()
                                 Load_Steps()
@@ -3086,6 +3170,11 @@ Public Class Program
                             ' change light
                             Set_Panel_BackColor()
                             CurRun.Link.Enabled = True
+
+                            'Case:LoA3_bkd to LoA3_fwd or TrA3_bkd to TrA3_fwd or TrA3_bkd to TrA3_fwd
+                            If CurRun.NextUnit.Name.Contains("fwd") Then
+                                DataGrid.AddA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU)
+                            End If
                             'jump to next Run_Unit
                             CurRun = CurRun.NextUnit
                             Set_Run_Unit()
@@ -3104,10 +3193,18 @@ Public Class Program
                             CurRun.Set_BackColor(Color.Green)
                             CurRun.Link.Enabled = True
                             'jump to next Run_Unit and change light
-                            RandBool = RandGen.Next(0, 2).ToString
-                            If RandBool = True Then
+
+                            DataGrid.AddA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU) 'adding overall column
+                            'Add?
+                            Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                            list.Add(CurRun.GRU.NextGRU) 'adding test 3 overall
+                            list.Add(CurRun.PrevUnit.PrevUnit.GRU.NextGRU) 'adding testing 2 overall
+                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU.NextGRU) 'adding test 1
+                            If DataGrid.NeedAdd(list) Then
                                 'True: add test
                                 CurRun = CurRun.NextUnit
+                                Set_Add_GRU(3, "Run 4", "前進")    'True: add test
+
                                 Set_Run_Unit()
                                 CurRun.Set_BackColor(Color.Yellow)
                                 'load LoA3_fwd_Add or TrA3_fwd_Add's steps
@@ -3149,6 +3246,14 @@ Public Class Program
                             CurRun.Link.Enabled = True
                             'jump to next Run_Unit
                             CurRun = CurRun.NextUnit
+
+                            Dim i As Integer = 4
+                            Dim tempGRU As Grid_Run_Unit = CurRun.GRU
+                            While Not IsNothing(tempGRU)
+                                tempGRU = tempGRU.NextGRU
+                                i += 1
+                            End While
+                            Set_Add_GRU(3, "Run " & i, "後退")
                             Set_Run_Unit()
                             'load LoA3 or TrA3's steps
                             Clear_Steps()
@@ -3163,11 +3268,24 @@ Public Class Program
                             'if want_add()=true then ... elseif want_add()=false then ... endif
 
                             CurRun.Link.Enabled = True
-                            RandBool = RandGen.Next(0, 2).ToString
-                            If RandBool = True Then
-                                'True: add test , jump to LoA3_fwd_Add or jump to TrA3_fwd_Add
-                                'True: add test
+                            'Add?
+                            Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                            list.Add(CurRun.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding test 3
+                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding testing 2
+                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding test 1
+                            Dim tempGRU = CurRun.GRU
+                            DataGrid.AddA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU) 'adding overall gru and column
+                            Dim i As Integer = 4
+                            While Not IsNothing(tempGRU)
+                                list.Add(tempGRU)
+                                tempGRU = tempGRU.NextGRU
+                                i += 1
+                            End While
+                            If DataGrid.NeedAdd(list) Then
                                 Restart_from_1st_Previous_Run_Unit()
+                                'True: add test
+                                Set_Add_GRU(3, "Run " & i, "前進")
+
                                 'load LoA3_fwd or TrA3_fwd's steps
                                 Clear_Steps()
                                 Load_Steps()
@@ -3221,14 +3339,18 @@ Public Class Program
                             CurRun.Set_BackColor(Color.Green)
                             CurRun.Link.Enabled = True
                             'jump to next Run_Unit and change light
-                            RandBool = RandGen.Next(0, 2).ToString
-                            If RandBool = True Then
+                            'Add?
+                            Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                            list.Add(CurRun.GRU) 'adding test 3 
+                            list.Add(CurRun.PrevUnit.PrevUnit.GRU) 'adding testing 2
+                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
+                            If DataGrid.NeedAdd(list) Then
                                 'True: add test
+                                CurRun = CurRun.NextUnit
+                                Set_Add_GRU(0, "Background", "")    'True: add test
                                 ' change light
                                 Set_Panel_BackColor()
 
-                                'jump to next Run_Unit
-                                CurRun = CurRun.NextUnit
                                 timeLeft = CurRun.Time
                                 timeLabel.Text = timeLeft & " s"
                                 Countdown = False
@@ -3266,13 +3388,26 @@ Public Class Program
                         'if want_add()=true then ... elseif want_add()=false then ... endif
 
                         CurRun.Link.Enabled = True
-                        RandBool = RandGen.Next(0, 2).ToString
-                        If RandBool = True Then
-                            'True: add test , jump to A4_Mid_BG_Add
-                            'True: add test
+                        'Add?
+                        Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                        list.Add(CurRun.PrevUnit.GRU) 'adding test 3 
+                        list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding testing 2
+                        list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
+                        Dim tempGRU = CurRun.GRU
+                        Dim i As Integer = 4
+                        While Not IsNothing(tempGRU)
+                            list.Add(tempGRU)
+                            tempGRU = tempGRU.NextGRU
+                            i += 1
+                        End While
+                        If DataGrid.NeedAdd(list) Then
                             CurRun.PrevUnit.Set_BackColor(Color.Yellow)
                             CurRun.Set_BackColor(Color.IndianRed)
                             CurRun = CurRun.PrevUnit
+                            'True: add test
+                            Set_Add_GRU(4, "Background", "")    'True: add test
+                            'True: add test , jump to A4_Mid_BG_Add
+                            
                             timeLeft = CurRun.Time
                             timeLabel.Text = timeLeft & " s"
                             Countdown = False

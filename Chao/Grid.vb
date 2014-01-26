@@ -7,7 +7,13 @@ Public Class Grid
     Public Form As DataGridView
     Private _R As Double
     Private _Machine As Program.Machines
-    Private Background As Grid_Run_Unit
+
+    Private _Background As Grid_Run_Unit
+    Public ReadOnly Property Background As Grid_Run_Unit
+        Get
+            Return _Background
+        End Get
+    End Property
     'Public Cur_Column
 
     'Private A_s As Integer 'keep track of which A's this one has
@@ -191,25 +197,21 @@ Public Class Grid
 
             tempRU = ConnectGRU_RU_COL("Run1", "後退", 8, tempRU)
 
-            Form.Columns(9).HeaderText = "Run1"
-            Form.Rows(0).Cells(9).Value = "平均"
+            tempRU = ConnectGRU_RU_COL("Run1", "平均", 9, tempRU)
 
             tempRU = ConnectGRU_RU_COL("Run2", "前進", 10, tempRU)
 
             tempRU = ConnectGRU_RU_COL("Run2", "後退", 11, tempRU)
 
-            Form.Columns(12).HeaderText = "Run2"
-            Form.Rows(0).Cells(12).Value = "平均"
+            tempRU = ConnectGRU_RU_COL("Run2", "平均", 12, tempRU)
 
             tempRU = ConnectGRU_RU_COL("Run3", "前進", 13, tempRU)
-
 
             tempRU = ConnectGRU_RU_COL("Run3", "後退", 14, tempRU)
 
             tempRU = tempRU.NextUnit.NextUnit 'skipping add
 
-            Form.Columns(15).HeaderText = "Run3"
-            Form.Rows(0).Cells(15).Value = "平均"
+            tempRU = ConnectGRU_RU_COL("Run3", "平均", 15, tempRU)
 
             tempRU = ConnectGRU_RU_COL("RSS", "", 16, tempRU)
             tempRU = PostCalConnect(17, tempRU)
@@ -274,23 +276,20 @@ Public Class Grid
 
             tempRU = ConnectGRU_RU_COL("Run1", "後退", 20, tempRU)
 
-            Form.Columns(21).HeaderText = "Run1"
-            Form.Rows(0).Cells(21).Value = "平均"
+            tempRU = ConnectGRU_RU_COL("Run1", "平均", 21, tempRU)
 
             tempRU = ConnectGRU_RU_COL("Run2", "前進", 22, tempRU)
 
             tempRU = ConnectGRU_RU_COL("Run2", "後退", 23, tempRU)
 
-            Form.Columns(24).HeaderText = "Run2"
-            Form.Rows(0).Cells(24).Value = "平均"
+            tempRU = ConnectGRU_RU_COL("Run2", "平均", 24, tempRU)
 
             tempRU = ConnectGRU_RU_COL("Run3", "前進", 25, tempRU)
 
             tempRU = ConnectGRU_RU_COL("Run3", "後退", 26, tempRU)
             tempRU = tempRU.NextUnit.NextUnit 'skipping add
 
-            Form.Columns(27).HeaderText = "Run3"
-            Form.Rows(0).Cells(27).Value = "平均"
+            tempRU = ConnectGRU_RU_COL("Run3", "平均", 27, tempRU)
 
             tempRU = ConnectGRU_RU_COL("RSS", "", 28, tempRU)
 
@@ -340,15 +339,26 @@ Public Class Grid
     End Sub
 
     Function ConnectGRU_RU_COL(ByVal colName As String, ByVal subHeader As String, ByVal colNum As Integer, ByRef tempRU As Run_Unit) As Run_Unit
+        Dim A3overall As Boolean = False
+        If subHeader.Contains("後退") Then
+            A3overall = True
+        End If
         Form.Columns(colNum).HeaderText = colName
         Form.Rows(0).Cells(colNum).Value = subHeader
+        If A3overall Then
+            Dim tempGRU As Grid_Run_Unit = New Grid_Run_Unit(colName)
+            tempRU.PrevUnit.GRU.OverallGRU = tempGRU
+            tempGRU.Column = Form.Columns(colNum)
+            tempGRU.Background = _Background
+            Return tempRU
+        End If
         tempRU.GRU = New Grid_Run_Unit(colName)
         tempRU.GRU.Column = Form.Columns(colNum)
         tempRU.GRU.ParentRU = tempRU
         If colName.Contains("Background") Or subHeader.Contains("Background") Then
-            Background = tempRU.GRU
+            _Background = tempRU.GRU
         Else
-            tempRU.GRU.Background = Background
+            tempRU.GRU.Background = _Background
         End If
         tempRU = tempRU.NextUnit
         Return tempRU
@@ -422,53 +432,55 @@ Public Class Grid
         If Run.Header = Run_Modes.RSS.ToString() Then
             RSS = Run
         End If
-        'If this run is not background
-        If Run.isRegular Then
-            'see if previous was background then use it as this one's background for A4
-            If Not IsNothing(Background) Then
-                Run.Background = Background
-            End If
-        End If
 
+        'for PreCal and PostCal
         Dim curColInd As Integer = Run.Column.Index
-
-        If Run.ParentRU.Name.Contains("P2") Then
-            Form.Rows(1).Cells(curColInd).Value = Run.LpAeq2
-        ElseIf Run.ParentRU.Name.Contains("P4") Then
-            Form.Rows(2).Cells(curColInd).Value = Run.LpAeq4
-        ElseIf Run.ParentRU.Name.Contains("P6") Then
-            Form.Rows(3).Cells(curColInd).Value = Run.LpAeq6
-        ElseIf Run.ParentRU.Name.Contains("P8") Then
-            Form.Rows(4).Cells(curColInd).Value = Run.LpAeq8
-        ElseIf Run.ParentRU.Name.Contains("P10") Then
-            Form.Rows(5).Cells(curColInd).Value = Run.LpAeq10
-        ElseIf Run.ParentRU.Name.Contains("P12") Then
-            Form.Rows(6).Cells(curColInd).Value = Run.LpAeq12
-        Else
-            'meter 2
-            Form.Rows(1).Cells(curColInd).Value = Run.LpAeq2
-            'meter 4
-            Form.Rows(2).Cells(curColInd).Value = Run.LpAeq4
-            'meter 6
-            Form.Rows(3).Cells(curColInd).Value = Run.LpAeq6
-            'meter 8
-            Form.Rows(4).Cells(curColInd).Value = Run.LpAeq8
-            'meter 10
-            Form.Rows(5).Cells(curColInd).Value = Run.LpAeq10
-            'meter 12
-            Form.Rows(6).Cells(curColInd).Value = Run.LpAeq12
-            'meters average
-            Form.Rows(7).Cells(curColInd).Value = Run.LpAeqAvg
-            'time
-            Form.Rows(8).Cells(curColInd).Value = Run.Time
-            If Run.isRegular Then
-                'deltaA
-                Form.Rows(9).Cells(curColInd).Value = Run.deltaLA
-                'K1A
-                Form.Rows(10).Cells(curColInd).Value = Run.K1A
+        If Not IsNothing(Run.ParentRU) Then
+            If Run.ParentRU.Name.Contains("P2") Then
+                Form.Rows(1).Cells(curColInd).Value = Run.LpAeq2
+                Return
+            ElseIf Run.ParentRU.Name.Contains("P4") Then
+                Form.Rows(2).Cells(curColInd).Value = Run.LpAeq4
+                Return
+            ElseIf Run.ParentRU.Name.Contains("P6") Then
+                Form.Rows(3).Cells(curColInd).Value = Run.LpAeq6
+                Return
+            ElseIf Run.ParentRU.Name.Contains("P8") Then
+                Form.Rows(4).Cells(curColInd).Value = Run.LpAeq8
+                Return
+            ElseIf Run.ParentRU.Name.Contains("P10") Then
+                Form.Rows(5).Cells(curColInd).Value = Run.LpAeq10
+                Return
+            ElseIf Run.ParentRU.Name.Contains("P12") Then
+                Form.Rows(6).Cells(curColInd).Value = Run.LpAeq12
+                Return
             End If
-
         End If
+
+        'meter 2
+        Form.Rows(1).Cells(curColInd).Value = Run.LpAeq2
+        'meter 4
+        Form.Rows(2).Cells(curColInd).Value = Run.LpAeq4
+        'meter 6
+        Form.Rows(3).Cells(curColInd).Value = Run.LpAeq6
+        'meter 8
+        Form.Rows(4).Cells(curColInd).Value = Run.LpAeq8
+        'meter 10
+        Form.Rows(5).Cells(curColInd).Value = Run.LpAeq10
+        'meter 12
+        Form.Rows(6).Cells(curColInd).Value = Run.LpAeq12
+        'meters average
+        Form.Rows(7).Cells(curColInd).Value = Run.LpAeqAvg
+        'time
+        Form.Rows(8).Cells(curColInd).Value = Run.Time
+        If Run.isRegular Then
+            'deltaA
+            Form.Rows(9).Cells(curColInd).Value = Run.deltaLA
+            'K1A
+            Form.Rows(10).Cells(curColInd).Value = Run.K1A
+        End If
+
+
 
         'add next column for next record
         'Dim col As New DataGridViewTextBoxColumn
@@ -479,23 +491,31 @@ Public Class Grid
 
     End Sub
 
-    'function that adds the overall column after runFwdard and runBwdard measurements are in place
-    Public Sub AddA3Overall(ByRef runFwd As Grid_Run_Unit, ByRef runBwd As Grid_Run_Unit)
+    'this shows the A3 overall column during regular runs
+    Public Sub ShowA3Overall(ByRef runFwd As Grid_Run_Unit, ByRef runBkd As Grid_Run_Unit)
+        ' the only way to access the overall GRU is through the previous backward GRU
+        Dim gru As Grid_Run_Unit = runBkd.OverallGRU
+        gru.SetMs(runFwd.Meter2 + runBkd.Meter2,
+                runFwd.Meter4 + runBkd.Meter4,
+                runFwd.Meter6 + runBkd.Meter6,
+                runFwd.Meter8 + runBkd.Meter8,
+                runFwd.Meter10 + runBkd.Meter10,
+                runFwd.Meter12 + runBkd.Meter12)
+        ShowGRUonForm(gru)
+    End Sub
+
+    'function that adds the overall column after runFwdard and runBwdard in additional runs
+    Public Sub AddA3OverallColumn(ByRef runBkd As Grid_Run_Unit)
 
         Dim col As DataGridViewTextBoxColumn = New DataGridViewTextBoxColumn()
-        col.HeaderText = "平均"
+        col.HeaderText = runBkd.Column.HeaderText
 
-        Dim gru As Grid_Run_Unit = New Grid_Run_Unit("Overall")
-        ' the only way to access the overall GRU is through the previous backward GRU
-        runBwd.NextGRU = gru
+        Dim gru As Grid_Run_Unit = New Grid_Run_Unit(runBkd.Column.HeaderText)
+        runBkd.OverallGRU = gru
         gru.Column = col
-        gru.SetMs(runFwd.Meter2 + runBwd.Meter2,
-                runFwd.Meter4 + runBwd.Meter4,
-                runFwd.Meter6 + runBwd.Meter6,
-                runFwd.Meter8 + runBwd.Meter8,
-                runFwd.Meter10 + runBwd.Meter10,
-                runFwd.Meter12 + runBwd.Meter12)
-        Me.Form.Columns.Insert(runBwd.Column.Index + 1, col)
+        gru.Background = _Background
+        Me.Form.Columns.Insert(runBkd.Column.Index + 1, col)
+        Me.Form.Rows(0).Cells(col.Index).Value = "平均"
         ShowGRUonForm(gru)
     End Sub
 
@@ -625,7 +645,7 @@ Public Class Grid
     'given a list of GRUs, determine whether needing additional measuring or not
     Public Function NeedAdd(ByRef grus As List(Of Grid_Run_Unit)) As Boolean
         Dim r = New Random()
-        If r.Next() Then
+        If r.Next(2) Then
             MsgBox("即將多增加一次測試，因為前幾次差距大於1!")
             Return True
         End If

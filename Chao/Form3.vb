@@ -2206,7 +2206,11 @@ Public Class Program
                             Meter_Measure_Unit.SeriesToMMU(series(4), Leqpoints(4).YValues(0)),
                             Meter_Measure_Unit.SeriesToMMU(series(5), Leqpoints(5).YValues(0)))
         End If
+
         DataGrid.ShowGRUonForm(tempGRU)
+        If CurRun.Name.Contains("bkd") Then
+            DataGrid.ShowA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU)
+        End If
     End Sub
 
     '##BUTTON CLICKS
@@ -2299,35 +2303,47 @@ Public Class Program
 
     'two approaches, if there's already a GRU existent, add as next GRU, if not, attach to the RU
     Sub Set_Add_GRU(ByVal whichA As Integer, ByVal colName As String, ByVal subHeader As String)
-        Dim tempGRU = New Grid_Run_Unit(colName)
-
+        Dim tempGRU = New Grid_Run_Unit(colName) 'the final GRU added
         Dim tempCol As DataGridViewTextBoxColumn = New DataGridViewTextBoxColumn()
         Dim lastGRU As Grid_Run_Unit
         Dim firstAdd As Boolean = False 'only used for A3, check if it's the first add, if not it will help jump 3 columns at a time
+        Dim tempRun As Run_Unit = CurRun
 
-        If IsNothing(CurRun.GRU) Then
-            CurRun.GRU = tempGRU
-            lastGRU = CurRun.PrevUnit.GRU
+
+        If IsNothing(tempRun.GRU) Then 'condition for first addtional run
+            lastGRU = tempRun.PrevUnit.GRU
+            If whichA = 2 Then
+                tempRun = tempRun.NextUnit.NextUnit 'skipping the first two add small runs
+            End If
+            tempRun.GRU = tempGRU
             firstAdd = True
-        Else
-            lastGRU = CurRun.GRU
+        Else 'condition for more than one additional run
+            If whichA = 2 Then
+                lastGRU = tempRun.NextUnit.NextUnit.GRU
+            Else
+                lastGRU = tempRun.GRU
+            End If
             While Not IsNothing(lastGRU.NextGRU)
                 lastGRU = lastGRU.NextGRU
             End While
             lastGRU.NextGRU = tempGRU
         End If
+        
+        'i is the number of columns increased each additional run has, A3 has fwd and bwd and overall so there's three
+        'A4 has background and regular so there's 2
         Dim i = 1
         If whichA = 3 And Not firstAdd Then
             i = 3
-        ElseIf whichA = 2 And Not firstAdd Then
+        ElseIf whichA = 4 And Not firstAdd Then
             i = 2
         End If
 
         DataGrid.Form.Columns.Insert(lastGRU.Column.Index + i, tempCol)
         DataGrid.Form.Rows(0).Cells(tempCol.Index).Value = subHeader
         tempGRU.Column = tempCol
+        tempGRU.Background = DataGrid.Background
         tempCol.HeaderText = colName
-        tempGRU.ParentRU = CurRun
+        tempGRU.ParentRU = tempRun
     End Sub
 
 
@@ -2789,7 +2805,26 @@ Public Class Program
                     'already move
                     Jump_Back_Countdown_False()
                 End If
-
+            ElseIf IsNothing(CurRun.NextUnit) Then
+                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
+                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+                    If Result = DialogResult.Yes Then
+                        All_Panel_Enable()
+                        CurRun.Set_BackColor(Color.Green)
+                        CurRun.Link.Enabled = True
+                        MessageBox.Show("End")
+                        startButton.Enabled = False
+                        stopButton.Enabled = False
+                        Accept_Button.Enabled = False
+                    ElseIf Result = DialogResult.No Then
+                        Accept_No()
+                    ElseIf Result = DialogResult.Cancel Then
+                        Accept_Cancel()
+                    End If
+                Else
+                    'already move
+                    Jump_Back_Countdown_False()
+                End If
             ElseIf CurRun.Name.Contains("PostCal") Then
                 If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
                     Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
@@ -2819,26 +2854,7 @@ Public Class Program
                     Jump_Back_Countdown_False()
                 End If
 
-            ElseIf IsNothing(CurRun.NextUnit) Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
-                        All_Panel_Enable()
-                        CurRun.Set_BackColor(Color.Green)
-                        CurRun.Link.Enabled = True
-                        MessageBox.Show("End")
-                        startButton.Enabled = False
-                        stopButton.Enabled = False
-                        Accept_Button.Enabled = False
-                    ElseIf Result = DialogResult.No Then
-                        Accept_No()
-                    ElseIf Result = DialogResult.Cancel Then
-                        Accept_Cancel()
-                    End If
-                Else
-                    'already move
-                    Jump_Back_Countdown_False()
-                End If
+            
 
 
             ElseIf CurRun.Name = "A4_Mid_BG" Or CurRun.Name = "A4_Mid_BG_Add" Then
@@ -3015,7 +3031,7 @@ Public Class Program
                             If DataGrid.NeedAdd(list) Then
                                 'True: add test
                                 CurRun = CurRun.NextUnit
-                                Set_Add_GRU(0, "Run 4", "")    'True: add test
+                                Set_Add_GRU(2, "Run 4", "")    'True: add test
                                 Set_Run_Unit()
                                 CurRun.Set_BackColor(Color.Yellow)
                                 'load A2's steps
@@ -3106,7 +3122,7 @@ Public Class Program
                             If DataGrid.NeedAdd(list) Then
                                 'True: add test
                                 Restart_from_2nd_Previous_Run_Unit()
-                                Set_Add_GRU(0, "Run " & i, "")
+                                Set_Add_GRU(2, "Run " & i, "")
                                 'load A2's steps
                                 Clear_Steps()
                                 Load_Steps()
@@ -3172,10 +3188,10 @@ Public Class Program
                             CurRun.Link.Enabled = True
 
                             'Case:LoA3_bkd to LoA3_fwd or TrA3_bkd to TrA3_fwd or TrA3_bkd to TrA3_fwd
-                            If CurRun.NextUnit.Name.Contains("fwd") Then
-                                DataGrid.AddA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU)
-                            End If
-                            'jump to next Run_Unit
+                            'If CurRun.NextUnit.Name.Contains("fwd") Then
+                            '    DataGrid.AddA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU)
+                            'End If
+                            ''jump to next Run_Unit
                             CurRun = CurRun.NextUnit
                             Set_Run_Unit()
                             'load LoA3 or TrA3's steps
@@ -3194,7 +3210,7 @@ Public Class Program
                             CurRun.Link.Enabled = True
                             'jump to next Run_Unit and change light
 
-                            DataGrid.AddA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU) 'adding overall column
+                            'DataGrid.AddA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU) 'adding overall column
                             'Add?
                             Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
                             list.Add(CurRun.GRU.NextGRU) 'adding test 3 overall
@@ -3240,7 +3256,7 @@ Public Class Program
                     If Result = DialogResult.Yes Then
                         All_Panel_Enable()
                         If CurRun.NextUnit.Name = "LoA3_bkd_Add" Or CurRun.NextUnit.Name = "TrA3_bkd_Add" Then
-                            'Case: LoA3_fwd_Add to LoA3_bkd_Add 
+                            'Case: LoA3_fwd_Add to LoA3_bkd_Add or TrA3_fwd_Add to TrA3_bkd_Add
                             ' change light
                             Set_Panel_BackColor()
                             CurRun.Link.Enabled = True
@@ -3254,6 +3270,7 @@ Public Class Program
                                 i += 1
                             End While
                             Set_Add_GRU(3, "Run " & i, "後退")
+                            DataGrid.AddA3OverallColumn(CurRun.GRU)
                             Set_Run_Unit()
                             'load LoA3 or TrA3's steps
                             Clear_Steps()
@@ -3274,7 +3291,7 @@ Public Class Program
                             list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding testing 2
                             list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding test 1
                             Dim tempGRU = CurRun.GRU
-                            DataGrid.AddA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU) 'adding overall gru and column
+                            'DataGrid.AddA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU) 'adding overall gru and column
                             Dim i As Integer = 4
                             While Not IsNothing(tempGRU)
                                 list.Add(tempGRU)

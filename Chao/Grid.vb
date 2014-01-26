@@ -149,23 +149,20 @@ Public Class Grid
 
             tempRU = ConnectGRU_RU_COL("Run1", "後退", 12, tempRU)
 
-            Form.Columns(13).HeaderText = "Run1"
-            Form.Rows(0).Cells(13).Value = "平均"
+            tempRU = ConnectGRU_RU_COL("Run1", "平均", 13, tempRU)
 
             tempRU = ConnectGRU_RU_COL("Run2", "前進", 14, tempRU)
 
             tempRU = ConnectGRU_RU_COL("Run2", "後退", 15, tempRU)
 
-            Form.Columns(16).HeaderText = "Run2"
-            Form.Rows(0).Cells(16).Value = "平均"
+            tempRU = ConnectGRU_RU_COL("Run1", "平均", 16, tempRU)
 
 
             tempRU = ConnectGRU_RU_COL("Run3", "前進", 17, tempRU)
 
             tempRU = ConnectGRU_RU_COL("Run3", "後退", 18, tempRU)
 
-            Form.Columns(19).HeaderText = "Run3"
-            Form.Rows(0).Cells(19).Value = "平均"
+            tempRU = ConnectGRU_RU_COL("Run1", "平均", 19, tempRU)
 
             tempRU = tempRU.NextUnit.NextUnit 'skipping add
 
@@ -209,9 +206,9 @@ Public Class Grid
 
             tempRU = ConnectGRU_RU_COL("Run3", "後退", 14, tempRU)
 
-            tempRU = tempRU.NextUnit.NextUnit 'skipping add
-
             tempRU = ConnectGRU_RU_COL("Run3", "平均", 15, tempRU)
+
+            tempRU = tempRU.NextUnit.NextUnit 'skipping add
 
             tempRU = ConnectGRU_RU_COL("RSS", "", 16, tempRU)
             tempRU = PostCalConnect(17, tempRU)
@@ -287,9 +284,10 @@ Public Class Grid
             tempRU = ConnectGRU_RU_COL("Run3", "前進", 25, tempRU)
 
             tempRU = ConnectGRU_RU_COL("Run3", "後退", 26, tempRU)
+            tempRU = ConnectGRU_RU_COL("Run3", "平均", 27, tempRU)
             tempRU = tempRU.NextUnit.NextUnit 'skipping add
 
-            tempRU = ConnectGRU_RU_COL("Run3", "平均", 27, tempRU)
+
 
             tempRU = ConnectGRU_RU_COL("RSS", "", 28, tempRU)
 
@@ -340,7 +338,7 @@ Public Class Grid
 
     Function ConnectGRU_RU_COL(ByVal colName As String, ByVal subHeader As String, ByVal colNum As Integer, ByRef tempRU As Run_Unit) As Run_Unit
         Dim A3overall As Boolean = False
-        If subHeader.Contains("後退") Then
+        If subHeader.Contains("平均") Then
             A3overall = True
         End If
         Form.Columns(colNum).HeaderText = colName

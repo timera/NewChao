@@ -469,6 +469,10 @@ Public Class Program
             GroupBox_A1_A2_A3.Enabled = False
             GroupBox_A4.Enabled = False
 
+            'set TabPage enable property
+            Me.TabPageProcedure.Enabled = True
+            Me.TabControl2.SelectedIndex = 0
+
             'set button enable property
             startButton.Enabled = True
             stopButton.Enabled = False
@@ -2209,7 +2213,13 @@ Public Class Program
 
         DataGrid.ShowGRUonForm(tempGRU)
         If CurRun.Name.Contains("bkd") Then
-            DataGrid.ShowA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU)
+            Dim latestFwdGRU As Grid_Run_Unit = CurRun.PrevUnit.GRU
+            Dim latestBkdGRU As Grid_Run_Unit = CurRun.GRU
+            While Not IsNothing(latestFwdGRU.NextGRU)
+                latestFwdGRU = latestFwdGRU.NextGRU
+                latestBkdGRU = latestBkdGRU.NextGRU
+            End While
+            DataGrid.ShowA3Overall(latestFwdGRU, latestBkdGRU)
         End If
     End Sub
 
@@ -2305,30 +2315,32 @@ Public Class Program
     Sub Set_Add_GRU(ByVal whichA As Integer, ByVal colName As String, ByVal subHeader As String)
         Dim tempGRU = New Grid_Run_Unit(colName) 'the final GRU added
         Dim tempCol As DataGridViewTextBoxColumn = New DataGridViewTextBoxColumn()
-        Dim lastGRU As Grid_Run_Unit
+        Dim lastGRU As Grid_Run_Unit 'used for getting the nearest column
         Dim firstAdd As Boolean = False 'only used for A3, check if it's the first add, if not it will help jump 3 columns at a time
-        Dim tempRun As Run_Unit = CurRun
-
+        Dim tempRun As Run_Unit = CurRun 'to get the right parent
+        If whichA = 2 Then
+            tempRun = tempRun.NextUnit.NextUnit
+        End If
 
         If IsNothing(tempRun.GRU) Then 'condition for first addtional run
-            lastGRU = tempRun.PrevUnit.GRU
             If whichA = 2 Then
-                tempRun = tempRun.NextUnit.NextUnit 'skipping the first two add small runs
+                lastGRU = CurRun.PrevUnit.GRU
+            ElseIf whichA = 3 And tempRun.Name.Contains("fwd") Then
+                lastGRU = tempRun.PrevUnit.GRU.OverallGRU
+            Else
+                lastGRU = tempRun.PrevUnit.GRU
             End If
             tempRun.GRU = tempGRU
             firstAdd = True
         Else 'condition for more than one additional run
-            If whichA = 2 Then
-                lastGRU = tempRun.NextUnit.NextUnit.GRU
-            Else
-                lastGRU = tempRun.GRU
-            End If
+            lastGRU = tempRun.GRU
+
             While Not IsNothing(lastGRU.NextGRU)
                 lastGRU = lastGRU.NextGRU
             End While
             lastGRU.NextGRU = tempGRU
         End If
-        
+
         'i is the number of columns increased each additional run has, A3 has fwd and bwd and overall so there's three
         'A4 has background and regular so there's 2
         Dim i = 1
@@ -3262,15 +3274,22 @@ Public Class Program
                             CurRun.Link.Enabled = True
                             'jump to next Run_Unit
                             CurRun = CurRun.NextUnit
-
-                            Dim i As Integer = 4
-                            Dim tempGRU As Grid_Run_Unit = CurRun.GRU
-                            While Not IsNothing(tempGRU)
+                            
+                            If Not IsNothing(CurRun.GRU) Then
+                                Dim i As Integer = 5
+                                Dim tempGRU As Grid_Run_Unit = CurRun.GRU
+                                While Not IsNothing(tempGRU.NextGRU)
+                                    tempGRU = tempGRU.NextGRU
+                                    i += 1
+                                End While
+                                Set_Add_GRU(3, "Run " & i, "後退")
                                 tempGRU = tempGRU.NextGRU
-                                i += 1
-                            End While
-                            Set_Add_GRU(3, "Run " & i, "後退")
-                            DataGrid.AddA3OverallColumn(CurRun.GRU)
+                                DataGrid.AddA3OverallColumn(tempGRU)
+                            Else
+                                Set_Add_GRU(3, "Run 4", "後退")
+                                DataGrid.AddA3OverallColumn(CurRun.GRU)
+                            End If
+                            
                             Set_Run_Unit()
                             'load LoA3 or TrA3's steps
                             Clear_Steps()

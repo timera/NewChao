@@ -514,7 +514,6 @@ Public Class Grid
         gru.Background = _Background
         Me.Form.Columns.Insert(runBkd.Column.Index + 1, col)
         Me.Form.Rows(0).Cells(col.Index).Value = "平均"
-        ShowGRUonForm(gru)
     End Sub
 
     'call this after RSS has been done

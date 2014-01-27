@@ -2672,6 +2672,11 @@ Public Class Program
                 DataGrid.ShowGRUonForm(keyGRU)
             End If
 
+            If CurRun.Name.Contains("RSS") Then
+                'Show calculated results for chart
+                DataGrid.ShowCalculated()
+            End If
+
             All_Panel_Enable()
             CurRun.Set_BackColor(Color.Green)
             Temp_CurRun.Set_BackColor(Color.Yellow)
@@ -2823,6 +2828,9 @@ Public Class Program
                         CurRun.Link.Enabled = True
                         'dispose old graph and create new graph
                         Load_New_Graph_CD_False()
+
+                        'Show calculated results for chart
+                        DataGrid.ShowCalculated()
 
                         'save info here
                         'jump to next Run_Unit and set second to zero(should be zero here)

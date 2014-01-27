@@ -42,6 +42,8 @@ Public Class Grid
     '    A3l
     'End Enum
 
+    Private ListAsGRUs As List(Of List(Of Grid_Run_Unit))
+
     Public Sub New(ByRef Parent As Control, ByVal Size As Size, ByVal Position As Point, ByVal R As Double, ByVal Machine As Program.Machines, ByVal headRU As Run_Unit)
         If IsNothing(headRU) Then
             MsgBox("Cannot create chart because given head run_unit is null!")
@@ -73,17 +75,24 @@ Public Class Grid
         Form.Rows(14).HeaderCell.Value = "LWA"
         Form.Rows(15).HeaderCell.Value = "LWA 採用"
 
+        ListAsGRUs = New List(Of List(Of Grid_Run_Unit))
+
         'Grid.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders)
 
         'Set A sequence
         Dim tempRU As Run_Unit = headRU
 
         If Machine = Program.Machines.Excavator Then 'A1 A2
+            _LWA_Final = New Integer(1) {}
+
             For i = 0 To 11
                 Form.Columns.Add(New DataGridViewTextBoxColumn())
             Next
 
             tempRU = PreCalConnect(tempRU)
+
+            Dim tempListGRUs As New List(Of Grid_Run_Unit)
+            ListAsGRUs.Add(tempListGRUs) ' for A1's GRUs
             Form.Columns(2).HeaderText = "A1"
             AddLabelColumn(2)
 
@@ -92,6 +101,9 @@ Public Class Grid
             tempRU = ConnectGRU_RU_COL("Run3", "", 5, tempRU)
             tempRU = tempRU.NextUnit ' skipping additional
 
+
+            tempListGRUs = New List(Of Grid_Run_Unit)
+            ListAsGRUs.Add(tempListGRUs) ' for A2's GRUs
             Form.Columns(6).HeaderText = "A2"
             AddLabelColumn(6)
 
@@ -111,12 +123,15 @@ Public Class Grid
 
         ElseIf Machine = Program.Machines.Loader Then 'A1 A2 A3
             'A_s = 3
-
+            _LWA_Final = New Integer(2) {}
             For i = 0 To 21
                 Form.Columns.Add(New DataGridViewTextBoxColumn())
             Next
 
             tempRU = PreCalConnect(tempRU)
+
+            Dim tempListGRUs As New List(Of Grid_Run_Unit)
+            ListAsGRUs.Add(tempListGRUs) ' for A1's GRUs
             Form.Columns(2).HeaderText = "A1"
             AddLabelColumn(2)
 
@@ -127,6 +142,8 @@ Public Class Grid
             tempRU = ConnectGRU_RU_COL("Run3", "", 5, tempRU)
             tempRU = tempRU.NextUnit 'skipping add unit
 
+            tempListGRUs = New List(Of Grid_Run_Unit)
+            ListAsGRUs.Add(tempListGRUs) ' for A2's GRUs
             Form.Columns(6).HeaderText = "A2"
             AddLabelColumn(6)
 
@@ -141,7 +158,8 @@ Public Class Grid
 
             tempRU = tempRU.NextUnit.NextUnit.NextUnit 'skipping A2 add
 
-
+            tempListGRUs = New List(Of Grid_Run_Unit)
+            ListAsGRUs.Add(tempListGRUs) ' for A3's GRUs
             Form.Columns(10).HeaderText = "A3"
             AddLabelColumn(10)
 
@@ -171,12 +189,15 @@ Public Class Grid
             tempRU = PostCalConnect(21, tempRU)
 
         ElseIf Machine = Program.Machines.Tractor Then 'A1 A3
+            _LWA_Final = New Integer(1) {}
             'A_s = 2
             For i = 0 To 17
                 Form.Columns.Add(New DataGridViewTextBoxColumn())
             Next
             tempRU = PreCalConnect(tempRU)
 
+            Dim tempListGRUs As New List(Of Grid_Run_Unit)
+            ListAsGRUs.Add(tempListGRUs) ' for A1's GRUs
             Form.Columns(2).HeaderText = "A1"
             AddLabelColumn(2)
 
@@ -187,6 +208,8 @@ Public Class Grid
             tempRU = ConnectGRU_RU_COL("Run3", "", 5, tempRU)
             tempRU = tempRU.NextUnit 'skipping additional
 
+            tempListGRUs = New List(Of Grid_Run_Unit)
+            ListAsGRUs.Add(tempListGRUs) ' for A3's GRUs
             Form.Columns(6).HeaderText = "A3"
             AddLabelColumn(6)
 
@@ -214,12 +237,15 @@ Public Class Grid
             tempRU = PostCalConnect(17, tempRU)
 
         ElseIf Machine = Program.Machines.Loader_Excavator Then 'A1 A2, A1 A2 A3
+            _LWA_Final = New Integer(4) {}
             'A_s = 5
             For i = 0 To 28
                 Form.Columns.Add(New DataGridViewTextBoxColumn())
             Next
             tempRU = PreCalConnect(tempRU)
 
+            Dim tempListGRUs As New List(Of Grid_Run_Unit)
+            ListAsGRUs.Add(tempListGRUs) ' for A1's GRUs
             Form.Columns(2).HeaderText = "A1"
             AddLabelColumn(2)
 
@@ -229,6 +255,8 @@ Public Class Grid
             tempRU = ConnectGRU_RU_COL("Run3", "", 5, tempRU)
             tempRU = tempRU.NextUnit 'skipping add
 
+            tempListGRUs = New List(Of Grid_Run_Unit)
+            ListAsGRUs.Add(tempListGRUs) ' for A2's GRUs
             Form.Columns(6).HeaderText = "A2"
             AddLabelColumn(6)
 
@@ -242,7 +270,8 @@ Public Class Grid
             tempRU = ConnectGRU_RU_COL("Run3", "", 9, tempRU)
             tempRU = tempRU.NextUnit.NextUnit.NextUnit 'skipping A2 add
 
-
+            tempListGRUs = New List(Of Grid_Run_Unit)
+            ListAsGRUs.Add(tempListGRUs) ' for A1's GRUs
             Form.Columns(10).HeaderText = "A1"
             AddLabelColumn(10)
 
@@ -253,6 +282,8 @@ Public Class Grid
             tempRU = ConnectGRU_RU_COL("Run3", "", 13, tempRU)
             tempRU = tempRU.NextUnit 'skipping A1 add
 
+            tempListGRUs = New List(Of Grid_Run_Unit)
+            ListAsGRUs.Add(tempListGRUs) ' for A2's GRUs
             Form.Columns(14).HeaderText = "A2"
             AddLabelColumn(14)
 
@@ -266,6 +297,8 @@ Public Class Grid
             tempRU = ConnectGRU_RU_COL("Run3", "", 17, tempRU)
             tempRU = tempRU.NextUnit.NextUnit.NextUnit 'skipping A2 add
 
+            tempListGRUs = New List(Of Grid_Run_Unit)
+            ListAsGRUs.Add(tempListGRUs) ' for A3's GRUs
             Form.Columns(18).HeaderText = "A3"
             AddLabelColumn(18)
 
@@ -294,6 +327,7 @@ Public Class Grid
             tempRU = PostCalConnect(29, tempRU)
 
         ElseIf Machine = Program.Machines.Others Then 'A4
+            _LWA_Final = New Integer(0) {}
             'A_s = 1
             For i = 0 To 8
                 Form.Columns.Add(New DataGridViewTextBoxColumn())
@@ -307,6 +341,8 @@ Public Class Grid
                 tempRU = tempRU.NextUnit
             Next
 
+            Dim tempListGRUs As New List(Of Grid_Run_Unit)
+            ListAsGRUs.Add(tempListGRUs) ' for A4's GRUs
             tempRU = ConnectGRU_RU_COL("Background", "", 1, tempRU)
 
             tempRU = ConnectGRU_RU_COL("Run1", "", 2, tempRU)
@@ -337,20 +373,24 @@ Public Class Grid
     End Sub
 
     Function ConnectGRU_RU_COL(ByVal colName As String, ByVal subHeader As String, ByVal colNum As Integer, ByRef tempRU As Run_Unit) As Run_Unit
+
         Dim A3overall As Boolean = False
         If subHeader.Contains("平均") Then
             A3overall = True
         End If
         Form.Columns(colNum).HeaderText = colName
         Form.Rows(0).Cells(colNum).Value = subHeader
+        Dim tempGRU As Grid_Run_Unit = New Grid_Run_Unit(colName)
+        If (tempGRU.isRegular) And Not subHeader.Contains("前進") And Not subHeader.Contains("平均") Then
+            ListAsGRUs(ListAsGRUs.Count - 1).Add(tempGRU)
+        End If
         If A3overall Then
-            Dim tempGRU As Grid_Run_Unit = New Grid_Run_Unit(colName)
             tempRU.PrevUnit.GRU.OverallGRU = tempGRU
             tempGRU.Column = Form.Columns(colNum)
             tempGRU.Background = _Background
             Return tempRU
         End If
-        tempRU.GRU = New Grid_Run_Unit(colName)
+        tempRU.GRU = tempGRU
         tempRU.GRU.Column = Form.Columns(colNum)
         tempRU.GRU.ParentRU = tempRU
         If colName.Contains("Background") Or subHeader.Contains("Background") Then
@@ -489,6 +529,44 @@ Public Class Grid
 
     End Sub
 
+    Private Sub ShowFinal(ByRef gru As Grid_Run_Unit, ByVal i As Integer)
+        Dim curColInd As Integer = gru.Column.Index
+        'meter 2
+        Form.Rows(1).Cells(curColInd).Value = gru.LpAeq2
+        'meter 4
+        Form.Rows(2).Cells(curColInd).Value = gru.LpAeq4
+        'meter 6
+        Form.Rows(3).Cells(curColInd).Value = gru.LpAeq6
+        'meter 8
+        Form.Rows(4).Cells(curColInd).Value = gru.LpAeq8
+        'meter 10
+        Form.Rows(5).Cells(curColInd).Value = gru.LpAeq10
+        'meter 12
+        Form.Rows(6).Cells(curColInd).Value = gru.LpAeq12
+        'meters average
+        Form.Rows(7).Cells(curColInd).Value = gru.LpAeqAvg
+        'time
+        Form.Rows(8).Cells(curColInd).Value = gru.Time
+
+        'deltaA
+        Form.Rows(9).Cells(curColInd).Value = gru.deltaLA
+        'K1A
+        Form.Rows(10).Cells(curColInd).Value = gru.K1A
+
+        'L*W
+
+        Form.Rows(11).Cells(curColInd).Value = LsW
+
+        Form.Rows(12).Cells(curColInd).Value = Lwr
+
+        Form.Rows(13).Cells(curColInd).Value = K2A
+
+        Form.Rows(14).Cells(curColInd).Value = gru.LWA
+
+        Form.Rows(15).Cells(curColInd).Value = LWA_Final(i)
+
+    End Sub
+
     'this shows the A3 overall column during regular runs
     Public Sub ShowA3Overall(ByRef runFwd As Grid_Run_Unit, ByRef runBkd As Grid_Run_Unit)
         ' the only way to access the overall GRU is through the previous backward GRU
@@ -517,46 +595,20 @@ Public Class Grid
     End Sub
 
     'call this after RSS has been done
-    Public Sub ShowCalculated(ByVal StartIndex As Integer, ByVal Length As Integer)
+    Public Sub ShowCalculated()
         Calculate()
-        'A1 and A2
-        'LsW row
-        Form.Rows(11).Cells(Form.Columns.Count - 1).Value = _LsW
-        'Lw row
-        Form.Rows(12).Cells(Form.Columns.Count - 1).Value = _Lwr
-        'K2A row
-        Form.Rows(13).Cells(Form.Columns.Count - 1).Value = _K2A
-        'LWA choice row
-        Form.Rows(15).Cells(Form.Columns.Count - 1).Value = _LWA_Final
+        Dim i = 0
+        For Each l In ListAsGRUs
+            ShowLWAs(l)
+            ShowFinal(l(l.Count - 2), i)
+            i += 1
+        Next
+    End Sub
 
-        'LWA 
-        'A1, A2
-        'If A < 3 Then
-        '    If GRUList.Count > 1 Then
-        '        For i = 1 To Form.Columns.Count - 2 'all the regulars
-        '            Form.Rows(14).Cells(i).Value = GRUList(i).LWA
-        '        Next
-        '    End If
-        'End If
-
-        ''A3
-        'If A = 3 Then
-        '    If GRUList.Count > 1 Then
-        '        For i = 3 To GRUList.Count - 2 Step 3
-        '            Form.Rows(14).Cells(i).Value = GRUList(i).LWA
-        '        Next
-        '    End If
-
-        'End If
-
-        ''A4
-        'If A = 4 Then
-        '    If GRUList.Count > 1 Then
-        '        For i = 1 To GRUList.Count - 2 Step 2
-        '            Form.Rows(14).Cells(i).Value = GRUList(i).LWA
-        '        Next
-        '    End If
-        'End If
+    Private Sub ShowLWAs(ByRef listGRUs As List(Of Grid_Run_Unit))
+        For Each gru In listGRUs
+            Form.Rows(14).Cells(gru.Column.Index).Value = gru.LWA
+        Next
     End Sub
 
     Public Sub ClearColumn(ByRef col As DataGridViewTextBoxColumn)
@@ -567,10 +619,42 @@ Public Class Grid
 
     'contains calculations- NeedAdd should be called before (Calc_LWAs)Calculate
     Public Sub Calculate()
-        If Not IsNothing(RSS) Then
+        If RSS IsNot Nothing Then
             Calc_LsW()
             Calc_K2A()
-            Calc_LWAs()
+            Dim i = 0
+            For Each l In ListAsGRUs
+
+                'adding potential additional runs
+                If l(0).ParentRU.Name.Contains("A1") Then 'case for A1
+                    Dim add As Grid_Run_Unit = l(l.Count - 1).ParentRU.NextUnit.GRU
+                    While add IsNot Nothing
+                        l.Add(add)
+                        add = add.NextGRU
+                    End While
+                ElseIf l(0).ParentRU.Name.Contains("A2") Then 'case for A2
+                    Dim add As Grid_Run_Unit = l(l.Count - 1).ParentRU.NextUnit.NextUnit.NextUnit.GRU
+                    While add IsNot Nothing
+                        l.Add(add)
+                        add = add.NextGRU
+                    End While
+                ElseIf l(0).ParentRU.Name.Contains("A3") Then 'case for A3
+                    Dim addbkd As Grid_Run_Unit = l(l.Count - 1).ParentRU.NextUnit.NextUnit.GRU
+                    While addbkd IsNot Nothing
+                        l.Add(addbkd.OverallGRU)
+                        addbkd = addbkd.NextGRU
+                    End While
+                ElseIf l(0).ParentRU.Name.Contains("A4") Then 'case for A4
+                    Dim add As Grid_Run_Unit = l(l.Count - 1).ParentRU.NextUnit.NextUnit.GRU
+                    While add IsNot Nothing
+                        l.Add(add)
+                        add = add.NextGRU
+                    End While
+                End If
+                'actually calculating the LWAs
+                Calc_LWAs(l, i)
+                i += 1
+            Next
         End If
     End Sub
 
@@ -610,31 +694,30 @@ Public Class Grid
         End Get
     End Property
 
-    Private _LWA_Final As Integer
-    Public Sub Calc_LWAs()
+    Private _LWA_Final() As Integer
+    Public Sub Calc_LWAs(ByRef grus As List(Of Grid_Run_Unit), ByVal index As Integer)
         'calculating all the LWAs
-        'Dim topTwo As Double() = {0.0, 0.0}
-        'If Not GRUList.Count > 1 Then
-        '    For i = 1 To GRUList.Count - 2
-        '        Dim cur As Grid_Run_Unit = GRUList(i)
-        '        cur.Calc_LWA(_K2A, _R)
-        '        If cur.Considered Then
-        '            If cur.LWA > topTwo(0) Then
-        '                topTwo(0) = cur.LWA
-        '            ElseIf cur.LWA > topTwo(1) Then
-        '                topTwo(1) = cur.LWA
-        '            End If
-        '        End If
-        '    Next
-        'End If
+        Dim topTwo As Double() = {0.0, 0.0}
+        If grus.Count > 1 Then
+            For i = 0 To grus.Count - 1
+                Dim cur As Grid_Run_Unit = grus(i)
+                cur.Calc_LWA(_K2A, _R)
+                If cur.LWA > topTwo(0) Then
+                    topTwo(1) = topTwo(0)
+                    topTwo(0) = cur.LWA
+                ElseIf cur.LWA > topTwo(1) Then
+                    topTwo(1) = cur.LWA
+                End If
+            Next
+        End If
 
-        ''calculating LWA 採用值
-        'Dim orig As Double = (topTwo(0) + topTwo(1)) / 2
-        'If Int(orig + 0.5) > Int(orig) Then
-        '    _LWA_Final = Int(orig) + 1
-        'Else
-        '    _LWA_Final = Int(orig)
-        'End If
+        'calculating LWA 採用值
+        Dim orig As Double = (topTwo(0) + topTwo(1)) / 2
+        If Int(orig + 0.5) > Int(orig) Then
+            _LWA_Final(index) = Int(orig) + 1
+        Else
+            _LWA_Final(index) = Int(orig)
+        End If
     End Sub
 
     Public ReadOnly Property LWA_Final()
@@ -1253,32 +1336,6 @@ Public Class Grid_Run_Unit
         End Get
     End Property
 
-
-    Private _LWA As Double
-    Private _RealLWA As Double
-    Public ReadOnly Property LWA() As Double
-        Get
-            If NotYetAccepted Then
-                Return _LWA
-            Else
-                Return _RealLWA
-            End If
-        End Get
-    End Property
-
-    Public Function Calc_LWA(ByVal K2A As Double, ByVal r As Double)
-        Try
-            If isRegular Then
-                _LWA = _LpAeqAvg - _K1A - K2A + 10 * Math.Log10(2 * Math.PI * r * r)
-                Return _LWA
-            End If
-        Catch ex As Exception
-            MsgBox("In Calc_LWA():" & ex.Message)
-            Return -1
-        End Try
-    End Function
-
-    
     Private _Time As Integer
     Private _RealTime As Integer
     Public ReadOnly Property Time() As Integer
@@ -1290,5 +1347,25 @@ Public Class Grid_Run_Unit
             End If
         End Get
     End Property
+
+    Private _LWA As Double
+    'Private _RealLWA As Double
+    Public ReadOnly Property LWA() As Double
+        Get
+            Return _LWA
+        End Get
+    End Property
+
+    Public Function Calc_LWA(ByVal K2A As Double, ByVal r As Double)
+        Try
+            If isRegular Then
+                _LWA = LpAeqAvg - K1A - K2A + 10 * Math.Log10(2 * Math.PI * r * r)
+                Return _LWA
+            End If
+        Catch ex As Exception
+            MsgBox("In Calc_LWA():" & ex.Message)
+        End Try
+        Return -1
+    End Function
 
 End Class

@@ -2194,7 +2194,7 @@ Public Class Program
         
         'everything else
         Dim tempGRU As Grid_Run_Unit = CurRun.GRU
-        While Not IsNothing(tempGRU.NextGRU)
+        While Not IsNothing(tempGRU.NextGRU) 'for more than one additional runs
             tempGRU = tempGRU.NextGRU
         End While
         If series.Count = 4 + 1 Then
@@ -2577,10 +2577,19 @@ Public Class Program
             'dispose old graph and create new graph
             Load_New_Graph_CD_True()
         Else
+            Dim keyGRU As Grid_Run_Unit = CurRun.GRU
+            While Not IsNothing(keyGRU.NextGRU) 'for more than one additional runs
+                keyGRU = keyGRU.NextGRU
+            End While
             Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
             If Result = DialogResult.Yes Then
                 'save data
-
+                keyGRU.Accept()
+                DataGrid.ShowGRUonForm(keyGRU)
+                If CurRun.Name.Contains("bkd") Then
+                    keyGRU.OverallGRU.Accept()
+                    DataGrid.ShowGRUonForm(keyGRU)
+                End If
                 All_Panel_Enable()
                 CurRun.Set_BackColor(Color.Green)
                 Temp_CurRun.Set_BackColor(Color.Yellow)
@@ -2607,7 +2616,12 @@ Public Class Program
             ElseIf Result = DialogResult.No Then
                 'Accept_No()
                 'don't save data
-
+                keyGRU.Deny()
+                DataGrid.ShowGRUonForm(keyGRU)
+                If CurRun.Name.Contains("bkd") Then
+                    keyGRU.OverallGRU.Deny()
+                    DataGrid.ShowGRUonForm(keyGRU)
+                End If
                 All_Panel_Enable()
 
                 CurRun.Set_BackColor(Color.Green)
@@ -2640,9 +2654,19 @@ Public Class Program
 
     End Sub
     Sub Jump_Back_Countdown_False()
+        Dim keyGRU As Grid_Run_Unit = CurRun.GRU
+        While Not IsNothing(keyGRU.NextGRU) 'for more than one additional runs
+            keyGRU = keyGRU.NextGRU
+        End While
         Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
         If Result = DialogResult.Yes Then
             'save data
+            keyGRU.Accept()
+            DataGrid.ShowGRUonForm(keyGRU)
+            If CurRun.Name.Contains("bkd") Then
+                keyGRU.OverallGRU.Accept()
+                DataGrid.ShowGRUonForm(keyGRU)
+            End If
 
             All_Panel_Enable()
             CurRun.Set_BackColor(Color.Green)
@@ -2671,6 +2695,13 @@ Public Class Program
         ElseIf Result = DialogResult.No Then
             'Accept_No()
             'don't save data
+            keyGRU.Deny()
+            DataGrid.ShowGRUonForm(keyGRU)
+            If CurRun.Name.Contains("bkd") Then
+                keyGRU.OverallGRU.Deny()
+                DataGrid.ShowGRUonForm(keyGRU)
+            End If
+
             All_Panel_Enable()
             CurRun.Set_BackColor(Color.Green)
             Temp_CurRun.Set_BackColor(Color.Yellow)
@@ -2732,12 +2763,21 @@ Public Class Program
         Accept_Button.Enabled = False
         startButton.Enabled = True
 
-        If Countdown = False Then
-            If CurRun.Name.Contains("PreCal") Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    'didn't move
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
+        Dim keyGRU As Grid_Run_Unit = CurRun.GRU
+        While Not IsNothing(keyGRU.NextGRU) 'for more than one additional runs
+            keyGRU = keyGRU.NextGRU
+        End While
+        
+        If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
+            Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+            If Result = DialogResult.Yes Then
+                keyGRU.Accept()
+                If CurRun.Name.Contains("bkd") Then
+                    keyGRU.OverallGRU.Accept()
+                End If
+                If Countdown = False Then
+                    If CurRun.Name.Contains("PreCal") Then
+                        'didn't move
                         All_Panel_Enable()
                         'Case1: now is PreCal
                         ' change light
@@ -2752,20 +2792,9 @@ Public Class Program
                         CurRun = CurRun.NextUnit
                         timeLeft = CurRun.Time
                         timeLabel.Text = timeLeft & " s"
-                    ElseIf Result = DialogResult.No Then
-                        Accept_No()
-                    ElseIf Result = DialogResult.Cancel Then
-                        Accept_Cancel()
-                    End If
-                Else
-                    'already move
-                    Jump_Back_Countdown_False()
-                End If
 
-            ElseIf CurRun.Name = "Background" Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
+
+                    ElseIf CurRun.Name = "Background" Then
                         All_Panel_Enable()
                         'Case2: now is Background
                         ' change light
@@ -2781,20 +2810,8 @@ Public Class Program
 
                         'dispose old graph and create new graph
                         Load_New_Graph_CD_True()
-                    ElseIf Result = DialogResult.No Then
-                        Accept_No()
-                    ElseIf Result = DialogResult.Cancel Then
-                        Accept_Cancel()
-                    End If
-                Else
-                    'already move
-                    Jump_Back_Countdown_False()
-                End If
 
-            ElseIf CurRun.Name = "RSS" Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
+                    ElseIf CurRun.Name = "RSS" Then
                         All_Panel_Enable()
                         'Case3: now is RSS
                         ' change light
@@ -2808,19 +2825,8 @@ Public Class Program
                         CurRun = CurRun.NextUnit
                         timeLeft = CurRun.Time
                         timeLabel.Text = timeLeft & " s"
-                    ElseIf Result = DialogResult.No Then
-                        Accept_No()
-                    ElseIf Result = DialogResult.Cancel Then
-                        Accept_Cancel()
-                    End If
-                Else
-                    'already move
-                    Jump_Back_Countdown_False()
-                End If
-            ElseIf IsNothing(CurRun.NextUnit) Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
+
+                    ElseIf IsNothing(CurRun.NextUnit) Then
                         All_Panel_Enable()
                         CurRun.Set_BackColor(Color.Green)
                         CurRun.Link.Enabled = True
@@ -2828,19 +2834,8 @@ Public Class Program
                         startButton.Enabled = False
                         stopButton.Enabled = False
                         Accept_Button.Enabled = False
-                    ElseIf Result = DialogResult.No Then
-                        Accept_No()
-                    ElseIf Result = DialogResult.Cancel Then
-                        Accept_Cancel()
-                    End If
-                Else
-                    'already move
-                    Jump_Back_Countdown_False()
-                End If
-            ElseIf CurRun.Name.Contains("PostCal") Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
+
+                    ElseIf CurRun.Name.Contains("PostCal") Then
                         All_Panel_Enable()
                         'Case4: now is PostCal
                         ' change light
@@ -2856,39 +2851,30 @@ Public Class Program
                         timeLeft = CurRun.Time
                         timeLabel.Text = timeLeft & " s"
 
-                    ElseIf Result = DialogResult.No Then
-                        Accept_No()
-                    ElseIf Result = DialogResult.Cancel Then
-                        Accept_Cancel()
-                    End If
-                Else
-                    'already move
-                    Jump_Back_Countdown_False()
-                End If
-
-            
 
 
-            ElseIf CurRun.Name = "A4_Mid_BG" Or CurRun.Name = "A4_Mid_BG_Add" Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
+
+
+                    ElseIf CurRun.Name = "A4_Mid_BG" Or CurRun.Name = "A4_Mid_BG_Add" Then
                         All_Panel_Enable()
                         'Case: now is A4_Mid_BG or A4_Mid_BG_Add and next is A4 or A4_Add
                         ' change light
                         Set_Panel_BackColor()
                         CurRun.Link.Enabled = True
 
-                        'jump to next Run_Unit
                         CurRun = CurRun.NextUnit
-                        Dim tempGRU = CurRun.GRU
-                        Dim i As Integer = 4
-                        While Not IsNothing(tempGRU)
-                            tempGRU = tempGRU.NextGRU
-                            i += 1
-                        End While
+                        'jump to next Run_Unit
+                        'case: next is A4_Add
+                        If CurRun.Name.Contains("Add") Then
+                            Dim tempGRU = CurRun.GRU
+                            Dim i As Integer = 4
+                            While Not IsNothing(tempGRU)
+                                tempGRU = tempGRU.NextGRU
+                                i += 1
+                            End While
 
-                        Set_Add_GRU(4, "Run " & i, "")
+                            Set_Add_GRU(4, "Run " & i, "")
+                        End If
                         Set_Run_Unit()
                         Countdown = True
                         'load A4's steps
@@ -2897,20 +2883,11 @@ Public Class Program
 
                         'dispose old graph and create new graph
                         Load_New_Graph_CD_True()
-                    ElseIf Result = DialogResult.No Then
-                        Accept_No()
-                    ElseIf Result = DialogResult.Cancel Then
-                        Accept_Cancel()
+
+
                     End If
-                Else
-                    Jump_Back_Countdown_False()
-                End If
-            End If
-        Else 'countdown = true
-            If CurRun.Name = "ExA1" Or CurRun.Name = "TrA1" Or CurRun.Name = "LoA1" Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
+                Else 'countdown = true
+                    If CurRun.Name = "ExA1" Or CurRun.Name = "TrA1" Or CurRun.Name = "LoA1" Then
                         All_Panel_Enable()
                         If CurRun.NextUnit.Name = "ExA1" Or CurRun.NextUnit.Name = "TrA1" Or CurRun.NextUnit.Name = "LoA1" Then
                             'Case1: now is ExA1 and next is also ExA1 or now is TrA1 and next is also TrA1 or now is LoA1 and next is also LoA1
@@ -2961,19 +2938,8 @@ Public Class Program
                             'dispose old graph and create new graph
                             Load_New_Graph_CD_True()
                         End If
-                    ElseIf Result = DialogResult.No Then
-                        Accept_No()
-                    ElseIf Result = DialogResult.Cancel Then
-                        Accept_Cancel()
-                    End If
-                Else
-                    Jump_Back_Countdown_True()
-                End If
 
-            ElseIf CurRun.Name = "ExA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "LoA1_Add" Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
+                    ElseIf CurRun.Name = "ExA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "LoA1_Add" Then
                         All_Panel_Enable()
                         'Case2: now is ExA1_Add and next is ExA2_1st or now is TrA1_Add and next is TrA3_fwd or now is LoA1_Add and next is LoA2_1st
                         'have an additional test?
@@ -3011,19 +2977,8 @@ Public Class Program
 
                         'dispose old graph and create new graph
                         Load_New_Graph_CD_True()
-                    ElseIf Result = DialogResult.No Then
-                        Accept_No()
-                    ElseIf Result = DialogResult.Cancel Then
-                        Accept_Cancel()
-                    End If
-                Else
-                    Jump_Back_Countdown_True()
-                End If
 
-            ElseIf CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_2nd_3rd" Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
+                    ElseIf CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_2nd_3rd" Then
                         All_Panel_Enable()
                         CurRun.PrevUnit.PrevUnit.Link.Enabled = True
                         If CurRun.NextUnit.Name = "ExA2_1st_Add" Or CurRun.NextUnit.Name = "LoA2_1st_Add" Then
@@ -3088,29 +3043,10 @@ Public Class Program
                             'dispose old graph and create new graph
                             Load_New_Graph_CD_True()
                         End If
-                    ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
-                        'dispose data
 
-                        'reset run_unit
-                        Restart_from_2nd_Previous_Run_Unit()
-                        'load steps
-                        Clear_Steps()
-                        Load_Steps()
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_True()
-                    ElseIf Result = DialogResult.Cancel Then
-                        startButton.Enabled = False
-                        Accept_Button.Enabled = True
-                    End If
-                Else
-                    Jump_Back_Countdown_True()
-                End If
 
-            ElseIf CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
+
+                    ElseIf CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
                         All_Panel_Enable()
                         CurRun.PrevUnit.PrevUnit.Link.Enabled = True
                         If CurRun.NextUnit.Name = "RSS" Or CurRun.NextUnit.Name = "LoA1" Or CurRun.NextUnit.Name = "LoA3_fwd" Then
@@ -3169,29 +3105,8 @@ Public Class Program
                                 End If
                             End If
                         End If
-                    ElseIf Result = DialogResult.No Then
-                        All_Panel_Enable()
-                        'dispose data
 
-                        'reset run_unit
-                        Restart_from_2nd_Previous_Run_Unit()
-                        'load steps
-                        Clear_Steps()
-                        Load_Steps()
-
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_True()
-                    ElseIf Result = DialogResult.Cancel Then
-                        Accept_Cancel()
-                    End If
-                Else
-                    Jump_Back_Countdown_True()
-                End If
-
-            ElseIf CurRun.Name = "LoA3_fwd" Or CurRun.Name = "LoA3_bkd" Or CurRun.Name = "TrA3_fwd" Or CurRun.Name = "TrA3_bkd" Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
+                    ElseIf CurRun.Name = "LoA3_fwd" Or CurRun.Name = "LoA3_bkd" Or CurRun.Name = "TrA3_fwd" Or CurRun.Name = "TrA3_bkd" Then
                         All_Panel_Enable()
                         If CurRun.NextUnit.Name = "LoA3_fwd" Or CurRun.NextUnit.Name = "LoA3_bkd" Or CurRun.NextUnit.Name = "TrA3_fwd" Or CurRun.NextUnit.Name = "TrA3_bkd" Then
                             'Case: LoA3_fwd to LoA3_bkd or LoA3_bkd to LoA3_fwd or TrA3_bkd to TrA3_fwd or TrA3_bkd to TrA3_fwd
@@ -3253,19 +3168,8 @@ Public Class Program
                                 Load_New_Graph_CD_False()
                             End If
                         End If
-                    ElseIf Result = DialogResult.No Then
-                        Accept_No()
-                    ElseIf Result = DialogResult.Cancel Then
-                        Accept_Cancel()
-                    End If
-                Else
-                    Jump_Back_Countdown_True()
-                End If
 
-            ElseIf CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "LoA3_bkd_Add" Or CurRun.Name = "TrA3_fwd_Add" Or CurRun.Name = "TrA3_bkd_Add" Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
+                    ElseIf CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "LoA3_bkd_Add" Or CurRun.Name = "TrA3_fwd_Add" Or CurRun.Name = "TrA3_bkd_Add" Then
                         All_Panel_Enable()
                         If CurRun.NextUnit.Name = "LoA3_bkd_Add" Or CurRun.NextUnit.Name = "TrA3_bkd_Add" Then
                             'Case: LoA3_fwd_Add to LoA3_bkd_Add or TrA3_fwd_Add to TrA3_bkd_Add
@@ -3274,7 +3178,7 @@ Public Class Program
                             CurRun.Link.Enabled = True
                             'jump to next Run_Unit
                             CurRun = CurRun.NextUnit
-                            
+
                             If Not IsNothing(CurRun.GRU) Then
                                 Dim i As Integer = 5
                                 Dim tempGRU As Grid_Run_Unit = CurRun.GRU
@@ -3289,7 +3193,7 @@ Public Class Program
                                 Set_Add_GRU(3, "Run 4", "後退")
                                 DataGrid.AddA3OverallColumn(CurRun.GRU)
                             End If
-                            
+
                             Set_Run_Unit()
                             'load LoA3 or TrA3's steps
                             Clear_Steps()
@@ -3340,19 +3244,9 @@ Public Class Program
                                 Load_New_Graph_CD_False()
                             End If
                         End If
-                    ElseIf Result = DialogResult.No Then
-                        Accept_No()
-                    ElseIf Result = DialogResult.Cancel Then
-                        Accept_Cancel()
-                    End If
-                Else
-                    Jump_Back_Countdown_True()
-                End If
 
-            ElseIf CurRun.Name = "A4" Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
+
+                    ElseIf CurRun.Name = "A4" Then
                         All_Panel_Enable()
                         If CurRun.NextUnit.Name = "A4_Mid_BG" Then
                             'Case: now is A4 and next is A4_Mid_BG
@@ -3405,19 +3299,8 @@ Public Class Program
                                 Load_New_Graph_CD_False()
                             End If
                         End If
-                    ElseIf Result = DialogResult.No Then
-                        Accept_No()
-                    ElseIf Result = DialogResult.Cancel Then
-                        Accept_Cancel()
-                    End If
-                Else
-                    Jump_Back_Countdown_True()
-                End If
 
-            ElseIf CurRun.Name = "A4_Add" Then
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-                    Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                    If Result = DialogResult.Yes Then
+                    ElseIf CurRun.Name = "A4_Add" Then
                         All_Panel_Enable()
                         'have an additional test?
                         'call a function 
@@ -3443,7 +3326,7 @@ Public Class Program
                             'True: add test
                             Set_Add_GRU(4, "Background", "")    'True: add test
                             'True: add test , jump to A4_Mid_BG_Add
-                            
+
                             timeLeft = CurRun.Time
                             timeLabel.Text = timeLeft & " s"
                             Countdown = False
@@ -3464,18 +3347,52 @@ Public Class Program
                             'dispose old graph and create new graph
                             Load_New_Graph_CD_False()
                         End If
-                    ElseIf Result = DialogResult.No Then
-                        Accept_No()
-                    ElseIf Result = DialogResult.Cancel Then
-                        Accept_Cancel()
+
                     End If
-                Else
-                    Jump_Back_Countdown_True()
                 End If
 
-            End If
-        End If
+            ElseIf Result = DialogResult.No Then
 
+                If CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_2nd_3rd" Then
+                    All_Panel_Enable()
+                    'dispose data
+
+                    'reset run_unit
+                    Restart_from_2nd_Previous_Run_Unit()
+                    'load steps
+                    Clear_Steps()
+                    Load_Steps()
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_True()
+                ElseIf CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
+                    All_Panel_Enable()
+                    'dispose data
+
+                    'reset run_unit
+                    Restart_from_2nd_Previous_Run_Unit()
+                    'load steps
+                    Clear_Steps()
+                    Load_Steps()
+
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_True()
+                Else
+                    Accept_No()
+                End If
+                keyGRU.Deny()
+                DataGrid.ClearColumn(keyGRU.Column)
+                If CurRun.Name.Contains("bkd") Then
+                    keyGRU.OverallGRU.Deny()
+                    DataGrid.ClearColumn(keyGRU.OverallGRU.Column)
+                End If
+            ElseIf Result = DialogResult.Cancel Then
+                Accept_Cancel()
+            End If
+        ElseIf CurRun.Name.Contains("PreCal") Or CurRun.Name = "Background" Or CurRun.Name = "RSS" Or IsNothing(CurRun.NextUnit) Or CurRun.Name.Contains("PostCal") Or CurRun.Name = "A4_Mid_BG" Or CurRun.Name = "A4_Mid_BG_Add" Then
+            Jump_Back_Countdown_False()
+        Else
+            Jump_Back_Countdown_True()
+        End If
     End Sub
 
 

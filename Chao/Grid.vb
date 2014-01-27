@@ -559,6 +559,12 @@ Public Class Grid
         'End If
     End Sub
 
+    Public Sub ClearColumn(ByRef col As DataGridViewTextBoxColumn)
+        For i = 1 To Form.Rows.Count - 1
+            Form.Rows(i).Cells(col.Index).Value = ""
+        Next
+    End Sub
+
     'contains calculations- NeedAdd should be called before (Calc_LWAs)Calculate
     Public Sub Calculate()
         If Not IsNothing(RSS) Then
@@ -803,6 +809,7 @@ Public Class Grid_Run_Unit
     Public ParentRU As Run_Unit
     Public NextGRU As Grid_Run_Unit
     Public OverallGRU As Grid_Run_Unit 'only used in A3
+    Private NotYetAccepted As Boolean = True
 
     Public Sub New(ByVal Header As String)
         _Header = Header
@@ -854,6 +861,7 @@ Public Class Grid_Run_Unit
         Else
             Calc_LpAeqAvg()
         End If
+        NotYetAccepted = True
     End Sub
 
     Public Sub SetMs(ByRef Meter2 As Meter_Measure_Unit,
@@ -887,6 +895,7 @@ Public Class Grid_Run_Unit
         Else
             Calc_LpAeqAvg()
         End If
+        NotYetAccepted = True
     End Sub
 
     Public Sub SetM(ByRef Meter As Meter_Measure_Unit, ByVal num As Integer)
@@ -903,6 +912,35 @@ Public Class Grid_Run_Unit
         ElseIf num = 12 Then
             _Meter12 = Meter
         End If
+        NotYetAccepted = True
+    End Sub
+    Public Sub Deny()
+        NotYetAccepted = False
+    End Sub
+    Public Sub Accept()
+        NotYetAccepted = False
+        If _Meter2 IsNot Nothing Then
+            _RealMeter2 = _Meter2
+        End If
+        If _Meter4 IsNot Nothing Then
+            _RealMeter4 = _Meter4
+        End If
+        If _Meter6 IsNot Nothing Then
+            _RealMeter6 = _Meter6
+        End If
+        If _Meter8 IsNot Nothing Then
+            _RealMeter8 = _Meter8
+        End If
+        If _Meter10 IsNot Nothing Then
+            _RealMeter10 = _Meter10
+        End If
+        If _Meter12 IsNot Nothing Then
+            _RealMeter12 = _Meter12
+        End If
+        _RealdeltaLA = _deltaLA
+        _RealK1A = _K1A
+        _RealLpAeqAvg = _LpAeqAvg
+        _RealTime = _Time
     End Sub
 
     Private _Background As Grid_Run_Unit
@@ -916,6 +954,7 @@ Public Class Grid_Run_Unit
     End Property
 
     Private MeterList As New List(Of Meter_Measure_Unit)
+    Private RealMeterList As New List(Of Meter_Measure_Unit)
 
     Public A4 As Boolean
 
@@ -940,100 +979,167 @@ Public Class Grid_Run_Unit
     End Property
 
     Private _Meter2 As Meter_Measure_Unit
+    Private _RealMeter2 As Meter_Measure_Unit
     Public ReadOnly Property Meter2() As Meter_Measure_Unit
         Get
-            Return _Meter2
+            If NotYetAccepted Then
+                Return _Meter2
+            Else
+                Return _RealMeter2
+            End If
         End Get
     End Property
-    Public Property LpAeq2() As Double
+    Public ReadOnly Property LpAeq2() As Double
         Get
-            Return _Meter2.Leq
+            If NotYetAccepted Then
+                If _Meter2 IsNot Nothing Then
+                    Return _Meter2.Leq
+                End If
+                Return Nothing
+            Else
+                If _RealMeter2 IsNot Nothing Then
+                    Return _RealMeter2.Leq
+                End If
+                Return Nothing
+            End If
         End Get
-        Set(ByVal value As Double)
-            _Meter2.Leq = value
-        End Set
     End Property
 
 
     Private _Meter4 As Meter_Measure_Unit
+    Private _RealMeter4 As Meter_Measure_Unit
     Public ReadOnly Property Meter4() As Meter_Measure_Unit
         Get
-            Return _Meter4
+            If NotYetAccepted Then
+                Return _Meter4
+            Else
+                Return _RealMeter4
+            End If
         End Get
     End Property
-    Public Property LpAeq4() As Double
+    Public ReadOnly Property LpAeq4() As Double
         Get
-            Return _Meter4.Leq
+            If NotYetAccepted Then
+                If _Meter4 IsNot Nothing Then
+                    Return _Meter4.Leq
+                End If
+                Return Nothing
+            Else
+                If _RealMeter4 IsNot Nothing Then
+                    Return _RealMeter4.Leq
+                End If
+                Return Nothing
+            End If
         End Get
-        Set(ByVal value As Double)
-            _Meter4.Leq = value
-        End Set
     End Property
 
     Private _Meter6 As Meter_Measure_Unit
+    Private _RealMeter6 As Meter_Measure_Unit
     Public ReadOnly Property Meter6() As Meter_Measure_Unit
         Get
-            Return _Meter6
+            If NotYetAccepted Then
+                Return _Meter6
+            Else
+                Return _RealMeter6
+            End If
         End Get
     End Property
-    Public Property LpAeq6() As Double
+    Public ReadOnly Property LpAeq6() As Double
         Get
-            Return _Meter6.Leq
+            If NotYetAccepted Then
+                If _Meter6 IsNot Nothing Then
+                    Return _Meter6.Leq
+                End If
+                Return Nothing
+            Else
+                If _RealMeter6 IsNot Nothing Then
+                    Return _RealMeter6.Leq
+                End If
+                Return Nothing
+            End If
         End Get
-        Set(ByVal value As Double)
-            _Meter6.Leq = value
-        End Set
+        
     End Property
 
     Private _Meter8 As Meter_Measure_Unit
+    Private _RealMeter8 As Meter_Measure_Unit
     Public ReadOnly Property Meter8() As Meter_Measure_Unit
         Get
-            Return _Meter8
+            If NotYetAccepted Then
+                Return _Meter8
+            Else
+                Return _RealMeter8
+            End If
         End Get
     End Property
-    Public Property LpAeq8() As Double
+    Public ReadOnly Property LpAeq8() As Double
         Get
-            Return _Meter8.Leq
+            If NotYetAccepted Then
+                If _Meter8 IsNot Nothing Then
+                    Return _Meter8.Leq
+                End If
+                Return Nothing
+            Else
+                If _RealMeter8 IsNot Nothing Then
+                    Return _RealMeter8.Leq
+                End If
+                Return Nothing
+            End If
         End Get
-        Set(ByVal value As Double)
-            _Meter8.Leq = value
-        End Set
     End Property
 
     Private _Meter10 As Meter_Measure_Unit
+    Private _RealMeter10 As Meter_Measure_Unit
     Public ReadOnly Property Meter10() As Meter_Measure_Unit
         Get
-            Return _Meter10
+            If NotYetAccepted Then
+                Return _Meter10
+            Else
+                Return _RealMeter10
+            End If
         End Get
     End Property
-    Public Property LpAeq10() As Double
+    Public ReadOnly Property LpAeq10() As Double
         Get
-            If Not IsNothing(_Meter10) Then
-                Return _Meter10.Leq
+            If NotYetAccepted Then
+                If _Meter10 IsNot Nothing Then
+                    Return _Meter10.Leq
+                End If
+                Return Nothing
+            Else
+                If _RealMeter10 IsNot Nothing Then
+                    Return _RealMeter10.Leq
+                End If
+                Return Nothing
             End If
-            Return Nothing
         End Get
-        Set(ByVal value As Double)
-            _Meter10.Leq = value
-        End Set
     End Property
 
     Private _Meter12 As Meter_Measure_Unit
+    Private _RealMeter12 As Meter_Measure_Unit
     Public ReadOnly Property Meter12() As Meter_Measure_Unit
         Get
-            Return _Meter12
+            If NotYetAccepted Then
+                Return _Meter12
+            Else
+                Return _RealMeter12
+            End If
         End Get
     End Property
-    Public Property LpAeq12() As Double
+    Public ReadOnly Property LpAeq12() As Double
         Get
-            If Not IsNothing(_Meter12) Then
-                Return _Meter12.Leq
+            If NotYetAccepted Then
+                If _Meter12 IsNot Nothing Then
+                    Return _Meter12.Leq
+                End If
+                Return Nothing
+            Else
+                If _RealMeter12 IsNot Nothing Then
+                    Return _RealMeter12.Leq
+                End If
+                Return Nothing
             End If
-            Return Nothing
         End Get
-        Set(ByVal value As Double)
-            _Meter12.Leq = value
-        End Set
     End Property
 
     Private Sub Calculate()
@@ -1061,13 +1167,29 @@ Public Class Grid_Run_Unit
     End Sub
 
     Private _LpAeqAvg As Double
+    Private _RealLpAeqAvg As Double
     Public ReadOnly Property LpAeqAvg() As Double
         Get
-            Return _LpAeqAvg
+            If NotYetAccepted Then
+                Return _LpAeqAvg
+            Else
+                Return _RealLpAeqAvg
+            End If
         End Get
     End Property
 
     Private _deltaLA As Double
+    Private _RealdeltaLA As Double
+    Public ReadOnly Property deltaLA() As Double
+        Get
+            If NotYetAccepted Then
+                Return _deltaLA
+            Else
+                Return _RealdeltaLA
+            End If
+        End Get
+    End Property
+
     Public Sub Calc_deltaLA()
         Try
             If IsNothing(_Background) Then
@@ -1085,11 +1207,7 @@ Public Class Grid_Run_Unit
         End Try
     End Sub
 
-    Public ReadOnly Property deltaLA() As Double
-        Get
-            Return _deltaLA
-        End Get
-    End Property
+   
 
 
     Public Sub Calc_K1A()
@@ -1111,9 +1229,14 @@ Public Class Grid_Run_Unit
     End Sub
 
     Private _K1A As Double
+    Private _RealK1A As Double
     Public ReadOnly Property K1A() As Double
         Get
-            Return _K1A
+            If NotYetAccepted Then
+                Return _K1A
+            Else
+                Return _RealK1A
+            End If
         End Get
     End Property
 
@@ -1126,6 +1249,17 @@ Public Class Grid_Run_Unit
 
 
     Private _LWA As Double
+    Private _RealLWA As Double
+    Public ReadOnly Property LWA() As Double
+        Get
+            If NotYetAccepted Then
+                Return _LWA
+            Else
+                Return _RealLWA
+            End If
+        End Get
+    End Property
+
     Public Function Calc_LWA(ByVal K2A As Double, ByVal r As Double)
         Try
             If isRegular Then
@@ -1138,16 +1272,16 @@ Public Class Grid_Run_Unit
         End Try
     End Function
 
-    Public ReadOnly Property LWA() As Double
-        Get
-            Return _LWA
-        End Get
-    End Property
-
+    
     Private _Time As Integer
+    Private _RealTime As Integer
     Public ReadOnly Property Time() As Integer
         Get
-            Return _Time
+            If NotYetAccepted Then
+                Return _Time
+            Else
+                Return _RealTime
+            End If
         End Get
     End Property
 

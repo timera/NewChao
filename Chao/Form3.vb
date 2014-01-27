@@ -2239,7 +2239,7 @@ Public Class Program
             startButton.Enabled = True
             stopButton.Enabled = False
             All_Panel_Enable()
-            If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
+            If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then 'if not jump step
                 'bounce back
                 If CurRun.Name = "ExA1" Or CurRun.Name = "LoA1" Or CurRun.Name = "TrA1" Or CurRun.Name = "A4" Or CurRun.Name = "ExA1_Add" Or CurRun.Name = "LoA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "A4_Add" Or CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA3_fwd" Or CurRun.Name = "LoA3_bkd" Or CurRun.Name = "TrA3_fwd" Or CurRun.Name = "TrA3_bkd" Or CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "LoA3_bkd_Add" Or CurRun.Name = "TrA3_fwd_Add" Or CurRun.Name = "TrA3_bkd_Add" Then
                     'dispose data
@@ -2590,6 +2590,8 @@ Public Class Program
                     keyGRU.OverallGRU.Accept()
                     DataGrid.ShowGRUonForm(keyGRU)
                 End If
+
+
                 All_Panel_Enable()
                 CurRun.Set_BackColor(Color.Green)
                 Temp_CurRun.Set_BackColor(Color.Yellow)
@@ -2622,6 +2624,8 @@ Public Class Program
                     keyGRU.OverallGRU.Deny()
                     DataGrid.ShowGRUonForm(keyGRU)
                 End If
+
+
                 All_Panel_Enable()
 
                 CurRun.Set_BackColor(Color.Green)
@@ -2947,7 +2951,7 @@ Public Class Program
                         'if want_add()=true then ... elseif want_add()=false then ... endif
 
 
-                        CurRun.Link.Enabled = True
+                        'CurRun.Link.Enabled = True
                         'Add?
                         Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
                         list.Add(CurRun.PrevUnit.GRU) 'adding test 3
@@ -3048,7 +3052,7 @@ Public Class Program
 
                     ElseIf CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
                         All_Panel_Enable()
-                        CurRun.PrevUnit.PrevUnit.Link.Enabled = True
+                        'CurRun.PrevUnit.PrevUnit.Link.Enabled = True
                         If CurRun.NextUnit.Name = "RSS" Or CurRun.NextUnit.Name = "LoA1" Or CurRun.NextUnit.Name = "LoA3_fwd" Then
                             'have an additional test?
                             'call a function 
@@ -3175,7 +3179,7 @@ Public Class Program
                             'Case: LoA3_fwd_Add to LoA3_bkd_Add or TrA3_fwd_Add to TrA3_bkd_Add
                             ' change light
                             Set_Panel_BackColor()
-                            CurRun.Link.Enabled = True
+                            'CurRun.Link.Enabled = True
                             'jump to next Run_Unit
                             CurRun = CurRun.NextUnit
 
@@ -3207,7 +3211,7 @@ Public Class Program
                             'call a function 
                             'if want_add()=true then ... elseif want_add()=false then ... endif
 
-                            CurRun.Link.Enabled = True
+                            'CurRun.Link.Enabled = True
                             'Add?
                             Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
                             list.Add(CurRun.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding test 3
@@ -3267,7 +3271,7 @@ Public Class Program
                             'if want_add()=true then ... elseif want_add()=false then ... endif
 
                             CurRun.Set_BackColor(Color.Green)
-                            CurRun.Link.Enabled = True
+                            'CurRun.Link.Enabled = True
                             'jump to next Run_Unit and change light
                             'Add?
                             Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
@@ -3306,7 +3310,7 @@ Public Class Program
                         'call a function 
                         'if want_add()=true then ... elseif want_add()=false then ... endif
 
-                        CurRun.Link.Enabled = True
+                        'CurRun.Link.Enabled = True
                         'Add?
                         Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
                         list.Add(CurRun.PrevUnit.GRU) 'adding test 3 

@@ -820,6 +820,10 @@ Public Class Grid_Run_Unit
         End If
     End Sub
 
+    Private Sub ClearMeterList()
+        MeterList.Clear()
+    End Sub
+
     Public Sub SetMs(ByRef Meter2 As Meter_Measure_Unit,
                    ByRef Meter4 As Meter_Measure_Unit,
                    ByRef Meter6 As Meter_Measure_Unit,
@@ -827,9 +831,10 @@ Public Class Grid_Run_Unit
                    ByRef Meter10 As Meter_Measure_Unit,
                    ByRef Meter12 As Meter_Measure_Unit
                    )
-        If IsNothing(Meter2) Or IsNothing(Meter4) Or IsNothing(Meter6) Or IsNothing(Meter8) Then
+        If IsNothing(Meter2) Or IsNothing(Meter4) Or IsNothing(Meter6) Or IsNothing(Meter8) Or IsNothing(Meter10) Or IsNothing(Meter12) Then
             _isRegular = False
         End If
+        ClearMeterList()
         _Meter2 = Meter2
         MeterList.Add(_Meter2)
         _Meter4 = Meter4
@@ -872,6 +877,7 @@ Public Class Grid_Run_Unit
         If IsNothing(Meter2) Or IsNothing(Meter4) Or IsNothing(Meter6) Or IsNothing(Meter8) Then
             _isRegular = False
         End If
+        ClearMeterList()
         _Meter2 = Meter2
         MeterList.Add(_Meter2)
         _Meter4 = Meter4
@@ -1196,11 +1202,11 @@ Public Class Grid_Run_Unit
                 _deltaLA = 0
                 Return
             End If
-            If _Background._LpAeqAvg = 0 Then
+            If _Background.LpAeqAvg = 0 Then
                 _deltaLA = 0
                 Return
             End If
-            _deltaLA = Me._LpAeqAvg - _Background._LpAeqAvg
+            _deltaLA = Me._LpAeqAvg - _Background.LpAeqAvg
         Catch ex As Exception
             MsgBox("In Calc_deltaLA():" & ex.Message)
             _deltaLA = -1

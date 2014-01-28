@@ -23,14 +23,16 @@ Partial Class Program
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.DisconnButton = New System.Windows.Forms.Button()
+        Me.ConnectButton = New System.Windows.Forms.Button()
         Me.Button_change_machine = New System.Windows.Forms.Button()
         Me.p6Label = New System.Windows.Forms.Label()
         Me.p5Label = New System.Windows.Forms.Label()
@@ -291,8 +293,6 @@ Partial Class Program
         Me.Step2 = New System.Windows.Forms.Label()
         Me.TabPageCharts = New System.Windows.Forms.TabPage()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.ConnectButton = New System.Windows.Forms.Button()
-        Me.DisconnButton = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox_Plot.SuspendLayout()
@@ -437,6 +437,24 @@ Partial Class Program
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "機具選擇"
         '
+        'DisconnButton
+        '
+        Me.DisconnButton.Location = New System.Drawing.Point(179, 554)
+        Me.DisconnButton.Name = "DisconnButton"
+        Me.DisconnButton.Size = New System.Drawing.Size(75, 37)
+        Me.DisconnButton.TabIndex = 48
+        Me.DisconnButton.Text = "Disconnect Meters"
+        Me.DisconnButton.UseVisualStyleBackColor = True
+        '
+        'ConnectButton
+        '
+        Me.ConnectButton.Location = New System.Drawing.Point(19, 554)
+        Me.ConnectButton.Name = "ConnectButton"
+        Me.ConnectButton.Size = New System.Drawing.Size(75, 37)
+        Me.ConnectButton.TabIndex = 47
+        Me.ConnectButton.Text = "Setup Server"
+        Me.ConnectButton.UseVisualStyleBackColor = True
+        '
         'Button_change_machine
         '
         Me.Button_change_machine.Location = New System.Drawing.Point(312, 34)
@@ -450,55 +468,61 @@ Partial Class Program
         'p6Label
         '
         Me.p6Label.AutoSize = True
+        Me.p6Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
         Me.p6Label.Location = New System.Drawing.Point(481, 390)
         Me.p6Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.p6Label.Name = "p6Label"
-        Me.p6Label.Size = New System.Drawing.Size(0, 12)
+        Me.p6Label.Size = New System.Drawing.Size(0, 31)
         Me.p6Label.TabIndex = 45
         '
         'p5Label
         '
         Me.p5Label.AutoSize = True
+        Me.p5Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
         Me.p5Label.Location = New System.Drawing.Point(473, 381)
         Me.p5Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.p5Label.Name = "p5Label"
-        Me.p5Label.Size = New System.Drawing.Size(0, 12)
+        Me.p5Label.Size = New System.Drawing.Size(0, 31)
         Me.p5Label.TabIndex = 44
         '
         'p4Label
         '
         Me.p4Label.AutoSize = True
+        Me.p4Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
         Me.p4Label.Location = New System.Drawing.Point(465, 373)
         Me.p4Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.p4Label.Name = "p4Label"
-        Me.p4Label.Size = New System.Drawing.Size(0, 12)
+        Me.p4Label.Size = New System.Drawing.Size(0, 31)
         Me.p4Label.TabIndex = 43
         '
         'p3Label
         '
         Me.p3Label.AutoSize = True
+        Me.p3Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
         Me.p3Label.Location = New System.Drawing.Point(457, 364)
         Me.p3Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.p3Label.Name = "p3Label"
-        Me.p3Label.Size = New System.Drawing.Size(0, 12)
+        Me.p3Label.Size = New System.Drawing.Size(0, 31)
         Me.p3Label.TabIndex = 42
         '
         'p2Label
         '
         Me.p2Label.AutoSize = True
+        Me.p2Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
         Me.p2Label.Location = New System.Drawing.Point(449, 355)
         Me.p2Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.p2Label.Name = "p2Label"
-        Me.p2Label.Size = New System.Drawing.Size(0, 12)
+        Me.p2Label.Size = New System.Drawing.Size(0, 31)
         Me.p2Label.TabIndex = 41
         '
         'p1Label
         '
         Me.p1Label.AutoSize = True
+        Me.p1Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
         Me.p1Label.Location = New System.Drawing.Point(441, 347)
         Me.p1Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.p1Label.Name = "p1Label"
-        Me.p1Label.Size = New System.Drawing.Size(0, 12)
+        Me.p1Label.Size = New System.Drawing.Size(0, 31)
         Me.p1Label.TabIndex = 40
         '
         'GroupBox_Plot
@@ -508,25 +532,27 @@ Partial Class Program
         Me.GroupBox_Plot.Controls.Add(Me.xLabel)
         Me.GroupBox_Plot.Location = New System.Drawing.Point(320, 66)
         Me.GroupBox_Plot.Name = "GroupBox_Plot"
-        Me.GroupBox_Plot.Size = New System.Drawing.Size(296, 276)
+        Me.GroupBox_Plot.Size = New System.Drawing.Size(600, 600)
         Me.GroupBox_Plot.TabIndex = 39
         Me.GroupBox_Plot.TabStop = False
         '
         'yLabel
         '
         Me.yLabel.AutoSize = True
+        Me.yLabel.Font = New System.Drawing.Font("新細明體", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.yLabel.Location = New System.Drawing.Point(150, 19)
         Me.yLabel.Name = "yLabel"
-        Me.yLabel.Size = New System.Drawing.Size(14, 12)
+        Me.yLabel.Size = New System.Drawing.Size(31, 27)
         Me.yLabel.TabIndex = 1
         Me.yLabel.Text = "Y"
         '
         'xLabel
         '
         Me.xLabel.AutoSize = True
+        Me.xLabel.Font = New System.Drawing.Font("新細明體", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.xLabel.Location = New System.Drawing.Point(294, 151)
         Me.xLabel.Name = "xLabel"
-        Me.xLabel.Size = New System.Drawing.Size(14, 12)
+        Me.xLabel.Size = New System.Drawing.Size(31, 27)
         Me.xLabel.TabIndex = 0
         Me.xLabel.Text = "X"
         '
@@ -2924,17 +2950,17 @@ Partial Class Program
         '
         'Chart2
         '
-        ChartArea3.Name = "ChartArea1"
-        Me.Chart2.ChartAreas.Add(ChartArea3)
-        Legend3.Name = "Legend1"
-        Me.Chart2.Legends.Add(Legend3)
+        ChartArea1.Name = "ChartArea1"
+        Me.Chart2.ChartAreas.Add(ChartArea1)
+        Legend1.Name = "Legend1"
+        Me.Chart2.Legends.Add(Legend1)
         Me.Chart2.Location = New System.Drawing.Point(602, 98)
         Me.Chart2.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Chart2.Name = "Chart2"
-        Series3.ChartArea = "ChartArea1"
-        Series3.Legend = "Legend1"
-        Series3.Name = "Series1"
-        Me.Chart2.Series.Add(Series3)
+        Series1.ChartArea = "ChartArea1"
+        Series1.Legend = "Legend1"
+        Series1.Name = "Series1"
+        Me.Chart2.Series.Add(Series1)
         Me.Chart2.Size = New System.Drawing.Size(271, 466)
         Me.Chart2.TabIndex = 83
         Me.Chart2.Text = "Chart2"
@@ -2942,17 +2968,17 @@ Partial Class Program
         '
         'Chart1
         '
-        ChartArea4.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea4)
-        Legend4.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend4)
+        ChartArea2.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea2)
+        Legend2.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend2)
         Me.Chart1.Location = New System.Drawing.Point(-41, 5)
         Me.Chart1.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Chart1.Name = "Chart1"
-        Series4.ChartArea = "ChartArea1"
-        Series4.Legend = "Legend1"
-        Series4.Name = "Series1"
-        Me.Chart1.Series.Add(Series4)
+        Series2.ChartArea = "ChartArea1"
+        Series2.Legend = "Legend1"
+        Series2.Name = "Series1"
+        Me.Chart1.Series.Add(Series2)
         Me.Chart1.Size = New System.Drawing.Size(914, 84)
         Me.Chart1.TabIndex = 82
         Me.Chart1.Text = "Chart1"
@@ -3129,24 +3155,6 @@ Partial Class Program
         'Timer1
         '
         Me.Timer1.Interval = 1000
-        '
-        'ConnectButton
-        '
-        Me.ConnectButton.Location = New System.Drawing.Point(334, 496)
-        Me.ConnectButton.Name = "ConnectButton"
-        Me.ConnectButton.Size = New System.Drawing.Size(75, 37)
-        Me.ConnectButton.TabIndex = 47
-        Me.ConnectButton.Text = "Connect Meters"
-        Me.ConnectButton.UseVisualStyleBackColor = True
-        '
-        'DisconnButton
-        '
-        Me.DisconnButton.Location = New System.Drawing.Point(427, 496)
-        Me.DisconnButton.Name = "DisconnButton"
-        Me.DisconnButton.Size = New System.Drawing.Size(75, 37)
-        Me.DisconnButton.TabIndex = 48
-        Me.DisconnButton.Text = "Disconnect Meters"
-        Me.DisconnButton.UseVisualStyleBackColor = True
         '
         'Program
         '

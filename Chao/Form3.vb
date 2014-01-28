@@ -256,10 +256,10 @@ Public Class Program
         GroupBox_Plot.Visible = True
 
         'x
-        origin(0) = 200
+        origin(0) = GroupBox_Plot.Width / 2
         'y
-        origin(1) = 150
-        length = 150
+        origin(1) = GroupBox_Plot.Height / 2
+        length = 275
         'xStart
         xCor(0, 0) = origin(0) - length 'x
         xCor(0, 1) = origin(1) 'y
@@ -312,14 +312,16 @@ Public Class Program
 
 
         NoisesArray = {Noise1, Noise2, Noise3, Noise4, Noise5, Noise6, Noise_Avg}
-        Dim noiseX = 65
-        Noise1.Location = New Point(845, 654)
-        Noise2.Location = New Point(845 + noiseX, 654)
-        Noise3.Location = New Point(845 + noiseX * 2, 654)
-        Noise4.Location = New Point(845 + noiseX * 3, 654)
-        Noise5.Location = New Point(845 + noiseX * 4, 654)
-        Noise6.Location = New Point(845 + noiseX * 5, 654)
-        Noise_Avg.Location = New Point(845 + noiseX * 6, 654)
+        Dim meterFigWidth = 60
+        Dim meterX = 845
+        Dim metery = 654
+        Noise1.Location = New Point(meterX, metery)
+        Noise2.Location = New Point(meterX + meterFigWidth, metery)
+        Noise3.Location = New Point(meterX + meterFigWidth * 2, metery)
+        Noise4.Location = New Point(meterX + meterFigWidth * 3, metery)
+        Noise5.Location = New Point(meterX + meterFigWidth * 4, metery)
+        Noise6.Location = New Point(meterX + meterFigWidth * 5, metery)
+        Noise_Avg.Location = New Point(meterX + meterFigWidth * 6, metery)
         For i = 0 To 6
             NoisesArray(i).Parent = TabPage2
             NoisesArray(i).Visible = False
@@ -1900,13 +1902,7 @@ Public Class Program
     End Sub
 
     Private Function GetInstantData()
-        Dim num As Integer
-        If Not Machine = Machines.Others Then
-            num = 6
-        Else
-            num = 4
-        End If
-        Dim result(num - 1) As Double
+        Dim result(6 - 1) As Double
         Dim temp() As String =
         Comm.GetMeasurementsFromMeters(Communication.Measurements.Lp)
         'TEMP
@@ -1947,10 +1943,10 @@ Public Class Program
                 meter = Communication.Meters.p12
             End If
         End If
-        For i = 0 To num - 1
+        For i = 0 To 6 - 1
             If Not onlyCal Then
                 NoisesArray(i).Text = vals(i)
-                sum += vals(i)
+                sum += 10 ^ (0.1 * vals(i))
             ElseIf i = meter Then
                 NoisesArray(i).Text = vals(i)
                 sum = vals(i)
@@ -1958,9 +1954,20 @@ Public Class Program
                 vals(i) = 0
             End If
         Next
-        NoisesArray(num).Text = Int((sum / num) * 100 + 0.5) / 100
+
+        Dim valsAndAvg() As Double = New Double(6) {}
+        Array.Copy(vals, valsAndAvg, 6)
+
+        Dim avg As Double
+        If Not onlyCal Then
+            avg = 10 * (Math.Log10(sum / num))
+        Else
+            avg = sum
+        End If
+        NoisesArray(6).Text = avg
+        valsAndAvg(6) = avg
         'Set graphs
-        MainBarGraph.Update(vals)
+        MainBarGraph.Update(valsAndAvg)
         MainLineGraph.Update(vals)
     End Sub
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
@@ -2142,6 +2149,13 @@ Public Class Program
     Private Sub updateFinalBarGraph()
         Dim cal As Boolean = False
         Dim meter As Integer = -1
+        Dim num As Integer
+        If Not Machine = Machines.Others Then
+            num = 6
+        Else
+            num = 4
+        End If
+
         If CurRun.Name.Contains("Cal") Then
             cal = True
             If CurRun.Name.Contains("Cal_P2") Then
@@ -2159,14 +2173,31 @@ Public Class Program
             End If
         End If
         Dim temps() As String = Comm.GetMeasurementsFromBuffer(Communication.Measurements.Leq)
-        Dim Leqs(temps.Length - 1) As Double
+        Dim Leqs(6) As Double
+        Dim sum As Double = 0
         For i = 0 To temps.Length - 1
-            If Not cal Or i = meter Then
-                Leqs(i) = Convert.ToDouble(temps(i))
+            If Not cal Then
+                Dim number = Convert.ToDouble(temps(i))
+                Leqs(i) = number
+                sum += 10 ^ (0.1 * number)
+            ElseIf i = meter Then
+                Dim number = Convert.ToDouble(temps(i))
+                Leqs(i) = number
+                sum = number
             Else
                 Leqs(i) = 0
             End If
         Next
+        For i = temps.Length To 6 - 1
+            Leqs(i) = 0
+        Next
+        Dim avg As Double
+        If Not cal Then
+            avg = 10 * (Math.Log10(sum / num))
+        Else
+            avg = sum
+        End If
+        Leqs(6) = avg
         MainBarGraph.Update(Leqs)
 
     End Sub
@@ -2230,7 +2261,7 @@ Public Class Program
 
     '##BUTTON CLICKS
     Private Sub stopButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles stopButton.Click
-        Comm.StopMeasure()
+
         If Countdown = False Then
             Timer1.Stop()
             'startButton.Enabled = True
@@ -2239,9 +2270,16 @@ Public Class Program
 
             'final Leq
             updateFinalBarGraph()
+            'Tell meters to stop measuring
+            Comm.StopMeasure()
             ShowResultsOnForm()
         Else
             Timer1.Stop()
+            'final Leq
+            updateFinalBarGraph()
+            'Tell meters to stop measuring
+            Comm.StopMeasure()
+
             startButton.Enabled = True
             stopButton.Enabled = False
             All_Panel_Enable()
@@ -3423,7 +3461,7 @@ Public Class Program
         xAxis = New LineShape(xCor(0, 0), xCor(0, 1), xCor(1, 0), xCor(1, 1))
         xAxis.Parent = canvas
         xLabel.Text = "x"
-        xLabel.Size = New System.Drawing.Size(10, 10)
+        xLabel.Size = New System.Drawing.Size(20, 20)
         xLabel.Location = New System.Drawing.Point(xCor(1, 0), xCor(1, 1))
 
         'y axis
@@ -3475,9 +3513,12 @@ Public Class Program
         For index = 0 To coors.GetLength(0) - 1
             Dim x = coors(index).Coors.Xc * ratio
             Dim y = coors(index).Coors.Yc * ratio
-            Dim rPoint = New OvalShape((origin(0) + x - 2), (origin(1) - y - 2), 2, 2)
+            Dim rPoint = New OvalShape((origin(0) + x - 2), (origin(1) - y - 2), 5, 5)
+
 
             rPoint.Parent = canvas
+            rPoint.BackColor = Color.Black
+            rPoint.BackStyle = BackStyle.Opaque
             Dim xText = Format(coors(index).Coors.Xc, "#.##")
             Dim yText = Format(coors(index).Coors.Yc, "#.##")
             Dim zText = Format(coors(index).Coors.Zc, "#.##")

@@ -196,14 +196,18 @@ Public Class Communication
     '14 figures
     Public Function GetMeasurementsFromBuffer(ByVal part As Measurements) As String()
         Dim result() As String = New String(MeterMacs.Count - 1) {}
-        If Not IsNothing(buffer) Then
-            Dim temp() As List(Of String) = buffer
-            For i = 0 To MeterMacs.Count - 1
-                If temp(i).Count > 0 Then
-                    result(i) = temp(i)(0).Substring(8).Split(",")(part)
-                End If
-            Next
-        End If
+        Try
+            If Not IsNothing(buffer) Then
+                Dim temp() As List(Of String) = buffer
+                For i = 0 To MeterMacs.Count - 1
+                    If temp(i).Count > 0 Then
+                        result(i) = temp(i)(0).Substring(8).Split(",")(part)
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("GetMeasurementsFromBuffer: " & ex.Message)
+        End Try
         Return result
     End Function
 
@@ -212,6 +216,7 @@ Public Class Communication
         Try
             If Open() Then
                 port.WriteLine("DOD?")
+                Thread.Sleep(_Latency)
                 Dim input() As Byte = GetInputFromPort()
                 buffer = ProcessMsgs(input)
                 For i = 0 To MeterMacs.Count - 1

@@ -166,10 +166,7 @@ Public Class LineGraph
 
     'Update function newval must contain the avg
     Public Overrides Sub Update(ByVal newVal() As Double)
-        If Not newVal.Length = NumOfMics Then
-            Return
-        End If
-        For i As Integer = 0 To newVal.Length - 1
+        For i As Integer = 0 To NumOfMics - 1
             If Not IsNothing(series(i)) Then
                 series(i).Points.Add(newVal(i))
             End If
@@ -213,7 +210,7 @@ Public Class BarGraph
         listOfNames = New List(Of String)
         Dim listOfPoints = New List(Of Double)
 
-        For i As Integer = 0 To NumOfMics - 1
+        For i As Integer = 0 To 6 - 1
             Dim tag As String = "P" + CStr((i + 1) * 2)
             listOfNames.Add(tag)
             listOfPoints.Add(0)
@@ -226,20 +223,18 @@ Public Class BarGraph
 
 
 
-    'Update, feed in values, add an avg
+    'Update, feed in values, including an avg
     Public Overrides Sub Update(ByVal newVal() As Double)
-        If Not newVal.Length = NumOfMics Then
-            Return
-        End If
+
         'adding average datapoint
-        Dim temp(newVal.Length) As Double
-        Dim sum As Double = 0
-        For i = 0 To newVal.Length - 1
-            temp(i) = newVal(i)
-            sum += 10 ^ (0.1 * newVal(i))
-        Next
-        temp(newVal.Length) = 10 * Math.Log10(sum / newVal.Length)
-        series(0).Points.DataBindXY(listOfNames, temp)
+        'Dim temp(newVal.Length) As Double
+        'Dim sum As Double = 0
+        'For i = 0 To newVal.Length - 1
+        'temp(i) = newVal(i)
+        ''sum += 10 ^ (0.1 * newVal(i))
+        'Next
+        'temp(newVal.Length) = 10 * Math.Log10(sum / newVal.Length)
+        series(0).Points.DataBindXY(listOfNames, newVal)
     End Sub
 
     Public Sub Dispose()

@@ -4,6 +4,7 @@ Imports System.Text
 Imports System.IO
 
 Public Class Communication
+    Dim _Latency As Integer = 500 'miliseconds to wait for response
     Enum Meters
         p2
         p4
@@ -30,10 +31,10 @@ Public Class Communication
         underrange
     End Enum
 
-    Private ServerMac() As Byte = BitConverter.GetBytes(CLng(&H5067A2F4A6))
+    Private ServerMac() As Byte = New Byte(5) {&H0, &H50, &H67, &HA2, &HF4, &HA6} 'BitConverter.GetBytes(CLng(&H5067A2F4A6))
 
     Private MeterMacs As List(Of Byte()) = New List(Of Byte())
-    Private Meter2Mac() As Byte = New Byte(2) {&HA2, &HF4, &H5A} 'BitConverter.GetBytes(CLng(&HA2F45A))
+    Private Meter2Mac() As Byte = New Byte(2) {&HA2, &HF4, &H5A}
     Private Meter4Mac() As Byte = New Byte(2) {&HA2, &HF4, &H91}
     Private Meter6Mac() As Byte = New Byte(2) {&HA2, &HF4, &H92}
     Private Meter8Mac() As Byte = New Byte(2) {&HA2, &HF4, &H93}
@@ -52,11 +53,12 @@ Public Class Communication
 
     Public Sub New()
         MeterMacs.Add(Meter2Mac)
-        MeterMacs.Add(Meter4Mac)
-        MeterMacs.Add(Meter6Mac)
-        MeterMacs.Add(Meter8Mac)
-        MeterMacs.Add(Meter10Mac)
-        MeterMacs.Add(Meter12Mac)
+        'TEMP
+        'MeterMacs.Add(Meter4Mac)
+        'MeterMacs.Add(Meter6Mac)
+        'MeterMacs.Add(Meter8Mac)
+        'MeterMacs.Add(Meter10Mac)
+        'MeterMacs.Add(Meter12Mac)
         buffer = New List(Of String)(MeterMacs.Count - 1) {}
         For i = 0 To MeterMacs.Count - 1
             buffer(i) = New List(Of String)
@@ -131,7 +133,7 @@ Public Class Communication
                 If add.SequenceEqual(MeterMacs(j)) Then
                     Dim bytes(msgs(i).Length - 7 - 1) As Byte
                     Array.Copy(msgs(i), 7, bytes, 0, msgs(i).Length - 7)
-                    Dim s As String = Encoding.Unicode.GetString(bytes)
+                    Dim s As String = Encoding.Default.GetString(bytes)
                     msgArray(j).Add(s)
                 End If
             Next
@@ -153,7 +155,7 @@ Public Class Communication
         Dim result() As Boolean = New Boolean(MeterMacs.Count - 1) {}
         Try
             Dim input() As Byte = GetInputFromPort()
-            buffer = ProcessMsgs(Input)
+            buffer = ProcessMsgs(input)
 
             For i = 0 To MeterMacs.Count - 1
                 Dim s As String = buffer(i)(0)
@@ -174,7 +176,7 @@ Public Class Communication
         Dim result() As Boolean = New Boolean(MeterMacs.Count - 1) {}
         If Open() Then
             port.WriteLine("Measure, Start")
-            Thread.Sleep(1000)
+            Thread.Sleep(_Latency)
             result = CheckTrue()
         End If
         Return result
@@ -182,10 +184,10 @@ Public Class Communication
 
     'broadcasts stop measuring, returns the ones that confrim stop measuring
     Public Function StopMeasure() As Boolean()
-    Dim result() As Boolean = New Boolean(MeterMacs.Count - 1) {}
+        Dim result() As Boolean = New Boolean(MeterMacs.Count - 1) {}
         If Open() Then
             port.WriteLine("Measure, Stop")
-            Thread.Sleep(1000)
+            Thread.Sleep(_Latency)
             result = CheckTrue()
         End If
         Return result
@@ -198,7 +200,7 @@ Public Class Communication
             Dim temp() As List(Of String) = buffer
             For i = 0 To MeterMacs.Count - 1
                 If temp(i).Count > 0 Then
-                    result(i) = temp(i)(1).Split(",")(part)
+                    result(i) = temp(i)(0).Substring(8).Split(",")(part)
                 End If
             Next
         End If
@@ -206,42 +208,86 @@ Public Class Communication
     End Function
 
     Public Function GetMeasurementsFromMeters(ByVal part As Measurements) As String()
-        'Dim result() As String = New String(MeterMacs.Count - 1) {}
-        'Try
-        '    Dim input() As Byte = GetInputFromPort()
-        '    buffer = ProcessMsgs(input)
-        '    For i = 0 To MeterMacs.Count - 1
-        '        Dim s As String = buffer(i)(0)
-        '        If s.StartsWith("R+0000") Then
-        '            result(i) = buffer(i)(1).Split(",")(part)
-        '        End If
-        '    Next
-        'Catch ex As Exception
-        '    MsgBox("GetMeasurementsFromMeters: " & ex.Message)
-        'End Try
-        'Return result
-        Dim r = New Random()
-        Dim temp(MeterMacs.Count - 1) As List(Of String)
-        For i = 0 To MeterMacs.Count - 1
-            temp(i) = New List(Of String)
-        Next
         Dim result() As String = New String(MeterMacs.Count - 1) {}
-        For i = 0 To MeterMacs.Count - 1
-            'result(i) = (r.Next(1, 100) / 10) + 90
-            Dim tempR = (r.Next(1, 10) / 10) + r.Next(1, 119)
-            temp(i).Add("R+0000")
-            temp(i).Add(tempR & "," & (tempR - 1) & ",--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-")
-            result(i) = temp(i)(1).Split(",")(part)
-        Next
-
-        buffer = temp
+        Try
+            If Open() Then
+                port.WriteLine("DOD?")
+                Dim input() As Byte = GetInputFromPort()
+                buffer = ProcessMsgs(input)
+                For i = 0 To MeterMacs.Count - 1
+                    Dim s As String = buffer(i)(0)
+                    If s.StartsWith("R+0000") Then
+                        s = s.Substring(8)
+                        result(i) = s.Split(",")(part)
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("GetMeasurementsFromMeters: " & ex.Message)
+        End Try
         Return result
+
+        ' ''TEMP
+        'Dim r = New Random()
+        'Dim temp(MeterMacs.Count - 1) As List(Of String)
+        'For i = 0 To MeterMacs.Count - 1
+        '    temp(i) = New List(Of String)
+        'Next
+        'Dim result() As String = New String(MeterMacs.Count - 1) {}
+        'For i = 0 To MeterMacs.Count - 1
+        '    'result(i) = (r.Next(1, 100) / 10) + 90
+        '    Dim tempR = (r.Next(1, 10) / 10) + r.Next(1, 119)
+        '    temp(i).Add("R+0000")
+        '    temp(i).Add(tempR & "," & (tempR - 1) & ",--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-")
+        '    result(i) = temp(i)(1).Split(",")(part)
+        'Next
+
+        'buffer = temp
+        'Return result
     End Function
 
     Public Function GetMeasurement(ByVal meterNum As Integer, ByVal part As Measurements) As String
         Dim s() As String = buffer(meterNum / 2 - 1)(1).Split(",")
         If Not IsNothing(s) And Not s.Length <= 0 Then
             Return s(part)
+        End If
+        Return False
+    End Function
+
+    Public Function SetupServer() As Boolean
+        If Open() Then
+            Try
+                Dim bufCmd() As Byte = {&H41, &H54, &H2B, &H2B, &H2B, &HD}
+                Dim sucCmd() As Byte = {&HCC, &H43, &H4F, &H4D, &H0}
+
+                Dim bufWriteAPI() As Byte = {&HCC, &H17, &H1}
+                Dim sucWriteAPI() As Byte = {&HCC, &H1, &H0}
+
+                Dim bufExitCmd() As Byte = {&HCC, &H41, &H54, &H4F, &HD}
+                Dim sucExitCmd() As Byte = {&HCC, &H44, &H41, &H54, &H0}
+
+                port.Write(bufCmd, 0, bufCmd.Length)
+                Thread.Sleep(_Latency)
+                Dim buffer() As Byte = New Byte(port.BytesToRead) {}
+                port.Read(buffer, 0, buffer.Length)
+                If buffer.SequenceEqual(sucCmd) Then
+                    port.Write(bufWriteAPI, 0, bufWriteAPI.Length)
+                    Thread.Sleep(_Latency)
+                    buffer = New Byte(port.BytesToRead) {}
+                    port.Read(buffer, 0, buffer.Length)
+                    If buffer.SequenceEqual(sucWriteAPI) Then
+                        port.Write(bufExitCmd, 0, bufExitCmd.Length)
+                        Thread.Sleep(_Latency)
+                        buffer = New Byte(port.BytesToRead) {}
+                        port.Read(buffer, 0, buffer.Length)
+                        If buffer.SequenceEqual(sucExitCmd) Then
+                            Return True
+                        End If
+                    End If
+                End If
+            Catch ex As Exception
+                MsgBox("Setup Server: " & ex.Message)
+            End Try
         End If
         Return False
     End Function

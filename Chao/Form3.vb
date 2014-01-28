@@ -1909,8 +1909,13 @@ Public Class Program
         Dim result(num - 1) As Double
         Dim temp() As String =
         Comm.GetMeasurementsFromMeters(Communication.Measurements.Lp)
-        For i = 0 To num - 1
+        'TEMP
+        For i = 0 To temp.Length - 1
+
             result(i) = temp(i)
+        Next
+        For i = temp.Length To result.Length - 1
+            result(i) = "0"
         Next
         Return result
     End Function
@@ -1974,7 +1979,7 @@ Public Class Program
                     'send values to display as text and graphs
                     SetScreenValuesAndGraphs(GetInstantData())
                 ElseIf timeLeft = 1 Then 'time's up\
-
+                    Comm.StopMeasure()
                     timeLeft = timeLeft - 1
                     timeLabel.Text = timeLeft & " s"
                     'send values to display as text and graphs
@@ -2120,12 +2125,12 @@ Public Class Program
     ' click event on Start Button
     Private Sub startButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles startButton.Click
         All_Panel_Disable()
+        Comm.StartMeasure()
         If Countdown = False Then
             startButton.Enabled = False
             Accept_Button.Enabled = False
             stopButton.Enabled = True
             Timer1.Start()
-            Comm.StartMeasure()
         Else
             startButton.Enabled = False
             stopButton.Enabled = True
@@ -2225,6 +2230,7 @@ Public Class Program
 
     '##BUTTON CLICKS
     Private Sub stopButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles stopButton.Click
+        Comm.StopMeasure()
         If Countdown = False Then
             Timer1.Stop()
             'startButton.Enabled = True
@@ -3501,8 +3507,12 @@ Public Class Program
 
     Private Sub ConnectButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ConnectButton.Click
         If Comm.Open() Then
-            ConnectButton.Enabled = False
-            DisconnButton.Enabled = True
+            If Comm.SetupServer() Then
+                ConnectButton.Enabled = False
+                DisconnButton.Enabled = True
+            Else
+                MsgBox("Cannot Set up Server Correctly!")
+            End If
         End If
     End Sub
 

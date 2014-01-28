@@ -36,6 +36,7 @@ Public Class Communication
     Private MeterMacs As List(Of Byte()) = New List(Of Byte())
     Private Meter2Mac() As Byte = New Byte(2) {&HA2, &HF4, &H5A}
     Private Meter4Mac() As Byte = New Byte(2) {&HA2, &HF4, &H91}
+    ' the following don't have the right Mac addresses yet
     Private Meter6Mac() As Byte = New Byte(2) {&HA2, &HF4, &H92}
     Private Meter8Mac() As Byte = New Byte(2) {&HA2, &HF4, &H93}
     Private Meter10Mac() As Byte = New Byte(2) {&HA2, &HF4, &H94}
@@ -54,15 +55,33 @@ Public Class Communication
     Public Sub New()
         MeterMacs.Add(Meter2Mac)
         'TEMP
-        'MeterMacs.Add(Meter4Mac)
-        'MeterMacs.Add(Meter6Mac)
-        'MeterMacs.Add(Meter8Mac)
-        'MeterMacs.Add(Meter10Mac)
-        'MeterMacs.Add(Meter12Mac)
+        MeterMacs.Add(Meter4Mac)
+        If Program.sim Then
+            MeterMacs.Add(Meter6Mac)
+            MeterMacs.Add(Meter8Mac)
+            MeterMacs.Add(Meter10Mac)
+            MeterMacs.Add(Meter12Mac)
+        End If
         buffer = New List(Of String)(MeterMacs.Count - 1) {}
         For i = 0 To MeterMacs.Count - 1
             buffer(i) = New List(Of String)
         Next
+    End Sub
+    'TEMP
+    Public Sub Sim()
+        MeterMacs.Clear()
+        MeterMacs.Add(Meter2Mac)
+        MeterMacs.Add(Meter4Mac)
+        MeterMacs.Add(Meter6Mac)
+        MeterMacs.Add(Meter8Mac)
+        MeterMacs.Add(Meter10Mac)
+        MeterMacs.Add(Meter12Mac)
+    End Sub
+
+    Public Sub Real()
+        MeterMacs.Clear()
+        MeterMacs.Add(Meter2Mac)
+        MeterMacs.Add(Meter4Mac)
     End Sub
 
     Public Function Open() As Boolean
@@ -158,12 +177,18 @@ Public Class Communication
             buffer = ProcessMsgs(input)
 
             For i = 0 To MeterMacs.Count - 1
-                Dim s As String = buffer(i)(0)
-                If s.StartsWith("R+0000") Then
-                    result(i) = True
+                If Not buffer(i).Count = 0 Then
+                    Dim s As String = buffer(i)(0)
+                    If s.StartsWith("R+0000") Then
+                        result(i) = True
+                    Else
+                        result(i) = False
+                    End If
+
                 Else
                     result(i) = False
                 End If
+
             Next
         Catch ex As Exception
             MsgBox("In CheckTrue: " & ex.Message)
@@ -213,42 +238,46 @@ Public Class Communication
 
     Public Function GetMeasurementsFromMeters(ByVal part As Measurements) As String()
         Dim result() As String = New String(MeterMacs.Count - 1) {}
-        Try
-            If Open() Then
-                port.WriteLine("DOD?")
-                Thread.Sleep(_Latency)
-                Dim input() As Byte = GetInputFromPort()
-                buffer = ProcessMsgs(input)
-                For i = 0 To MeterMacs.Count - 1
-                    Dim s As String = buffer(i)(0)
-                    If s.StartsWith("R+0000") Then
-                        s = s.Substring(8)
-                        result(i) = s.Split(",")(part)
-                    End If
-                Next
-            End If
-        Catch ex As Exception
-            MsgBox("GetMeasurementsFromMeters: " & ex.Message)
-        End Try
+        If Not Program.sim Then
+            Try
+                If Open() Then
+                    port.WriteLine("DOD?")
+                    Thread.Sleep(_Latency)
+                    Dim input() As Byte = GetInputFromPort()
+                    buffer = ProcessMsgs(input)
+                    For i = 0 To MeterMacs.Count - 1
+                        If Not buffer(i).Count = 0 Then
+                            Dim s As String = buffer(i)(0)
+                            If s.StartsWith("R+0000") Then
+                                s = s.Substring(8)
+                                result(i) = s.Split(",")(part)
+                            End If
+                        Else
+                            result(i) = 0
+                        End If
+                    Next
+                End If
+            Catch ex As Exception
+                MsgBox("GetMeasurementsFromMeters: " & ex.Message)
+            End Try
+            Return result
+        Else
+            ''TEMP
+            Dim r = New Random()
+            Dim temp(MeterMacs.Count - 1) As List(Of String)
+            For i = 0 To MeterMacs.Count - 1
+                temp(i) = New List(Of String)
+            Next
+            For i = 0 To MeterMacs.Count - 1
+                'result(i) = (r.Next(1, 100) / 10) + 90
+                Dim tempR = (r.Next(1, 10) / 10) + r.Next(1, 119)
+                temp(i).Add("R+0000  " & tempR & "," & (tempR - 1) & ",--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-")
+                result(i) = temp(i)(0).Substring(8).Split(",")(part)
+            Next
+
+            buffer = temp
+        End If
         Return result
-
-        ' ''TEMP
-        'Dim r = New Random()
-        'Dim temp(MeterMacs.Count - 1) As List(Of String)
-        'For i = 0 To MeterMacs.Count - 1
-        '    temp(i) = New List(Of String)
-        'Next
-        'Dim result() As String = New String(MeterMacs.Count - 1) {}
-        'For i = 0 To MeterMacs.Count - 1
-        '    'result(i) = (r.Next(1, 100) / 10) + 90
-        '    Dim tempR = (r.Next(1, 10) / 10) + r.Next(1, 119)
-        '    temp(i).Add("R+0000")
-        '    temp(i).Add(tempR & "," & (tempR - 1) & ",--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-")
-        '    result(i) = temp(i)(1).Split(",")(part)
-        'Next
-
-        'buffer = temp
-        'Return result
     End Function
 
     Public Function GetMeasurement(ByVal meterNum As Integer, ByVal part As Measurements) As String

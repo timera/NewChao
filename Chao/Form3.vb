@@ -608,7 +608,7 @@ Public Class Program
     End Sub
 
     Private DataGrid As Grid
-    Private A_Unit_Size As Size = New Size(1000, 450)
+    Private A_Unit_Size As Size = New Size(1250, 450)
     'Create charts for chosen machine
     Private Sub CreateChart(ByVal r As Double)
         DataGrid = New Grid(TabPageCharts, A_Unit_Size, New Point(10, 10), r, Machine, HeadRun)
@@ -1918,7 +1918,7 @@ Public Class Program
 
     Private Sub SetScreenValuesAndGraphs(ByVal vals() As Double)
         Dim num As Integer
-        Dim sum As Integer = 0
+        Dim sum As Long = 0
         If Not Machine = Machines.Others Then
             num = 6
         Else
@@ -3562,5 +3562,25 @@ Public Class Program
             DisconnButton.Enabled = False
             ConnectButton.Enabled = True
         End If
+    End Sub
+
+    Private Sub SaveButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveButton.Click
+        DataGrid.Save()
+    End Sub
+
+    Public sim As Boolean = True
+
+    Private Sub ButtonSim_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonSim.Click
+        sim = True
+        ButtonMeters.Enabled = True
+        ButtonSim.Enabled = False
+        Comm.Sim()
+    End Sub
+
+
+    Private Sub ButtonMeters_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonMeters.Click
+        sim = False
+        ButtonMeters.Enabled = False
+        ButtonSim.Enabled = True
     End Sub
 End Class

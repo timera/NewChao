@@ -190,6 +190,7 @@ Public Class Program
     Private Sub Program_Load_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         '##COMMUNICATION
         Comm = New Communication()
+        SimulationMode()
 
         'Set up the window
         Dim margins As MARGINS = New MARGINS
@@ -3436,10 +3437,10 @@ Public Class Program
                     Accept_No()
                 End If
                 keyGRU.Deny()
-                DataGrid.ClearColumn(keyGRU.Column)
+                DataGrid.ClearColumn(keyGRU)
                 If CurRun.Name.Contains("bkd") Then
                     keyGRU.OverallGRU.Deny()
-                    DataGrid.ClearColumn(keyGRU.OverallGRU.Column)
+                    DataGrid.ClearColumn(keyGRU.OverallGRU)
                 End If
             ElseIf Result = DialogResult.Cancel Then
                 Accept_Cancel()
@@ -3570,11 +3571,16 @@ Public Class Program
 
     Public sim As Boolean = True
 
-    Private Sub ButtonSim_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonSim.Click
-        sim = True
+    Private Sub SimulationMode()
         ButtonMeters.Enabled = True
         ButtonSim.Enabled = False
         Comm.Sim()
+        PanelMeterSetup.Enabled = False
+        sim = True
+    End Sub
+
+    Private Sub ButtonSim_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonSim.Click
+        SimulationMode()
     End Sub
 
 
@@ -3582,5 +3588,13 @@ Public Class Program
         sim = False
         ButtonMeters.Enabled = False
         ButtonSim.Enabled = True
+        PanelMeterSetup.Enabled = True
+    End Sub
+
+    Private Sub ButtonComRefresh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonComRefresh.Click
+        ComboBoxComs.Items.Clear()
+        For Each com In Communication.GetComs()
+            ComboBoxComs.Items.Add(com)
+        Next
     End Sub
 End Class

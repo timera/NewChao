@@ -45,17 +45,13 @@ Public Class Communication
 
     Private buffer() As List(Of String)
 
-    Public WithEvents port As SerialPort = New  _
-    System.IO.Ports.SerialPort("COM5",
-                            9600,
-                            Parity.None,
-                            8,
-                            StopBits.One)
+    Public WithEvents port As SerialPort
 
     Public Sub New()
         MeterMacs.Add(Meter2Mac)
         'TEMP
         MeterMacs.Add(Meter4Mac)
+        'TEMP because we don't have these meters yet
         If Program.sim Then
             MeterMacs.Add(Meter6Mac)
             MeterMacs.Add(Meter8Mac)
@@ -69,6 +65,11 @@ Public Class Communication
     End Sub
     'TEMP
     Public Sub Sim()
+        If port IsNot Nothing Then
+            If port.IsOpen Then
+                Close()
+            End If
+        End If
         MeterMacs.Clear()
         MeterMacs.Add(Meter2Mac)
         MeterMacs.Add(Meter4Mac)
@@ -78,29 +79,61 @@ Public Class Communication
         MeterMacs.Add(Meter12Mac)
     End Sub
 
+    'TEMP
     Public Sub Real()
         MeterMacs.Clear()
         MeterMacs.Add(Meter2Mac)
         MeterMacs.Add(Meter4Mac)
     End Sub
 
+    Public Shared Function GetComs() As String()
+        Return SerialPort.GetPortNames()
+    End Function
+
     Public Function Open() As Boolean
         Try
-            If Not port.IsOpen Then
+            If Program.sim Then
+                Return True
+            End If
+            ' if port not initialized
+            If port Is Nothing Then
+                Dim com As String = "COM5"
+                If Program.ComboBoxComs.SelectedItem IsNot Nothing Then
+                    com = Program.ComboBoxComs.SelectedItem
+                End If
+                port = New  _
+                System.IO.Ports.SerialPort(com,
+                                            9600,
+                                            Parity.None,
+                                            8,
+                                            StopBits.One)
+                port.Open()
+            ElseIf Not port.IsOpen Then
+                Dim com As String = "COM5"
+                If Program.ComboBoxComs.SelectedItem IsNot Nothing Then
+                    com = Program.ComboBoxComs.SelectedItem
+                End If
+                port = New  _
+                System.IO.Ports.SerialPort(com,
+                                            9600,
+                                            Parity.None,
+                                            8,
+                                            StopBits.One)
                 port.Open()
             End If
             If port.IsOpen Then
                 Return True
             End If
-            Return False
         Catch ex As Exception
             MsgBox("Can't Connect to Meter" & vbCrLf & ex.Message)
-            Return False
         End Try
-        Return True
+        Return False
     End Function
 
     Public Function Close() As Boolean
+        If Program.sim Then
+            Return True
+        End If
         Try
             If Not port.IsOpen Then
                 Return True
@@ -109,12 +142,11 @@ Public Class Communication
                 port.Close()
                 Return True
             End If
-            Return False
+
         Catch ex As Exception
             MsgBox("Can't Connect to Meter" & vbCrLf & ex.Message)
-            Return False
         End Try
-        Return True
+        Return False
     End Function
 
     'process incoming messages, categorize them into different meters and strip them down to only the message
@@ -199,7 +231,11 @@ Public Class Communication
     'broadcasts start measuring, returns the ones that confirm start measuring
     Public Function StartMeasure() As Boolean()
         Dim result() As Boolean = New Boolean(MeterMacs.Count - 1) {}
-        If Open() Then
+        If Program.sim Then
+            For i = 0 To result.Length - 1
+                result(i) = True
+            Next
+        ElseIf Open() Then
             port.WriteLine("Measure, Start")
             Thread.Sleep(_Latency)
             result = CheckTrue()
@@ -210,7 +246,11 @@ Public Class Communication
     'broadcasts stop measuring, returns the ones that confrim stop measuring
     Public Function StopMeasure() As Boolean()
         Dim result() As Boolean = New Boolean(MeterMacs.Count - 1) {}
-        If Open() Then
+        If Program.sim Then
+            For i = 0 To result.Length - 1
+                result(i) = True
+            Next
+        ElseIf Open() Then
             port.WriteLine("Measure, Stop")
             Thread.Sleep(_Latency)
             result = CheckTrue()

@@ -473,28 +473,27 @@ Public Class Grid
 
         'for PreCal and PostCal
         Dim curColInd As Integer = Run.Column.Index
-        If Not IsNothing(Run.ParentRU) Then
-            If Run.ParentRU.Name.Contains("P2") Then
-                Form.Rows(1).Cells(curColInd).Value = Run.LpAeq2
-                Return
-            ElseIf Run.ParentRU.Name.Contains("P4") Then
-                Form.Rows(2).Cells(curColInd).Value = Run.LpAeq4
-                Return
-            ElseIf Run.ParentRU.Name.Contains("P6") Then
-                Form.Rows(3).Cells(curColInd).Value = Run.LpAeq6
-                Return
-            ElseIf Run.ParentRU.Name.Contains("P8") Then
-                Form.Rows(4).Cells(curColInd).Value = Run.LpAeq8
-                Return
-            ElseIf Run.ParentRU.Name.Contains("P10") Then
-                Form.Rows(5).Cells(curColInd).Value = Run.LpAeq10
-                Return
-            ElseIf Run.ParentRU.Name.Contains("P12") Then
-                Form.Rows(6).Cells(curColInd).Value = Run.LpAeq12
-                Return
-            End If
-        End If
 
+        If Run.Header.Contains("P2") Then
+            Form.Rows(1).Cells(curColInd).Value = Run.LpAeq2
+            Return
+        ElseIf Run.Header.Contains("P4") Then
+            Form.Rows(2).Cells(curColInd).Value = Run.LpAeq4
+            Return
+        ElseIf Run.Header.Contains("P6") Then
+            Form.Rows(3).Cells(curColInd).Value = Run.LpAeq6
+            Return
+        ElseIf Run.Header.Contains("P8") Then
+            Form.Rows(4).Cells(curColInd).Value = Run.LpAeq8
+            Return
+        ElseIf Run.Header.Contains("P10") Then
+            Form.Rows(5).Cells(curColInd).Value = Run.LpAeq10
+            Return
+        ElseIf Run.Header.Contains("P12") Then
+            Form.Rows(6).Cells(curColInd).Value = Run.LpAeq12
+            Return
+        End If
+        
         'meter 2
         Form.Rows(1).Cells(curColInd).Value = Run.LpAeq2
         'meter 4
@@ -611,9 +610,31 @@ Public Class Grid
         Next
     End Sub
 
-    Public Sub ClearColumn(ByRef col As DataGridViewTextBoxColumn)
+    Public Sub ClearColumn(ByRef gru As Grid_Run_Unit)
+        Dim curColInd As Integer = gru.Column.Index
+
+        If gru.Header.Contains("P2") Then
+            Form.Rows(1).Cells(curColInd).Value = ""
+            Return
+        ElseIf gru.Header.Contains("P4") Then
+            Form.Rows(2).Cells(curColInd).Value = ""
+            Return
+        ElseIf gru.Header.Contains("P6") Then
+            Form.Rows(3).Cells(curColInd).Value = ""
+            Return
+        ElseIf gru.Header.Contains("P8") Then
+            Form.Rows(4).Cells(curColInd).Value = ""
+            Return
+        ElseIf gru.Header.Contains("P10") Then
+            Form.Rows(5).Cells(curColInd).Value = ""
+            Return
+        ElseIf gru.Header.Contains("P12") Then
+            Form.Rows(6).Cells(curColInd).Value = ""
+            Return
+        End If
+
         For i = 1 To Form.Rows.Count - 1
-            Form.Rows(i).Cells(col.Index).Value = ""
+            Form.Rows(i).Cells(curColInd).Value = ""
         Next
     End Sub
 

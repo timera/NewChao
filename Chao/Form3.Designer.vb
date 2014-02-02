@@ -31,8 +31,13 @@ Partial Class Program
         Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.DisconnButton = New System.Windows.Forms.Button()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.ButtonComRefresh = New System.Windows.Forms.Button()
+        Me.ComboBoxComs = New System.Windows.Forms.ComboBox()
+        Me.ButtonMeters = New System.Windows.Forms.Button()
         Me.ConnectButton = New System.Windows.Forms.Button()
+        Me.ButtonSim = New System.Windows.Forms.Button()
+        Me.DisconnButton = New System.Windows.Forms.Button()
         Me.Button_change_machine = New System.Windows.Forms.Button()
         Me.p6Label = New System.Windows.Forms.Label()
         Me.p5Label = New System.Windows.Forms.Label()
@@ -50,6 +55,9 @@ Partial Class Program
         Me.GroupBox_A4 = New System.Windows.Forms.GroupBox()
         Me.Button_L1_L2_L3_check = New System.Windows.Forms.Button()
         Me.TextBox_r2 = New System.Windows.Forms.TextBox()
+        Me.TextBox_L3 = New Chao.ChaoTextBox()
+        Me.TextBox_L2 = New Chao.ChaoTextBox()
+        Me.TextBox_L1 = New Chao.ChaoTextBox()
         Me.Label_r2 = New System.Windows.Forms.Label()
         Me.Label_input_L2 = New System.Windows.Forms.Label()
         Me.Label_input_L3 = New System.Windows.Forms.Label()
@@ -57,6 +65,7 @@ Partial Class Program
         Me.GroupBox_A1_A2_A3 = New System.Windows.Forms.GroupBox()
         Me.Button_L_check = New System.Windows.Forms.Button()
         Me.TextBox_r1 = New System.Windows.Forms.TextBox()
+        Me.TextBox_L = New Chao.ChaoTextBox()
         Me.Label_r1 = New System.Windows.Forms.Label()
         Me.Label_input_L = New System.Windows.Forms.Label()
         Me.Picture_machine = New System.Windows.Forms.PictureBox()
@@ -255,6 +264,15 @@ Partial Class Program
         Me.S3 = New System.Windows.Forms.Label()
         Me.S2 = New System.Windows.Forms.Label()
         Me.S1 = New System.Windows.Forms.Label()
+        Me.Input_S_Step2 = New Chao.ChaoTextBox()
+        Me.Input_S_Step3 = New Chao.ChaoTextBox()
+        Me.Input_S_Step4 = New Chao.ChaoTextBox()
+        Me.Input_S_Step5 = New Chao.ChaoTextBox()
+        Me.Input_S_Step9 = New Chao.ChaoTextBox()
+        Me.Input_S_Step8 = New Chao.ChaoTextBox()
+        Me.Input_S_Step7 = New Chao.ChaoTextBox()
+        Me.Input_S_Step6 = New Chao.ChaoTextBox()
+        Me.Input_S_Step1 = New Chao.ChaoTextBox()
         Me.Test_ConfirmButton = New System.Windows.Forms.Button()
         Me.Test_NextButton = New System.Windows.Forms.Button()
         Me.Test_StartButton = New System.Windows.Forms.Button()
@@ -281,23 +299,10 @@ Partial Class Program
         Me.TabPageCharts = New System.Windows.Forms.TabPage()
         Me.SaveButton = New System.Windows.Forms.Button()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.ButtonSim = New System.Windows.Forms.Button()
-        Me.ButtonMeters = New System.Windows.Forms.Button()
-        Me.TextBox_L3 = New Chao.ChaoTextBox()
-        Me.TextBox_L2 = New Chao.ChaoTextBox()
-        Me.TextBox_L1 = New Chao.ChaoTextBox()
-        Me.TextBox_L = New Chao.ChaoTextBox()
-        Me.Input_S_Step2 = New Chao.ChaoTextBox()
-        Me.Input_S_Step3 = New Chao.ChaoTextBox()
-        Me.Input_S_Step4 = New Chao.ChaoTextBox()
-        Me.Input_S_Step5 = New Chao.ChaoTextBox()
-        Me.Input_S_Step9 = New Chao.ChaoTextBox()
-        Me.Input_S_Step8 = New Chao.ChaoTextBox()
-        Me.Input_S_Step7 = New Chao.ChaoTextBox()
-        Me.Input_S_Step6 = New Chao.ChaoTextBox()
-        Me.Input_S_Step1 = New Chao.ChaoTextBox()
+        Me.PanelMeterSetup = New System.Windows.Forms.Panel()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
         Me.GroupBox_Plot.SuspendLayout()
         Me.GroupBox_A4.SuspendLayout()
         Me.GroupBox_A1_A2_A3.SuspendLayout()
@@ -395,6 +400,7 @@ Partial Class Program
         CType(Me.Chart2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPageCharts.SuspendLayout()
+        Me.PanelMeterSetup.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -413,10 +419,7 @@ Partial Class Program
         'TabPage1
         '
         Me.TabPage1.BackColor = System.Drawing.Color.DarkGray
-        Me.TabPage1.Controls.Add(Me.ButtonMeters)
-        Me.TabPage1.Controls.Add(Me.ButtonSim)
-        Me.TabPage1.Controls.Add(Me.DisconnButton)
-        Me.TabPage1.Controls.Add(Me.ConnectButton)
+        Me.TabPage1.Controls.Add(Me.GroupBox1)
         Me.TabPage1.Controls.Add(Me.Button_change_machine)
         Me.TabPage1.Controls.Add(Me.p6Label)
         Me.TabPage1.Controls.Add(Me.p5Label)
@@ -443,23 +446,71 @@ Partial Class Program
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "機具選擇"
         '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.PanelMeterSetup)
+        Me.GroupBox1.Controls.Add(Me.ButtonMeters)
+        Me.GroupBox1.Controls.Add(Me.ButtonSim)
+        Me.GroupBox1.Location = New System.Drawing.Point(8, 522)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(274, 143)
+        Me.GroupBox1.TabIndex = 52
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Meter Controls"
+        '
+        'ButtonComRefresh
+        '
+        Me.ButtonComRefresh.Location = New System.Drawing.Point(183, 3)
+        Me.ButtonComRefresh.Name = "ButtonComRefresh"
+        Me.ButtonComRefresh.Size = New System.Drawing.Size(64, 23)
+        Me.ButtonComRefresh.TabIndex = 52
+        Me.ButtonComRefresh.Text = "Refresh"
+        Me.ButtonComRefresh.UseVisualStyleBackColor = True
+        '
+        'ComboBoxComs
+        '
+        Me.ComboBoxComs.FormattingEnabled = True
+        Me.ComboBoxComs.Location = New System.Drawing.Point(9, 3)
+        Me.ComboBoxComs.Name = "ComboBoxComs"
+        Me.ComboBoxComs.Size = New System.Drawing.Size(168, 20)
+        Me.ComboBoxComs.TabIndex = 51
+        '
+        'ButtonMeters
+        '
+        Me.ButtonMeters.Location = New System.Drawing.Point(119, 94)
+        Me.ButtonMeters.Name = "ButtonMeters"
+        Me.ButtonMeters.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonMeters.TabIndex = 50
+        Me.ButtonMeters.Text = "Meters"
+        Me.ButtonMeters.UseVisualStyleBackColor = True
+        '
+        'ConnectButton
+        '
+        Me.ConnectButton.Location = New System.Drawing.Point(7, 30)
+        Me.ConnectButton.Name = "ConnectButton"
+        Me.ConnectButton.Size = New System.Drawing.Size(75, 37)
+        Me.ConnectButton.TabIndex = 47
+        Me.ConnectButton.Text = "Connect Meters"
+        Me.ConnectButton.UseVisualStyleBackColor = True
+        '
+        'ButtonSim
+        '
+        Me.ButtonSim.Enabled = False
+        Me.ButtonSim.Location = New System.Drawing.Point(22, 94)
+        Me.ButtonSim.Name = "ButtonSim"
+        Me.ButtonSim.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonSim.TabIndex = 49
+        Me.ButtonSim.Text = "Simulation"
+        Me.ButtonSim.UseVisualStyleBackColor = True
+        '
         'DisconnButton
         '
-        Me.DisconnButton.Location = New System.Drawing.Point(137, 525)
+        Me.DisconnButton.Location = New System.Drawing.Point(104, 30)
         Me.DisconnButton.Name = "DisconnButton"
         Me.DisconnButton.Size = New System.Drawing.Size(75, 37)
         Me.DisconnButton.TabIndex = 48
         Me.DisconnButton.Text = "Disconnect Meters"
         Me.DisconnButton.UseVisualStyleBackColor = True
-        '
-        'ConnectButton
-        '
-        Me.ConnectButton.Location = New System.Drawing.Point(40, 525)
-        Me.ConnectButton.Name = "ConnectButton"
-        Me.ConnectButton.Size = New System.Drawing.Size(75, 37)
-        Me.ConnectButton.TabIndex = 47
-        Me.ConnectButton.Text = "Setup Server"
-        Me.ConnectButton.UseVisualStyleBackColor = True
         '
         'Button_change_machine
         '
@@ -633,6 +684,27 @@ Partial Class Program
         Me.TextBox_r2.Size = New System.Drawing.Size(99, 22)
         Me.TextBox_r2.TabIndex = 17
         '
+        'TextBox_L3
+        '
+        Me.TextBox_L3.Location = New System.Drawing.Point(103, 79)
+        Me.TextBox_L3.Name = "TextBox_L3"
+        Me.TextBox_L3.Size = New System.Drawing.Size(99, 22)
+        Me.TextBox_L3.TabIndex = 16
+        '
+        'TextBox_L2
+        '
+        Me.TextBox_L2.Location = New System.Drawing.Point(103, 51)
+        Me.TextBox_L2.Name = "TextBox_L2"
+        Me.TextBox_L2.Size = New System.Drawing.Size(99, 22)
+        Me.TextBox_L2.TabIndex = 15
+        '
+        'TextBox_L1
+        '
+        Me.TextBox_L1.Location = New System.Drawing.Point(103, 23)
+        Me.TextBox_L1.Name = "TextBox_L1"
+        Me.TextBox_L1.Size = New System.Drawing.Size(99, 22)
+        Me.TextBox_L1.TabIndex = 14
+        '
         'Label_r2
         '
         Me.Label_r2.AutoSize = True
@@ -703,6 +775,13 @@ Partial Class Program
         Me.TextBox_r1.Name = "TextBox_r1"
         Me.TextBox_r1.Size = New System.Drawing.Size(99, 22)
         Me.TextBox_r1.TabIndex = 7
+        '
+        'TextBox_L
+        '
+        Me.TextBox_L.Location = New System.Drawing.Point(105, 24)
+        Me.TextBox_L.Name = "TextBox_L"
+        Me.TextBox_L.Size = New System.Drawing.Size(99, 22)
+        Me.TextBox_L.TabIndex = 6
         '
         'Label_r1
         '
@@ -2816,6 +2895,69 @@ Partial Class Program
         Me.S1.TabIndex = 9
         Me.S1.Text = "S"
         '
+        'Input_S_Step2
+        '
+        Me.Input_S_Step2.Location = New System.Drawing.Point(18, 60)
+        Me.Input_S_Step2.Name = "Input_S_Step2"
+        Me.Input_S_Step2.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step2.TabIndex = 8
+        '
+        'Input_S_Step3
+        '
+        Me.Input_S_Step3.Location = New System.Drawing.Point(18, 99)
+        Me.Input_S_Step3.Name = "Input_S_Step3"
+        Me.Input_S_Step3.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step3.TabIndex = 7
+        '
+        'Input_S_Step4
+        '
+        Me.Input_S_Step4.Location = New System.Drawing.Point(18, 140)
+        Me.Input_S_Step4.Name = "Input_S_Step4"
+        Me.Input_S_Step4.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step4.TabIndex = 6
+        '
+        'Input_S_Step5
+        '
+        Me.Input_S_Step5.Location = New System.Drawing.Point(18, 185)
+        Me.Input_S_Step5.Name = "Input_S_Step5"
+        Me.Input_S_Step5.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step5.TabIndex = 5
+        '
+        'Input_S_Step9
+        '
+        Me.Input_S_Step9.Location = New System.Drawing.Point(18, 348)
+        Me.Input_S_Step9.Name = "Input_S_Step9"
+        Me.Input_S_Step9.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step9.TabIndex = 4
+        '
+        'Input_S_Step8
+        '
+        Me.Input_S_Step8.Location = New System.Drawing.Point(18, 302)
+        Me.Input_S_Step8.Name = "Input_S_Step8"
+        Me.Input_S_Step8.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step8.TabIndex = 3
+        '
+        'Input_S_Step7
+        '
+        Me.Input_S_Step7.Location = New System.Drawing.Point(18, 265)
+        Me.Input_S_Step7.Name = "Input_S_Step7"
+        Me.Input_S_Step7.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step7.TabIndex = 2
+        '
+        'Input_S_Step6
+        '
+        Me.Input_S_Step6.Location = New System.Drawing.Point(18, 223)
+        Me.Input_S_Step6.Name = "Input_S_Step6"
+        Me.Input_S_Step6.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step6.TabIndex = 1
+        '
+        'Input_S_Step1
+        '
+        Me.Input_S_Step1.Location = New System.Drawing.Point(18, 23)
+        Me.Input_S_Step1.Name = "Input_S_Step1"
+        Me.Input_S_Step1.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step1.TabIndex = 0
+        '
         'Test_ConfirmButton
         '
         Me.Test_ConfirmButton.Location = New System.Drawing.Point(68, 364)
@@ -3081,115 +3223,16 @@ Partial Class Program
         '
         Me.Timer1.Interval = 1000
         '
-        'ButtonSim
+        'PanelMeterSetup
         '
-        Me.ButtonSim.Enabled = False
-        Me.ButtonSim.Location = New System.Drawing.Point(989, 250)
-        Me.ButtonSim.Name = "ButtonSim"
-        Me.ButtonSim.Size = New System.Drawing.Size(75, 23)
-        Me.ButtonSim.TabIndex = 49
-        Me.ButtonSim.Text = "Simulation"
-        Me.ButtonSim.UseVisualStyleBackColor = True
-        '
-        'ButtonMeters
-        '
-        Me.ButtonMeters.Location = New System.Drawing.Point(1086, 250)
-        Me.ButtonMeters.Name = "ButtonMeters"
-        Me.ButtonMeters.Size = New System.Drawing.Size(75, 23)
-        Me.ButtonMeters.TabIndex = 50
-        Me.ButtonMeters.Text = "Meters"
-        Me.ButtonMeters.UseVisualStyleBackColor = True
-        '
-        'TextBox_L3
-        '
-        Me.TextBox_L3.Location = New System.Drawing.Point(103, 79)
-        Me.TextBox_L3.Name = "TextBox_L3"
-        Me.TextBox_L3.Size = New System.Drawing.Size(99, 22)
-        Me.TextBox_L3.TabIndex = 16
-        '
-        'TextBox_L2
-        '
-        Me.TextBox_L2.Location = New System.Drawing.Point(103, 51)
-        Me.TextBox_L2.Name = "TextBox_L2"
-        Me.TextBox_L2.Size = New System.Drawing.Size(99, 22)
-        Me.TextBox_L2.TabIndex = 15
-        '
-        'TextBox_L1
-        '
-        Me.TextBox_L1.Location = New System.Drawing.Point(103, 23)
-        Me.TextBox_L1.Name = "TextBox_L1"
-        Me.TextBox_L1.Size = New System.Drawing.Size(99, 22)
-        Me.TextBox_L1.TabIndex = 14
-        '
-        'TextBox_L
-        '
-        Me.TextBox_L.Location = New System.Drawing.Point(105, 24)
-        Me.TextBox_L.Name = "TextBox_L"
-        Me.TextBox_L.Size = New System.Drawing.Size(99, 22)
-        Me.TextBox_L.TabIndex = 6
-        '
-        'Input_S_Step2
-        '
-        Me.Input_S_Step2.Location = New System.Drawing.Point(18, 60)
-        Me.Input_S_Step2.Name = "Input_S_Step2"
-        Me.Input_S_Step2.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step2.TabIndex = 8
-        '
-        'Input_S_Step3
-        '
-        Me.Input_S_Step3.Location = New System.Drawing.Point(18, 99)
-        Me.Input_S_Step3.Name = "Input_S_Step3"
-        Me.Input_S_Step3.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step3.TabIndex = 7
-        '
-        'Input_S_Step4
-        '
-        Me.Input_S_Step4.Location = New System.Drawing.Point(18, 140)
-        Me.Input_S_Step4.Name = "Input_S_Step4"
-        Me.Input_S_Step4.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step4.TabIndex = 6
-        '
-        'Input_S_Step5
-        '
-        Me.Input_S_Step5.Location = New System.Drawing.Point(18, 185)
-        Me.Input_S_Step5.Name = "Input_S_Step5"
-        Me.Input_S_Step5.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step5.TabIndex = 5
-        '
-        'Input_S_Step9
-        '
-        Me.Input_S_Step9.Location = New System.Drawing.Point(18, 348)
-        Me.Input_S_Step9.Name = "Input_S_Step9"
-        Me.Input_S_Step9.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step9.TabIndex = 4
-        '
-        'Input_S_Step8
-        '
-        Me.Input_S_Step8.Location = New System.Drawing.Point(18, 302)
-        Me.Input_S_Step8.Name = "Input_S_Step8"
-        Me.Input_S_Step8.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step8.TabIndex = 3
-        '
-        'Input_S_Step7
-        '
-        Me.Input_S_Step7.Location = New System.Drawing.Point(18, 265)
-        Me.Input_S_Step7.Name = "Input_S_Step7"
-        Me.Input_S_Step7.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step7.TabIndex = 2
-        '
-        'Input_S_Step6
-        '
-        Me.Input_S_Step6.Location = New System.Drawing.Point(18, 223)
-        Me.Input_S_Step6.Name = "Input_S_Step6"
-        Me.Input_S_Step6.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step6.TabIndex = 1
-        '
-        'Input_S_Step1
-        '
-        Me.Input_S_Step1.Location = New System.Drawing.Point(18, 23)
-        Me.Input_S_Step1.Name = "Input_S_Step1"
-        Me.Input_S_Step1.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step1.TabIndex = 0
+        Me.PanelMeterSetup.Controls.Add(Me.ComboBoxComs)
+        Me.PanelMeterSetup.Controls.Add(Me.ButtonComRefresh)
+        Me.PanelMeterSetup.Controls.Add(Me.DisconnButton)
+        Me.PanelMeterSetup.Controls.Add(Me.ConnectButton)
+        Me.PanelMeterSetup.Location = New System.Drawing.Point(16, 21)
+        Me.PanelMeterSetup.Name = "PanelMeterSetup"
+        Me.PanelMeterSetup.Size = New System.Drawing.Size(252, 68)
+        Me.PanelMeterSetup.TabIndex = 53
         '
         'Program
         '
@@ -3203,6 +3246,7 @@ Partial Class Program
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox_Plot.ResumeLayout(False)
         Me.GroupBox_Plot.PerformLayout()
         Me.GroupBox_A4.ResumeLayout(False)
@@ -3389,6 +3433,7 @@ Partial Class Program
         CType(Me.Chart2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPageCharts.ResumeLayout(False)
+        Me.PanelMeterSetup.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -3659,4 +3704,8 @@ Partial Class Program
     Friend WithEvents SaveButton As System.Windows.Forms.Button
     Friend WithEvents ButtonMeters As System.Windows.Forms.Button
     Friend WithEvents ButtonSim As System.Windows.Forms.Button
+    Friend WithEvents ComboBoxComs As System.Windows.Forms.ComboBox
+    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents ButtonComRefresh As System.Windows.Forms.Button
+    Friend WithEvents PanelMeterSetup As System.Windows.Forms.Panel
 End Class

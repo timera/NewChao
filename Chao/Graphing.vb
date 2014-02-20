@@ -207,8 +207,11 @@ Public Class BarGraph
         s.IsVisibleInLegend = False
         s.IsValueShownAsLabel = False
         chart.Series.Add(s)
+        chart.ChartAreas(0).AxisY.Maximum = 120
+        chart.ChartAreas(0).AxisY.Minimum = 40
         listOfNames = New List(Of String)
         Dim listOfPoints = New List(Of Double)
+
 
         For i As Integer = 0 To 6 - 1
             Dim tag As String = "P" + CStr((i + 1) * 2)

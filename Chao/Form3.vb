@@ -64,7 +64,9 @@ Public Class Program
     Dim HeadStep As Steps
     Public CurStep As Steps
     Dim array_step(9) As Label
-    Dim array_step_s(8) As TextBox
+    Public array_step_s(8) As TextBox
+    Dim array_light(8) As Label
+    Public array_step_display(8) As Label
 
     Public Countdown As Boolean = False
 
@@ -306,16 +308,16 @@ Public Class Program
 
 
         startButton.Location = New Point(119, 0)
-        Accept_Button.Location = New Point(119, 68)
+        Accept_Button.Location = New Point(119, 59)
         Accept_Button.Enabled = False
         timeLabel.Location = New Point(5, 5)
-        stopButton.Location = New Point(222, 0)
+        stopButton.Location = New Point(224, 0)
 
 
         NoisesArray = {Noise1, Noise2, Noise3, Noise4, Noise5, Noise6, Noise_Avg}
-        Dim meterFigWidth = 60
-        Dim meterX = 845
-        Dim metery = 654
+        Dim meterFigWidth = 47
+        Dim meterX = 800
+        Dim metery = 610
         Noise1.Location = New Point(meterX, metery)
         Noise2.Location = New Point(meterX + meterFigWidth, metery)
         Noise3.Location = New Point(meterX + meterFigWidth * 2, metery)
@@ -350,6 +352,27 @@ Public Class Program
         array_step(8) = Step9
         array_step(9) = Step10
 
+        stepX = 460
+        Label_step1_second.Location = New Point(stepX, 110)
+        Label_step2_second.Location = New Point(stepX, 110 + stepY * 1)
+        Label_step3_second.Location = New Point(stepX, 110 + stepY * 2)
+        Label_step4_second.Location = New Point(stepX, 110 + stepY * 3)
+        Label_step5_second.Location = New Point(stepX, 110 + stepY * 4)
+        Label_step6_second.Location = New Point(stepX, 110 + stepY * 5)
+        Label_step7_second.Location = New Point(stepX, 110 + stepY * 6)
+        Label_step8_second.Location = New Point(stepX, 110 + stepY * 7)
+        Label_step9_second.Location = New Point(stepX, 110 + stepY * 8)
+
+        array_light(0) = Light1
+        array_light(1) = Light2
+        array_light(2) = Light3
+        array_light(3) = Light4
+        array_light(4) = Light5
+        array_light(5) = Light6
+        array_light(6) = Light7
+        array_light(7) = Light8
+        array_light(8) = Light9
+
         array_step_s(0) = Input_S_Step1
         array_step_s(1) = Input_S_Step2
         array_step_s(2) = Input_S_Step3
@@ -364,18 +387,94 @@ Public Class Program
             array_step_s(i).Enabled = False
         Next
 
+        array_step_display(0) = Label_step1_second
+        array_step_display(1) = Label_step2_second
+        array_step_display(2) = Label_step3_second
+        array_step_display(3) = Label_step4_second
+        array_step_display(4) = Label_step5_second
+        array_step_display(5) = Label_step6_second
+        array_step_display(6) = Label_step7_second
+        array_step_display(7) = Label_step8_second
+        array_step_display(8) = Label_step9_second
 
-        Label1.Location = New Point(106, 203)
-        Label2.Location = New Point(106, 291)
-        Label3.Location = New Point(106, 383)
-        Label4.Location = New Point(106, 476)
 
-        Panel_PreCal.Location = New Point(10, 40)
-        Panel_PreCal_Sub.Location = New Point(10, 70)
-        Panel_Bkg.Location = New Point(10, 255)
-        Panel_RSS.Location = New Point(10, 285)
-        Panel_PostCal.Location = New Point(10, 315)
-        Panel_PostCal_Sub.Location = New Point(10, 345)
+        Label1.Location = New Point(100, 188)
+        Label2.Location = New Point(100, 266)
+        Label3.Location = New Point(100, 348)
+        Label4.Location = New Point(100, 431)
+
+        Panel_PreCal.Location = New Point(10, 10)
+        Panel_PreCal_Sub.Location = New Point(10, 40)
+        Panel_Bkg.Location = New Point(10, 225)
+        Panel_RSS.Location = New Point(10, 253)
+        Panel_PostCal.Location = New Point(10, 285)
+        Panel_PostCal_Sub.Location = New Point(10, 315)
+
+        Panel_PreCal_1st.Location = New Point(20, 0)
+        Panel_PreCal_2nd.Location = New Point(20, 28)
+        Panel_PreCal_3rd.Location = New Point(20, 56)
+        Panel_PreCal_4th.Location = New Point(20, 84)
+        Panel_PreCal_5th.Location = New Point(20, 112)
+        Panel_PreCal_6th.Location = New Point(20, 140)
+
+        Panel_PostCal_1st.Location = New Point(20, 0)
+        Panel_PostCal_2nd.Location = New Point(20, 28)
+        Panel_PostCal_3rd.Location = New Point(20, 56)
+        Panel_PostCal_4th.Location = New Point(20, 84)
+        Panel_PostCal_5th.Location = New Point(20, 112)
+        Panel_PostCal_6th.Location = New Point(20, 140)
+
+        Panel_ExA2_Fst_1st.Location = New Point(2, 16)
+        Panel_ExA2_Fst_2nd.Location = New Point(2, 44)
+        Panel_ExA2_Fst_3rd.Location = New Point(2, 72)
+        Panel_ExA2_Sec_1st.Location = New Point(2, 106)
+        Panel_ExA2_Sec_2nd.Location = New Point(2, 134)
+        Panel_ExA2_Sec_3rd.Location = New Point(2, 162)
+        Panel_ExA2_Thd_1st.Location = New Point(2, 196)
+        Panel_ExA2_Thd_2nd.Location = New Point(2, 224)
+        Panel_ExA2_Thd_3rd.Location = New Point(2, 252)
+        Panel_ExA2_Add_1st.Location = New Point(2, 286)
+        Panel_ExA2_Add_2nd.Location = New Point(2, 314)
+        Panel_ExA2_Add_3rd.Location = New Point(2, 342)
+
+        Panel_LoA2_Fst_1st.Location = New Point(2, 16)
+        Panel_LoA2_Fst_2nd.Location = New Point(2, 44)
+        Panel_LoA2_Fst_3rd.Location = New Point(2, 72)
+        Panel_LoA2_Sec_1st.Location = New Point(2, 106)
+        Panel_LoA2_Sec_2nd.Location = New Point(2, 134)
+        Panel_LoA2_Sec_3rd.Location = New Point(2, 162)
+        Panel_LoA2_Thd_1st.Location = New Point(2, 196)
+        Panel_LoA2_Thd_2nd.Location = New Point(2, 224)
+        Panel_LoA2_Thd_3rd.Location = New Point(2, 252)
+        Panel_LoA2_Add_1st.Location = New Point(2, 286)
+        Panel_LoA2_Add_2nd.Location = New Point(2, 314)
+        Panel_LoA2_Add_3rd.Location = New Point(2, 342)
+
+        Panel_LoA3_Fst_fwd.Location = New Point(2, 31)
+        Panel_LoA3_Fst_bkd.Location = New Point(2, 59)
+        Panel_LoA3_Sec_fwd.Location = New Point(2, 95)
+        Panel_LoA3_Sec_bkd.Location = New Point(2, 123)
+        Panel_LoA3_Thd_fwd.Location = New Point(2, 178)
+        Panel_LoA3_Thd_bkd.Location = New Point(2, 206)
+        Panel_LoA3_Add_fwd.Location = New Point(2, 269)
+        Panel_LoA3_Add_bkd.Location = New Point(2, 297)
+
+        Panel_LoA3_Fst_fwd.Location = New Point(2, 31)
+        Panel_LoA3_Fst_bkd.Location = New Point(2, 59)
+        Panel_LoA3_Sec_fwd.Location = New Point(2, 95)
+        Panel_LoA3_Sec_bkd.Location = New Point(2, 123)
+        Panel_LoA3_Thd_fwd.Location = New Point(2, 178)
+        Panel_LoA3_Thd_bkd.Location = New Point(2, 206)
+        Panel_LoA3_Add_fwd.Location = New Point(2, 269)
+        Panel_LoA3_Add_bkd.Location = New Point(2, 297)
+
+        Panel_A4_Fst.Location = New Point(3, 40)
+        Panel_A4_Sec_Mid_Background.Location = New Point(3, 121)
+        Panel_A4_Sec.Location = New Point(3, 149)
+        Panel_A4_Thd_Mid_Background.Location = New Point(3, 195)
+        Panel_A4_Thd.Location = New Point(3, 223)
+        Panel_A4_Add_Mid_Background.Location = New Point(3, 277)
+        Panel_A4_Add.Location = New Point(3, 305)
 
         Button_change_machine.Enabled = False
 
@@ -434,6 +533,9 @@ Public Class Program
                 ElseIf tabpage.Name = "TabPageProcedure" Then
                     tabpage.Enabled = True
                 End If
+            Next
+            For i = 0 To 8
+                array_light(i).BackColor = Color.DarkGray
             Next
         End If
     End Sub
@@ -937,9 +1039,9 @@ Public Class Program
         PanelTractorA1.Visible = False
         PanelTractorA3.Visible = False
         PanelExcavatorA1.Size = ASize
-        PanelExcavatorA1.Location = New Point(190, 140)
+        PanelExcavatorA1.Location = New Point(180, 140)
         PanelExcavatorA2.Size = ASize
-        PanelExcavatorA2.Location = New Point(254, 140)
+        PanelExcavatorA2.Location = New Point(225, 140)
 
         LinkLabel_PreCal_PostCal_BG_RSS_enable()
         LinkLabel_PreCal_PostCal_visible()
@@ -993,8 +1095,8 @@ Public Class Program
 
         Load_PostCal(tempRun)
 
-        MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
-        MainBarGraph = New BarGraph(New Point(858, 106), New Size(390, 539), TabPage2, CGraph.Modes.A1A2A3)
+        MainLineGraph = New LineGraph(New Point(92, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
+        MainBarGraph = New BarGraph(New Point(775, 106), New Size(380, 500), TabPage2, CGraph.Modes.A1A2A3)
         For i = 0 To 6
             NoisesArray(i).Visible = True
         Next
@@ -1105,11 +1207,11 @@ Public Class Program
         PanelTractorA1.Visible = False
         PanelTractorA3.Visible = False
         PanelLoaderA1.Size = ASize
-        PanelLoaderA1.Location = New Point(190, 140)
+        PanelLoaderA1.Location = New Point(180, 140)
         PanelLoaderA2.Size = ASize
-        PanelLoaderA2.Location = New Point(254, 140)
+        PanelLoaderA2.Location = New Point(225, 140)
         PanelLoaderA3.Size = ASize
-        PanelLoaderA3.Location = New Point(311, 140)
+        PanelLoaderA3.Location = New Point(270, 140)
 
         LinkLabel_PreCal_PostCal_BG_RSS_enable()
         LinkLabel_PreCal_PostCal_visible()
@@ -1181,8 +1283,8 @@ Public Class Program
         Load_PostCal(tempRun)
 
 
-        MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
-        MainBarGraph = New BarGraph(New Point(858, 106), New Size(390, 539), TabPage2, CGraph.Modes.A1A2A3)
+        MainLineGraph = New LineGraph(New Point(92, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
+        MainBarGraph = New BarGraph(New Point(775, 106), New Size(380, 500), TabPage2, CGraph.Modes.A1A2A3)
         For i = 0 To 6
             NoisesArray(i).Visible = True
         Next
@@ -1372,15 +1474,15 @@ Public Class Program
         LinkLabel_LoA3_Add_bkd.Enabled = False
 
         PanelExcavatorA1.Size = ASize
-        PanelExcavatorA1.Location = New Point(190, 140)
+        PanelExcavatorA1.Location = New Point(180, 140)
         PanelExcavatorA2.Size = ASize
-        PanelExcavatorA2.Location = New Point(254, 140)
+        PanelExcavatorA2.Location = New Point(225, 140)
         PanelLoaderA1.Size = ASize
-        PanelLoaderA1.Location = New Point(311, 140)
+        PanelLoaderA1.Location = New Point(270, 140)
         PanelLoaderA2.Size = ASize
-        PanelLoaderA2.Location = New Point(368, 140)
+        PanelLoaderA2.Location = New Point(320, 140)
         PanelLoaderA3.Size = ASize
-        PanelLoaderA3.Location = New Point(425, 140)
+        PanelLoaderA3.Location = New Point(365, 140)
 
         PanelExcavatorA1.Controls.Add(Panel_ExA1_Fst_1st)
         PanelExcavatorA1.Controls.Add(Panel_ExA1_Sec_1st)
@@ -1446,8 +1548,8 @@ Public Class Program
 
         Load_PostCal(tempRun)
 
-        MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
-        MainBarGraph = New BarGraph(New Point(858, 106), New Size(390, 539), TabPage2, CGraph.Modes.A1A2A3)
+        MainLineGraph = New LineGraph(New Point(92, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
+        MainBarGraph = New BarGraph(New Point(775, 106), New Size(380, 500), TabPage2, CGraph.Modes.A1A2A3)
         For i = 0 To 6
             NoisesArray(i).Visible = True
         Next
@@ -1468,9 +1570,9 @@ Public Class Program
         PanelLoaderA1.Visible = False
         PanelLoaderA2.Visible = False
         PanelTractorA1.Size = ASize
-        PanelTractorA1.Location = New Point(190, 140)
+        PanelTractorA1.Location = New Point(180, 140)
         PanelTractorA3.Size = ASize
-        PanelTractorA3.Location = New Point(254, 140)
+        PanelTractorA3.Location = New Point(225, 140)
 
         LinkLabel_PreCal_PostCal_BG_RSS_enable()
         LinkLabel_PreCal_PostCal_visible()
@@ -1526,8 +1628,8 @@ Public Class Program
         'PostCal
         Load_PostCal(tempRun)
 
-        MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
-        MainBarGraph = New BarGraph(New Point(858, 106), New Size(390, 539), TabPage2, CGraph.Modes.A1A2A3)
+        MainLineGraph = New LineGraph(New Point(92, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
+        MainBarGraph = New BarGraph(New Point(775, 106), New Size(380, 500), TabPage2, CGraph.Modes.A1A2A3)
         For i = 0 To 6
             NoisesArray(i).Visible = True
         Next
@@ -1631,7 +1733,7 @@ Public Class Program
         PanelTractorA1.Visible = False
         PanelTractorA3.Visible = False
         PanelA4.Size = ASize
-        PanelA4.Location = New Point(190, 140)
+        PanelA4.Location = New Point(180, 140)
         PanelA4.Controls.Add(Panel_A4_Fst)
         PanelA4.Controls.Add(Panel_A4_Sec)
         PanelA4.Controls.Add(Panel_A4_Thd)
@@ -1750,8 +1852,8 @@ Public Class Program
         tempRun = tempRun.NextUnit
         PostCal_4th = tempRun
 
-        MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A4, HeadRun.Time)
-        MainBarGraph = New BarGraph(New Point(858, 106), New Size(390, 539), TabPage2, CGraph.Modes.A4)
+        MainLineGraph = New LineGraph(New Point(92, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A4, HeadRun.Time)
+        MainBarGraph = New BarGraph(New Point(775, 106), New Size(380, 500), TabPage2, CGraph.Modes.A4)
         For i = 0 To 6
             NoisesArray(i).Visible = True
         Next
@@ -2053,6 +2155,10 @@ Public Class Program
     Sub Set_Step_BackColor()
         array_step(CurRun.CurStep - 1).BackColor = Color.Green
         array_step(CurRun.CurStep).BackColor = Color.Yellow
+        If TimerTesting = True Then
+            array_light(CurRun.CurStep - 1).BackColor = Color.Green
+            array_light(CurRun.CurStep).BackColor = Color.Yellow
+        End If
     End Sub
     Sub All_Panel_Disable()
         Panel_PreCal_Sub.Enabled = False
@@ -2089,19 +2195,32 @@ Public Class Program
         Next
     End Sub
     Sub Load_Steps()
+        Set_Second_for_Steps()
         For index = CurRun.StartStep To CurRun.EndStep
             sum_steps += CurStep.Time
             array_step(index - 1).Text = CurStep.step_str
             If CurStep.Time = -1 Then
                 array_step(index - 1).BackColor = Color.Green
+                If TimerTesting = True Then
+                    array_light(index - 1).BackColor = Color.Green
+                End If
             Else
                 If CurRun.EndStep = 1 Or index = 1 Then
                     array_step(index - 1).BackColor = Color.Yellow
+                    If TimerTesting = True Then
+                        array_light(index - 1).BackColor = Color.Yellow
+                    End If
                 Else
                     If array_step(index - 2).BackColor = Color.Green Then
                         array_step(index - 1).BackColor = Color.Yellow
+                        If TimerTesting = True Then
+                            array_light(index - 1).BackColor = Color.Yellow
+                        End If
                     Else
                         array_step(index - 1).BackColor = Color.IndianRed
+                        If TimerTesting = True Then
+                            array_light(index - 1).BackColor = Color.IndianRed
+                        End If
                     End If
                 End If
             End If
@@ -2115,18 +2234,18 @@ Public Class Program
         'load new graph (when variable countdown = false)
         MainLineGraph.Dispose()
         If Machine = Machines.Others Then
-            MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A4, CurRun.Time)  'A4 mode
+            MainLineGraph = New LineGraph(New Point(92, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A4, CurRun.Time)  'A4 mode
         Else
-            MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, CurRun.Time) 'A1 A2 A3 mode
+            MainLineGraph = New LineGraph(New Point(92, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, CurRun.Time) 'A1 A2 A3 mode
         End If
     End Sub
     Sub Load_New_Graph_CD_True()
         'load new graph(when variable countdown = true)
         MainLineGraph.Dispose()
         If Machine = Machines.Others Then
-            MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A4, sum_steps)  'A4 mode
+            MainLineGraph = New LineGraph(New Point(92, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A4, sum_steps)  'A4 mode
         Else
-            MainLineGraph = New LineGraph(New Point(110, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, sum_steps) 'A1 A2 A3 mode
+            MainLineGraph = New LineGraph(New Point(92, 3), New Size(1119, 97), TabPage2, CGraph.Modes.A1A2A3, sum_steps) 'A1 A2 A3 mode
         End If
         sum_steps = 0
     End Sub
@@ -2564,6 +2683,9 @@ Public Class Program
                 'load A1's steps
                 Clear_Steps()
                 Load_Steps()
+                array_light(0).BackColor = Color.Green
+                array_light(2).BackColor = Color.Green
+                array_light(3).BackColor = Color.Yellow
 
                 'dispose old graph and create new graph
                 Load_New_Graph_CD_True()
@@ -2588,8 +2710,90 @@ Public Class Program
                 Load_New_Graph_CD_True()
             End If
         End If
+        Set_Second_for_Steps()
     End Sub
+    Sub Set_Second_for_Steps()
+        If CurRun.Name.Contains("ExA2_1st") Then
+            If Not Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
+                For index = 8 To 1
+                    array_step_display(index).Text = array_step_display(index - 1).Text
+                Next
+                array_step_display(0).Text = "0"
+            Else
+                For index = 0 To 8
+                    array_step_display(index).Text = ""
+                Next
+                For index = 0 To 8
+                    array_step_display(index).Text = array_step_s(index).Text
+                Next
+            End If
+        ElseIf CurRun.Name.Contains("ExA2_2nd") Then
+            If Not Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
+                If CurRun.PrevUnit.Name.Contains("ExA2_1st") Then
+                    For index = 0 To 7
+                        array_step_display(index).Text = array_step_display(index + 1).Text
+                    Next
+                    array_step_display(8).Text = ""
+                End If
+            Else
+                For index = 0 To 8
+                    array_step_display(index).Text = ""
+                Next
+                For index = 0 To 7
+                    array_step_display(index).Text = array_step_s(index + 1).Text
+                Next
+            End If
 
+        ElseIf CurRun.Name.Contains("LoA2_1st") Then
+            If Not Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
+                For index = 2 To 1
+                    array_step_display(index).Text = array_step_display(index - 1).Text
+                Next
+                array_step_display(0).Text = "0"
+            Else
+                For index = 0 To 8
+                    array_step_display(index).Text = ""
+                Next
+                For index = 0 To 2
+                    array_step_display(index).Text = array_step_s(index).Text
+                Next
+            End If
+
+        ElseIf CurRun.Name.Contains("LoA2_2nd") Then
+            If Not Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
+                If CurRun.PrevUnit.Name.Contains("LoA2_1st") Then
+                    For index = 0 To 1
+                        array_step_display(index).Text = array_step_display(index + 1).Text
+                    Next
+                    array_step_display(2).Text = ""
+                End If
+            Else
+                For index = 0 To 8
+                    array_step_display(index).Text = ""
+                Next
+                For index = 0 To 1
+                    array_step_display(index).Text = array_step_s(index + 1).Text
+                Next
+            End If
+        ElseIf CurRun.Name.Contains("A1") Then
+            For index = 0 To 8
+                array_step_display(index).Text = ""
+            Next
+            array_step_display(0).Text = CurRun.Steps.Time
+        ElseIf CurRun.Name.Contains("fwd") Then
+            For index = 0 To 2
+                array_step_display(index).Text = array_step_s(index).Text
+            Next
+        ElseIf CurRun.Name.Contains("bkd") Then
+            Label_step1_second.Text = Input_S_Step4.Text
+            Label_step2_second.Text = ""
+            Label_step3_second.Text = ""
+        Else
+            For index = 0 To 8
+                array_step_display(index).Text = ""
+            Next
+        End If
+    End Sub
     Sub Reset_Test_Time()
         CurRun.Steps = Load_Steps_helper(CurRun)
         TimerTesting = True
@@ -3074,6 +3278,9 @@ Public Class Program
                                     Countdown = False
                                     Load_New_Graph_CD_False()
                                     Clear_Steps()
+                                    For index = 0 To 8
+                                        array_step_display(index).Text = ""
+                                    Next
                                 ElseIf CurRun.Name = "LoA1" Then
                                     Set_Run_Unit()
                                     'load steps
@@ -3146,6 +3353,9 @@ Public Class Program
                                     Countdown = False
                                     Load_New_Graph_CD_False()
                                     Clear_Steps()
+                                    For index = 0 To 8
+                                        array_step_display(index).Text = ""
+                                    Next
                                 ElseIf CurRun.Name = "LoA1" Then
                                     Set_Run_Unit()
                                     'load LoA1's steps
@@ -3221,6 +3431,9 @@ Public Class Program
                                 timeLabel.Text = timeLeft & " s"
                                 Countdown = False
                                 Clear_Steps()
+                                For index = 0 To 8
+                                    array_step_display(index).Text = ""
+                                Next
                                 'dispose old graph and create new graph
                                 Load_New_Graph_CD_False()
                             End If
@@ -3297,6 +3510,9 @@ Public Class Program
                                 timeLabel.Text = timeLeft & " s"
                                 Countdown = False
                                 Clear_Steps()
+                                For index = 0 To 8
+                                    array_step_display(index).Text = ""
+                                Next
                                 'dispose old graph and create new graph
                                 Load_New_Graph_CD_False()
                             End If
@@ -3352,6 +3568,9 @@ Public Class Program
                                 timeLabel.Text = timeLeft & " s"
                                 Countdown = False
                                 Clear_Steps()
+                                For index = 0 To 8
+                                    array_step_display(index).Text = ""
+                                Next
                                 'dispose old graph and create new graph
                                 Load_New_Graph_CD_False()
                             End If
@@ -3401,6 +3620,9 @@ Public Class Program
                             timeLabel.Text = timeLeft & " s"
                             Countdown = False
                             Clear_Steps()
+                            For index = 0 To 8
+                                array_step_display(index).Text = ""
+                            Next
                             'dispose old graph and create new graph
                             Load_New_Graph_CD_False()
                         End If
@@ -3597,4 +3819,5 @@ Public Class Program
             ComboBoxComs.Items.Add(com)
         Next
     End Sub
+
 End Class

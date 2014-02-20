@@ -316,6 +316,7 @@
         End If
 
         Program.Temp_Countdown = Program.Countdown
+
     End Sub
     Sub Countdown_True_after_Jump()
         Program.Countdown = True
@@ -342,6 +343,16 @@
         'load steps
         Program.Clear_Steps()
         Program.Load_Steps()
+        For index = Program.CurRun.StartStep To Program.CurRun.EndStep
+            Program.array_step_display(index - 1).Text = Program.CurStep.Time
+            If Program.array_step_display(index - 1).Text = "-1" Then
+                Program.array_step_display(index - 1).Text = "0"
+            End If
+            If Program.CurStep.HasNext() Then
+                Program.CurStep = Program.CurStep.NextStep
+            End If
+        Next
+        Program.CurStep = Program.CurRun.HeadStep
 
         'dispose old graph and create new graph
         Program.Load_New_Graph_CD_True()
@@ -376,10 +387,14 @@
         End If
 
         Program.Temp_Countdown = Program.Countdown
+
     End Sub
     Sub Countdown_False_after_Jump()
         Program.Countdown = False
         Program.Clear_Steps()
+        For index = 0 To 8
+            Program.array_step_display(index).Text = ""
+        Next
         'dispose old graph and create new graph
         Program.Load_New_Graph_CD_False()
         Program.timeLeft = Program.CurRun.Time

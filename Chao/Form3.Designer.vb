@@ -32,12 +32,13 @@ Partial Class Program
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.ButtonComRefresh = New System.Windows.Forms.Button()
+        Me.PanelMeterSetup = New System.Windows.Forms.Panel()
         Me.ComboBoxComs = New System.Windows.Forms.ComboBox()
-        Me.ButtonMeters = New System.Windows.Forms.Button()
-        Me.ConnectButton = New System.Windows.Forms.Button()
-        Me.ButtonSim = New System.Windows.Forms.Button()
+        Me.ButtonComRefresh = New System.Windows.Forms.Button()
         Me.DisconnButton = New System.Windows.Forms.Button()
+        Me.ConnectButton = New System.Windows.Forms.Button()
+        Me.ButtonMeters = New System.Windows.Forms.Button()
+        Me.ButtonSim = New System.Windows.Forms.Button()
         Me.Button_change_machine = New System.Windows.Forms.Button()
         Me.p6Label = New System.Windows.Forms.Label()
         Me.p5Label = New System.Windows.Forms.Label()
@@ -73,6 +74,15 @@ Partial Class Program
         Me.ComboBox_machine_list = New System.Windows.Forms.ComboBox()
         Me.Label_machine_choose = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Label_step9_second = New System.Windows.Forms.Label()
+        Me.Label_step8_second = New System.Windows.Forms.Label()
+        Me.Label_step7_second = New System.Windows.Forms.Label()
+        Me.Label_step6_second = New System.Windows.Forms.Label()
+        Me.Label_step5_second = New System.Windows.Forms.Label()
+        Me.Label_step4_second = New System.Windows.Forms.Label()
+        Me.Label_step3_second = New System.Windows.Forms.Label()
+        Me.Label_step2_second = New System.Windows.Forms.Label()
+        Me.Label_step1_second = New System.Windows.Forms.Label()
         Me.LinkLabel_Temp = New System.Windows.Forms.LinkLabel()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPageProcedure = New System.Windows.Forms.TabPage()
@@ -253,6 +263,15 @@ Partial Class Program
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TabPageTimer = New System.Windows.Forms.TabPage()
+        Me.Light9 = New System.Windows.Forms.Label()
+        Me.Light8 = New System.Windows.Forms.Label()
+        Me.Light7 = New System.Windows.Forms.Label()
+        Me.Light6 = New System.Windows.Forms.Label()
+        Me.Light5 = New System.Windows.Forms.Label()
+        Me.Light4 = New System.Windows.Forms.Label()
+        Me.Light3 = New System.Windows.Forms.Label()
+        Me.Light2 = New System.Windows.Forms.Label()
+        Me.Light1 = New System.Windows.Forms.Label()
         Me.Test_StopButton = New System.Windows.Forms.Button()
         Me.Test_Input_S_Panel = New System.Windows.Forms.Panel()
         Me.S9 = New System.Windows.Forms.Label()
@@ -299,10 +318,10 @@ Partial Class Program
         Me.TabPageCharts = New System.Windows.Forms.TabPage()
         Me.SaveButton = New System.Windows.Forms.Button()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.PanelMeterSetup = New System.Windows.Forms.Panel()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        Me.PanelMeterSetup.SuspendLayout()
         Me.GroupBox_Plot.SuspendLayout()
         Me.GroupBox_A4.SuspendLayout()
         Me.GroupBox_A1_A2_A3.SuspendLayout()
@@ -400,7 +419,6 @@ Partial Class Program
         CType(Me.Chart2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPageCharts.SuspendLayout()
-        Me.PanelMeterSetup.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -412,7 +430,7 @@ Partial Class Program
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(1265, 694)
+        Me.TabControl1.Size = New System.Drawing.Size(1204, 694)
         Me.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.TabControl1.TabIndex = 0
         '
@@ -442,7 +460,7 @@ Partial Class Program
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Size = New System.Drawing.Size(1257, 668)
+        Me.TabPage1.Size = New System.Drawing.Size(1196, 668)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "機具選擇"
         '
@@ -458,14 +476,16 @@ Partial Class Program
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Meter Controls"
         '
-        'ButtonComRefresh
+        'PanelMeterSetup
         '
-        Me.ButtonComRefresh.Location = New System.Drawing.Point(183, 3)
-        Me.ButtonComRefresh.Name = "ButtonComRefresh"
-        Me.ButtonComRefresh.Size = New System.Drawing.Size(64, 23)
-        Me.ButtonComRefresh.TabIndex = 52
-        Me.ButtonComRefresh.Text = "Refresh"
-        Me.ButtonComRefresh.UseVisualStyleBackColor = True
+        Me.PanelMeterSetup.Controls.Add(Me.ComboBoxComs)
+        Me.PanelMeterSetup.Controls.Add(Me.ButtonComRefresh)
+        Me.PanelMeterSetup.Controls.Add(Me.DisconnButton)
+        Me.PanelMeterSetup.Controls.Add(Me.ConnectButton)
+        Me.PanelMeterSetup.Location = New System.Drawing.Point(16, 21)
+        Me.PanelMeterSetup.Name = "PanelMeterSetup"
+        Me.PanelMeterSetup.Size = New System.Drawing.Size(252, 68)
+        Me.PanelMeterSetup.TabIndex = 53
         '
         'ComboBoxComs
         '
@@ -475,14 +495,23 @@ Partial Class Program
         Me.ComboBoxComs.Size = New System.Drawing.Size(168, 20)
         Me.ComboBoxComs.TabIndex = 51
         '
-        'ButtonMeters
+        'ButtonComRefresh
         '
-        Me.ButtonMeters.Location = New System.Drawing.Point(119, 94)
-        Me.ButtonMeters.Name = "ButtonMeters"
-        Me.ButtonMeters.Size = New System.Drawing.Size(75, 23)
-        Me.ButtonMeters.TabIndex = 50
-        Me.ButtonMeters.Text = "Meters"
-        Me.ButtonMeters.UseVisualStyleBackColor = True
+        Me.ButtonComRefresh.Location = New System.Drawing.Point(183, 3)
+        Me.ButtonComRefresh.Name = "ButtonComRefresh"
+        Me.ButtonComRefresh.Size = New System.Drawing.Size(64, 23)
+        Me.ButtonComRefresh.TabIndex = 52
+        Me.ButtonComRefresh.Text = "Refresh"
+        Me.ButtonComRefresh.UseVisualStyleBackColor = True
+        '
+        'DisconnButton
+        '
+        Me.DisconnButton.Location = New System.Drawing.Point(104, 30)
+        Me.DisconnButton.Name = "DisconnButton"
+        Me.DisconnButton.Size = New System.Drawing.Size(75, 37)
+        Me.DisconnButton.TabIndex = 48
+        Me.DisconnButton.Text = "Disconnect Meters"
+        Me.DisconnButton.UseVisualStyleBackColor = True
         '
         'ConnectButton
         '
@@ -493,6 +522,15 @@ Partial Class Program
         Me.ConnectButton.Text = "Connect Meters"
         Me.ConnectButton.UseVisualStyleBackColor = True
         '
+        'ButtonMeters
+        '
+        Me.ButtonMeters.Location = New System.Drawing.Point(119, 94)
+        Me.ButtonMeters.Name = "ButtonMeters"
+        Me.ButtonMeters.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonMeters.TabIndex = 50
+        Me.ButtonMeters.Text = "Meters"
+        Me.ButtonMeters.UseVisualStyleBackColor = True
+        '
         'ButtonSim
         '
         Me.ButtonSim.Enabled = False
@@ -502,15 +540,6 @@ Partial Class Program
         Me.ButtonSim.TabIndex = 49
         Me.ButtonSim.Text = "Simulation"
         Me.ButtonSim.UseVisualStyleBackColor = True
-        '
-        'DisconnButton
-        '
-        Me.DisconnButton.Location = New System.Drawing.Point(104, 30)
-        Me.DisconnButton.Name = "DisconnButton"
-        Me.DisconnButton.Size = New System.Drawing.Size(75, 37)
-        Me.DisconnButton.TabIndex = 48
-        Me.DisconnButton.Text = "Disconnect Meters"
-        Me.DisconnButton.UseVisualStyleBackColor = True
         '
         'Button_change_machine
         '
@@ -846,7 +875,17 @@ Partial Class Program
         '
         'TabPage2
         '
+        Me.TabPage2.AutoScroll = True
         Me.TabPage2.BackColor = System.Drawing.Color.DarkGray
+        Me.TabPage2.Controls.Add(Me.Label_step9_second)
+        Me.TabPage2.Controls.Add(Me.Label_step8_second)
+        Me.TabPage2.Controls.Add(Me.Label_step7_second)
+        Me.TabPage2.Controls.Add(Me.Label_step6_second)
+        Me.TabPage2.Controls.Add(Me.Label_step5_second)
+        Me.TabPage2.Controls.Add(Me.Label_step4_second)
+        Me.TabPage2.Controls.Add(Me.Label_step3_second)
+        Me.TabPage2.Controls.Add(Me.Label_step2_second)
+        Me.TabPage2.Controls.Add(Me.Label_step1_second)
         Me.TabPage2.Controls.Add(Me.LinkLabel_Temp)
         Me.TabPage2.Controls.Add(Me.TabControl2)
         Me.TabPage2.Controls.Add(Me.Step1)
@@ -873,9 +912,99 @@ Partial Class Program
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Size = New System.Drawing.Size(1257, 668)
+        Me.TabPage2.Size = New System.Drawing.Size(1196, 668)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "測試主畫面"
+        '
+        'Label_step9_second
+        '
+        Me.Label_step9_second.BackColor = System.Drawing.Color.DarkGray
+        Me.Label_step9_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label_step9_second.Location = New System.Drawing.Point(504, 297)
+        Me.Label_step9_second.Name = "Label_step9_second"
+        Me.Label_step9_second.Size = New System.Drawing.Size(35, 52)
+        Me.Label_step9_second.TabIndex = 122
+        Me.Label_step9_second.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label_step8_second
+        '
+        Me.Label_step8_second.BackColor = System.Drawing.Color.DarkGray
+        Me.Label_step8_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label_step8_second.Location = New System.Drawing.Point(502, 240)
+        Me.Label_step8_second.Name = "Label_step8_second"
+        Me.Label_step8_second.Size = New System.Drawing.Size(35, 52)
+        Me.Label_step8_second.TabIndex = 121
+        Me.Label_step8_second.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label_step7_second
+        '
+        Me.Label_step7_second.BackColor = System.Drawing.Color.DarkGray
+        Me.Label_step7_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label_step7_second.Location = New System.Drawing.Point(502, 185)
+        Me.Label_step7_second.Name = "Label_step7_second"
+        Me.Label_step7_second.Size = New System.Drawing.Size(35, 52)
+        Me.Label_step7_second.TabIndex = 120
+        Me.Label_step7_second.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label_step6_second
+        '
+        Me.Label_step6_second.BackColor = System.Drawing.Color.DarkGray
+        Me.Label_step6_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label_step6_second.Location = New System.Drawing.Point(502, 132)
+        Me.Label_step6_second.Name = "Label_step6_second"
+        Me.Label_step6_second.Size = New System.Drawing.Size(35, 52)
+        Me.Label_step6_second.TabIndex = 119
+        Me.Label_step6_second.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label_step5_second
+        '
+        Me.Label_step5_second.BackColor = System.Drawing.Color.DarkGray
+        Me.Label_step5_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label_step5_second.Location = New System.Drawing.Point(461, 338)
+        Me.Label_step5_second.Name = "Label_step5_second"
+        Me.Label_step5_second.Size = New System.Drawing.Size(35, 52)
+        Me.Label_step5_second.TabIndex = 118
+        Me.Label_step5_second.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label_step4_second
+        '
+        Me.Label_step4_second.BackColor = System.Drawing.Color.DarkGray
+        Me.Label_step4_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label_step4_second.Location = New System.Drawing.Point(461, 280)
+        Me.Label_step4_second.Name = "Label_step4_second"
+        Me.Label_step4_second.Size = New System.Drawing.Size(35, 52)
+        Me.Label_step4_second.TabIndex = 117
+        Me.Label_step4_second.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label_step3_second
+        '
+        Me.Label_step3_second.BackColor = System.Drawing.Color.DarkGray
+        Me.Label_step3_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label_step3_second.Location = New System.Drawing.Point(461, 224)
+        Me.Label_step3_second.Name = "Label_step3_second"
+        Me.Label_step3_second.Size = New System.Drawing.Size(35, 52)
+        Me.Label_step3_second.TabIndex = 116
+        Me.Label_step3_second.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label_step2_second
+        '
+        Me.Label_step2_second.BackColor = System.Drawing.Color.DarkGray
+        Me.Label_step2_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label_step2_second.Location = New System.Drawing.Point(461, 163)
+        Me.Label_step2_second.Name = "Label_step2_second"
+        Me.Label_step2_second.Size = New System.Drawing.Size(35, 52)
+        Me.Label_step2_second.TabIndex = 115
+        Me.Label_step2_second.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label_step1_second
+        '
+        Me.Label_step1_second.BackColor = System.Drawing.Color.DarkGray
+        Me.Label_step1_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label_step1_second.Location = New System.Drawing.Point(460, 110)
+        Me.Label_step1_second.Name = "Label_step1_second"
+        Me.Label_step1_second.Size = New System.Drawing.Size(35, 52)
+        Me.Label_step1_second.TabIndex = 114
+        Me.Label_step1_second.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'LinkLabel_Temp
         '
@@ -889,11 +1018,11 @@ Partial Class Program
         '
         Me.TabControl2.Controls.Add(Me.TabPageProcedure)
         Me.TabControl2.Controls.Add(Me.TabPageTimer)
-        Me.TabControl2.Location = New System.Drawing.Point(6, 100)
+        Me.TabControl2.Location = New System.Drawing.Point(6, 110)
         Me.TabControl2.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
-        Me.TabControl2.Size = New System.Drawing.Size(400, 550)
+        Me.TabControl2.Size = New System.Drawing.Size(450, 550)
         Me.TabControl2.TabIndex = 112
         '
         'TabPageProcedure
@@ -926,7 +1055,7 @@ Partial Class Program
         Me.TabPageProcedure.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.TabPageProcedure.Name = "TabPageProcedure"
         Me.TabPageProcedure.Padding = New System.Windows.Forms.Padding(2, 3, 2, 3)
-        Me.TabPageProcedure.Size = New System.Drawing.Size(392, 524)
+        Me.TabPageProcedure.Size = New System.Drawing.Size(442, 524)
         Me.TabPageProcedure.TabIndex = 0
         Me.TabPageProcedure.Text = "Procedure"
         '
@@ -958,7 +1087,7 @@ Partial Class Program
         Me.Panel_PostCal_Sub.Location = New System.Drawing.Point(72, 343)
         Me.Panel_PostCal_Sub.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Panel_PostCal_Sub.Name = "Panel_PostCal_Sub"
-        Me.Panel_PostCal_Sub.Size = New System.Drawing.Size(68, 156)
+        Me.Panel_PostCal_Sub.Size = New System.Drawing.Size(80, 170)
         Me.Panel_PostCal_Sub.TabIndex = 111
         '
         'Panel_PostCal_6th
@@ -1542,7 +1671,7 @@ Partial Class Program
         Me.Accept_Button.Location = New System.Drawing.Point(8, 65)
         Me.Accept_Button.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Accept_Button.Name = "Accept_Button"
-        Me.Accept_Button.Size = New System.Drawing.Size(76, 25)
+        Me.Accept_Button.Size = New System.Drawing.Size(75, 25)
         Me.Accept_Button.TabIndex = 59
         Me.Accept_Button.Text = "Accept"
         Me.Accept_Button.UseVisualStyleBackColor = True
@@ -1586,7 +1715,7 @@ Partial Class Program
         Me.PanelLoaderA2.Location = New System.Drawing.Point(310, 37)
         Me.PanelLoaderA2.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.PanelLoaderA2.Name = "PanelLoaderA2"
-        Me.PanelLoaderA2.Size = New System.Drawing.Size(38, 351)
+        Me.PanelLoaderA2.Size = New System.Drawing.Size(38, 380)
         Me.PanelLoaderA2.TabIndex = 98
         '
         'Panel_LoA2_Add_3rd
@@ -1858,7 +1987,7 @@ Partial Class Program
         Me.Panel_PreCal_Sub.Location = New System.Drawing.Point(8, 140)
         Me.Panel_PreCal_Sub.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Panel_PreCal_Sub.Name = "Panel_PreCal_Sub"
-        Me.Panel_PreCal_Sub.Size = New System.Drawing.Size(68, 156)
+        Me.Panel_PreCal_Sub.Size = New System.Drawing.Size(80, 170)
         Me.Panel_PreCal_Sub.TabIndex = 110
         '
         'Panel_PreCal_6th
@@ -2298,7 +2427,7 @@ Partial Class Program
         Me.PanelExcavatorA2.Location = New System.Drawing.Point(164, 146)
         Me.PanelExcavatorA2.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.PanelExcavatorA2.Name = "PanelExcavatorA2"
-        Me.PanelExcavatorA2.Size = New System.Drawing.Size(38, 351)
+        Me.PanelExcavatorA2.Size = New System.Drawing.Size(38, 380)
         Me.PanelExcavatorA2.TabIndex = 84
         '
         'Panel_ExA2_Add_3rd
@@ -2766,6 +2895,15 @@ Partial Class Program
         '
         Me.TabPageTimer.BackColor = System.Drawing.Color.DarkGray
         Me.TabPageTimer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.TabPageTimer.Controls.Add(Me.Light9)
+        Me.TabPageTimer.Controls.Add(Me.Light8)
+        Me.TabPageTimer.Controls.Add(Me.Light7)
+        Me.TabPageTimer.Controls.Add(Me.Light6)
+        Me.TabPageTimer.Controls.Add(Me.Light5)
+        Me.TabPageTimer.Controls.Add(Me.Light4)
+        Me.TabPageTimer.Controls.Add(Me.Light3)
+        Me.TabPageTimer.Controls.Add(Me.Light2)
+        Me.TabPageTimer.Controls.Add(Me.Light1)
         Me.TabPageTimer.Controls.Add(Me.Test_StopButton)
         Me.TabPageTimer.Controls.Add(Me.Test_Input_S_Panel)
         Me.TabPageTimer.Controls.Add(Me.Test_ConfirmButton)
@@ -2775,9 +2913,90 @@ Partial Class Program
         Me.TabPageTimer.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.TabPageTimer.Name = "TabPageTimer"
         Me.TabPageTimer.Padding = New System.Windows.Forms.Padding(2, 3, 2, 3)
-        Me.TabPageTimer.Size = New System.Drawing.Size(392, 524)
+        Me.TabPageTimer.Size = New System.Drawing.Size(442, 524)
         Me.TabPageTimer.TabIndex = 1
         Me.TabPageTimer.Text = "Timer"
+        '
+        'Light9
+        '
+        Me.Light9.BackColor = System.Drawing.Color.DarkGray
+        Me.Light9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Light9.Location = New System.Drawing.Point(320, 367)
+        Me.Light9.Name = "Light9"
+        Me.Light9.Size = New System.Drawing.Size(22, 22)
+        Me.Light9.TabIndex = 21
+        '
+        'Light8
+        '
+        Me.Light8.BackColor = System.Drawing.Color.DarkGray
+        Me.Light8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Light8.Location = New System.Drawing.Point(320, 323)
+        Me.Light8.Name = "Light8"
+        Me.Light8.Size = New System.Drawing.Size(22, 22)
+        Me.Light8.TabIndex = 27
+        '
+        'Light7
+        '
+        Me.Light7.BackColor = System.Drawing.Color.DarkGray
+        Me.Light7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Light7.Location = New System.Drawing.Point(320, 286)
+        Me.Light7.Name = "Light7"
+        Me.Light7.Size = New System.Drawing.Size(22, 22)
+        Me.Light7.TabIndex = 26
+        '
+        'Light6
+        '
+        Me.Light6.BackColor = System.Drawing.Color.DarkGray
+        Me.Light6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Light6.Location = New System.Drawing.Point(320, 244)
+        Me.Light6.Name = "Light6"
+        Me.Light6.Size = New System.Drawing.Size(22, 22)
+        Me.Light6.TabIndex = 25
+        '
+        'Light5
+        '
+        Me.Light5.BackColor = System.Drawing.Color.DarkGray
+        Me.Light5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Light5.Location = New System.Drawing.Point(320, 203)
+        Me.Light5.Name = "Light5"
+        Me.Light5.Size = New System.Drawing.Size(22, 22)
+        Me.Light5.TabIndex = 24
+        '
+        'Light4
+        '
+        Me.Light4.BackColor = System.Drawing.Color.DarkGray
+        Me.Light4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Light4.Location = New System.Drawing.Point(320, 162)
+        Me.Light4.Name = "Light4"
+        Me.Light4.Size = New System.Drawing.Size(22, 22)
+        Me.Light4.TabIndex = 23
+        '
+        'Light3
+        '
+        Me.Light3.BackColor = System.Drawing.Color.DarkGray
+        Me.Light3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Light3.Location = New System.Drawing.Point(320, 119)
+        Me.Light3.Name = "Light3"
+        Me.Light3.Size = New System.Drawing.Size(22, 22)
+        Me.Light3.TabIndex = 22
+        '
+        'Light2
+        '
+        Me.Light2.BackColor = System.Drawing.Color.DarkGray
+        Me.Light2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Light2.Location = New System.Drawing.Point(320, 80)
+        Me.Light2.Name = "Light2"
+        Me.Light2.Size = New System.Drawing.Size(22, 22)
+        Me.Light2.TabIndex = 21
+        '
+        'Light1
+        '
+        Me.Light1.BackColor = System.Drawing.Color.DarkGray
+        Me.Light1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Light1.Location = New System.Drawing.Point(320, 40)
+        Me.Light1.Name = "Light1"
+        Me.Light1.Size = New System.Drawing.Size(22, 22)
+        Me.Light1.TabIndex = 20
         '
         'Test_StopButton
         '
@@ -2897,56 +3116,56 @@ Partial Class Program
         '
         'Input_S_Step2
         '
-        Me.Input_S_Step2.Location = New System.Drawing.Point(18, 60)
+        Me.Input_S_Step2.Location = New System.Drawing.Point(18, 63)
         Me.Input_S_Step2.Name = "Input_S_Step2"
         Me.Input_S_Step2.Size = New System.Drawing.Size(85, 22)
         Me.Input_S_Step2.TabIndex = 8
         '
         'Input_S_Step3
         '
-        Me.Input_S_Step3.Location = New System.Drawing.Point(18, 99)
+        Me.Input_S_Step3.Location = New System.Drawing.Point(18, 102)
         Me.Input_S_Step3.Name = "Input_S_Step3"
         Me.Input_S_Step3.Size = New System.Drawing.Size(85, 22)
         Me.Input_S_Step3.TabIndex = 7
         '
         'Input_S_Step4
         '
-        Me.Input_S_Step4.Location = New System.Drawing.Point(18, 140)
+        Me.Input_S_Step4.Location = New System.Drawing.Point(18, 145)
         Me.Input_S_Step4.Name = "Input_S_Step4"
         Me.Input_S_Step4.Size = New System.Drawing.Size(85, 22)
         Me.Input_S_Step4.TabIndex = 6
         '
         'Input_S_Step5
         '
-        Me.Input_S_Step5.Location = New System.Drawing.Point(18, 185)
+        Me.Input_S_Step5.Location = New System.Drawing.Point(18, 186)
         Me.Input_S_Step5.Name = "Input_S_Step5"
         Me.Input_S_Step5.Size = New System.Drawing.Size(85, 22)
         Me.Input_S_Step5.TabIndex = 5
         '
         'Input_S_Step9
         '
-        Me.Input_S_Step9.Location = New System.Drawing.Point(18, 348)
+        Me.Input_S_Step9.Location = New System.Drawing.Point(18, 350)
         Me.Input_S_Step9.Name = "Input_S_Step9"
         Me.Input_S_Step9.Size = New System.Drawing.Size(85, 22)
         Me.Input_S_Step9.TabIndex = 4
         '
         'Input_S_Step8
         '
-        Me.Input_S_Step8.Location = New System.Drawing.Point(18, 302)
+        Me.Input_S_Step8.Location = New System.Drawing.Point(18, 306)
         Me.Input_S_Step8.Name = "Input_S_Step8"
         Me.Input_S_Step8.Size = New System.Drawing.Size(85, 22)
         Me.Input_S_Step8.TabIndex = 3
         '
         'Input_S_Step7
         '
-        Me.Input_S_Step7.Location = New System.Drawing.Point(18, 265)
+        Me.Input_S_Step7.Location = New System.Drawing.Point(18, 269)
         Me.Input_S_Step7.Name = "Input_S_Step7"
         Me.Input_S_Step7.Size = New System.Drawing.Size(85, 22)
         Me.Input_S_Step7.TabIndex = 2
         '
         'Input_S_Step6
         '
-        Me.Input_S_Step6.Location = New System.Drawing.Point(18, 223)
+        Me.Input_S_Step6.Location = New System.Drawing.Point(18, 227)
         Me.Input_S_Step6.Name = "Input_S_Step6"
         Me.Input_S_Step6.Size = New System.Drawing.Size(85, 22)
         Me.Input_S_Step6.TabIndex = 1
@@ -2998,6 +3217,7 @@ Partial Class Program
         'Noise_Avg
         '
         Me.Noise_Avg.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Noise_Avg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Noise_Avg.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Noise_Avg.Location = New System.Drawing.Point(858, 593)
         Me.Noise_Avg.Name = "Noise_Avg"
@@ -3062,6 +3282,7 @@ Partial Class Program
         'Noise6
         '
         Me.Noise6.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Noise6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Noise6.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Noise6.Location = New System.Drawing.Point(792, 593)
         Me.Noise6.Name = "Noise6"
@@ -3072,6 +3293,7 @@ Partial Class Program
         'Noise5
         '
         Me.Noise5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Noise5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Noise5.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Noise5.Location = New System.Drawing.Point(727, 593)
         Me.Noise5.Name = "Noise5"
@@ -3082,6 +3304,7 @@ Partial Class Program
         'Noise4
         '
         Me.Noise4.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Noise4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Noise4.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Noise4.Location = New System.Drawing.Point(659, 593)
         Me.Noise4.Name = "Noise4"
@@ -3102,6 +3325,7 @@ Partial Class Program
         'Noise3
         '
         Me.Noise3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Noise3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Noise3.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Noise3.Location = New System.Drawing.Point(592, 593)
         Me.Noise3.Name = "Noise3"
@@ -3112,6 +3336,7 @@ Partial Class Program
         'Noise2
         '
         Me.Noise2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Noise2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Noise2.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Noise2.Location = New System.Drawing.Point(508, 593)
         Me.Noise2.Name = "Noise2"
@@ -3122,6 +3347,7 @@ Partial Class Program
         'Noise1
         '
         Me.Noise1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Noise1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Noise1.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Noise1.Location = New System.Drawing.Point(458, 593)
         Me.Noise1.Name = "Noise1"
@@ -3205,7 +3431,7 @@ Partial Class Program
         Me.TabPageCharts.Location = New System.Drawing.Point(4, 22)
         Me.TabPageCharts.Name = "TabPageCharts"
         Me.TabPageCharts.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPageCharts.Size = New System.Drawing.Size(1257, 668)
+        Me.TabPageCharts.Size = New System.Drawing.Size(1196, 668)
         Me.TabPageCharts.TabIndex = 2
         Me.TabPageCharts.Text = "數據"
         Me.TabPageCharts.UseVisualStyleBackColor = True
@@ -3223,23 +3449,12 @@ Partial Class Program
         '
         Me.Timer1.Interval = 1000
         '
-        'PanelMeterSetup
-        '
-        Me.PanelMeterSetup.Controls.Add(Me.ComboBoxComs)
-        Me.PanelMeterSetup.Controls.Add(Me.ButtonComRefresh)
-        Me.PanelMeterSetup.Controls.Add(Me.DisconnButton)
-        Me.PanelMeterSetup.Controls.Add(Me.ConnectButton)
-        Me.PanelMeterSetup.Location = New System.Drawing.Point(16, 21)
-        Me.PanelMeterSetup.Name = "PanelMeterSetup"
-        Me.PanelMeterSetup.Size = New System.Drawing.Size(252, 68)
-        Me.PanelMeterSetup.TabIndex = 53
-        '
         'Program
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DarkGray
-        Me.ClientSize = New System.Drawing.Size(1265, 694)
+        Me.ClientSize = New System.Drawing.Size(1204, 694)
         Me.Controls.Add(Me.TabControl1)
         Me.Name = "Program"
         Me.Text = "Program"
@@ -3247,6 +3462,7 @@ Partial Class Program
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
+        Me.PanelMeterSetup.ResumeLayout(False)
         Me.GroupBox_Plot.ResumeLayout(False)
         Me.GroupBox_Plot.PerformLayout()
         Me.GroupBox_A4.ResumeLayout(False)
@@ -3433,7 +3649,6 @@ Partial Class Program
         CType(Me.Chart2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPageCharts.ResumeLayout(False)
-        Me.PanelMeterSetup.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -3708,4 +3923,22 @@ Partial Class Program
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents ButtonComRefresh As System.Windows.Forms.Button
     Friend WithEvents PanelMeterSetup As System.Windows.Forms.Panel
+    Friend WithEvents Label_step1_second As System.Windows.Forms.Label
+    Friend WithEvents Label_step9_second As System.Windows.Forms.Label
+    Friend WithEvents Label_step8_second As System.Windows.Forms.Label
+    Friend WithEvents Label_step7_second As System.Windows.Forms.Label
+    Friend WithEvents Label_step6_second As System.Windows.Forms.Label
+    Friend WithEvents Label_step5_second As System.Windows.Forms.Label
+    Friend WithEvents Label_step4_second As System.Windows.Forms.Label
+    Friend WithEvents Label_step3_second As System.Windows.Forms.Label
+    Friend WithEvents Label_step2_second As System.Windows.Forms.Label
+    Friend WithEvents Light9 As System.Windows.Forms.Label
+    Friend WithEvents Light8 As System.Windows.Forms.Label
+    Friend WithEvents Light7 As System.Windows.Forms.Label
+    Friend WithEvents Light6 As System.Windows.Forms.Label
+    Friend WithEvents Light5 As System.Windows.Forms.Label
+    Friend WithEvents Light4 As System.Windows.Forms.Label
+    Friend WithEvents Light3 As System.Windows.Forms.Label
+    Friend WithEvents Light2 As System.Windows.Forms.Label
+    Friend WithEvents Light1 As System.Windows.Forms.Label
 End Class

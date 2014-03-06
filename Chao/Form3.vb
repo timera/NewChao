@@ -14,14 +14,9 @@ Public Class Program
     End Function
 
     'coordinates for 6 points
-    Dim pos(5) As CoorPoint
+    Dim pos() As CoorPoint
     'Dim pos(5, 2) As Double
-    'lines coresponding to the points
-
-    'coordinates for 4 points
-    Dim pos2(3) As CoorPoint
-    'Dim pos2(3, 2) As Double
-    'lines coresponding to the points
+    Dim posColors() As Color = {Color.Red, Color.Orange, Color.Yellow, Color.Green, Color.Blue, Color.Cyan}
 
     'Origin for the coordinates system
     Dim origin(1) As Double
@@ -234,27 +229,6 @@ Public Class Program
         Test_ConfirmButton.Enabled = False
         ConnectButton.Enabled = True
         DisconnButton.Enabled = False
-
-        'Set up Plotting
-        Points = New ArrayList
-        pos(0) = New CoorPoint(p1Label)
-        pos(1) = New CoorPoint(p2Label)
-        pos(2) = New CoorPoint(p3Label)
-        pos(3) = New CoorPoint(p4Label)
-        pos(4) = New CoorPoint(p5Label)
-        pos(5) = New CoorPoint(p6Label)
-        pos2(0) = New CoorPoint(p7Label)
-        pos2(1) = New CoorPoint(p8Label)
-        pos2(2) = New CoorPoint(p9Label)
-        pos2(3) = New CoorPoint(p10Label)
-        For i = 0 To 5
-            pos(i).Label.Parent = TabPage1
-            Points.Add(pos(i))
-        Next
-        For i = 0 To 3
-            pos2(i).Label.Parent = TabPage1
-            Points.Add(pos2(i))
-        Next
 
         GroupBox_Plot.Visible = True
 
@@ -725,8 +699,14 @@ Public Class Program
     End Sub
 
     Private Sub Button_L_check_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L_check.Click
-
-
+        'Set up Plotting
+        Points = New ArrayList
+        pos = {New CoorPoint(p2Label), New CoorPoint(p4Label), New CoorPoint(p6Label), New CoorPoint(p8Label), New CoorPoint(p10Label), New CoorPoint(p12Label)}
+        For i = 0 To 5
+            pos(i).Label.Parent = TabPage1
+            pos(i).Label.ForeColor = posColors(i)
+            Points.Add(pos(i))
+        Next
 
         Dim r1 As Integer
         If String.IsNullOrWhiteSpace(TextBox_L.Text) Then
@@ -782,6 +762,14 @@ Public Class Program
     End Sub
 
     Private Sub Button_L1_L2_L3_check_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L1_L2_L3_check.Click
+        'Set up Plotting
+        Points = New ArrayList
+        pos = {New CoorPoint(p2Label), New CoorPoint(p4Label), New CoorPoint(p6Label), New CoorPoint(p8Label)}
+        For i = 0 To 3
+            pos(i).Label.Parent = TabPage1
+            pos(i).Label.ForeColor = posColors(i)
+            Points.Add(pos(i))
+        Next
 
         If String.IsNullOrWhiteSpace(TextBox_L1.Text) Or String.IsNullOrWhiteSpace(TextBox_L2.Text) Or String.IsNullOrWhiteSpace(TextBox_L3.Text) Then
             Return
@@ -794,14 +782,14 @@ Public Class Program
         L2 = TextBox_L2.Text
         L3 = TextBox_L3.Text
         D0_2 = 2 * Math.Sqrt(((L1 / 2) ^ 2) + ((L2 / 2) ^ 2) + (L3 ^ 2))
-        TextBox_r2.Text = D0_2
+        TextBox_r2.Text = Math.Ceiling(D0_2)
         Dim r = D0_2
-        pos2(0).Coors = New ThreeDPoint(D0_2 * -0.45, D0_2 * 0.77, D0_2 * 0.45)
-        pos2(1).Coors = New ThreeDPoint(D0_2 * -0.45, D0_2 * -0.77, D0_2 * 0.45)
-        pos2(2).Coors = New ThreeDPoint(D0_2 * 0.89, 0, D0_2 * 0.45)
-        pos2(3).Coors = New ThreeDPoint(0, 0, D0_2)
+        pos(0).Coors = New ThreeDPoint(D0_2 * -0.45, D0_2 * 0.77, D0_2 * 0.45)
+        pos(1).Coors = New ThreeDPoint(D0_2 * -0.45, D0_2 * -0.77, D0_2 * 0.45)
+        pos(2).Coors = New ThreeDPoint(D0_2 * 0.89, 0, D0_2 * 0.45)
+        pos(3).Coors = New ThreeDPoint(0, 0, D0_2)
 
-        plot(xCor, yCor, GroupBox_Plot, r, pos2)
+        plot(xCor, yCor, GroupBox_Plot, r, pos)
         If choice = "鐵輪壓路機(Road roller)" Then
             Load_Others(choice)
             MachChosen = True
@@ -1082,7 +1070,7 @@ Public Class Program
         Dim tempRun As Run_Unit
         Set_Panel(Panel_PreCal_1st, LinkLabel_PreCal_1st)
         tempRun = New Run_Unit(LinkLabel_PreCal_1st, Panel_PreCal_1st, Nothing, Nothing, 0, "PreCal_P2", 0, 0, 0)
-        tempRun = Load_Precal(tempRun)
+        tempRun = Load_PreCal(tempRun)
 
         'Main Steps
         tempRun = Load_Excavator_Helper(tempRun)
@@ -1269,7 +1257,7 @@ Public Class Program
         'Set_Panel(Panel_PreCal, LinkLabel_preCal)
         Set_Panel(Panel_PreCal_1st, LinkLabel_PreCal_1st)
         tempRun = New Run_Unit(LinkLabel_PreCal_1st, Panel_PreCal_1st, Nothing, Nothing, 0, "PreCal_P2", 0, 0, 0)
-        tempRun = Load_Precal(tempRun)
+        tempRun = Load_PreCal(tempRun)
 
         tempRun = Load_Loader_Helper(tempRun)
 
@@ -1535,7 +1523,7 @@ Public Class Program
         'Set_Panel(Panel_PreCal, LinkLabel_preCal)
         Set_Panel(Panel_PreCal_1st, LinkLabel_PreCal_1st)
         tempRun = New Run_Unit(LinkLabel_PreCal_1st, Panel_PreCal_1st, Nothing, Nothing, 0, "PreCal_P2", 0, 0, 0)
-        tempRun = Load_Precal(tempRun)
+        tempRun = Load_PreCal(tempRun)
 
         tempRun = Load_Excavator_Helper(tempRun)
         tempRun = Load_Loader_Helper(tempRun)
@@ -1615,7 +1603,7 @@ Public Class Program
         'Set_Panel(Panel_PreCal, LinkLabel_preCal)
         Set_Panel(Panel_PreCal_1st, LinkLabel_PreCal_1st)
         tempRun = New Run_Unit(LinkLabel_PreCal_1st, Panel_PreCal_1st, Nothing, Nothing, 0, "PreCal_P2", 0, 0, 0)
-        tempRun = Load_Precal(tempRun)
+        tempRun = Load_PreCal(tempRun)
 
         tempRun = Load_Tractor_Helper(tempRun)
 
@@ -1968,41 +1956,7 @@ Public Class Program
 
     End Function
 
-    Private MouseIsDown As Boolean = False
-    Private lastPos As Point
-
-    Private Sub pLabel_MouseDown(ByVal sender As Object, ByVal e As  _
-    System.Windows.Forms.MouseEventArgs) Handles p1Label.MouseDown, p2Label.MouseDown, p3Label.MouseDown, p4Label.MouseDown, p5Label.MouseDown, p6Label.MouseDown, p7Label.MouseDown, p8Label.MouseDown, p9Label.MouseDown, p10Label.MouseDown
-        ' Set a flag to show that the mouse is down.
-        MouseIsDown = True
-        lastPos = Cursor.Position
-        For Each l As CoorPoint In Points
-            If l.Label.Name = sender.Name Then
-                If Not IsNothing(l.Line) Then
-                    l.Line.Dispose()
-                End If
-            End If
-        Next
-    End Sub
-
-    Private Sub pLabel_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles p9Label.MouseUp, p8Label.MouseUp, p7Label.MouseUp, p10Label.MouseUp, p6Label.MouseUp, p5Label.MouseUp, p4Label.MouseUp, p3Label.MouseUp, p2Label.MouseUp, p1Label.MouseUp
-        MouseIsDown = False
-        For Each l As CoorPoint In Points
-            If l.Label.Name = sender.Name Then
-                l.Line = New LineShape(canvas)
-                l.Line.StartPoint = New System.Drawing.Point((origin(0) + ratio * l.Coors.Xc), (origin(1) - ratio * l.Coors.Yc))
-                l.Line.EndPoint = translate(New Point(l.Label.Location.X + l.Label.Size.Width / 2, l.Label.Location.Y - l.Label.Size.Height), TabPage1.Location, GroupBox_Plot.Location + canvas.Location)
-            End If
-        Next
-    End Sub
-    Private Sub pLabel_MouseMove(ByVal sender As Label, ByVal e As System.Windows.Forms.MouseEventArgs) Handles p9Label.MouseMove, p8Label.MouseMove, p7Label.MouseMove, p10Label.MouseMove, p6Label.MouseMove, p5Label.MouseMove, p4Label.MouseMove, p3Label.MouseMove, p2Label.MouseMove, p1Label.MouseMove
-        If MouseIsDown Then
-            ' Initiate dragging.
-            Dim temp As Point = Cursor.Position
-            sender.Location = temp - lastPos + sender.Location
-            lastPos = temp
-        End If
-    End Sub
+    
 
     Private Function GetInstantData()
         Dim result(6 - 1) As Double
@@ -2095,7 +2049,7 @@ Public Class Program
                     'send values to display as text and graphs
 
                     SetScreenValuesAndGraphs(GetInstantData())
-                    
+
                     'if HasNextStep
                     'change step color , seconds 
                     'do next step
@@ -2347,7 +2301,7 @@ Public Class Program
             End If
         End If
 
-        
+
         'everything else
         Dim tempGRU As Grid_Run_Unit = CurRun.GRU
         While Not IsNothing(tempGRU.NextGRU) 'for more than one additional runs
@@ -2393,86 +2347,147 @@ Public Class Program
             'Tell meters to stop measuring
             Comm.StopMeasure()
             ShowResultsOnForm()
+
+            'IF PRECAL
+            If CurRun.Name.Contains("PreCal") Then
+                Dim value As Integer
+                If CurRun.Name.Contains("P2") Then
+                    value = CurRun.GRU.LpAeq2
+                ElseIf CurRun.Name.Contains("P4") Then
+                    value = CurRun.GRU.LpAeq4
+                ElseIf CurRun.Name.Contains("P6") Then
+                    value = CurRun.GRU.LpAeq6
+                ElseIf CurRun.Name.Contains("P8") Then
+                    value = CurRun.GRU.LpAeq8
+                ElseIf CurRun.Name.Contains("P10") Then
+                    value = CurRun.GRU.LpAeq10
+                ElseIf CurRun.Name.Contains("P12") Then
+                    value = CurRun.GRU.LpAeq12
+                End If
+                If value > 94.7 Or value < 93.3 Then
+                    MsgBox("校正值超出94+-0.7dB範圍，建議修正!")
+                End If
+                'IF PostCal
+            ElseIf CurRun.Name.Contains("PostCal") Then
+                Dim value1 As Integer
+                If CurRun.Name.Contains("P2") Then
+                    value1 = CurRun.GRU.LpAeq2
+                ElseIf CurRun.Name.Contains("P4") Then
+                    value1 = CurRun.GRU.LpAeq4
+                ElseIf CurRun.Name.Contains("P6") Then
+                    value1 = CurRun.GRU.LpAeq6
+                ElseIf CurRun.Name.Contains("P8") Then
+                    value1 = CurRun.GRU.LpAeq8
+                ElseIf CurRun.Name.Contains("P10") Then
+                    value1 = CurRun.GRU.LpAeq10
+                ElseIf CurRun.Name.Contains("P12") Then
+                    value1 = CurRun.GRU.LpAeq12
+                End If
+                Dim tempRun As Run_Unit = CurRun
+                While tempRun IsNot Nothing
+                    If tempRun.Name.Contains("PreCal") Then
+                        Dim value2 As Integer
+                        If CurRun.Name.Contains("P2") Then
+                            value2 = tempRun.GRU.LpAeq2
+                        ElseIf CurRun.Name.Contains("P4") Then
+                            value2 = tempRun.GRU.LpAeq4
+                        ElseIf CurRun.Name.Contains("P6") Then
+                            value2 = tempRun.GRU.LpAeq6
+                        ElseIf CurRun.Name.Contains("P8") Then
+                            value2 = tempRun.GRU.LpAeq8
+                        ElseIf CurRun.Name.Contains("P10") Then
+                            value2 = tempRun.GRU.LpAeq10
+                        ElseIf CurRun.Name.Contains("P12") Then
+                            value2 = tempRun.GRU.LpAeq12
+                        End If
+                        If Math.Abs(value2 - value1) > 0.3 Then
+                            MsgBox("前後校正值差0.3dB以上!")
+                            Exit While
+                        End If
+                    End If
+                    tempRun = tempRun.PrevUnit
+                End While
+                End If
         Else
-            Timer1.Stop()
-            'final Leq
-            updateFinalBarGraph()
-            'Tell meters to stop measuring
-            Comm.StopMeasure()
+                Timer1.Stop()
+                'final Leq
+                updateFinalBarGraph()
+                'Tell meters to stop measuring
+                Comm.StopMeasure()
 
-            startButton.Enabled = True
-            stopButton.Enabled = False
-            All_Panel_Enable()
-            If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then 'if not jump step
-                'bounce back
-                If CurRun.Name = "ExA1" Or CurRun.Name = "LoA1" Or CurRun.Name = "TrA1" Or CurRun.Name = "A4" Or CurRun.Name = "ExA1_Add" Or CurRun.Name = "LoA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "A4_Add" Or CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA3_fwd" Or CurRun.Name = "LoA3_bkd" Or CurRun.Name = "TrA3_fwd" Or CurRun.Name = "TrA3_bkd" Or CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "LoA3_bkd_Add" Or CurRun.Name = "TrA3_fwd_Add" Or CurRun.Name = "TrA3_bkd_Add" Then
-                    'dispose data
-
-                    'reset run_unit
-                    Set_Run_Unit()
-                    'load A1's steps
-                    Clear_Steps()
-                    Load_Steps()
-                    'dispose old graph and create new graph
-                    Load_New_Graph_CD_True()
-                    'bounce back to previous step
-                ElseIf CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_2nd_3rd" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
-                    If CurRun.PrevUnit.Name = "ExA2_1st" Or CurRun.PrevUnit.Name = "ExA2_1st_Add" Or CurRun.PrevUnit.Name = "LoA2_1st" Or CurRun.PrevUnit.Name = "LoA2_1st_Add" Then
+                startButton.Enabled = True
+                stopButton.Enabled = False
+                All_Panel_Enable()
+                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then 'if not jump step
+                    'bounce back
+                    If CurRun.Name = "ExA1" Or CurRun.Name = "LoA1" Or CurRun.Name = "TrA1" Or CurRun.Name = "A4" Or CurRun.Name = "ExA1_Add" Or CurRun.Name = "LoA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "A4_Add" Or CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA3_fwd" Or CurRun.Name = "LoA3_bkd" Or CurRun.Name = "TrA3_fwd" Or CurRun.Name = "TrA3_bkd" Or CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "LoA3_bkd_Add" Or CurRun.Name = "TrA3_fwd_Add" Or CurRun.Name = "TrA3_bkd_Add" Then
                         'dispose data
 
                         'reset run_unit
-                        Restart_from_1st_Previous_Run_Unit()
-                        'load LoA3_fwd or TrA3_fwd's steps
+                        Set_Run_Unit()
+                        'load A1's steps
                         Clear_Steps()
                         Load_Steps()
                         'dispose old graph and create new graph
                         Load_New_Graph_CD_True()
-                    Else 'jump back two steps
-                        'dispose data
+                        'bounce back to previous step
+                    ElseIf CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_2nd_3rd" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
+                        If CurRun.PrevUnit.Name = "ExA2_1st" Or CurRun.PrevUnit.Name = "ExA2_1st_Add" Or CurRun.PrevUnit.Name = "LoA2_1st" Or CurRun.PrevUnit.Name = "LoA2_1st_Add" Then
+                            'dispose data
 
-                        'reset run_unit
-                        Restart_from_2nd_Previous_Run_Unit()
-                        'load LoA3_fwd or TrA3_fwd's steps
-                        Clear_Steps()
-                        Load_Steps()
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_True()
+                            'reset run_unit
+                            Restart_from_1st_Previous_Run_Unit()
+                            'load LoA3_fwd or TrA3_fwd's steps
+                            Clear_Steps()
+                            Load_Steps()
+                            'dispose old graph and create new graph
+                            Load_New_Graph_CD_True()
+                        Else 'jump back two steps
+                            'dispose data
+
+                            'reset run_unit
+                            Restart_from_2nd_Previous_Run_Unit()
+                            'load LoA3_fwd or TrA3_fwd's steps
+                            Clear_Steps()
+                            Load_Steps()
+                            'dispose old graph and create new graph
+                            Load_New_Graph_CD_True()
+                        End If
                     End If
-                End If
-            Else
-                If CurRun.Name = "ExA2_1st" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st_Add" Then
-                    CurRun.NextUnit.Set_BackColor(Color.Green)
-                    CurRun.NextUnit.NextUnit.Set_BackColor(Color.Green)
-                ElseIf CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_2nd_3rd" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
-                    If CurRun.NextUnit.Name.Contains("_2nd_3rd") Then
-                        CurRun.NextUnit.Set_BackColor(Color.Green)
-                    End If
-                End If
-                CurRun.Set_BackColor(Color.Green)
-                Temp_CurRun.Set_BackColor(Color.Yellow)
-
-                CurRun = Temp_CurRun
-                Temp_CurRun = Null_CurRun
-
-                If Temp_Countdown = True Then
-                    Countdown = True
-                    Set_Run_Unit()
-                    Clear_Steps()
-                    Load_Steps()
-                    'dispose old graph and create new graph
-                    Load_New_Graph_CD_True()
                 Else
-                    Countdown = False
-                    timeLeft = CurRun.Time
-                    timeLabel.Text = timeLeft & " s"
-                    Clear_Steps()
-                    'dispose old graph and create new graph
-                    Load_New_Graph_CD_False()
-                End If
-                timeLabel.Text = timeLeft & " s"
+                    If CurRun.Name = "ExA2_1st" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st_Add" Then
+                        CurRun.NextUnit.Set_BackColor(Color.Green)
+                        CurRun.NextUnit.NextUnit.Set_BackColor(Color.Green)
+                    ElseIf CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_2nd_3rd" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
+                        If CurRun.NextUnit.Name.Contains("_2nd_3rd") Then
+                            CurRun.NextUnit.Set_BackColor(Color.Green)
+                        End If
+                    End If
+                    CurRun.Set_BackColor(Color.Green)
+                    Temp_CurRun.Set_BackColor(Color.Yellow)
 
+                    CurRun = Temp_CurRun
+                    Temp_CurRun = Null_CurRun
+
+                    If Temp_Countdown = True Then
+                        Countdown = True
+                        Set_Run_Unit()
+                        Clear_Steps()
+                        Load_Steps()
+                        'dispose old graph and create new graph
+                        Load_New_Graph_CD_True()
+                    Else
+                        Countdown = False
+                        timeLeft = CurRun.Time
+                        timeLabel.Text = timeLeft & " s"
+                        Clear_Steps()
+                        'dispose old graph and create new graph
+                        Load_New_Graph_CD_False()
+                    End If
+                    timeLabel.Text = timeLeft & " s"
+
+                End If
             End If
-        End If
     End Sub
 
     'two approaches, if there's already a GRU existent, add as next GRU, if not, attach to the RU
@@ -3025,7 +3040,7 @@ Public Class Program
         While Not IsNothing(keyGRU.NextGRU) 'for more than one additional runs
             keyGRU = keyGRU.NextGRU
         End While
-        
+
         If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
             Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
             If Result = DialogResult.Yes Then
@@ -3705,14 +3720,15 @@ Public Class Program
         If Not IsNothing(canvas) Then
             canvas.Dispose()
         End If
-        'clear labels
-        For Each cp As CoorPoint In pos
-            cp.Label.Text = ""
-        Next
-        For Each cp As CoorPoint In pos2
-            cp.Label.Text = ""
-        Next
 
+        'clear labels
+        p2Label.Text = ""
+        p4Label.Text = ""
+        p6Label.Text = ""
+        p8Label.Text = ""
+        p10Label.Text = ""
+        p12Label.Text = ""
+        
         canvas = New ShapeContainer()
         canvas.Parent = parent
         canvas.BackColor = Color.Transparent
@@ -3732,7 +3748,7 @@ Public Class Program
         Dim rCircle = New OvalShape((origin(0) - r), (origin(1) - r), 2 * r, 2 * r)
         rCircle.Parent = canvas
         'plot normalized points
-
+        Dim labels = {"P2", "P4", "P6", "P8", "P10", "P12"}
         For index = 0 To coors.GetLength(0) - 1
             Dim x = coors(index).Coors.Xc * ratio
             Dim y = coors(index).Coors.Yc * ratio
@@ -3740,11 +3756,12 @@ Public Class Program
 
 
             rPoint.Parent = canvas
-            rPoint.BackColor = Color.Black
+            rPoint.BorderColor = posColors(index)
+            rPoint.BackColor = posColors(index)
             rPoint.BackStyle = BackStyle.Opaque
-            Dim xText = Format(coors(index).Coors.Xc, "#.##")
-            Dim yText = Format(coors(index).Coors.Yc, "#.##")
-            Dim zText = Format(coors(index).Coors.Zc, "#.##")
+            Dim xText = Format(coors(index).Coors.Xc, "#.#")
+            Dim yText = Format(coors(index).Coors.Yc, "#.#")
+            Dim zText = Format(coors(index).Coors.Zc, "#.#")
             If xText = "" Then
                 xText = "0"
             End If
@@ -3754,7 +3771,7 @@ Public Class Program
             If zText = "" Then
                 zText = "0"
             End If
-            coors(index).Label.Text = "(" + xText + " , " + yText + " , " + zText + ")"
+            coors(index).Label.Text = labels(index) + " (" + xText + " , " + yText + " , " + zText + ")"
             coors(index).Label.Location = translate(New System.Drawing.Point(origin(0) + x, origin(1) - y), GroupBox_Plot.Location, TabPage1.Location)
             coors(index).Label.BringToFront()
         Next
@@ -3768,6 +3785,43 @@ Public Class Program
         Dim y = p1.Y + con2.Y - con3.Y
         Return New System.Drawing.Point(x, y)
     End Function
+
+    Private MouseIsDown As Boolean = False
+    Private lastPos As Point
+
+    Private Sub pLabel_MouseDown(ByVal sender As Object, ByVal e As  _
+    System.Windows.Forms.MouseEventArgs) Handles p8Label.MouseDown, p2Label.MouseDown, p10Label.MouseDown, p4Label.MouseDown, p12Label.MouseDown, p6Label.MouseDown
+        ' Set a flag to show that the mouse is down.
+        MouseIsDown = True
+        lastPos = Cursor.Position
+        For Each l As CoorPoint In Points
+            If l.Label.Name = sender.Name Then
+                If Not IsNothing(l.Line) Then
+                    l.Line.Dispose()
+                End If
+            End If
+        Next
+    End Sub
+
+    Private Sub pLabel_MouseUp(ByVal sender As Label, ByVal e As System.Windows.Forms.MouseEventArgs) Handles p6Label.MouseUp, p12Label.MouseUp, p4Label.MouseUp, p10Label.MouseUp, p2Label.MouseUp, p8Label.MouseUp
+        MouseIsDown = False
+        For Each l As CoorPoint In Points
+            If l.Label.Name = sender.Name Then
+                l.Line = New LineShape(canvas)
+                l.Line.BorderColor = sender.ForeColor
+                l.Line.StartPoint = New System.Drawing.Point((origin(0) + ratio * l.Coors.Xc), (origin(1) - ratio * l.Coors.Yc))
+                l.Line.EndPoint = translate(New Point(l.Label.Location.X + l.Label.Size.Width / 2, l.Label.Location.Y), TabPage1.Location, GroupBox_Plot.Location + canvas.Location)
+            End If
+        Next
+    End Sub
+    Private Sub pLabel_MouseMove(ByVal sender As Label, ByVal e As System.Windows.Forms.MouseEventArgs) Handles p6Label.MouseMove, p12Label.MouseMove, p4Label.MouseMove, p10Label.MouseMove, p2Label.MouseMove, p8Label.MouseMove
+        If MouseIsDown Then
+            ' Initiate dragging.
+            Dim temp As Point = Cursor.Position
+            sender.Location = temp - lastPos + sender.Location
+            lastPos = temp
+        End If
+    End Sub
 
     Private Sub ConnectButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ConnectButton.Click
         If Comm.Open() Then

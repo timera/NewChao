@@ -41,18 +41,14 @@ Partial Class Program
         Me.ButtonSim = New System.Windows.Forms.Button()
         Me.Button_change_machine = New System.Windows.Forms.Button()
         Me.p6Label = New System.Windows.Forms.Label()
-        Me.p5Label = New System.Windows.Forms.Label()
+        Me.p12Label = New System.Windows.Forms.Label()
         Me.p4Label = New System.Windows.Forms.Label()
-        Me.p3Label = New System.Windows.Forms.Label()
+        Me.p10Label = New System.Windows.Forms.Label()
         Me.p2Label = New System.Windows.Forms.Label()
-        Me.p1Label = New System.Windows.Forms.Label()
+        Me.p8Label = New System.Windows.Forms.Label()
         Me.GroupBox_Plot = New System.Windows.Forms.GroupBox()
         Me.yLabel = New System.Windows.Forms.Label()
         Me.xLabel = New System.Windows.Forms.Label()
-        Me.p9Label = New System.Windows.Forms.Label()
-        Me.p8Label = New System.Windows.Forms.Label()
-        Me.p7Label = New System.Windows.Forms.Label()
-        Me.p10Label = New System.Windows.Forms.Label()
         Me.GroupBox_A4 = New System.Windows.Forms.GroupBox()
         Me.Button_L1_L2_L3_check = New System.Windows.Forms.Button()
         Me.TextBox_r2 = New System.Windows.Forms.TextBox()
@@ -318,6 +314,7 @@ Partial Class Program
         Me.TabPageCharts = New System.Windows.Forms.TabPage()
         Me.SaveButton = New System.Windows.Forms.Button()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.TabPageSettings = New System.Windows.Forms.TabPage()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -426,6 +423,7 @@ Partial Class Program
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPageCharts)
+        Me.TabControl1.Controls.Add(Me.TabPageSettings)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
@@ -440,16 +438,12 @@ Partial Class Program
         Me.TabPage1.Controls.Add(Me.GroupBox1)
         Me.TabPage1.Controls.Add(Me.Button_change_machine)
         Me.TabPage1.Controls.Add(Me.p6Label)
-        Me.TabPage1.Controls.Add(Me.p5Label)
+        Me.TabPage1.Controls.Add(Me.p12Label)
         Me.TabPage1.Controls.Add(Me.p4Label)
-        Me.TabPage1.Controls.Add(Me.p3Label)
-        Me.TabPage1.Controls.Add(Me.p2Label)
-        Me.TabPage1.Controls.Add(Me.p1Label)
-        Me.TabPage1.Controls.Add(Me.GroupBox_Plot)
-        Me.TabPage1.Controls.Add(Me.p9Label)
-        Me.TabPage1.Controls.Add(Me.p8Label)
-        Me.TabPage1.Controls.Add(Me.p7Label)
         Me.TabPage1.Controls.Add(Me.p10Label)
+        Me.TabPage1.Controls.Add(Me.p2Label)
+        Me.TabPage1.Controls.Add(Me.p8Label)
+        Me.TabPage1.Controls.Add(Me.GroupBox_Plot)
         Me.TabPage1.Controls.Add(Me.GroupBox_A4)
         Me.TabPage1.Controls.Add(Me.GroupBox_A1_A2_A3)
         Me.TabPage1.Controls.Add(Me.Picture_machine)
@@ -563,13 +557,13 @@ Partial Class Program
         '
         'p5Label
         '
-        Me.p5Label.AutoSize = True
-        Me.p5Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
-        Me.p5Label.Location = New System.Drawing.Point(473, 381)
-        Me.p5Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.p5Label.Name = "p5Label"
-        Me.p5Label.Size = New System.Drawing.Size(0, 31)
-        Me.p5Label.TabIndex = 44
+        Me.p12Label.AutoSize = True
+        Me.p12Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
+        Me.p12Label.Location = New System.Drawing.Point(473, 381)
+        Me.p12Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.p12Label.Name = "p5Label"
+        Me.p12Label.Size = New System.Drawing.Size(0, 31)
+        Me.p12Label.TabIndex = 44
         '
         'p4Label
         '
@@ -583,13 +577,13 @@ Partial Class Program
         '
         'p3Label
         '
-        Me.p3Label.AutoSize = True
-        Me.p3Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
-        Me.p3Label.Location = New System.Drawing.Point(457, 364)
-        Me.p3Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.p3Label.Name = "p3Label"
-        Me.p3Label.Size = New System.Drawing.Size(0, 31)
-        Me.p3Label.TabIndex = 42
+        Me.p10Label.AutoSize = True
+        Me.p10Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
+        Me.p10Label.Location = New System.Drawing.Point(457, 364)
+        Me.p10Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.p10Label.Name = "p3Label"
+        Me.p10Label.Size = New System.Drawing.Size(0, 31)
+        Me.p10Label.TabIndex = 42
         '
         'p2Label
         '
@@ -603,20 +597,20 @@ Partial Class Program
         '
         'p1Label
         '
-        Me.p1Label.AutoSize = True
-        Me.p1Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
-        Me.p1Label.Location = New System.Drawing.Point(441, 347)
-        Me.p1Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.p1Label.Name = "p1Label"
-        Me.p1Label.Size = New System.Drawing.Size(0, 31)
-        Me.p1Label.TabIndex = 40
+        Me.p8Label.AutoSize = True
+        Me.p8Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
+        Me.p8Label.Location = New System.Drawing.Point(441, 347)
+        Me.p8Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.p8Label.Name = "p1Label"
+        Me.p8Label.Size = New System.Drawing.Size(0, 31)
+        Me.p8Label.TabIndex = 40
         '
         'GroupBox_Plot
         '
         Me.GroupBox_Plot.BackColor = System.Drawing.Color.DarkGray
         Me.GroupBox_Plot.Controls.Add(Me.yLabel)
         Me.GroupBox_Plot.Controls.Add(Me.xLabel)
-        Me.GroupBox_Plot.Location = New System.Drawing.Point(320, 66)
+        Me.GroupBox_Plot.Location = New System.Drawing.Point(364, 86)
         Me.GroupBox_Plot.Name = "GroupBox_Plot"
         Me.GroupBox_Plot.Size = New System.Drawing.Size(600, 600)
         Me.GroupBox_Plot.TabIndex = 39
@@ -641,42 +635,6 @@ Partial Class Program
         Me.xLabel.Size = New System.Drawing.Size(31, 27)
         Me.xLabel.TabIndex = 0
         Me.xLabel.Text = "X"
-        '
-        'p9Label
-        '
-        Me.p9Label.AutoSize = True
-        Me.p9Label.Location = New System.Drawing.Point(433, 338)
-        Me.p9Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.p9Label.Name = "p9Label"
-        Me.p9Label.Size = New System.Drawing.Size(0, 12)
-        Me.p9Label.TabIndex = 38
-        '
-        'p8Label
-        '
-        Me.p8Label.AutoSize = True
-        Me.p8Label.Location = New System.Drawing.Point(425, 329)
-        Me.p8Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.p8Label.Name = "p8Label"
-        Me.p8Label.Size = New System.Drawing.Size(0, 12)
-        Me.p8Label.TabIndex = 37
-        '
-        'p7Label
-        '
-        Me.p7Label.AutoSize = True
-        Me.p7Label.Location = New System.Drawing.Point(417, 321)
-        Me.p7Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.p7Label.Name = "p7Label"
-        Me.p7Label.Size = New System.Drawing.Size(0, 12)
-        Me.p7Label.TabIndex = 36
-        '
-        'p10Label
-        '
-        Me.p10Label.AutoSize = True
-        Me.p10Label.Location = New System.Drawing.Point(409, 312)
-        Me.p10Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.p10Label.Name = "p10Label"
-        Me.p10Label.Size = New System.Drawing.Size(0, 12)
-        Me.p10Label.TabIndex = 35
         '
         'GroupBox_A4
         '
@@ -3449,6 +3407,16 @@ Partial Class Program
         '
         Me.Timer1.Interval = 1000
         '
+        'TabPageSettings
+        '
+        Me.TabPageSettings.Location = New System.Drawing.Point(4, 22)
+        Me.TabPageSettings.Name = "TabPageSettings"
+        Me.TabPageSettings.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPageSettings.Size = New System.Drawing.Size(1196, 668)
+        Me.TabPageSettings.TabIndex = 3
+        Me.TabPageSettings.Text = "設定"
+        Me.TabPageSettings.UseVisualStyleBackColor = True
+        '
         'Program
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3691,19 +3659,15 @@ Partial Class Program
     Friend WithEvents Noise3 As System.Windows.Forms.Label
     Friend WithEvents Noise2 As System.Windows.Forms.Label
     Friend WithEvents Noise1 As System.Windows.Forms.Label
-    Friend WithEvents p9Label As System.Windows.Forms.Label
-    Friend WithEvents p8Label As System.Windows.Forms.Label
-    Friend WithEvents p7Label As System.Windows.Forms.Label
-    Friend WithEvents p10Label As System.Windows.Forms.Label
     Friend WithEvents GroupBox_Plot As System.Windows.Forms.GroupBox
     Friend WithEvents yLabel As System.Windows.Forms.Label
     Friend WithEvents xLabel As System.Windows.Forms.Label
     Friend WithEvents p6Label As System.Windows.Forms.Label
-    Friend WithEvents p5Label As System.Windows.Forms.Label
+    Friend WithEvents p12Label As System.Windows.Forms.Label
     Friend WithEvents p4Label As System.Windows.Forms.Label
-    Friend WithEvents p3Label As System.Windows.Forms.Label
+    Friend WithEvents p10Label As System.Windows.Forms.Label
     Friend WithEvents p2Label As System.Windows.Forms.Label
-    Friend WithEvents p1Label As System.Windows.Forms.Label
+    Friend WithEvents p8Label As System.Windows.Forms.Label
     Friend WithEvents Step9 As System.Windows.Forms.Label
     Friend WithEvents LinkLabel_postCal As System.Windows.Forms.LinkLabel
     Friend WithEvents LinkLabel_preCal As System.Windows.Forms.LinkLabel
@@ -3941,4 +3905,5 @@ Partial Class Program
     Friend WithEvents Light3 As System.Windows.Forms.Label
     Friend WithEvents Light2 As System.Windows.Forms.Label
     Friend WithEvents Light1 As System.Windows.Forms.Label
+    Friend WithEvents TabPageSettings As System.Windows.Forms.TabPage
 End Class

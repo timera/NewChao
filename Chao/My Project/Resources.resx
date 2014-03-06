@@ -217,13 +217,91 @@
     <value>吊在空中之狀態，不超過地面上50公分為原則並使其產生最大振動數</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="green" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\green.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="vibrating_hammer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vibrating hammer.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="red" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\red.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="全套管鑽掘機" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\全套管鑽掘機.JPG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="yellow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\yellow.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="卡車起重機" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\卡車起重機.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="土壤取樣器_地鑽___Earth_auger_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\土壤取樣器(地鑽) (Earth auger).jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="壓路機_rollers_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\壓路機(rollers).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="小型膠輪式裝料機_compact_loader__wheeled_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\小型膠輪式裝料機(compact loader  wheeled).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="小型開挖機_compact_excavator_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\小型開挖機(compact excavator).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="履帶式推土機_crawler_dozer_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\履帶式推土機(crawler dozer).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="履帶式裝料機_crawler_loader_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\履帶式裝料機(crawler loader).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="履帶式開挖機_crawler_excavator_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\履帶式開挖機(crawler excavator).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="履帶式開挖裝料機_crawler_backhoe_loader_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\履帶式開挖裝料機(crawler backhoe loader).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="履帶起重機" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\履帶起重機.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="拔樁機" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\拔樁機.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="振動打樁機" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\振動打樁機.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="油壓式打樁機_Hydraulic_pile_driver_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\油壓式打樁機(Hydraulic pile driver).jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="混凝土割切機_Concrete_cutter_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\混凝土割切機(Concrete cutter).jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="混凝土泵車_Concrete_pump_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\混凝土泵車(Concrete pump).jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="混凝土破碎機_Concrete_breaker_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\混凝土破碎機(Concrete breaker).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="滑移裝料機_skid_steer_loader_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\滑移裝料機(skid steer loader).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="瀝青混凝土舖築機_Asphalt_finisher_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\瀝青混凝土舖築機(Asphalt finisher).jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="發電機_Generator_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\發電機(Generator).jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="空氣壓縮機_Compressor_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\空氣壓縮機(Compressor).jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="膠輪式推土機_wheeled_dozer_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\膠輪式推土機(wheeled dozer).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="膠輪式裝料機_wheeled_loader_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\膠輪式裝料機(wheeled loader).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="膠輪式開挖機_wheeled_excavator_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\膠輪式開挖機(wheeled excavator).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="膠輪式開挖裝料機_wheeled_backhoe_loader_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\膠輪式開挖裝料機(wheeled backhoe loader).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="輪式起重機" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\輪式起重機.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="鑽土機_Earth_drill_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\鑽土機(Earth drill).jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="鑽岩機_Rock_breaker_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\鑽岩機(Rock breaker).jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

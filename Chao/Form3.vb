@@ -666,10 +666,15 @@ Public Class Program
         'mach區分要輸入至哪個 groupbox for plotting the coordinates
         If Not IsNothing(Machine) Then
             If Not Machine = Machines.Others Then
-                GroupBox_A1_A2_A3.Enabled = True
-                TextBox_L.Enabled = True
-                Button_L_check.Enabled = True
-                GroupBox_A4.Enabled = False
+                If inner_choice.Contains("A1") Or inner_choice.Contains("A4") Then
+                    GroupBox_A1_A2_A3.Enabled = False
+                    GroupBox_A4.Enabled = False
+                Else
+                    GroupBox_A1_A2_A3.Enabled = True
+                    TextBox_L.Enabled = True
+                    Button_L_check.Enabled = True
+                    GroupBox_A4.Enabled = False
+                End If
             Else
                 GroupBox_A1_A2_A3.Enabled = False
                 GroupBox_A4.Enabled = True
@@ -889,8 +894,6 @@ Public Class Program
         End If
 
     End Sub
-
-
 
     Sub LinkLabel_PreCal_PostCal_visible()
         Panel_PreCal_Sub.Visible = True
@@ -1706,7 +1709,6 @@ Public Class Program
     End Function
 
     Sub Load_Others(ByVal name As String)
-
 
         PanelA4.Visible = True
         Panel_PreCal.Visible = True

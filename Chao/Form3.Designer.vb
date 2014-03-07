@@ -300,8 +300,8 @@ Partial Class Program
         Me.Step2 = New System.Windows.Forms.Label()
         Me.TabPageCharts = New System.Windows.Forms.TabPage()
         Me.SaveButton = New System.Windows.Forms.Button()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.TabPageSettings = New System.Windows.Forms.TabPage()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.TextBox_L3 = New Chao.ChaoTextBox()
         Me.TextBox_L2 = New Chao.ChaoTextBox()
         Me.TextBox_L1 = New Chao.ChaoTextBox()
@@ -555,13 +555,13 @@ Partial Class Program
         Me.p6Label.Size = New System.Drawing.Size(0, 31)
         Me.p6Label.TabIndex = 45
         '
-        'p5Label
+        'p12Label
         '
         Me.p12Label.AutoSize = True
         Me.p12Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
         Me.p12Label.Location = New System.Drawing.Point(473, 381)
         Me.p12Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.p12Label.Name = "p5Label"
+        Me.p12Label.Name = "p12Label"
         Me.p12Label.Size = New System.Drawing.Size(0, 31)
         Me.p12Label.TabIndex = 44
         '
@@ -575,13 +575,13 @@ Partial Class Program
         Me.p4Label.Size = New System.Drawing.Size(0, 31)
         Me.p4Label.TabIndex = 43
         '
-        'p3Label
+        'p10Label
         '
         Me.p10Label.AutoSize = True
         Me.p10Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
         Me.p10Label.Location = New System.Drawing.Point(457, 364)
         Me.p10Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.p10Label.Name = "p3Label"
+        Me.p10Label.Name = "p10Label"
         Me.p10Label.Size = New System.Drawing.Size(0, 31)
         Me.p10Label.TabIndex = 42
         '
@@ -595,13 +595,13 @@ Partial Class Program
         Me.p2Label.Size = New System.Drawing.Size(0, 31)
         Me.p2Label.TabIndex = 41
         '
-        'p1Label
+        'p8Label
         '
         Me.p8Label.AutoSize = True
         Me.p8Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
         Me.p8Label.Location = New System.Drawing.Point(441, 347)
         Me.p8Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.p8Label.Name = "p1Label"
+        Me.p8Label.Name = "p8Label"
         Me.p8Label.Size = New System.Drawing.Size(0, 31)
         Me.p8Label.TabIndex = 40
         '
@@ -786,7 +786,7 @@ Partial Class Program
         'ComboBox_machine_list
         '
         Me.ComboBox_machine_list.FormattingEnabled = True
-        Me.ComboBox_machine_list.Items.AddRange(New Object() {"A1+A2", "開挖機(Excavator)", "A1+A3", "推土機(Crawler and wheel tractor)", "A1+A2+A3", "裝料機(Crawler and wheel loader)", "裝料開挖機", "A4", "鐵輪壓路機(Road roller)", "膠輪壓路機(Wheel roller)", "振動式壓路機(Vibrating roller) ", "履帶起重機(Crawler crane)", "卡車起重機(Truck crane)", "輪形起重機(Wheel crane)", "振動式樁錘(Vibrating hammer)", "油壓式打樁機(Hydraulic pile driver)", "拔樁機", "油壓式拔樁機", "土壤取樣器(地鑽) (Earth auger)", "全套管鑽掘機", "鑽土機(Earth drill)", "鑽岩機(Rock breaker)", "混凝土泵車(Concrete pump)", "混凝土破碎機(Concrete breaker)", "瀝青混凝土舖築機(Asphalt finisher)", "混凝土割切機(Concrete cutter)", "發電機(Generator)", "空氣壓縮機(Compressor) "})
+        Me.ComboBox_machine_list.Items.AddRange(New Object() {"A1+A2", "開挖機(Excavator)", "A1+A3", "推土機(Crawler and wheel tractor)", "A1+A2+A3", "裝料機(Crawler and wheel loader)", "裝料開挖機", "A4", "鐵輪壓路機(Road roller)", "膠輪壓路機(Wheel roller)", "振動式壓路機(Vibrating roller)", "履帶起重機(Crawler crane)", "卡車起重機(Truck crane)", "輪形起重機(Wheel crane)", "振動式樁錘(Vibrating hammer)", "油壓式打樁機(Hydraulic pile driver)", "拔樁機", "油壓式拔樁機", "土壤取樣器(地鑽) (Earth auger)", "全套管鑽掘機", "鑽土機(Earth drill)", "鑽岩機(Rock breaker)", "混凝土泵車(Concrete pump)", "混凝土破碎機(Concrete breaker)", "瀝青混凝土舖築機(Asphalt finisher)", "混凝土割切機(Concrete cutter)", "發電機(Generator)", "空氣壓縮機(Compressor)"})
         Me.ComboBox_machine_list.Location = New System.Drawing.Point(8, 35)
         Me.ComboBox_machine_list.Name = "ComboBox_machine_list"
         Me.ComboBox_machine_list.Size = New System.Drawing.Size(287, 20)
@@ -3312,10 +3312,6 @@ Partial Class Program
         Me.SaveButton.Text = "Save"
         Me.SaveButton.UseVisualStyleBackColor = True
         '
-        'Timer1
-        '
-        Me.Timer1.Interval = 1000
-        '
         'TabPageSettings
         '
         Me.TabPageSettings.Location = New System.Drawing.Point(4, 22)
@@ -3325,6 +3321,11 @@ Partial Class Program
         Me.TabPageSettings.TabIndex = 3
         Me.TabPageSettings.Text = "設定"
         Me.TabPageSettings.UseVisualStyleBackColor = True
+        '
+        'Timer1
+        '
+        Me.Timer1.Interval = 1000
+        '
         'TextBox_L3
         '
         Me.TextBox_L3.Location = New System.Drawing.Point(103, 79)

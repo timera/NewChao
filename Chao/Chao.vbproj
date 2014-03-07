@@ -90,6 +90,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculations.vb" />
+    <Compile Include="CustomClasses.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Communication.vb" />
     <Compile Include="Form3.Designer.vb">
       <DependentUpon>Form3.vb</DependentUpon>

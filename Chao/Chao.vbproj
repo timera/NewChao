@@ -114,9 +114,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Run.vb">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Run.vb" />
     <Compile Include="Steps.vb" />
   </ItemGroup>
   <ItemGroup>

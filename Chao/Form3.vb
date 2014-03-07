@@ -579,6 +579,8 @@ Public Class Program
 
             A4_step_text = Nothing
 
+            Label_A4_Hint1.Visible = False
+            Label_A4_Hint2.Visible = False
         End If
     End Sub
 
@@ -771,6 +773,9 @@ Public Class Program
     End Sub
 
     Private Sub Button_L1_L2_L3_check_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L1_L2_L3_check.Click
+
+        Label_A4_Hint1.Visible = True
+        Label_A4_Hint2.Visible = True
         'Set up Plotting
         Points = New ArrayList
         pos = {New CoorPoint(p2Label), New CoorPoint(p4Label), New CoorPoint(p6Label), New CoorPoint(p8Label)}

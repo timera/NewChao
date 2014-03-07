@@ -1970,7 +1970,7 @@ Public Class Program
 
     End Function
 
-    
+
 
     Private Function GetInstantData()
         Dim result(6 - 1) As Double
@@ -2421,87 +2421,87 @@ Public Class Program
                     End If
                     tempRun = tempRun.PrevUnit
                 End While
-                End If
+            End If
         Else
-                Timer1.Stop()
-                'final Leq
-                updateFinalBarGraph()
-                'Tell meters to stop measuring
-                Comm.StopMeasure()
+            Timer1.Stop()
+            'final Leq
+            updateFinalBarGraph()
+            'Tell meters to stop measuring
+            Comm.StopMeasure()
 
-                startButton.Enabled = True
-                stopButton.Enabled = False
-                All_Panel_Enable()
-                If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then 'if not jump step
-                    'bounce back
-                    If CurRun.Name = "ExA1" Or CurRun.Name = "LoA1" Or CurRun.Name = "TrA1" Or CurRun.Name = "A4" Or CurRun.Name = "ExA1_Add" Or CurRun.Name = "LoA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "A4_Add" Or CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA3_fwd" Or CurRun.Name = "LoA3_bkd" Or CurRun.Name = "TrA3_fwd" Or CurRun.Name = "TrA3_bkd" Or CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "LoA3_bkd_Add" Or CurRun.Name = "TrA3_fwd_Add" Or CurRun.Name = "TrA3_bkd_Add" Then
+            startButton.Enabled = True
+            stopButton.Enabled = False
+            All_Panel_Enable()
+            If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then 'if not jump step
+                'bounce back
+                If CurRun.Name = "ExA1" Or CurRun.Name = "LoA1" Or CurRun.Name = "TrA1" Or CurRun.Name = "A4" Or CurRun.Name = "ExA1_Add" Or CurRun.Name = "LoA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "A4_Add" Or CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA3_fwd" Or CurRun.Name = "LoA3_bkd" Or CurRun.Name = "TrA3_fwd" Or CurRun.Name = "TrA3_bkd" Or CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "LoA3_bkd_Add" Or CurRun.Name = "TrA3_fwd_Add" Or CurRun.Name = "TrA3_bkd_Add" Then
+                    'dispose data
+
+                    'reset run_unit
+                    Set_Run_Unit()
+                    'load A1's steps
+                    Clear_Steps()
+                    Load_Steps()
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_True()
+                    'bounce back to previous step
+                ElseIf CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_2nd_3rd" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
+                    If CurRun.PrevUnit.Name = "ExA2_1st" Or CurRun.PrevUnit.Name = "ExA2_1st_Add" Or CurRun.PrevUnit.Name = "LoA2_1st" Or CurRun.PrevUnit.Name = "LoA2_1st_Add" Then
                         'dispose data
 
                         'reset run_unit
-                        Set_Run_Unit()
-                        'load A1's steps
+                        Restart_from_1st_Previous_Run_Unit()
+                        'load LoA3_fwd or TrA3_fwd's steps
                         Clear_Steps()
                         Load_Steps()
                         'dispose old graph and create new graph
                         Load_New_Graph_CD_True()
-                        'bounce back to previous step
-                    ElseIf CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_2nd_3rd" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
-                        If CurRun.PrevUnit.Name = "ExA2_1st" Or CurRun.PrevUnit.Name = "ExA2_1st_Add" Or CurRun.PrevUnit.Name = "LoA2_1st" Or CurRun.PrevUnit.Name = "LoA2_1st_Add" Then
-                            'dispose data
+                    Else 'jump back two steps
+                        'dispose data
 
-                            'reset run_unit
-                            Restart_from_1st_Previous_Run_Unit()
-                            'load LoA3_fwd or TrA3_fwd's steps
-                            Clear_Steps()
-                            Load_Steps()
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_True()
-                        Else 'jump back two steps
-                            'dispose data
-
-                            'reset run_unit
-                            Restart_from_2nd_Previous_Run_Unit()
-                            'load LoA3_fwd or TrA3_fwd's steps
-                            Clear_Steps()
-                            Load_Steps()
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_True()
-                        End If
-                    End If
-                Else
-                    If CurRun.Name = "ExA2_1st" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st_Add" Then
-                        CurRun.NextUnit.Set_BackColor(Color.Green)
-                        CurRun.NextUnit.NextUnit.Set_BackColor(Color.Green)
-                    ElseIf CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_2nd_3rd" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
-                        If CurRun.NextUnit.Name.Contains("_2nd_3rd") Then
-                            CurRun.NextUnit.Set_BackColor(Color.Green)
-                        End If
-                    End If
-                    CurRun.Set_BackColor(Color.Green)
-                    Temp_CurRun.Set_BackColor(Color.Yellow)
-
-                    CurRun = Temp_CurRun
-                    Temp_CurRun = Null_CurRun
-
-                    If Temp_Countdown = True Then
-                        Countdown = True
-                        Set_Run_Unit()
+                        'reset run_unit
+                        Restart_from_2nd_Previous_Run_Unit()
+                        'load LoA3_fwd or TrA3_fwd's steps
                         Clear_Steps()
                         Load_Steps()
                         'dispose old graph and create new graph
                         Load_New_Graph_CD_True()
-                    Else
-                        Countdown = False
-                        timeLeft = CurRun.Time
-                        timeLabel.Text = timeLeft & " s"
-                        Clear_Steps()
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_False()
                     End If
-                    timeLabel.Text = timeLeft & " s"
-
                 End If
+            Else
+                If CurRun.Name = "ExA2_1st" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st_Add" Then
+                    CurRun.NextUnit.Set_BackColor(Color.Green)
+                    CurRun.NextUnit.NextUnit.Set_BackColor(Color.Green)
+                ElseIf CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_2nd_3rd" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
+                    If CurRun.NextUnit.Name.Contains("_2nd_3rd") Then
+                        CurRun.NextUnit.Set_BackColor(Color.Green)
+                    End If
+                End If
+                CurRun.Set_BackColor(Color.Green)
+                Temp_CurRun.Set_BackColor(Color.Yellow)
+
+                CurRun = Temp_CurRun
+                Temp_CurRun = Null_CurRun
+
+                If Temp_Countdown = True Then
+                    Countdown = True
+                    Set_Run_Unit()
+                    Clear_Steps()
+                    Load_Steps()
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_True()
+                Else
+                    Countdown = False
+                    timeLeft = CurRun.Time
+                    timeLabel.Text = timeLeft & " s"
+                    Clear_Steps()
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_False()
+                End If
+                timeLabel.Text = timeLeft & " s"
+
             End If
+        End If
     End Sub
 
     'two approaches, if there's already a GRU existent, add as next GRU, if not, attach to the RU

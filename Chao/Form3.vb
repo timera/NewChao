@@ -2603,6 +2603,7 @@ Public Class Program
     End Sub
 
     Private Sub Test_StartButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_StartButton.Click
+
         Load_New_Graph_CD_True()
         Test_NextButton.Enabled = False
         Test_StopButton.Enabled = True
@@ -2618,13 +2619,14 @@ Public Class Program
         array_step_s(Index_for_Setup_Time).Text = CurRun.Steps.Time
         array_step_s(Index_for_Setup_Time).Enabled = True
         timeLeft = 0
-        timeLabel.Text = timeLeft & " s"
+
         If CurRun.CurStep = CurRun.EndStep Then 'last step (not HasNextStep)
             Test_ConfirmButton.Enabled = True
             Test_NextButton.Enabled = False
         End If
     End Sub
     Private Sub Test_NextButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_NextButton.Click
+        timeLabel.Text = timeLeft & " s"
         Test_NextButton.Enabled = False
         If CurRun.CurStep = CurRun.EndStep Then 'last step (not HasNextStep)
             array_step(CurRun.CurStep - 1).BackColor = Color.Green

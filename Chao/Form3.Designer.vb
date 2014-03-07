@@ -804,10 +804,8 @@ Partial Class Program
         '
         Me.Label_input_L.AutoSize = True
         Me.Label_input_L.BackColor = System.Drawing.Color.DarkGray
-
         Me.Label_input_L.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.Label_input_L.ForeColor = System.Drawing.Color.Black
-
         Me.Label_input_L.Location = New System.Drawing.Point(6, 18)
         Me.Label_input_L.Name = "Label_input_L"
         Me.Label_input_L.Size = New System.Drawing.Size(75, 26)

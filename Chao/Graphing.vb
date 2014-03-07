@@ -117,6 +117,10 @@ Public Class LineGraph
         chart.ChartAreas(0).AxisY.IsLabelAutoFit = False
         'chart.ChartAreas(0).AxisX.Interval = Int(time / 15) + 1
         chart.ChartAreas(0).AxisX.IsMarginVisible = True
+        chart.ChartAreas(0).AxisX.Minimum = 1
+        chart.ChartAreas(0).AxisX.Crossing = 1
+        chart.ChartAreas(0).AxisY.Maximum = 120
+        chart.ChartAreas(0).AxisY.Minimum = 40
         'set up series
         Dim s As Series
         For i As Integer = 2 To NumOfMics * 2 Step 2
@@ -207,6 +211,7 @@ Public Class BarGraph
         s.IsVisibleInLegend = False
         s.IsValueShownAsLabel = False
         chart.Series.Add(s)
+        chart.ChartAreas(0).AxisY.Crossing = 40
         chart.ChartAreas(0).AxisY.Maximum = 120
         chart.ChartAreas(0).AxisY.Minimum = 40
         listOfNames = New List(Of String)

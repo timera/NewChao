@@ -2035,7 +2035,7 @@ Public Class Program
         Else
             avg = sum
         End If
-        NoisesArray(6).Text = avg
+        NoisesArray(6).Text = CStr(Math.Round(avg, 1))
         valsAndAvg(6) = avg
         'Set graphs
         MainBarGraph.Update(valsAndAvg)

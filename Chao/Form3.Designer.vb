@@ -999,6 +999,7 @@ Partial Class Program
         '
         'startButton
         '
+        Me.startButton.Font = New System.Drawing.Font("新細明體", 15.0!, System.Drawing.FontStyle.Bold)
         Me.startButton.Location = New System.Drawing.Point(8, 6)
         Me.startButton.Name = "startButton"
         Me.startButton.Size = New System.Drawing.Size(75, 53)
@@ -1391,6 +1392,7 @@ Partial Class Program
         'LinkLabel_A4_Fst
         '
         Me.LinkLabel_A4_Fst.AutoSize = True
+        Me.LinkLabel_A4_Fst.Font = New System.Drawing.Font("新細明體", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.LinkLabel_A4_Fst.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_A4_Fst.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_A4_Fst.Name = "LinkLabel_A4_Fst"
@@ -1598,6 +1600,7 @@ Partial Class Program
         '
         'Accept_Button
         '
+        Me.Accept_Button.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Accept_Button.Location = New System.Drawing.Point(8, 65)
         Me.Accept_Button.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Accept_Button.Name = "Accept_Button"
@@ -2332,6 +2335,7 @@ Partial Class Program
         '
         'stopButton
         '
+        Me.stopButton.Font = New System.Drawing.Font("新細明體", 15.0!, System.Drawing.FontStyle.Bold)
         Me.stopButton.Location = New System.Drawing.Point(170, 7)
         Me.stopButton.Name = "stopButton"
         Me.stopButton.Size = New System.Drawing.Size(75, 84)
@@ -3085,7 +3089,7 @@ Partial Class Program
         '
         Me.Noise_Avg.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Noise_Avg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Noise_Avg.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Noise_Avg.Font = New System.Drawing.Font("新細明體", 13.0!, System.Drawing.FontStyle.Bold)
         Me.Noise_Avg.Location = New System.Drawing.Point(858, 593)
         Me.Noise_Avg.Name = "Noise_Avg"
         Me.Noise_Avg.Size = New System.Drawing.Size(60, 39)
@@ -3150,10 +3154,10 @@ Partial Class Program
         '
         Me.Noise6.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Noise6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Noise6.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Noise6.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.Noise6.Location = New System.Drawing.Point(792, 593)
         Me.Noise6.Name = "Noise6"
-        Me.Noise6.Size = New System.Drawing.Size(45, 39)
+        Me.Noise6.Size = New System.Drawing.Size(46, 39)
         Me.Noise6.TabIndex = 50
         Me.Noise6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -3161,10 +3165,10 @@ Partial Class Program
         '
         Me.Noise5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Noise5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Noise5.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Noise5.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.Noise5.Location = New System.Drawing.Point(727, 593)
         Me.Noise5.Name = "Noise5"
-        Me.Noise5.Size = New System.Drawing.Size(45, 39)
+        Me.Noise5.Size = New System.Drawing.Size(46, 39)
         Me.Noise5.TabIndex = 49
         Me.Noise5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -3172,10 +3176,10 @@ Partial Class Program
         '
         Me.Noise4.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Noise4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Noise4.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Noise4.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.Noise4.Location = New System.Drawing.Point(659, 593)
         Me.Noise4.Name = "Noise4"
-        Me.Noise4.Size = New System.Drawing.Size(45, 39)
+        Me.Noise4.Size = New System.Drawing.Size(46, 39)
         Me.Noise4.TabIndex = 48
         Me.Noise4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -3193,10 +3197,10 @@ Partial Class Program
         '
         Me.Noise3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Noise3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Noise3.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Noise3.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.Noise3.Location = New System.Drawing.Point(592, 593)
         Me.Noise3.Name = "Noise3"
-        Me.Noise3.Size = New System.Drawing.Size(45, 39)
+        Me.Noise3.Size = New System.Drawing.Size(46, 39)
         Me.Noise3.TabIndex = 47
         Me.Noise3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -3204,10 +3208,10 @@ Partial Class Program
         '
         Me.Noise2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Noise2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Noise2.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Noise2.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.Noise2.Location = New System.Drawing.Point(508, 593)
         Me.Noise2.Name = "Noise2"
-        Me.Noise2.Size = New System.Drawing.Size(45, 39)
+        Me.Noise2.Size = New System.Drawing.Size(46, 39)
         Me.Noise2.TabIndex = 46
         Me.Noise2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -3215,10 +3219,10 @@ Partial Class Program
         '
         Me.Noise1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Noise1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Noise1.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Noise1.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.Noise1.Location = New System.Drawing.Point(458, 593)
         Me.Noise1.Name = "Noise1"
-        Me.Noise1.Size = New System.Drawing.Size(45, 39)
+        Me.Noise1.Size = New System.Drawing.Size(46, 39)
         Me.Noise1.TabIndex = 45
         Me.Noise1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '

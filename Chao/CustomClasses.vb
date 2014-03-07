@@ -117,11 +117,11 @@ Public Class DisButton
     Inherits System.Windows.Forms.Button
 
     Private _ForeColorBackup As Color = SystemColors.WindowText
-    Private _BackColorBackup As Color = SystemColors.ButtonFace
-    'Private 
+    Private _BackColorBackup As Color = System.Drawing.Color.Transparent
+    Private _ColorsSaved As Boolean = False
     Private _SettingColors As Boolean = False
 
-    Private _BackColorDisabled As Color = Color.DarkGray 'SystemColors.Control
+    Private _BackColorDisabled As Color = Color.DimGray 'SystemColors.Control
     Private _ForeColorDisabled As Color = Color.White 'SystemColors.WindowText
 
     Private Const WM_ENABLE As Integer = &HA
@@ -131,8 +131,21 @@ Public Class DisButton
     End Sub
 
     Private Sub DisButton_VisibleChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.VisibleChanged
+        If Not Me._ColorsSaved AndAlso Me.Visible Then
+            ' Save the ForeColor/BackColor so we can switch back to them later
+            _ForeColorBackup = Me.ForeColor
+            _BackColorBackup = Me.BackColor
+            _ColorsSaved = True
 
-        SetColors() ' Change to the Enabled/Disabled colors specified by the user
+            If Not Me.Enabled Then ' If the window starts out in a Disabled state...
+                ' Force the TextBox to initialize properly in an Enabled state,
+                ' then switch it back to a Disabled state
+                Me.Enabled = True
+                Me.Enabled = False
+            End If
+
+            SetColors() ' Change to the Enabled/Disabled colors specified by the user
+        End If
     End Sub
 
     Protected Overrides Sub OnForeColorChanged(ByVal e As System.EventArgs)
@@ -160,16 +173,17 @@ Public Class DisButton
     Private Sub SetColors()
         ' Don't change colors until the original ones have been saved,
         ' since we would lose what the original Enabled colors are supposed to be
-
-        _SettingColors = True
-        If Me.Enabled Then
-            Me.ForeColor = Me._ForeColorBackup
-            Me.BackColor = Me._BackColorBackup
-        Else
-            Me.ForeColor = Me.ForeColorDisabled
-            Me.BackColor = Me.BackColorDisabled
+        If _ColorsSaved Then
+            _SettingColors = True
+            If Me.Enabled Then
+                Me.ForeColor = Me._ForeColorBackup
+                Me.BackColor = Me._BackColorBackup
+            Else
+                Me.ForeColor = Me.ForeColorDisabled
+                Me.BackColor = Me.BackColorDisabled
+            End If
+            _SettingColors = False
         End If
-        _SettingColors = False
     End Sub
 
     Protected Overrides Sub OnEnabledChanged(ByVal e As System.EventArgs)
@@ -178,28 +192,16 @@ Public Class DisButton
         SetColors() ' change colors whenever the Enabled() state changes
     End Sub
 
-    Public Property BackColorDisabled() As System.Drawing.Color
+    Public ReadOnly Property BackColorDisabled() As System.Drawing.Color
         Get
             Return _BackColorDisabled
         End Get
-        Set(ByVal Value As System.Drawing.Color)
-            If Not Value.Equals(Color.Empty) Then
-                _BackColorDisabled = Value
-            End If
-            SetColors()
-        End Set
     End Property
 
-    Public Property ForeColorDisabled() As System.Drawing.Color
+    Public ReadOnly Property ForeColorDisabled() As System.Drawing.Color
         Get
             Return _ForeColorDisabled
         End Get
-        Set(ByVal Value As System.Drawing.Color)
-            If Not Value.Equals(Color.Empty) Then
-                _ForeColorDisabled = Value
-            End If
-            SetColors()
-        End Set
     End Property
 
     Protected Overrides ReadOnly Property CreateParams As System.Windows.Forms.CreateParams

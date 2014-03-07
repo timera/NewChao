@@ -50,7 +50,7 @@ Partial Class Program
         Me.yLabel = New System.Windows.Forms.Label()
         Me.xLabel = New System.Windows.Forms.Label()
         Me.GroupBox_A4 = New System.Windows.Forms.GroupBox()
-        Me.Button_L1_L2_L3_check = New System.Windows.Forms.Button()
+        Me.Button_L1_L2_L3_check = New Chao.DisButton()
         Me.TextBox_r2 = New System.Windows.Forms.TextBox()
         Me.TextBox_L3 = New Chao.ChaoTextBox()
         Me.TextBox_L2 = New Chao.ChaoTextBox()
@@ -656,12 +656,14 @@ Partial Class Program
         '
         'Button_L1_L2_L3_check
         '
+        Me.Button_L1_L2_L3_check.BackColor = System.Drawing.Color.Transparent
+        Me.Button_L1_L2_L3_check.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Button_L1_L2_L3_check.Location = New System.Drawing.Point(217, 80)
         Me.Button_L1_L2_L3_check.Name = "Button_L1_L2_L3_check"
         Me.Button_L1_L2_L3_check.Size = New System.Drawing.Size(42, 23)
         Me.Button_L1_L2_L3_check.TabIndex = 9
         Me.Button_L1_L2_L3_check.Text = "確認"
-        Me.Button_L1_L2_L3_check.UseVisualStyleBackColor = True
+        Me.Button_L1_L2_L3_check.UseVisualStyleBackColor = False
         '
         'TextBox_r2
         '
@@ -760,10 +762,8 @@ Partial Class Program
         '
         'Button_L_check
         '
-        Me.Button_L_check.BackColor = System.Drawing.Color.DarkGray
-        Me.Button_L_check.BackColorDisabled = System.Drawing.Color.DarkGray
+        Me.Button_L_check.BackColor = System.Drawing.Color.Transparent
         Me.Button_L_check.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.Button_L_check.ForeColorDisabled = System.Drawing.Color.White
         Me.Button_L_check.Location = New System.Drawing.Point(220, 24)
         Me.Button_L_check.Name = "Button_L_check"
         Me.Button_L_check.Size = New System.Drawing.Size(42, 23)
@@ -804,10 +804,8 @@ Partial Class Program
         '
         Me.Label_input_L.AutoSize = True
         Me.Label_input_L.BackColor = System.Drawing.Color.DarkGray
-
         Me.Label_input_L.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.Label_input_L.ForeColor = System.Drawing.Color.Black
-
         Me.Label_input_L.Location = New System.Drawing.Point(6, 18)
         Me.Label_input_L.Name = "Label_input_L"
         Me.Label_input_L.Size = New System.Drawing.Size(75, 26)
@@ -3679,7 +3677,7 @@ Partial Class Program
     Friend WithEvents Label_r1 As System.Windows.Forms.Label
     Friend WithEvents Label_input_L As System.Windows.Forms.Label
     Friend WithEvents GroupBox_A4 As System.Windows.Forms.GroupBox
-    Friend WithEvents Button_L1_L2_L3_check As System.Windows.Forms.Button
+    Friend WithEvents Button_L1_L2_L3_check As DisButton
     Friend WithEvents TextBox_r2 As System.Windows.Forms.TextBox
     Friend WithEvents Label_r2 As System.Windows.Forms.Label
     Friend WithEvents Label_input_L2 As System.Windows.Forms.Label

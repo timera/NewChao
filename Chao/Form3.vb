@@ -45,6 +45,8 @@ Public Class Program
     End Enum
     Dim Machine As Machines
 
+    Public A4_step_text As String
+
     'Graphs for the main screen
     Dim MainLineGraph As LineGraph
     Dim MainBarGraph As BarGraph
@@ -574,6 +576,9 @@ Public Class Program
                 array_step_s(i).Text = 0
                 array_step_s(i).Enabled = False
             Next
+
+            A4_step_text = Nothing
+
         End If
     End Sub
 
@@ -643,7 +648,6 @@ Public Class Program
             Machine = Machines.Others
         ElseIf inner_choice = "混凝土破碎機(Concrete breaker)" Then
             Picture_machine.Image = My.Resources.混凝土破碎機_Concrete_breaker_
-            Step1.Text = My.Resources.A4_Concrete_Breaker
             Machine = Machines.Others
         ElseIf inner_choice = "瀝青混凝土舖築機(Asphalt finisher)" Then
             Picture_machine.Image = My.Resources.瀝青混凝土舖築機_Asphalt_finisher_
@@ -842,6 +846,7 @@ Public Class Program
             MachChosen = True
         ElseIf choice = "混凝土破碎機(Concrete breaker)" Then
             Load_Others(choice)
+            MachChosen = True
         ElseIf choice = "瀝青混凝土舖築機(Asphalt finisher)" Then
             Load_Others(choice)
             MachChosen = True
@@ -1849,40 +1854,47 @@ Public Class Program
         Next
 
         'display them on screen-set position and size
-        Dim text As String
-        Step1.BackColor = Color.Yellow
+
         If name = "空氣壓縮機(Compressor)" Then
-            text = My.Resources.A4_Compressor
+            A4_step_text = My.Resources.A4_Compressor
         ElseIf name = "混凝土割切機(Concrete cutter)" Then
-            text = My.Resources.A4_Concrete_Cutter
+            A4_step_text = My.Resources.A4_Concrete_Cutter
         ElseIf name = "瀝青混凝土舖築機(Asphalt finisher)" Then
-            text = My.Resources.A4_Asphalt_Finisher
+            A4_step_text = My.Resources.A4_Asphalt_Finisher
         ElseIf name = "混凝土破碎機(Concrete breaker)" Then
-            text = My.Resources.A4_Concrete_Breaker
+            A4_step_text = My.Resources.A4_Concrete_Breaker
         ElseIf name = "混凝土泵車(Concrete pump)" Then
-            text = My.Resources.A4_Concrete_Pump
+            A4_step_text = My.Resources.A4_Concrete_Pump
         ElseIf name = "鑽土機(Earth drill)" Then
-            text = My.Resources.A4_Auger_Drill_Driver
+            A4_step_text = My.Resources.A4_Auger_Drill_Driver
         ElseIf name = "全套管鑽掘機" Then
-            text = My.Resources.A4_Auger_Drill_Driver
+            A4_step_text = My.Resources.A4_Auger_Drill_Driver
         ElseIf name = "土壤取樣器(地鑽) (Earth auger)" Then
-            text = My.Resources.A4_Auger_Drill_Driver
+            A4_step_text = My.Resources.A4_Auger_Drill_Driver
         ElseIf name = "油壓式拔樁機" Then
-            text = My.Resources.A4_Auger_Drill_Driver
+            A4_step_text = My.Resources.A4_Auger_Drill_Driver
         ElseIf name = "油壓式打樁機(Hydraulic pile driver)" Then
-            text = My.Resources.A4_Auger_Drill_Driver
+            A4_step_text = My.Resources.A4_Auger_Drill_Driver
         ElseIf name = "振動式樁錘(Vibrating hammer)" Then
-            text = My.Resources.A4_Vibrating_Hammer
+            A4_step_text = My.Resources.A4_Vibrating_Hammer
         ElseIf name = "輪形起重機(Wheel crane)" Then
-            text = My.Resources.A4_Crane
+            A4_step_text = My.Resources.A4_Crane
         ElseIf name = "卡車起重機(Truck crane)" Then
-            text = My.Resources.A4_Crane
+            A4_step_text = My.Resources.A4_Crane
         ElseIf name = "履帶起重機(Crawler crane)" Then
-            text = My.Resources.A4_Crane
+            A4_step_text = My.Resources.A4_Crane
         ElseIf name = "振動式壓路機(Vibrating roller)" Then
-            text = My.Resources.A4_Roller
+            A4_step_text = My.Resources.A4_Roller
         ElseIf name = "膠輪壓路機(Wheel roller)" Then
-            text = My.Resources.A4_Roller
+            A4_step_text = My.Resources.A4_Roller
+        ElseIf name = "鐵輪壓路機(Road roller)" Then
+            A4_step_text = My.Resources.A4_Roller
+        ElseIf name = "拔樁機" Then
+            A4_step_text = My.Resources.A4_Auger_Drill_Driver
+        ElseIf name = "鑽岩機(Rock breaker)" Then
+            A4_step_text = My.Resources.A4_Auger_Drill_Driver
+        ElseIf name = "發電機(Generator)" Then
+            A4_step_text = My.Resources.A4_Generator
         End If
         tempRun = HeadRun
         While Not IsNothing(tempRun)
@@ -1950,7 +1962,7 @@ Public Class Program
             tempRun.Steps = New Steps(My.Resources.A3_Tractor_step4, Step1, Nothing, True, array_TrA3_time(3))
             tempRun.HeadStep = tempRun.Steps
         ElseIf tempRun.Name = "A4" Or tempRun.Name = "A4_Add" Then
-            tempRun.Steps = New Steps(My.Resources.A4_Asphalt_Finisher, Step1, Nothing, True, 5)
+            tempRun.Steps = New Steps(A4_step_text, Step1, Nothing, True, 5)
             tempRun.HeadStep = tempRun.Steps
         End If
 
@@ -3557,6 +3569,7 @@ Public Class Program
                             'if want_add()=true then ... elseif want_add()=false then ... endif
 
                             CurRun.Set_BackColor(Color.Green)
+                            CurRun.Link.Enabled = True
                             'CurRun.Link.Enabled = True
                             'jump to next Run_Unit and change light
                             'Add?
@@ -3569,8 +3582,7 @@ Public Class Program
                                 CurRun = CurRun.NextUnit
                                 Set_Add_GRU(0, "Background", "")    'True: add test
                                 ' change light
-                                Set_Panel_BackColor()
-
+                                CurRun.Set_BackColor(Color.Yellow)
                                 timeLeft = CurRun.Time
                                 timeLabel.Text = timeLeft & " s"
                                 Countdown = False
@@ -3598,7 +3610,7 @@ Public Class Program
                         'have an additional test?
                         'call a function 
                         'if want_add()=true then ... elseif want_add()=false then ... endif
-
+                        CurRun.Link.Enabled = True
                         'CurRun.Link.Enabled = True
                         'Add?
                         Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)

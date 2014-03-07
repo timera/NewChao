@@ -196,13 +196,13 @@
     <value>原則上定數回轉與定額負載之狀態。(定速定載)</value>
   </data>
   <data name="A4_Concrete_Breaker" xml:space="preserve">
-    <value>以規定之工作壓力為測定作業狀態，將鑿桿(chisel)強烈押在控制板，須避免組裝部分影響測值。作業者不可站在噪音測線上</value>
+    <value>規定之工作壓力為測定作業狀態，鑿桿強烈押在控制板，避免組裝部分影響測值。作業者不可站在噪音測線上</value>
   </data>
   <data name="A4_Concrete_Cutter" xml:space="preserve">
     <value>以定速回轉切割混凝土，深度為刀片直徑之1/4</value>
   </data>
   <data name="A4_Concrete_Pump" xml:space="preserve">
-    <value>以最大之運轉狀態壓送混凝土，此時吊桿應向水平方向延伸，配管長度約為10公尺。(最大之運轉狀態壓送混凝土)</value>
+    <value>最大之運轉狀態壓送混凝土，此時吊桿應向水平方向延伸，配管長度約為10公尺(最大之運轉狀態壓送混凝土)</value>
   </data>
   <data name="A4_Crane" xml:space="preserve">
     <value>吊桿之角度為60度，勾子抓斗等以上卷狀態，定置高速怠轉。(全速空轉)</value>

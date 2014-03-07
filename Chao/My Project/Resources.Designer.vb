@@ -295,7 +295,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  查詢類似 以規定之工作壓力為測定作業狀態，將鑿桿(chisel)強烈押在控制板，須避免組裝部分影響測值。作業者不可站在噪音測線上 的當地語系化字串。
+        '''  查詢類似 規定之工作壓力為測定作業狀態，鑿桿強烈押在控制板，避免組裝部分影響測值。作業者不可站在噪音測線上 的當地語系化字串。
         '''</summary>
         Friend ReadOnly Property A4_Concrete_Breaker() As String
             Get
@@ -313,7 +313,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  查詢類似 以最大之運轉狀態壓送混凝土，此時吊桿應向水平方向延伸，配管長度約為10公尺。(最大之運轉狀態壓送混凝土) 的當地語系化字串。
+        '''  查詢類似 最大之運轉狀態壓送混凝土，此時吊桿應向水平方向延伸，配管長度約為10公尺(最大之運轉狀態壓送混凝土) 的當地語系化字串。
         '''</summary>
         Friend ReadOnly Property A4_Concrete_Pump() As String
             Get

@@ -309,7 +309,6 @@ Public Class Communication
                 temp(i) = New List(Of String)
             Next
             For i = 0 To MeterMacs.Count - 1
-                'result(i) = (r.Next(1, 100) / 10) + 90
                 Dim tempR = (r.Next(1, 10) / 10) + r.Next(40, 119)
                 temp(i).Add("R+0000  " & tempR & "," & (tempR - 1) & ",--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-")
                 result(i) = temp(i)(0).Substring(8).Split(",")(part)

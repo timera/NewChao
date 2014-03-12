@@ -7,7 +7,7 @@
     Private _BackColorDisabled As Color = Color.DimGray
     Private _ForeColorDisabled As Color = Color.White
 
-    'Private Const WM_ENABLE As Integer = &HA
+    Private Const WM_ENABLE As Integer = &HA
 
     Private Sub DisButton_VisibleChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.VisibleChanged
 
@@ -42,32 +42,32 @@
         End Get
     End Property
 
-    'Protected Overrides ReadOnly Property CreateParams As System.Windows.Forms.CreateParams
-    '    Get
-    '        Dim cp As System.Windows.Forms.CreateParams
-    '        If Not Me.Enabled Then ' If the window starts out in a disabled state...
-    '            ' Prevent window being initialized in a disabled state:
-    '            Me.Enabled = True ' temporary ENABLED state
-    '            cp = MyBase.CreateParams ' create window in ENABLED state
-    '            Me.Enabled = False ' toggle it back to DISABLED state 
-    '        Else
-    '            cp = MyBase.CreateParams
-    '        End If
-    '        Return cp
-    '    End Get
-    'End Property
+    Protected Overrides ReadOnly Property CreateParams As System.Windows.Forms.CreateParams
+        Get
+            Dim cp As System.Windows.Forms.CreateParams
+            If Not Me.Enabled Then ' If the window starts out in a disabled state...
+                ' Prevent window being initialized in a disabled state:
+                Me.Enabled = True ' temporary ENABLED state
+                cp = MyBase.CreateParams ' create window in ENABLED state
+                Me.Enabled = False ' toggle it back to DISABLED state 
+            Else
+                cp = MyBase.CreateParams
+            End If
+            Return cp
+        End Get
+    End Property
 
-    'Protected Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
-    '    Select Case m.Msg
-    '        Case WM_ENABLE
-    '            ' Prevent the message from reaching the control,
-    '            ' so the colors don't get changed by the default procedure.
-    '            Exit Sub ' <-- suppress WM_ENABLE message
+    Protected Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
+        Select Case m.Msg
+            Case WM_ENABLE
+                ' Prevent the message from reaching the control,
+                ' so the colors don't get changed by the default procedure.
+                Exit Sub ' <-- suppress WM_ENABLE message
 
-    '    End Select
+        End Select
 
-    '    MyBase.WndProc(m)
-    'End Sub
+        MyBase.WndProc(m)
+    End Sub
 
 End Class
 
@@ -80,7 +80,7 @@ Public Class DisTextBox
     Private _BackColorDisabled As Color = Color.DarkGray 'SystemColors.Control
     Private _ForeColorDisabled As Color = Color.White 'SystemColors.WindowText
 
-    'Private Const WM_ENABLE As Integer = &HA
+    Private Const WM_ENABLE As Integer = &HA
 
     Public Sub New()
         MyBase.New()
@@ -118,32 +118,32 @@ Public Class DisTextBox
         End Get
     End Property
 
-    'Protected Overrides ReadOnly Property CreateParams As System.Windows.Forms.CreateParams
-    '    Get
-    '        Dim cp As System.Windows.Forms.CreateParams
-    '        If Not Me.Enabled Then ' If the window starts out in a disabled state...
-    '            ' Prevent window being initialized in a disabled state:
-    '            Me.Enabled = True ' temporary ENABLED state
-    '            cp = MyBase.CreateParams ' create window in ENABLED state
-    '            Me.Enabled = False ' toggle it back to DISABLED state 
-    '        Else
-    '            cp = MyBase.CreateParams
-    '        End If
-    '        Return cp
-    '    End Get
-    'End Property
+    Protected Overrides ReadOnly Property CreateParams As System.Windows.Forms.CreateParams
+        Get
+            Dim cp As System.Windows.Forms.CreateParams
+            If Not Me.Enabled Then ' If the window starts out in a disabled state...
+                ' Prevent window being initialized in a disabled state:
+                Me.Enabled = True ' temporary ENABLED state
+                cp = MyBase.CreateParams ' create window in ENABLED state
+                Me.Enabled = False ' toggle it back to DISABLED state 
+            Else
+                cp = MyBase.CreateParams
+            End If
+            Return cp
+        End Get
+    End Property
 
-    'Protected Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
-    '    Select Case m.Msg
-    '        Case WM_ENABLE
-    '            ' Prevent the message from reaching the control,
-    '            ' so the colors don't get changed by the default procedure.
-    '            Exit Sub ' <-- suppress WM_ENABLE message
+    Protected Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
+        Select Case m.Msg
+            Case WM_ENABLE
+                ' Prevent the message from reaching the control,
+                ' so the colors don't get changed by the default procedure.
+                Exit Sub ' <-- suppress WM_ENABLE message
 
-    '    End Select
+        End Select
 
-    '    MyBase.WndProc(m)
-    'End Sub
+        MyBase.WndProc(m)
+    End Sub
 
 End Class
 

@@ -22,7 +22,6 @@ Partial Class Program
     '請不要使用程式碼編輯器進行修改。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
         Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
@@ -36,12 +35,6 @@ Partial Class Program
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.PanelMeterSetup = New System.Windows.Forms.Panel()
         Me.ComboBoxComs = New System.Windows.Forms.ComboBox()
-        Me.ButtonComRefresh = New System.Windows.Forms.Button()
-        Me.DisconnButton = New System.Windows.Forms.Button()
-        Me.ConnectButton = New System.Windows.Forms.Button()
-        Me.ButtonMeters = New System.Windows.Forms.Button()
-        Me.ButtonSim = New System.Windows.Forms.Button()
-        Me.Button_change_machine = New System.Windows.Forms.Button()
         Me.p6Label = New System.Windows.Forms.Label()
         Me.p12Label = New System.Windows.Forms.Label()
         Me.p4Label = New System.Windows.Forms.Label()
@@ -52,19 +45,11 @@ Partial Class Program
         Me.yLabel = New System.Windows.Forms.Label()
         Me.xLabel = New System.Windows.Forms.Label()
         Me.GroupBox_A4 = New System.Windows.Forms.GroupBox()
-        Me.Button_L1_L2_L3_check = New Chao.DisButton()
-        Me.TextBox_r2 = New System.Windows.Forms.TextBox()
-        Me.TextBox_L3 = New Chao.ChaoTextBox()
-        Me.TextBox_L2 = New Chao.ChaoTextBox()
-        Me.TextBox_L1 = New Chao.ChaoTextBox()
         Me.Label_r2 = New System.Windows.Forms.Label()
         Me.Label_input_L2 = New System.Windows.Forms.Label()
         Me.Label_input_L3 = New System.Windows.Forms.Label()
         Me.Label_input_L1 = New System.Windows.Forms.Label()
         Me.GroupBox_A1_A2_A3 = New System.Windows.Forms.GroupBox()
-        Me.Button_L_check = New Chao.DisButton()
-        Me.TextBox_r1 = New System.Windows.Forms.TextBox()
-        Me.TextBox_L = New Chao.ChaoTextBox()
         Me.Label_r1 = New System.Windows.Forms.Label()
         Me.Label_input_L = New System.Windows.Forms.Label()
         Me.Picture_machine = New System.Windows.Forms.PictureBox()
@@ -281,15 +266,6 @@ Partial Class Program
         Me.S3 = New System.Windows.Forms.Label()
         Me.S2 = New System.Windows.Forms.Label()
         Me.S1 = New System.Windows.Forms.Label()
-        Me.Input_S_Step2 = New Chao.ChaoTextBox()
-        Me.Input_S_Step3 = New Chao.ChaoTextBox()
-        Me.Input_S_Step4 = New Chao.ChaoTextBox()
-        Me.Input_S_Step5 = New Chao.ChaoTextBox()
-        Me.Input_S_Step9 = New Chao.ChaoTextBox()
-        Me.Input_S_Step8 = New Chao.ChaoTextBox()
-        Me.Input_S_Step7 = New Chao.ChaoTextBox()
-        Me.Input_S_Step6 = New Chao.ChaoTextBox()
-        Me.Input_S_Step1 = New Chao.ChaoTextBox()
         Me.Test_ConfirmButton = New System.Windows.Forms.Button()
         Me.Test_NextButton = New System.Windows.Forms.Button()
         Me.Test_StartButton = New System.Windows.Forms.Button()
@@ -316,7 +292,29 @@ Partial Class Program
         Me.TabPageCharts = New System.Windows.Forms.TabPage()
         Me.SaveButton = New System.Windows.Forms.Button()
         Me.TabPageSettings = New System.Windows.Forms.TabPage()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.ButtonComRefresh = New Chao.DisButton()
+        Me.DisconnButton = New Chao.DisButton()
+        Me.ConnectButton = New Chao.DisButton()
+        Me.ButtonMeters = New Chao.DisButton()
+        Me.ButtonSim = New Chao.DisButton()
+        Me.Button_change_machine = New Chao.DisButton()
+        Me.Button_L1_L2_L3_check = New Chao.DisButton()
+        Me.TextBox_r2 = New Chao.DisTextBox()
+        Me.TextBox_L3 = New Chao.ChaoTextBox()
+        Me.TextBox_L2 = New Chao.ChaoTextBox()
+        Me.TextBox_L1 = New Chao.ChaoTextBox()
+        Me.Button_L_check = New Chao.DisButton()
+        Me.TextBox_r1 = New Chao.DisTextBox()
+        Me.TextBox_L = New Chao.ChaoTextBox()
+        Me.Input_S_Step2 = New Chao.ChaoTextBox()
+        Me.Input_S_Step3 = New Chao.ChaoTextBox()
+        Me.Input_S_Step4 = New Chao.ChaoTextBox()
+        Me.Input_S_Step5 = New Chao.ChaoTextBox()
+        Me.Input_S_Step9 = New Chao.ChaoTextBox()
+        Me.Input_S_Step8 = New Chao.ChaoTextBox()
+        Me.Input_S_Step7 = New Chao.ChaoTextBox()
+        Me.Input_S_Step6 = New Chao.ChaoTextBox()
+        Me.Input_S_Step1 = New Chao.ChaoTextBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -518,62 +516,6 @@ Partial Class Program
         Me.ComboBoxComs.Size = New System.Drawing.Size(168, 20)
         Me.ComboBoxComs.TabIndex = 51
         '
-        'ButtonComRefresh
-        '
-        Me.ButtonComRefresh.Location = New System.Drawing.Point(183, 3)
-        Me.ButtonComRefresh.Name = "ButtonComRefresh"
-        Me.ButtonComRefresh.Size = New System.Drawing.Size(64, 23)
-        Me.ButtonComRefresh.TabIndex = 52
-        Me.ButtonComRefresh.Text = "Refresh"
-        Me.ButtonComRefresh.UseVisualStyleBackColor = True
-        '
-        'DisconnButton
-        '
-        Me.DisconnButton.Location = New System.Drawing.Point(104, 30)
-        Me.DisconnButton.Name = "DisconnButton"
-        Me.DisconnButton.Size = New System.Drawing.Size(75, 37)
-        Me.DisconnButton.TabIndex = 48
-        Me.DisconnButton.Text = "Disconnect Meters"
-        Me.DisconnButton.UseVisualStyleBackColor = True
-        '
-        'ConnectButton
-        '
-        Me.ConnectButton.Location = New System.Drawing.Point(7, 30)
-        Me.ConnectButton.Name = "ConnectButton"
-        Me.ConnectButton.Size = New System.Drawing.Size(75, 37)
-        Me.ConnectButton.TabIndex = 47
-        Me.ConnectButton.Text = "Connect Meters"
-        Me.ConnectButton.UseVisualStyleBackColor = True
-        '
-        'ButtonMeters
-        '
-        Me.ButtonMeters.Location = New System.Drawing.Point(119, 94)
-        Me.ButtonMeters.Name = "ButtonMeters"
-        Me.ButtonMeters.Size = New System.Drawing.Size(75, 23)
-        Me.ButtonMeters.TabIndex = 50
-        Me.ButtonMeters.Text = "Meters"
-        Me.ButtonMeters.UseVisualStyleBackColor = True
-        '
-        'ButtonSim
-        '
-        Me.ButtonSim.Enabled = False
-        Me.ButtonSim.Location = New System.Drawing.Point(22, 94)
-        Me.ButtonSim.Name = "ButtonSim"
-        Me.ButtonSim.Size = New System.Drawing.Size(75, 23)
-        Me.ButtonSim.TabIndex = 49
-        Me.ButtonSim.Text = "Simulation"
-        Me.ButtonSim.UseVisualStyleBackColor = True
-        '
-        'Button_change_machine
-        '
-        Me.Button_change_machine.Location = New System.Drawing.Point(312, 34)
-        Me.Button_change_machine.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
-        Me.Button_change_machine.Name = "Button_change_machine"
-        Me.Button_change_machine.Size = New System.Drawing.Size(74, 20)
-        Me.Button_change_machine.TabIndex = 46
-        Me.Button_change_machine.Text = "更換機具"
-        Me.Button_change_machine.UseVisualStyleBackColor = True
-        '
         'p6Label
         '
         Me.p6Label.AutoSize = True
@@ -683,52 +625,6 @@ Partial Class Program
         Me.GroupBox_A4.TabStop = False
         Me.GroupBox_A4.Text = "A4"
         '
-        'Button_L1_L2_L3_check
-        '
-        Me.Button_L1_L2_L3_check.BackColor = System.Drawing.Color.Transparent
-        Me.Button_L1_L2_L3_check.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Button_L1_L2_L3_check.Location = New System.Drawing.Point(217, 80)
-        Me.Button_L1_L2_L3_check.Name = "Button_L1_L2_L3_check"
-        Me.Button_L1_L2_L3_check.Size = New System.Drawing.Size(42, 23)
-        Me.Button_L1_L2_L3_check.TabIndex = 9
-        Me.Button_L1_L2_L3_check.Text = "確認"
-        Me.Button_L1_L2_L3_check.UseVisualStyleBackColor = False
-        '
-        'TextBox_r2
-        '
-        Me.TextBox_r2.Enabled = False
-        Me.TextBox_r2.Location = New System.Drawing.Point(103, 119)
-        Me.TextBox_r2.Name = "TextBox_r2"
-        Me.TextBox_r2.Size = New System.Drawing.Size(99, 22)
-        Me.TextBox_r2.TabIndex = 17
-        '
-        'TextBox_L3
-        '
-        Me.TextBox_L3.BackColor = System.Drawing.SystemColors.Control
-        Me.TextBox_L3.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.TextBox_L3.Location = New System.Drawing.Point(103, 79)
-        Me.TextBox_L3.Name = "TextBox_L3"
-        Me.TextBox_L3.Size = New System.Drawing.Size(99, 22)
-        Me.TextBox_L3.TabIndex = 16
-        '
-        'TextBox_L2
-        '
-        Me.TextBox_L2.BackColor = System.Drawing.SystemColors.Control
-        Me.TextBox_L2.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.TextBox_L2.Location = New System.Drawing.Point(103, 51)
-        Me.TextBox_L2.Name = "TextBox_L2"
-        Me.TextBox_L2.Size = New System.Drawing.Size(99, 22)
-        Me.TextBox_L2.TabIndex = 15
-        '
-        'TextBox_L1
-        '
-        Me.TextBox_L1.BackColor = System.Drawing.SystemColors.Control
-        Me.TextBox_L1.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.TextBox_L1.Location = New System.Drawing.Point(103, 23)
-        Me.TextBox_L1.Name = "TextBox_L1"
-        Me.TextBox_L1.Size = New System.Drawing.Size(99, 22)
-        Me.TextBox_L1.TabIndex = 14
-        '
         'Label_r2
         '
         Me.Label_r2.AutoSize = True
@@ -782,34 +678,6 @@ Partial Class Program
         Me.GroupBox_A1_A2_A3.TabIndex = 10
         Me.GroupBox_A1_A2_A3.TabStop = False
         Me.GroupBox_A1_A2_A3.Text = "A1 or A2 or A3"
-        '
-        'Button_L_check
-        '
-        Me.Button_L_check.BackColor = System.Drawing.Color.Transparent
-        Me.Button_L_check.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Button_L_check.Location = New System.Drawing.Point(220, 24)
-        Me.Button_L_check.Name = "Button_L_check"
-        Me.Button_L_check.Size = New System.Drawing.Size(42, 23)
-        Me.Button_L_check.TabIndex = 8
-        Me.Button_L_check.Text = "確認"
-        Me.Button_L_check.UseVisualStyleBackColor = False
-        '
-        'TextBox_r1
-        '
-        Me.TextBox_r1.Enabled = False
-        Me.TextBox_r1.Location = New System.Drawing.Point(105, 55)
-        Me.TextBox_r1.Name = "TextBox_r1"
-        Me.TextBox_r1.Size = New System.Drawing.Size(99, 22)
-        Me.TextBox_r1.TabIndex = 7
-        '
-        'TextBox_L
-        '
-        Me.TextBox_L.BackColor = System.Drawing.SystemColors.Control
-        Me.TextBox_L.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.TextBox_L.Location = New System.Drawing.Point(105, 24)
-        Me.TextBox_L.Name = "TextBox_L"
-        Me.TextBox_L.Size = New System.Drawing.Size(99, 22)
-        Me.TextBox_L.TabIndex = 6
         '
         'Label_r1
         '
@@ -3117,69 +2985,6 @@ Partial Class Program
         Me.S1.TabIndex = 9
         Me.S1.Text = "S"
         '
-        'Input_S_Step2
-        '
-        Me.Input_S_Step2.Location = New System.Drawing.Point(18, 63)
-        Me.Input_S_Step2.Name = "Input_S_Step2"
-        Me.Input_S_Step2.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step2.TabIndex = 8
-        '
-        'Input_S_Step3
-        '
-        Me.Input_S_Step3.Location = New System.Drawing.Point(18, 102)
-        Me.Input_S_Step3.Name = "Input_S_Step3"
-        Me.Input_S_Step3.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step3.TabIndex = 7
-        '
-        'Input_S_Step4
-        '
-        Me.Input_S_Step4.Location = New System.Drawing.Point(18, 145)
-        Me.Input_S_Step4.Name = "Input_S_Step4"
-        Me.Input_S_Step4.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step4.TabIndex = 6
-        '
-        'Input_S_Step5
-        '
-        Me.Input_S_Step5.Location = New System.Drawing.Point(18, 186)
-        Me.Input_S_Step5.Name = "Input_S_Step5"
-        Me.Input_S_Step5.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step5.TabIndex = 5
-        '
-        'Input_S_Step9
-        '
-        Me.Input_S_Step9.Location = New System.Drawing.Point(18, 350)
-        Me.Input_S_Step9.Name = "Input_S_Step9"
-        Me.Input_S_Step9.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step9.TabIndex = 4
-        '
-        'Input_S_Step8
-        '
-        Me.Input_S_Step8.Location = New System.Drawing.Point(18, 306)
-        Me.Input_S_Step8.Name = "Input_S_Step8"
-        Me.Input_S_Step8.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step8.TabIndex = 3
-        '
-        'Input_S_Step7
-        '
-        Me.Input_S_Step7.Location = New System.Drawing.Point(18, 269)
-        Me.Input_S_Step7.Name = "Input_S_Step7"
-        Me.Input_S_Step7.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step7.TabIndex = 2
-        '
-        'Input_S_Step6
-        '
-        Me.Input_S_Step6.Location = New System.Drawing.Point(18, 227)
-        Me.Input_S_Step6.Name = "Input_S_Step6"
-        Me.Input_S_Step6.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step6.TabIndex = 1
-        '
-        'Input_S_Step1
-        '
-        Me.Input_S_Step1.Location = New System.Drawing.Point(18, 23)
-        Me.Input_S_Step1.Name = "Input_S_Step1"
-        Me.Input_S_Step1.Size = New System.Drawing.Size(85, 22)
-        Me.Input_S_Step1.TabIndex = 0
-        '
         'Test_ConfirmButton
         '
         Me.Test_ConfirmButton.Location = New System.Drawing.Point(68, 364)
@@ -3458,9 +3263,214 @@ Partial Class Program
         Me.TabPageSettings.Text = "設定"
         Me.TabPageSettings.UseVisualStyleBackColor = True
         '
-        'Timer1
+        'ButtonComRefresh
         '
-        Me.Timer1.Interval = 1000
+        Me.ButtonComRefresh.BackColor = System.Drawing.Color.Transparent
+        Me.ButtonComRefresh.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.ButtonComRefresh.Location = New System.Drawing.Point(183, 3)
+        Me.ButtonComRefresh.Name = "ButtonComRefresh"
+        Me.ButtonComRefresh.Size = New System.Drawing.Size(64, 23)
+        Me.ButtonComRefresh.TabIndex = 52
+        Me.ButtonComRefresh.Text = "Refresh"
+        Me.ButtonComRefresh.UseVisualStyleBackColor = False
+        '
+        'DisconnButton
+        '
+        Me.DisconnButton.BackColor = System.Drawing.Color.Transparent
+        Me.DisconnButton.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.DisconnButton.Location = New System.Drawing.Point(104, 30)
+        Me.DisconnButton.Name = "DisconnButton"
+        Me.DisconnButton.Size = New System.Drawing.Size(75, 37)
+        Me.DisconnButton.TabIndex = 48
+        Me.DisconnButton.Text = "Disconnect Meters"
+        Me.DisconnButton.UseVisualStyleBackColor = False
+        '
+        'ConnectButton
+        '
+        Me.ConnectButton.BackColor = System.Drawing.Color.Transparent
+        Me.ConnectButton.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.ConnectButton.Location = New System.Drawing.Point(7, 30)
+        Me.ConnectButton.Name = "ConnectButton"
+        Me.ConnectButton.Size = New System.Drawing.Size(75, 37)
+        Me.ConnectButton.TabIndex = 47
+        Me.ConnectButton.Text = "Connect Meters"
+        Me.ConnectButton.UseVisualStyleBackColor = False
+        '
+        'ButtonMeters
+        '
+        Me.ButtonMeters.BackColor = System.Drawing.Color.Transparent
+        Me.ButtonMeters.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.ButtonMeters.Location = New System.Drawing.Point(119, 94)
+        Me.ButtonMeters.Name = "ButtonMeters"
+        Me.ButtonMeters.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonMeters.TabIndex = 50
+        Me.ButtonMeters.Text = "Meters"
+        Me.ButtonMeters.UseVisualStyleBackColor = False
+        '
+        'ButtonSim
+        '
+        Me.ButtonSim.BackColor = System.Drawing.Color.Transparent
+        Me.ButtonSim.Enabled = False
+        Me.ButtonSim.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.ButtonSim.Location = New System.Drawing.Point(22, 94)
+        Me.ButtonSim.Name = "ButtonSim"
+        Me.ButtonSim.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonSim.TabIndex = 49
+        Me.ButtonSim.Text = "Simulation"
+        Me.ButtonSim.UseVisualStyleBackColor = False
+        '
+        'Button_change_machine
+        '
+        Me.Button_change_machine.BackColor = System.Drawing.Color.Transparent
+        Me.Button_change_machine.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button_change_machine.Location = New System.Drawing.Point(312, 34)
+        Me.Button_change_machine.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
+        Me.Button_change_machine.Name = "Button_change_machine"
+        Me.Button_change_machine.Size = New System.Drawing.Size(74, 20)
+        Me.Button_change_machine.TabIndex = 46
+        Me.Button_change_machine.Text = "更換機具"
+        Me.Button_change_machine.UseVisualStyleBackColor = False
+        '
+        'Button_L1_L2_L3_check
+        '
+        Me.Button_L1_L2_L3_check.BackColor = System.Drawing.Color.Transparent
+        Me.Button_L1_L2_L3_check.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button_L1_L2_L3_check.Location = New System.Drawing.Point(217, 80)
+        Me.Button_L1_L2_L3_check.Name = "Button_L1_L2_L3_check"
+        Me.Button_L1_L2_L3_check.Size = New System.Drawing.Size(42, 23)
+        Me.Button_L1_L2_L3_check.TabIndex = 9
+        Me.Button_L1_L2_L3_check.Text = "確認"
+        Me.Button_L1_L2_L3_check.UseVisualStyleBackColor = False
+        '
+        'TextBox_r2
+        '
+        Me.TextBox_r2.BackColor = System.Drawing.SystemColors.Control
+        Me.TextBox_r2.ForeColor = System.Drawing.SystemColors.WindowText
+        Me.TextBox_r2.Location = New System.Drawing.Point(103, 119)
+        Me.TextBox_r2.Name = "TextBox_r2"
+        Me.TextBox_r2.ReadOnly = True
+        Me.TextBox_r2.Size = New System.Drawing.Size(99, 22)
+        Me.TextBox_r2.TabIndex = 17
+        '
+        'TextBox_L3
+        '
+        Me.TextBox_L3.BackColor = System.Drawing.SystemColors.Control
+        Me.TextBox_L3.ForeColor = System.Drawing.SystemColors.WindowText
+        Me.TextBox_L3.Location = New System.Drawing.Point(103, 79)
+        Me.TextBox_L3.Name = "TextBox_L3"
+        Me.TextBox_L3.Size = New System.Drawing.Size(99, 22)
+        Me.TextBox_L3.TabIndex = 16
+        '
+        'TextBox_L2
+        '
+        Me.TextBox_L2.BackColor = System.Drawing.SystemColors.Control
+        Me.TextBox_L2.ForeColor = System.Drawing.SystemColors.WindowText
+        Me.TextBox_L2.Location = New System.Drawing.Point(103, 51)
+        Me.TextBox_L2.Name = "TextBox_L2"
+        Me.TextBox_L2.Size = New System.Drawing.Size(99, 22)
+        Me.TextBox_L2.TabIndex = 15
+        '
+        'TextBox_L1
+        '
+        Me.TextBox_L1.BackColor = System.Drawing.SystemColors.Control
+        Me.TextBox_L1.ForeColor = System.Drawing.SystemColors.WindowText
+        Me.TextBox_L1.Location = New System.Drawing.Point(103, 23)
+        Me.TextBox_L1.Name = "TextBox_L1"
+        Me.TextBox_L1.Size = New System.Drawing.Size(99, 22)
+        Me.TextBox_L1.TabIndex = 14
+        '
+        'Button_L_check
+        '
+        Me.Button_L_check.BackColor = System.Drawing.Color.Transparent
+        Me.Button_L_check.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button_L_check.Location = New System.Drawing.Point(220, 24)
+        Me.Button_L_check.Name = "Button_L_check"
+        Me.Button_L_check.Size = New System.Drawing.Size(42, 23)
+        Me.Button_L_check.TabIndex = 8
+        Me.Button_L_check.Text = "確認"
+        Me.Button_L_check.UseVisualStyleBackColor = False
+        '
+        'TextBox_r1
+        '
+        Me.TextBox_r1.BackColor = System.Drawing.SystemColors.Control
+        Me.TextBox_r1.ForeColor = System.Drawing.SystemColors.WindowText
+        Me.TextBox_r1.Location = New System.Drawing.Point(105, 55)
+        Me.TextBox_r1.Name = "TextBox_r1"
+        Me.TextBox_r1.ReadOnly = True
+        Me.TextBox_r1.Size = New System.Drawing.Size(99, 22)
+        Me.TextBox_r1.TabIndex = 7
+        '
+        'TextBox_L
+        '
+        Me.TextBox_L.BackColor = System.Drawing.SystemColors.Control
+        Me.TextBox_L.ForeColor = System.Drawing.SystemColors.WindowText
+        Me.TextBox_L.Location = New System.Drawing.Point(105, 24)
+        Me.TextBox_L.Name = "TextBox_L"
+        Me.TextBox_L.Size = New System.Drawing.Size(99, 22)
+        Me.TextBox_L.TabIndex = 6
+        '
+        'Input_S_Step2
+        '
+        Me.Input_S_Step2.Location = New System.Drawing.Point(18, 63)
+        Me.Input_S_Step2.Name = "Input_S_Step2"
+        Me.Input_S_Step2.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step2.TabIndex = 8
+        '
+        'Input_S_Step3
+        '
+        Me.Input_S_Step3.Location = New System.Drawing.Point(18, 102)
+        Me.Input_S_Step3.Name = "Input_S_Step3"
+        Me.Input_S_Step3.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step3.TabIndex = 7
+        '
+        'Input_S_Step4
+        '
+        Me.Input_S_Step4.Location = New System.Drawing.Point(18, 145)
+        Me.Input_S_Step4.Name = "Input_S_Step4"
+        Me.Input_S_Step4.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step4.TabIndex = 6
+        '
+        'Input_S_Step5
+        '
+        Me.Input_S_Step5.Location = New System.Drawing.Point(18, 186)
+        Me.Input_S_Step5.Name = "Input_S_Step5"
+        Me.Input_S_Step5.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step5.TabIndex = 5
+        '
+        'Input_S_Step9
+        '
+        Me.Input_S_Step9.Location = New System.Drawing.Point(18, 350)
+        Me.Input_S_Step9.Name = "Input_S_Step9"
+        Me.Input_S_Step9.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step9.TabIndex = 4
+        '
+        'Input_S_Step8
+        '
+        Me.Input_S_Step8.Location = New System.Drawing.Point(18, 306)
+        Me.Input_S_Step8.Name = "Input_S_Step8"
+        Me.Input_S_Step8.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step8.TabIndex = 3
+        '
+        'Input_S_Step7
+        '
+        Me.Input_S_Step7.Location = New System.Drawing.Point(18, 269)
+        Me.Input_S_Step7.Name = "Input_S_Step7"
+        Me.Input_S_Step7.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step7.TabIndex = 2
+        '
+        'Input_S_Step6
+        '
+        Me.Input_S_Step6.Location = New System.Drawing.Point(18, 227)
+        Me.Input_S_Step6.Name = "Input_S_Step6"
+        Me.Input_S_Step6.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step6.TabIndex = 1
+        '
+        'Input_S_Step1
+        '
+        Me.Input_S_Step1.Location = New System.Drawing.Point(18, 23)
+        Me.Input_S_Step1.Name = "Input_S_Step1"
+        Me.Input_S_Step1.Size = New System.Drawing.Size(85, 22)
+        Me.Input_S_Step1.TabIndex = 0
         '
         'Program
         '
@@ -3674,12 +3684,12 @@ Partial Class Program
     Friend WithEvents Picture_machine As System.Windows.Forms.PictureBox
     Friend WithEvents GroupBox_A1_A2_A3 As System.Windows.Forms.GroupBox
     Friend WithEvents Button_L_check As DisButton
-    Friend WithEvents TextBox_r1 As System.Windows.Forms.TextBox
+    Friend WithEvents TextBox_r1 As DisTextBox
     Friend WithEvents Label_r1 As System.Windows.Forms.Label
     Friend WithEvents Label_input_L As System.Windows.Forms.Label
     Friend WithEvents GroupBox_A4 As System.Windows.Forms.GroupBox
     Friend WithEvents Button_L1_L2_L3_check As DisButton
-    Friend WithEvents TextBox_r2 As System.Windows.Forms.TextBox
+    Friend WithEvents TextBox_r2 As DisTextBox
     Friend WithEvents Label_r2 As System.Windows.Forms.Label
     Friend WithEvents Label_input_L2 As System.Windows.Forms.Label
     Friend WithEvents Label_input_L3 As System.Windows.Forms.Label
@@ -3880,7 +3890,7 @@ Partial Class Program
     Friend WithEvents LinkLabel_PreCal_2nd As System.Windows.Forms.LinkLabel
     Friend WithEvents Panel_PreCal_1st As System.Windows.Forms.Panel
     Friend WithEvents LinkLabel_PreCal_1st As System.Windows.Forms.LinkLabel
-    Friend WithEvents Button_change_machine As System.Windows.Forms.Button
+    Friend WithEvents Button_change_machine As DisButton
     Friend WithEvents Panel_A4_Add_Mid_Background As System.Windows.Forms.Panel
     Friend WithEvents LinkLabel_A4_Add_Mid_Background As System.Windows.Forms.LinkLabel
     Friend WithEvents Panel_A4_Thd_Mid_Background As System.Windows.Forms.Panel
@@ -3923,14 +3933,14 @@ Partial Class Program
     Friend WithEvents Input_S_Step7 As Chao.ChaoTextBox
     Friend WithEvents Input_S_Step6 As Chao.ChaoTextBox
     Friend WithEvents Input_S_Step1 As Chao.ChaoTextBox
-    Friend WithEvents ConnectButton As System.Windows.Forms.Button
-    Friend WithEvents DisconnButton As System.Windows.Forms.Button
+    Friend WithEvents ConnectButton As DisButton
+    Friend WithEvents DisconnButton As DisButton
     Friend WithEvents SaveButton As System.Windows.Forms.Button
-    Friend WithEvents ButtonMeters As System.Windows.Forms.Button
-    Friend WithEvents ButtonSim As System.Windows.Forms.Button
+    Friend WithEvents ButtonMeters As DisButton
+    Friend WithEvents ButtonSim As DisButton
     Friend WithEvents ComboBoxComs As System.Windows.Forms.ComboBox
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
-    Friend WithEvents ButtonComRefresh As System.Windows.Forms.Button
+    Friend WithEvents ButtonComRefresh As DisButton
     Friend WithEvents PanelMeterSetup As System.Windows.Forms.Panel
     Friend WithEvents Label_step1_second As System.Windows.Forms.Label
     Friend WithEvents Label_step9_second As System.Windows.Forms.Label

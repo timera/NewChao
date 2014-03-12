@@ -42,12 +42,12 @@ Partial Class Program
         Me.ButtonMeters = New Chao.DisButton()
         Me.ButtonSim = New Chao.DisButton()
         Me.Button_change_machine = New Chao.DisButton()
-        Me.p6Label = New System.Windows.Forms.Label()
-        Me.p12Label = New System.Windows.Forms.Label()
-        Me.p4Label = New System.Windows.Forms.Label()
-        Me.p10Label = New System.Windows.Forms.Label()
-        Me.p2Label = New System.Windows.Forms.Label()
-        Me.p8Label = New System.Windows.Forms.Label()
+        Me.p2Label = New ColorLabel()
+        Me.p4Label = New ColorLabel()
+        Me.p6Label = New ColorLabel()
+        Me.p8Label = New ColorLabel()
+        Me.p10Label = New ColorLabel()
+        Me.p12Label = New ColorLabel()
         Me.GroupBox_Plot = New System.Windows.Forms.GroupBox()
         Me.yLabel = New System.Windows.Forms.Label()
         Me.xLabel = New System.Windows.Forms.Label()
@@ -314,9 +314,9 @@ Partial Class Program
         Me.Step3 = New System.Windows.Forms.Label()
         Me.Step2 = New System.Windows.Forms.Label()
         Me.TabPageCharts = New System.Windows.Forms.TabPage()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.SaveButton = New System.Windows.Forms.Button()
         Me.TabPageSettings = New System.Windows.Forms.TabPage()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -3138,10 +3138,6 @@ Partial Class Program
         Me.Test_Input_S_Panel.Size = New System.Drawing.Size(140, 433)
         Me.Test_Input_S_Panel.TabIndex = 3
         '
-        'Timer1
-        '
-        Me.Timer1.Interval = 1000
-        '
         'S9
         '
         Me.S9.AutoSize = True
@@ -3564,6 +3560,10 @@ Partial Class Program
         Me.TabPageSettings.Text = "設定"
         Me.TabPageSettings.UseVisualStyleBackColor = True
         '
+        'Timer1
+        '
+        Me.Timer1.Interval = 1000
+        '
         'Program
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3809,12 +3809,12 @@ Partial Class Program
     Friend WithEvents GroupBox_Plot As System.Windows.Forms.GroupBox
     Friend WithEvents yLabel As System.Windows.Forms.Label
     Friend WithEvents xLabel As System.Windows.Forms.Label
-    Friend WithEvents p6Label As System.Windows.Forms.Label
-    Friend WithEvents p12Label As System.Windows.Forms.Label
-    Friend WithEvents p4Label As System.Windows.Forms.Label
-    Friend WithEvents p10Label As System.Windows.Forms.Label
-    Friend WithEvents p2Label As System.Windows.Forms.Label
-    Friend WithEvents p8Label As System.Windows.Forms.Label
+    Friend WithEvents p2Label As ColorLabel
+    Friend WithEvents p4Label As ColorLabel
+    Friend WithEvents p6Label As ColorLabel
+    Friend WithEvents p8Label As ColorLabel
+    Friend WithEvents p10Label As ColorLabel
+    Friend WithEvents p12Label As ColorLabel
     Friend WithEvents Step9 As System.Windows.Forms.Label
     Friend WithEvents LinkLabel_postCal As System.Windows.Forms.LinkLabel
     Friend WithEvents LinkLabel_preCal As System.Windows.Forms.LinkLabel

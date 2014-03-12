@@ -253,16 +253,16 @@ End Class
 
 'helper classes for keeping track of labels and points
 Public Class CoorPoint
-    Public Label As Label
+    Public Label As ColorLabel
     Public Coors As ThreeDPoint
     Public Line As LineShape
 
-    Public Sub New(ByVal lab As Label)
+    Public Sub New(ByVal lab As ColorLabel)
         Label = lab
         Coors = New ThreeDPoint
     End Sub
 
-    Public Sub New(ByVal lab As Label, ByVal p As ThreeDPoint, ByVal l As LineShape)
+    Public Sub New(ByVal lab As ColorLabel, ByVal p As ThreeDPoint, ByVal l As LineShape)
         Label = lab
         Coors = p
         Line = l

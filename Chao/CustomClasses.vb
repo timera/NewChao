@@ -177,3 +177,90 @@ Class ChaoTextBox
         End If
     End Sub
 End Class
+
+Public Class ColorLabel
+    Inherits Control
+
+    Public Sub New()
+        MyBase.New()
+        Me.Size = New Size(100, 100)
+    End Sub
+
+    Public Sub ClearXYZ()
+        _X = 0
+        _Y = 0
+        _Z = 0
+    End Sub
+
+    Private _X As Decimal = 0
+
+    Property X() As Decimal
+        Get
+            Return _X
+        End Get
+        Set(ByVal value As Decimal)
+            _X = value
+            Me.Invalidate()
+        End Set
+    End Property
+
+    Private _Y As Decimal = 0
+
+    Property Y() As Decimal
+        Get
+            Return _Y
+        End Get
+        Set(ByVal value As Decimal)
+            _Y = value
+            Me.Invalidate()
+        End Set
+    End Property
+
+    Private _Z As Decimal = 0
+
+    Property Z() As Decimal
+        Get
+            Return _Z
+        End Get
+        Set(ByVal value As Decimal)
+            _Z = value
+            Me.Invalidate()
+        End Set
+    End Property
+
+    Private _P As String = "P"
+
+    Property P() As String
+        Get
+            Return _P
+        End Get
+        Set(ByVal value As String)
+            _P = value
+            Me.Invalidate()
+        End Set
+    End Property
+
+    Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
+        MyBase.OnPaint(e)
+
+        If _X = 0 And _Y = 0 And _Z = 0 Then
+            e.Graphics.Clear(SystemColors.Control)
+            Return
+        End If
+
+        Dim xText As String = String.Format("X: {0:N1}", _X)
+        Dim yText As String = String.Format("Y: {0:N1}", _Y)
+        Dim zText As String = String.Format("Z: {0:N1}", _Z)
+        Dim pHeight As Integer = TextRenderer.MeasureText(e.Graphics, _P, Me.Font).Height
+        Dim pWidth As Integer = TextRenderer.MeasureText(e.Graphics, _P, Me.Font).Width
+
+
+        TextRenderer.DrawText(e.Graphics, _P, Me.Font, New Point(0, 0), Color.DimGray)
+        TextRenderer.DrawText(e.Graphics, xText, Me.Font, New Point(pWidth + 2, 0), Color.Blue)
+        TextRenderer.DrawText(e.Graphics, yText, Me.Font, New Point(pWidth + 2, 2 + pHeight), Color.Red)
+        TextRenderer.DrawText(e.Graphics, zText, Me.Font, New Point(pWidth + 2, (2 + pHeight) * 2), Color.DarkGreen)
+        
+
+    End Sub
+
+End Class

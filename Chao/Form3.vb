@@ -3770,13 +3770,19 @@ Public Class Program
         End If
 
         'clear labels
-        p2Label.Text = ""
-        p4Label.Text = ""
-        p6Label.Text = ""
-        p8Label.Text = ""
-        p10Label.Text = ""
-        p12Label.Text = ""
-        
+        p2Label.ClearXYZ()
+        p4Label.ClearXYZ()
+        p6Label.ClearXYZ()
+        p8Label.ClearXYZ()
+        p10Label.ClearXYZ()
+        p12Label.ClearXYZ()
+
+        'p2Label.X = 1
+        'p2Label.Y = 2
+        'p2Label.Z = 3
+        'p2Label.Parent = TabPage1
+        'p2Label.Size = New Size(100, 100)
+
         canvas = New ShapeContainer()
         canvas.Parent = parent
         canvas.BackColor = Color.Transparent
@@ -3807,19 +3813,11 @@ Public Class Program
             rPoint.BorderColor = posColors(index)
             rPoint.BackColor = posColors(index)
             rPoint.BackStyle = BackStyle.Opaque
-            Dim xText = Format(coors(index).Coors.Xc, "#.#")
-            Dim yText = Format(coors(index).Coors.Yc, "#.#")
-            Dim zText = Format(coors(index).Coors.Zc, "#.#")
-            If xText = "" Then
-                xText = "0"
-            End If
-            If yText = "" Then
-                yText = "0"
-            End If
-            If zText = "" Then
-                zText = "0"
-            End If
-            coors(index).Label.Text = labels(index) + " (" + xText + " , " + yText + " , " + zText + ")"
+            coors(index).Label.Size = New Size(170, 100)
+            coors(index).Label.P = labels(index)
+            coors(index).Label.X = coors(index).Coors.Xc
+            coors(index).Label.Y = coors(index).Coors.Yc
+            coors(index).Label.Z = coors(index).Coors.Zc
             coors(index).Label.Location = translate(New System.Drawing.Point(origin(0) + x, origin(1) - y), GroupBox_Plot.Location, TabPage1.Location)
             coors(index).Label.BringToFront()
         Next
@@ -3851,7 +3849,7 @@ Public Class Program
         Next
     End Sub
 
-    Private Sub pLabel_MouseUp(ByVal sender As Label, ByVal e As System.Windows.Forms.MouseEventArgs) Handles p6Label.MouseUp, p12Label.MouseUp, p4Label.MouseUp, p10Label.MouseUp, p2Label.MouseUp, p8Label.MouseUp
+    Private Sub pLabel_MouseUp(ByVal sender As ColorLabel, ByVal e As System.Windows.Forms.MouseEventArgs) Handles p6Label.MouseUp, p12Label.MouseUp, p4Label.MouseUp, p10Label.MouseUp, p2Label.MouseUp, p8Label.MouseUp
         MouseIsDown = False
         For Each l As CoorPoint In Points
             If l.Label.Name = sender.Name Then
@@ -3862,7 +3860,7 @@ Public Class Program
             End If
         Next
     End Sub
-    Private Sub pLabel_MouseMove(ByVal sender As Label, ByVal e As System.Windows.Forms.MouseEventArgs) Handles p6Label.MouseMove, p12Label.MouseMove, p4Label.MouseMove, p10Label.MouseMove, p2Label.MouseMove, p8Label.MouseMove
+    Private Sub pLabel_MouseMove(ByVal sender As ColorLabel, ByVal e As System.Windows.Forms.MouseEventArgs) Handles p6Label.MouseMove, p12Label.MouseMove, p4Label.MouseMove, p10Label.MouseMove, p2Label.MouseMove, p8Label.MouseMove
         If MouseIsDown Then
             ' Initiate dragging.
             Dim temp As Point = Cursor.Position

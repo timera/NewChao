@@ -939,7 +939,7 @@ Partial Class Program
         Me.startButton.Font = New System.Drawing.Font("新細明體", 15.0!, System.Drawing.FontStyle.Bold)
         Me.startButton.Location = New System.Drawing.Point(8, 6)
         Me.startButton.Name = "startButton"
-        Me.startButton.Size = New System.Drawing.Size(75, 53)
+        Me.startButton.Size = New System.Drawing.Size(75, 50)
         Me.startButton.TabIndex = 13
         Me.startButton.Text = "Start"
         Me.startButton.UseVisualStyleBackColor = True
@@ -952,7 +952,7 @@ Partial Class Program
         Me.Panel_PostCal_Sub.Controls.Add(Me.Panel_PostCal_3rd)
         Me.Panel_PostCal_Sub.Controls.Add(Me.Panel_PostCal_2nd)
         Me.Panel_PostCal_Sub.Controls.Add(Me.Panel_PostCal_1st)
-        Me.Panel_PostCal_Sub.Location = New System.Drawing.Point(72, 343)
+        Me.Panel_PostCal_Sub.Location = New System.Drawing.Point(8, 426)
         Me.Panel_PostCal_Sub.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Panel_PostCal_Sub.Name = "Panel_PostCal_Sub"
         Me.Panel_PostCal_Sub.Size = New System.Drawing.Size(80, 170)
@@ -970,10 +970,11 @@ Partial Class Program
         'LinkLabel_PostCal_6th
         '
         Me.LinkLabel_PostCal_6th.AutoSize = True
+        Me.LinkLabel_PostCal_6th.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_PostCal_6th.Location = New System.Drawing.Point(4, 4)
         Me.LinkLabel_PostCal_6th.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PostCal_6th.Name = "LinkLabel_PostCal_6th"
-        Me.LinkLabel_PostCal_6th.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_PostCal_6th.Size = New System.Drawing.Size(32, 15)
         Me.LinkLabel_PostCal_6th.TabIndex = 1
         Me.LinkLabel_PostCal_6th.TabStop = True
         Me.LinkLabel_PostCal_6th.Text = "P12"
@@ -990,10 +991,11 @@ Partial Class Program
         'LinkLabel_PostCal_5th
         '
         Me.LinkLabel_PostCal_5th.AutoSize = True
+        Me.LinkLabel_PostCal_5th.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_PostCal_5th.Location = New System.Drawing.Point(4, 2)
         Me.LinkLabel_PostCal_5th.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PostCal_5th.Name = "LinkLabel_PostCal_5th"
-        Me.LinkLabel_PostCal_5th.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_PostCal_5th.Size = New System.Drawing.Size(32, 15)
         Me.LinkLabel_PostCal_5th.TabIndex = 1
         Me.LinkLabel_PostCal_5th.TabStop = True
         Me.LinkLabel_PostCal_5th.Text = "P10"
@@ -1010,10 +1012,11 @@ Partial Class Program
         'LinkLabel_PostCal_4th
         '
         Me.LinkLabel_PostCal_4th.AutoSize = True
+        Me.LinkLabel_PostCal_4th.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_PostCal_4th.Location = New System.Drawing.Point(4, 3)
         Me.LinkLabel_PostCal_4th.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PostCal_4th.Name = "LinkLabel_PostCal_4th"
-        Me.LinkLabel_PostCal_4th.Size = New System.Drawing.Size(19, 12)
+        Me.LinkLabel_PostCal_4th.Size = New System.Drawing.Size(24, 15)
         Me.LinkLabel_PostCal_4th.TabIndex = 1
         Me.LinkLabel_PostCal_4th.TabStop = True
         Me.LinkLabel_PostCal_4th.Text = "P8"
@@ -1030,10 +1033,11 @@ Partial Class Program
         'LinkLabel_PostCal_3rd
         '
         Me.LinkLabel_PostCal_3rd.AutoSize = True
+        Me.LinkLabel_PostCal_3rd.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_PostCal_3rd.Location = New System.Drawing.Point(4, 2)
         Me.LinkLabel_PostCal_3rd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PostCal_3rd.Name = "LinkLabel_PostCal_3rd"
-        Me.LinkLabel_PostCal_3rd.Size = New System.Drawing.Size(19, 12)
+        Me.LinkLabel_PostCal_3rd.Size = New System.Drawing.Size(24, 15)
         Me.LinkLabel_PostCal_3rd.TabIndex = 1
         Me.LinkLabel_PostCal_3rd.TabStop = True
         Me.LinkLabel_PostCal_3rd.Text = "P6"
@@ -1050,10 +1054,11 @@ Partial Class Program
         'LinkLabel_PostCal_2nd
         '
         Me.LinkLabel_PostCal_2nd.AutoSize = True
+        Me.LinkLabel_PostCal_2nd.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_PostCal_2nd.Location = New System.Drawing.Point(4, 3)
         Me.LinkLabel_PostCal_2nd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PostCal_2nd.Name = "LinkLabel_PostCal_2nd"
-        Me.LinkLabel_PostCal_2nd.Size = New System.Drawing.Size(19, 12)
+        Me.LinkLabel_PostCal_2nd.Size = New System.Drawing.Size(24, 15)
         Me.LinkLabel_PostCal_2nd.TabIndex = 1
         Me.LinkLabel_PostCal_2nd.TabStop = True
         Me.LinkLabel_PostCal_2nd.Text = "P4"
@@ -1070,10 +1075,11 @@ Partial Class Program
         'LinkLabel_PostCal_1st
         '
         Me.LinkLabel_PostCal_1st.AutoSize = True
+        Me.LinkLabel_PostCal_1st.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_PostCal_1st.Location = New System.Drawing.Point(4, 6)
         Me.LinkLabel_PostCal_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PostCal_1st.Name = "LinkLabel_PostCal_1st"
-        Me.LinkLabel_PostCal_1st.Size = New System.Drawing.Size(19, 12)
+        Me.LinkLabel_PostCal_1st.Size = New System.Drawing.Size(24, 15)
         Me.LinkLabel_PostCal_1st.TabIndex = 0
         Me.LinkLabel_PostCal_1st.TabStop = True
         Me.LinkLabel_PostCal_1st.Text = "P2"
@@ -1103,10 +1109,11 @@ Partial Class Program
         'LinkLabel_TrA1_Add_1st
         '
         Me.LinkLabel_TrA1_Add_1st.AutoSize = True
+        Me.LinkLabel_TrA1_Add_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_TrA1_Add_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_TrA1_Add_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_TrA1_Add_1st.Name = "LinkLabel_TrA1_Add_1st"
-        Me.LinkLabel_TrA1_Add_1st.Size = New System.Drawing.Size(28, 12)
+        Me.LinkLabel_TrA1_Add_1st.Size = New System.Drawing.Size(42, 19)
         Me.LinkLabel_TrA1_Add_1st.TabIndex = 65
         Me.LinkLabel_TrA1_Add_1st.TabStop = True
         Me.LinkLabel_TrA1_Add_1st.Text = "Run"
@@ -1123,10 +1130,11 @@ Partial Class Program
         'LinkLabel_TrA1_Thd_1st
         '
         Me.LinkLabel_TrA1_Thd_1st.AutoSize = True
+        Me.LinkLabel_TrA1_Thd_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_TrA1_Thd_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_TrA1_Thd_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_TrA1_Thd_1st.Name = "LinkLabel_TrA1_Thd_1st"
-        Me.LinkLabel_TrA1_Thd_1st.Size = New System.Drawing.Size(28, 12)
+        Me.LinkLabel_TrA1_Thd_1st.Size = New System.Drawing.Size(42, 19)
         Me.LinkLabel_TrA1_Thd_1st.TabIndex = 65
         Me.LinkLabel_TrA1_Thd_1st.TabStop = True
         Me.LinkLabel_TrA1_Thd_1st.Text = "Run"
@@ -1143,10 +1151,11 @@ Partial Class Program
         'LinkLabel_TrA1_Sec_1st
         '
         Me.LinkLabel_TrA1_Sec_1st.AutoSize = True
+        Me.LinkLabel_TrA1_Sec_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_TrA1_Sec_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_TrA1_Sec_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_TrA1_Sec_1st.Name = "LinkLabel_TrA1_Sec_1st"
-        Me.LinkLabel_TrA1_Sec_1st.Size = New System.Drawing.Size(28, 12)
+        Me.LinkLabel_TrA1_Sec_1st.Size = New System.Drawing.Size(42, 19)
         Me.LinkLabel_TrA1_Sec_1st.TabIndex = 65
         Me.LinkLabel_TrA1_Sec_1st.TabStop = True
         Me.LinkLabel_TrA1_Sec_1st.Text = "Run"
@@ -1154,16 +1163,18 @@ Partial Class Program
         'Label_Tr_A1
         '
         Me.Label_Tr_A1.AutoSize = True
+        Me.Label_Tr_A1.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Label_Tr_A1.Location = New System.Drawing.Point(12, 0)
         Me.Label_Tr_A1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label_Tr_A1.Name = "Label_Tr_A1"
-        Me.Label_Tr_A1.Size = New System.Drawing.Size(21, 12)
+        Me.Label_Tr_A1.Size = New System.Drawing.Size(29, 16)
         Me.Label_Tr_A1.TabIndex = 68
         Me.Label_Tr_A1.Text = "A1"
         '
         'Panel_TrA1_Fst_1st
         '
         Me.Panel_TrA1_Fst_1st.Controls.Add(Me.LinkLabel_TrA1_Fst_1st)
+        Me.Panel_TrA1_Fst_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.Panel_TrA1_Fst_1st.Location = New System.Drawing.Point(4, 39)
         Me.Panel_TrA1_Fst_1st.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Panel_TrA1_Fst_1st.Name = "Panel_TrA1_Fst_1st"
@@ -1176,7 +1187,7 @@ Partial Class Program
         Me.LinkLabel_TrA1_Fst_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_TrA1_Fst_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_TrA1_Fst_1st.Name = "LinkLabel_TrA1_Fst_1st"
-        Me.LinkLabel_TrA1_Fst_1st.Size = New System.Drawing.Size(28, 12)
+        Me.LinkLabel_TrA1_Fst_1st.Size = New System.Drawing.Size(42, 19)
         Me.LinkLabel_TrA1_Fst_1st.TabIndex = 65
         Me.LinkLabel_TrA1_Fst_1st.TabStop = True
         Me.LinkLabel_TrA1_Fst_1st.Text = "Run"
@@ -1209,10 +1220,11 @@ Partial Class Program
         'LinkLabel_A4_Add_Mid_Background
         '
         Me.LinkLabel_A4_Add_Mid_Background.AutoSize = True
+        Me.LinkLabel_A4_Add_Mid_Background.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_A4_Add_Mid_Background.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_A4_Add_Mid_Background.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_A4_Add_Mid_Background.Name = "LinkLabel_A4_Add_Mid_Background"
-        Me.LinkLabel_A4_Add_Mid_Background.Size = New System.Drawing.Size(29, 12)
+        Me.LinkLabel_A4_Add_Mid_Background.Size = New System.Drawing.Size(44, 19)
         Me.LinkLabel_A4_Add_Mid_Background.TabIndex = 65
         Me.LinkLabel_A4_Add_Mid_Background.TabStop = True
         Me.LinkLabel_A4_Add_Mid_Background.Text = "mbg"
@@ -1229,10 +1241,11 @@ Partial Class Program
         'LinkLabel_A4_Thd_Mid_Background
         '
         Me.LinkLabel_A4_Thd_Mid_Background.AutoSize = True
+        Me.LinkLabel_A4_Thd_Mid_Background.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_A4_Thd_Mid_Background.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_A4_Thd_Mid_Background.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_A4_Thd_Mid_Background.Name = "LinkLabel_A4_Thd_Mid_Background"
-        Me.LinkLabel_A4_Thd_Mid_Background.Size = New System.Drawing.Size(29, 12)
+        Me.LinkLabel_A4_Thd_Mid_Background.Size = New System.Drawing.Size(44, 19)
         Me.LinkLabel_A4_Thd_Mid_Background.TabIndex = 65
         Me.LinkLabel_A4_Thd_Mid_Background.TabStop = True
         Me.LinkLabel_A4_Thd_Mid_Background.Text = "mbg"
@@ -1249,10 +1262,11 @@ Partial Class Program
         'LinkLabel_A4_Sec_Mid_Background
         '
         Me.LinkLabel_A4_Sec_Mid_Background.AutoSize = True
+        Me.LinkLabel_A4_Sec_Mid_Background.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_A4_Sec_Mid_Background.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_A4_Sec_Mid_Background.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_A4_Sec_Mid_Background.Name = "LinkLabel_A4_Sec_Mid_Background"
-        Me.LinkLabel_A4_Sec_Mid_Background.Size = New System.Drawing.Size(29, 12)
+        Me.LinkLabel_A4_Sec_Mid_Background.Size = New System.Drawing.Size(44, 19)
         Me.LinkLabel_A4_Sec_Mid_Background.TabIndex = 65
         Me.LinkLabel_A4_Sec_Mid_Background.TabStop = True
         Me.LinkLabel_A4_Sec_Mid_Background.Text = "mbg"
@@ -1269,10 +1283,11 @@ Partial Class Program
         'LinkLabel_A4_Add
         '
         Me.LinkLabel_A4_Add.AutoSize = True
+        Me.LinkLabel_A4_Add.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_A4_Add.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_A4_Add.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_A4_Add.Name = "LinkLabel_A4_Add"
-        Me.LinkLabel_A4_Add.Size = New System.Drawing.Size(28, 12)
+        Me.LinkLabel_A4_Add.Size = New System.Drawing.Size(42, 19)
         Me.LinkLabel_A4_Add.TabIndex = 65
         Me.LinkLabel_A4_Add.TabStop = True
         Me.LinkLabel_A4_Add.Text = "Run"
@@ -1280,6 +1295,7 @@ Partial Class Program
         'Panel_A4_Thd
         '
         Me.Panel_A4_Thd.Controls.Add(Me.LinkLabel_A4_Thd)
+        Me.Panel_A4_Thd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.Panel_A4_Thd.Location = New System.Drawing.Point(4, 221)
         Me.Panel_A4_Thd.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Panel_A4_Thd.Name = "Panel_A4_Thd"
@@ -1292,7 +1308,7 @@ Partial Class Program
         Me.LinkLabel_A4_Thd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_A4_Thd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_A4_Thd.Name = "LinkLabel_A4_Thd"
-        Me.LinkLabel_A4_Thd.Size = New System.Drawing.Size(28, 12)
+        Me.LinkLabel_A4_Thd.Size = New System.Drawing.Size(42, 19)
         Me.LinkLabel_A4_Thd.TabIndex = 65
         Me.LinkLabel_A4_Thd.TabStop = True
         Me.LinkLabel_A4_Thd.Text = "Run"
@@ -1309,10 +1325,11 @@ Partial Class Program
         'LinkLabel_A4_Sec
         '
         Me.LinkLabel_A4_Sec.AutoSize = True
+        Me.LinkLabel_A4_Sec.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_A4_Sec.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_A4_Sec.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_A4_Sec.Name = "LinkLabel_A4_Sec"
-        Me.LinkLabel_A4_Sec.Size = New System.Drawing.Size(28, 12)
+        Me.LinkLabel_A4_Sec.Size = New System.Drawing.Size(42, 19)
         Me.LinkLabel_A4_Sec.TabIndex = 65
         Me.LinkLabel_A4_Sec.TabStop = True
         Me.LinkLabel_A4_Sec.Text = "Run"
@@ -1329,11 +1346,11 @@ Partial Class Program
         'LinkLabel_A4_Fst
         '
         Me.LinkLabel_A4_Fst.AutoSize = True
-        Me.LinkLabel_A4_Fst.Font = New System.Drawing.Font("新細明體", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.LinkLabel_A4_Fst.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_A4_Fst.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_A4_Fst.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_A4_Fst.Name = "LinkLabel_A4_Fst"
-        Me.LinkLabel_A4_Fst.Size = New System.Drawing.Size(28, 12)
+        Me.LinkLabel_A4_Fst.Size = New System.Drawing.Size(42, 19)
         Me.LinkLabel_A4_Fst.TabIndex = 65
         Me.LinkLabel_A4_Fst.TabStop = True
         Me.LinkLabel_A4_Fst.Text = "Run"
@@ -1341,10 +1358,11 @@ Partial Class Program
         'Label_A4
         '
         Me.Label_A4.AutoSize = True
+        Me.Label_A4.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Label_A4.Location = New System.Drawing.Point(9, 0)
         Me.Label_A4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label_A4.Name = "Label_A4"
-        Me.Label_A4.Size = New System.Drawing.Size(21, 12)
+        Me.Label_A4.Size = New System.Drawing.Size(29, 16)
         Me.Label_A4.TabIndex = 68
         Me.Label_A4.Text = "A4"
         '
@@ -1377,10 +1395,11 @@ Partial Class Program
         'LinkLabel_TrA3_Add_bkd
         '
         Me.LinkLabel_TrA3_Add_bkd.AutoSize = True
+        Me.LinkLabel_TrA3_Add_bkd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_TrA3_Add_bkd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_TrA3_Add_bkd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_TrA3_Add_bkd.Name = "LinkLabel_TrA3_Add_bkd"
-        Me.LinkLabel_TrA3_Add_bkd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_TrA3_Add_bkd.Size = New System.Drawing.Size(39, 19)
         Me.LinkLabel_TrA3_Add_bkd.TabIndex = 65
         Me.LinkLabel_TrA3_Add_bkd.TabStop = True
         Me.LinkLabel_TrA3_Add_bkd.Text = "bkd"
@@ -1397,10 +1416,11 @@ Partial Class Program
         'LinkLabel_TrA3_Add_fwd
         '
         Me.LinkLabel_TrA3_Add_fwd.AutoSize = True
+        Me.LinkLabel_TrA3_Add_fwd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_TrA3_Add_fwd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_TrA3_Add_fwd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_TrA3_Add_fwd.Name = "LinkLabel_TrA3_Add_fwd"
-        Me.LinkLabel_TrA3_Add_fwd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_TrA3_Add_fwd.Size = New System.Drawing.Size(40, 19)
         Me.LinkLabel_TrA3_Add_fwd.TabIndex = 65
         Me.LinkLabel_TrA3_Add_fwd.TabStop = True
         Me.LinkLabel_TrA3_Add_fwd.Text = "fwd"
@@ -1417,10 +1437,11 @@ Partial Class Program
         'LinkLabel_TrA3_Thd_bkd
         '
         Me.LinkLabel_TrA3_Thd_bkd.AutoSize = True
+        Me.LinkLabel_TrA3_Thd_bkd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_TrA3_Thd_bkd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_TrA3_Thd_bkd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_TrA3_Thd_bkd.Name = "LinkLabel_TrA3_Thd_bkd"
-        Me.LinkLabel_TrA3_Thd_bkd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_TrA3_Thd_bkd.Size = New System.Drawing.Size(39, 19)
         Me.LinkLabel_TrA3_Thd_bkd.TabIndex = 65
         Me.LinkLabel_TrA3_Thd_bkd.TabStop = True
         Me.LinkLabel_TrA3_Thd_bkd.Text = "bkd"
@@ -1437,10 +1458,11 @@ Partial Class Program
         'LinkLabel_TrA3_Thd_fwd
         '
         Me.LinkLabel_TrA3_Thd_fwd.AutoSize = True
+        Me.LinkLabel_TrA3_Thd_fwd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_TrA3_Thd_fwd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_TrA3_Thd_fwd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_TrA3_Thd_fwd.Name = "LinkLabel_TrA3_Thd_fwd"
-        Me.LinkLabel_TrA3_Thd_fwd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_TrA3_Thd_fwd.Size = New System.Drawing.Size(40, 19)
         Me.LinkLabel_TrA3_Thd_fwd.TabIndex = 65
         Me.LinkLabel_TrA3_Thd_fwd.TabStop = True
         Me.LinkLabel_TrA3_Thd_fwd.Text = "fwd"
@@ -1457,10 +1479,11 @@ Partial Class Program
         'LinkLabel_TrA3_Sec_bkd
         '
         Me.LinkLabel_TrA3_Sec_bkd.AutoSize = True
+        Me.LinkLabel_TrA3_Sec_bkd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_TrA3_Sec_bkd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_TrA3_Sec_bkd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_TrA3_Sec_bkd.Name = "LinkLabel_TrA3_Sec_bkd"
-        Me.LinkLabel_TrA3_Sec_bkd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_TrA3_Sec_bkd.Size = New System.Drawing.Size(39, 19)
         Me.LinkLabel_TrA3_Sec_bkd.TabIndex = 65
         Me.LinkLabel_TrA3_Sec_bkd.TabStop = True
         Me.LinkLabel_TrA3_Sec_bkd.Text = "bkd"
@@ -1477,10 +1500,11 @@ Partial Class Program
         'LinkLabel_TrA3_Sec_fwd
         '
         Me.LinkLabel_TrA3_Sec_fwd.AutoSize = True
+        Me.LinkLabel_TrA3_Sec_fwd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_TrA3_Sec_fwd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_TrA3_Sec_fwd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_TrA3_Sec_fwd.Name = "LinkLabel_TrA3_Sec_fwd"
-        Me.LinkLabel_TrA3_Sec_fwd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_TrA3_Sec_fwd.Size = New System.Drawing.Size(40, 19)
         Me.LinkLabel_TrA3_Sec_fwd.TabIndex = 65
         Me.LinkLabel_TrA3_Sec_fwd.TabStop = True
         Me.LinkLabel_TrA3_Sec_fwd.Text = "fwd"
@@ -1497,10 +1521,11 @@ Partial Class Program
         'LinkLabel_TrA3_Fst_bkd
         '
         Me.LinkLabel_TrA3_Fst_bkd.AutoSize = True
+        Me.LinkLabel_TrA3_Fst_bkd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_TrA3_Fst_bkd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_TrA3_Fst_bkd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_TrA3_Fst_bkd.Name = "LinkLabel_TrA3_Fst_bkd"
-        Me.LinkLabel_TrA3_Fst_bkd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_TrA3_Fst_bkd.Size = New System.Drawing.Size(39, 19)
         Me.LinkLabel_TrA3_Fst_bkd.TabIndex = 65
         Me.LinkLabel_TrA3_Fst_bkd.TabStop = True
         Me.LinkLabel_TrA3_Fst_bkd.Text = "bkd"
@@ -1517,10 +1542,11 @@ Partial Class Program
         'LinkLabel_TrA3_Fst_fwd
         '
         Me.LinkLabel_TrA3_Fst_fwd.AutoSize = True
+        Me.LinkLabel_TrA3_Fst_fwd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_TrA3_Fst_fwd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_TrA3_Fst_fwd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_TrA3_Fst_fwd.Name = "LinkLabel_TrA3_Fst_fwd"
-        Me.LinkLabel_TrA3_Fst_fwd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_TrA3_Fst_fwd.Size = New System.Drawing.Size(40, 19)
         Me.LinkLabel_TrA3_Fst_fwd.TabIndex = 65
         Me.LinkLabel_TrA3_Fst_fwd.TabStop = True
         Me.LinkLabel_TrA3_Fst_fwd.Text = "fwd"
@@ -1528,10 +1554,11 @@ Partial Class Program
         'Label_Tr_A3
         '
         Me.Label_Tr_A3.AutoSize = True
+        Me.Label_Tr_A3.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Label_Tr_A3.Location = New System.Drawing.Point(12, 0)
         Me.Label_Tr_A3.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label_Tr_A3.Name = "Label_Tr_A3"
-        Me.Label_Tr_A3.Size = New System.Drawing.Size(21, 12)
+        Me.Label_Tr_A3.Size = New System.Drawing.Size(29, 16)
         Me.Label_Tr_A3.TabIndex = 68
         Me.Label_Tr_A3.Text = "A3"
         '
@@ -1552,17 +1579,18 @@ Partial Class Program
         Me.Panel_PostCal.Location = New System.Drawing.Point(8, 383)
         Me.Panel_PostCal.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Panel_PostCal.Name = "Panel_PostCal"
-        Me.Panel_PostCal.Size = New System.Drawing.Size(60, 34)
+        Me.Panel_PostCal.Size = New System.Drawing.Size(68, 34)
         Me.Panel_PostCal.TabIndex = 107
         '
         'LinkLabel_postCal
         '
         Me.LinkLabel_postCal.AutoSize = True
         Me.LinkLabel_postCal.Enabled = False
+        Me.LinkLabel_postCal.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_postCal.LinkColor = System.Drawing.Color.Black
         Me.LinkLabel_postCal.Location = New System.Drawing.Point(3, 10)
         Me.LinkLabel_postCal.Name = "LinkLabel_postCal"
-        Me.LinkLabel_postCal.Size = New System.Drawing.Size(51, 12)
+        Me.LinkLabel_postCal.Size = New System.Drawing.Size(62, 15)
         Me.LinkLabel_postCal.TabIndex = 53
         Me.LinkLabel_postCal.TabStop = True
         Me.LinkLabel_postCal.Text = "Post Cal"
@@ -1601,10 +1629,11 @@ Partial Class Program
         '
         Me.LinkLabel_LoA2_Add_3rd.AutoSize = True
         Me.LinkLabel_LoA2_Add_3rd.Enabled = False
+        Me.LinkLabel_LoA2_Add_3rd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA2_Add_3rd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA2_Add_3rd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA2_Add_3rd.Name = "LinkLabel_LoA2_Add_3rd"
-        Me.LinkLabel_LoA2_Add_3rd.Size = New System.Drawing.Size(24, 12)
+        Me.LinkLabel_LoA2_Add_3rd.Size = New System.Drawing.Size(36, 19)
         Me.LinkLabel_LoA2_Add_3rd.TabIndex = 65
         Me.LinkLabel_LoA2_Add_3rd.TabStop = True
         Me.LinkLabel_LoA2_Add_3rd.Text = "3rd"
@@ -1622,10 +1651,11 @@ Partial Class Program
         '
         Me.LinkLabel_LoA2_Add_2nd.AutoSize = True
         Me.LinkLabel_LoA2_Add_2nd.Enabled = False
+        Me.LinkLabel_LoA2_Add_2nd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA2_Add_2nd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA2_Add_2nd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA2_Add_2nd.Name = "LinkLabel_LoA2_Add_2nd"
-        Me.LinkLabel_LoA2_Add_2nd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_LoA2_Add_2nd.Size = New System.Drawing.Size(39, 19)
         Me.LinkLabel_LoA2_Add_2nd.TabIndex = 65
         Me.LinkLabel_LoA2_Add_2nd.TabStop = True
         Me.LinkLabel_LoA2_Add_2nd.Text = "2nd"
@@ -1642,10 +1672,11 @@ Partial Class Program
         'LinkLabel_LoA2_Add_1st
         '
         Me.LinkLabel_LoA2_Add_1st.AutoSize = True
+        Me.LinkLabel_LoA2_Add_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA2_Add_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA2_Add_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA2_Add_1st.Name = "LinkLabel_LoA2_Add_1st"
-        Me.LinkLabel_LoA2_Add_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_LoA2_Add_1st.Size = New System.Drawing.Size(33, 19)
         Me.LinkLabel_LoA2_Add_1st.TabIndex = 65
         Me.LinkLabel_LoA2_Add_1st.TabStop = True
         Me.LinkLabel_LoA2_Add_1st.Text = "1st"
@@ -1663,10 +1694,11 @@ Partial Class Program
         '
         Me.LinkLabel_LoA2_Thd_3rd.AutoSize = True
         Me.LinkLabel_LoA2_Thd_3rd.Enabled = False
+        Me.LinkLabel_LoA2_Thd_3rd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA2_Thd_3rd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA2_Thd_3rd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA2_Thd_3rd.Name = "LinkLabel_LoA2_Thd_3rd"
-        Me.LinkLabel_LoA2_Thd_3rd.Size = New System.Drawing.Size(24, 12)
+        Me.LinkLabel_LoA2_Thd_3rd.Size = New System.Drawing.Size(36, 19)
         Me.LinkLabel_LoA2_Thd_3rd.TabIndex = 65
         Me.LinkLabel_LoA2_Thd_3rd.TabStop = True
         Me.LinkLabel_LoA2_Thd_3rd.Text = "3rd"
@@ -1684,10 +1716,11 @@ Partial Class Program
         '
         Me.LinkLabel_LoA2_Thd_2nd.AutoSize = True
         Me.LinkLabel_LoA2_Thd_2nd.Enabled = False
+        Me.LinkLabel_LoA2_Thd_2nd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA2_Thd_2nd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA2_Thd_2nd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA2_Thd_2nd.Name = "LinkLabel_LoA2_Thd_2nd"
-        Me.LinkLabel_LoA2_Thd_2nd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_LoA2_Thd_2nd.Size = New System.Drawing.Size(39, 19)
         Me.LinkLabel_LoA2_Thd_2nd.TabIndex = 65
         Me.LinkLabel_LoA2_Thd_2nd.TabStop = True
         Me.LinkLabel_LoA2_Thd_2nd.Text = "2nd"
@@ -1704,10 +1737,11 @@ Partial Class Program
         'LinkLabel_LoA2_Thd_1st
         '
         Me.LinkLabel_LoA2_Thd_1st.AutoSize = True
+        Me.LinkLabel_LoA2_Thd_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA2_Thd_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA2_Thd_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA2_Thd_1st.Name = "LinkLabel_LoA2_Thd_1st"
-        Me.LinkLabel_LoA2_Thd_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_LoA2_Thd_1st.Size = New System.Drawing.Size(33, 19)
         Me.LinkLabel_LoA2_Thd_1st.TabIndex = 65
         Me.LinkLabel_LoA2_Thd_1st.TabStop = True
         Me.LinkLabel_LoA2_Thd_1st.Text = "1st"
@@ -1725,10 +1759,11 @@ Partial Class Program
         '
         Me.LinkLabel_LoA2_Sec_3rd.AutoSize = True
         Me.LinkLabel_LoA2_Sec_3rd.Enabled = False
+        Me.LinkLabel_LoA2_Sec_3rd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA2_Sec_3rd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA2_Sec_3rd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA2_Sec_3rd.Name = "LinkLabel_LoA2_Sec_3rd"
-        Me.LinkLabel_LoA2_Sec_3rd.Size = New System.Drawing.Size(24, 12)
+        Me.LinkLabel_LoA2_Sec_3rd.Size = New System.Drawing.Size(36, 19)
         Me.LinkLabel_LoA2_Sec_3rd.TabIndex = 65
         Me.LinkLabel_LoA2_Sec_3rd.TabStop = True
         Me.LinkLabel_LoA2_Sec_3rd.Text = "3rd"
@@ -1746,10 +1781,11 @@ Partial Class Program
         '
         Me.LinkLabel_LoA2_Sec_2nd.AutoSize = True
         Me.LinkLabel_LoA2_Sec_2nd.Enabled = False
+        Me.LinkLabel_LoA2_Sec_2nd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA2_Sec_2nd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA2_Sec_2nd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA2_Sec_2nd.Name = "LinkLabel_LoA2_Sec_2nd"
-        Me.LinkLabel_LoA2_Sec_2nd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_LoA2_Sec_2nd.Size = New System.Drawing.Size(39, 19)
         Me.LinkLabel_LoA2_Sec_2nd.TabIndex = 65
         Me.LinkLabel_LoA2_Sec_2nd.TabStop = True
         Me.LinkLabel_LoA2_Sec_2nd.Text = "2nd"
@@ -1766,10 +1802,11 @@ Partial Class Program
         'LinkLabel_LoA2_Sec_1st
         '
         Me.LinkLabel_LoA2_Sec_1st.AutoSize = True
+        Me.LinkLabel_LoA2_Sec_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA2_Sec_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA2_Sec_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA2_Sec_1st.Name = "LinkLabel_LoA2_Sec_1st"
-        Me.LinkLabel_LoA2_Sec_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_LoA2_Sec_1st.Size = New System.Drawing.Size(33, 19)
         Me.LinkLabel_LoA2_Sec_1st.TabIndex = 65
         Me.LinkLabel_LoA2_Sec_1st.TabStop = True
         Me.LinkLabel_LoA2_Sec_1st.Text = "1st"
@@ -1787,10 +1824,11 @@ Partial Class Program
         '
         Me.LinkLabel_LoA2_Fst_3rd.AutoSize = True
         Me.LinkLabel_LoA2_Fst_3rd.Enabled = False
+        Me.LinkLabel_LoA2_Fst_3rd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA2_Fst_3rd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA2_Fst_3rd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA2_Fst_3rd.Name = "LinkLabel_LoA2_Fst_3rd"
-        Me.LinkLabel_LoA2_Fst_3rd.Size = New System.Drawing.Size(24, 12)
+        Me.LinkLabel_LoA2_Fst_3rd.Size = New System.Drawing.Size(36, 19)
         Me.LinkLabel_LoA2_Fst_3rd.TabIndex = 65
         Me.LinkLabel_LoA2_Fst_3rd.TabStop = True
         Me.LinkLabel_LoA2_Fst_3rd.Text = "3rd"
@@ -1808,10 +1846,11 @@ Partial Class Program
         '
         Me.LinkLabel_LoA2_Fst_2nd.AutoSize = True
         Me.LinkLabel_LoA2_Fst_2nd.Enabled = False
+        Me.LinkLabel_LoA2_Fst_2nd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA2_Fst_2nd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA2_Fst_2nd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA2_Fst_2nd.Name = "LinkLabel_LoA2_Fst_2nd"
-        Me.LinkLabel_LoA2_Fst_2nd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_LoA2_Fst_2nd.Size = New System.Drawing.Size(39, 19)
         Me.LinkLabel_LoA2_Fst_2nd.TabIndex = 65
         Me.LinkLabel_LoA2_Fst_2nd.TabStop = True
         Me.LinkLabel_LoA2_Fst_2nd.Text = "2nd"
@@ -1819,10 +1858,11 @@ Partial Class Program
         'Label_Lo_A2
         '
         Me.Label_Lo_A2.AutoSize = True
+        Me.Label_Lo_A2.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Label_Lo_A2.Location = New System.Drawing.Point(8, -1)
         Me.Label_Lo_A2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label_Lo_A2.Name = "Label_Lo_A2"
-        Me.Label_Lo_A2.Size = New System.Drawing.Size(21, 12)
+        Me.Label_Lo_A2.Size = New System.Drawing.Size(29, 16)
         Me.Label_Lo_A2.TabIndex = 68
         Me.Label_Lo_A2.Text = "A2"
         '
@@ -1838,10 +1878,11 @@ Partial Class Program
         'LinkLabel_LoA2_Fst_1st
         '
         Me.LinkLabel_LoA2_Fst_1st.AutoSize = True
+        Me.LinkLabel_LoA2_Fst_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA2_Fst_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA2_Fst_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA2_Fst_1st.Name = "LinkLabel_LoA2_Fst_1st"
-        Me.LinkLabel_LoA2_Fst_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_LoA2_Fst_1st.Size = New System.Drawing.Size(33, 19)
         Me.LinkLabel_LoA2_Fst_1st.TabIndex = 65
         Me.LinkLabel_LoA2_Fst_1st.TabStop = True
         Me.LinkLabel_LoA2_Fst_1st.Text = "1st"
@@ -1872,10 +1913,11 @@ Partial Class Program
         'LinkLabel_PreCal_6th
         '
         Me.LinkLabel_PreCal_6th.AutoSize = True
+        Me.LinkLabel_PreCal_6th.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_PreCal_6th.Location = New System.Drawing.Point(4, 4)
         Me.LinkLabel_PreCal_6th.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PreCal_6th.Name = "LinkLabel_PreCal_6th"
-        Me.LinkLabel_PreCal_6th.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_PreCal_6th.Size = New System.Drawing.Size(32, 15)
         Me.LinkLabel_PreCal_6th.TabIndex = 1
         Me.LinkLabel_PreCal_6th.TabStop = True
         Me.LinkLabel_PreCal_6th.Text = "P12"
@@ -1892,10 +1934,11 @@ Partial Class Program
         'LinkLabel_PreCal_5th
         '
         Me.LinkLabel_PreCal_5th.AutoSize = True
+        Me.LinkLabel_PreCal_5th.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_PreCal_5th.Location = New System.Drawing.Point(4, 2)
         Me.LinkLabel_PreCal_5th.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PreCal_5th.Name = "LinkLabel_PreCal_5th"
-        Me.LinkLabel_PreCal_5th.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_PreCal_5th.Size = New System.Drawing.Size(32, 15)
         Me.LinkLabel_PreCal_5th.TabIndex = 1
         Me.LinkLabel_PreCal_5th.TabStop = True
         Me.LinkLabel_PreCal_5th.Text = "P10"
@@ -1912,10 +1955,11 @@ Partial Class Program
         'LinkLabel_PreCal_4th
         '
         Me.LinkLabel_PreCal_4th.AutoSize = True
+        Me.LinkLabel_PreCal_4th.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_PreCal_4th.Location = New System.Drawing.Point(4, 3)
         Me.LinkLabel_PreCal_4th.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PreCal_4th.Name = "LinkLabel_PreCal_4th"
-        Me.LinkLabel_PreCal_4th.Size = New System.Drawing.Size(19, 12)
+        Me.LinkLabel_PreCal_4th.Size = New System.Drawing.Size(24, 15)
         Me.LinkLabel_PreCal_4th.TabIndex = 1
         Me.LinkLabel_PreCal_4th.TabStop = True
         Me.LinkLabel_PreCal_4th.Text = "P8"
@@ -1932,10 +1976,11 @@ Partial Class Program
         'LinkLabel_PreCal_3rd
         '
         Me.LinkLabel_PreCal_3rd.AutoSize = True
+        Me.LinkLabel_PreCal_3rd.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_PreCal_3rd.Location = New System.Drawing.Point(4, 2)
         Me.LinkLabel_PreCal_3rd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PreCal_3rd.Name = "LinkLabel_PreCal_3rd"
-        Me.LinkLabel_PreCal_3rd.Size = New System.Drawing.Size(19, 12)
+        Me.LinkLabel_PreCal_3rd.Size = New System.Drawing.Size(24, 15)
         Me.LinkLabel_PreCal_3rd.TabIndex = 1
         Me.LinkLabel_PreCal_3rd.TabStop = True
         Me.LinkLabel_PreCal_3rd.Text = "P6"
@@ -1952,10 +1997,11 @@ Partial Class Program
         'LinkLabel_PreCal_2nd
         '
         Me.LinkLabel_PreCal_2nd.AutoSize = True
+        Me.LinkLabel_PreCal_2nd.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_PreCal_2nd.Location = New System.Drawing.Point(4, 3)
         Me.LinkLabel_PreCal_2nd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PreCal_2nd.Name = "LinkLabel_PreCal_2nd"
-        Me.LinkLabel_PreCal_2nd.Size = New System.Drawing.Size(19, 12)
+        Me.LinkLabel_PreCal_2nd.Size = New System.Drawing.Size(24, 15)
         Me.LinkLabel_PreCal_2nd.TabIndex = 1
         Me.LinkLabel_PreCal_2nd.TabStop = True
         Me.LinkLabel_PreCal_2nd.Text = "P4"
@@ -1972,10 +2018,11 @@ Partial Class Program
         'LinkLabel_PreCal_1st
         '
         Me.LinkLabel_PreCal_1st.AutoSize = True
+        Me.LinkLabel_PreCal_1st.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_PreCal_1st.Location = New System.Drawing.Point(4, 6)
         Me.LinkLabel_PreCal_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_PreCal_1st.Name = "LinkLabel_PreCal_1st"
-        Me.LinkLabel_PreCal_1st.Size = New System.Drawing.Size(19, 12)
+        Me.LinkLabel_PreCal_1st.Size = New System.Drawing.Size(24, 15)
         Me.LinkLabel_PreCal_1st.TabIndex = 0
         Me.LinkLabel_PreCal_1st.TabStop = True
         Me.LinkLabel_PreCal_1st.Text = "P2"
@@ -1987,7 +2034,7 @@ Partial Class Program
         Me.PanelLoaderA1.Controls.Add(Me.Panel_LoA1_Sec_1st)
         Me.PanelLoaderA1.Controls.Add(Me.Label_Lo_A1)
         Me.PanelLoaderA1.Controls.Add(Me.Panel_LoA1_Fst_1st)
-        Me.PanelLoaderA1.Location = New System.Drawing.Point(415, 36)
+        Me.PanelLoaderA1.Location = New System.Drawing.Point(393, 39)
         Me.PanelLoaderA1.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.PanelLoaderA1.Name = "PanelLoaderA1"
         Me.PanelLoaderA1.Size = New System.Drawing.Size(38, 351)
@@ -2005,10 +2052,11 @@ Partial Class Program
         'LinkLabel_LoA1_Add_1st
         '
         Me.LinkLabel_LoA1_Add_1st.AutoSize = True
+        Me.LinkLabel_LoA1_Add_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA1_Add_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA1_Add_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA1_Add_1st.Name = "LinkLabel_LoA1_Add_1st"
-        Me.LinkLabel_LoA1_Add_1st.Size = New System.Drawing.Size(28, 12)
+        Me.LinkLabel_LoA1_Add_1st.Size = New System.Drawing.Size(42, 19)
         Me.LinkLabel_LoA1_Add_1st.TabIndex = 65
         Me.LinkLabel_LoA1_Add_1st.TabStop = True
         Me.LinkLabel_LoA1_Add_1st.Text = "Run"
@@ -2025,10 +2073,11 @@ Partial Class Program
         'LinkLabel_LoA1_Thd_1st
         '
         Me.LinkLabel_LoA1_Thd_1st.AutoSize = True
+        Me.LinkLabel_LoA1_Thd_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA1_Thd_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA1_Thd_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA1_Thd_1st.Name = "LinkLabel_LoA1_Thd_1st"
-        Me.LinkLabel_LoA1_Thd_1st.Size = New System.Drawing.Size(28, 12)
+        Me.LinkLabel_LoA1_Thd_1st.Size = New System.Drawing.Size(42, 19)
         Me.LinkLabel_LoA1_Thd_1st.TabIndex = 65
         Me.LinkLabel_LoA1_Thd_1st.TabStop = True
         Me.LinkLabel_LoA1_Thd_1st.Text = "Run"
@@ -2045,10 +2094,11 @@ Partial Class Program
         'LinkLabel_LoA1_Sec_1st
         '
         Me.LinkLabel_LoA1_Sec_1st.AutoSize = True
+        Me.LinkLabel_LoA1_Sec_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA1_Sec_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA1_Sec_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA1_Sec_1st.Name = "LinkLabel_LoA1_Sec_1st"
-        Me.LinkLabel_LoA1_Sec_1st.Size = New System.Drawing.Size(28, 12)
+        Me.LinkLabel_LoA1_Sec_1st.Size = New System.Drawing.Size(42, 19)
         Me.LinkLabel_LoA1_Sec_1st.TabIndex = 65
         Me.LinkLabel_LoA1_Sec_1st.TabStop = True
         Me.LinkLabel_LoA1_Sec_1st.Text = "Run"
@@ -2056,10 +2106,11 @@ Partial Class Program
         'Label_Lo_A1
         '
         Me.Label_Lo_A1.AutoSize = True
+        Me.Label_Lo_A1.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Label_Lo_A1.Location = New System.Drawing.Point(7, 0)
         Me.Label_Lo_A1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label_Lo_A1.Name = "Label_Lo_A1"
-        Me.Label_Lo_A1.Size = New System.Drawing.Size(21, 12)
+        Me.Label_Lo_A1.Size = New System.Drawing.Size(29, 16)
         Me.Label_Lo_A1.TabIndex = 68
         Me.Label_Lo_A1.Text = "A1"
         '
@@ -2075,10 +2126,11 @@ Partial Class Program
         'LinkLabel_LoA1_Fst_1st
         '
         Me.LinkLabel_LoA1_Fst_1st.AutoSize = True
+        Me.LinkLabel_LoA1_Fst_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA1_Fst_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA1_Fst_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA1_Fst_1st.Name = "LinkLabel_LoA1_Fst_1st"
-        Me.LinkLabel_LoA1_Fst_1st.Size = New System.Drawing.Size(28, 12)
+        Me.LinkLabel_LoA1_Fst_1st.Size = New System.Drawing.Size(42, 19)
         Me.LinkLabel_LoA1_Fst_1st.TabIndex = 65
         Me.LinkLabel_LoA1_Fst_1st.TabStop = True
         Me.LinkLabel_LoA1_Fst_1st.Text = "Run"
@@ -2094,7 +2146,7 @@ Partial Class Program
         Me.PanelLoaderA3.Controls.Add(Me.Panel_LoA3_Fst_bkd)
         Me.PanelLoaderA3.Controls.Add(Me.Panel_LoA3_Fst_fwd)
         Me.PanelLoaderA3.Controls.Add(Me.Label_Ex_A3)
-        Me.PanelLoaderA3.Location = New System.Drawing.Point(322, 146)
+        Me.PanelLoaderA3.Location = New System.Drawing.Point(352, 39)
         Me.PanelLoaderA3.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.PanelLoaderA3.Name = "PanelLoaderA3"
         Me.PanelLoaderA3.Size = New System.Drawing.Size(38, 351)
@@ -2112,10 +2164,11 @@ Partial Class Program
         'LinkLabel_LoA3_Add_bkd
         '
         Me.LinkLabel_LoA3_Add_bkd.AutoSize = True
+        Me.LinkLabel_LoA3_Add_bkd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA3_Add_bkd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA3_Add_bkd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA3_Add_bkd.Name = "LinkLabel_LoA3_Add_bkd"
-        Me.LinkLabel_LoA3_Add_bkd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_LoA3_Add_bkd.Size = New System.Drawing.Size(39, 19)
         Me.LinkLabel_LoA3_Add_bkd.TabIndex = 65
         Me.LinkLabel_LoA3_Add_bkd.TabStop = True
         Me.LinkLabel_LoA3_Add_bkd.Text = "bkd"
@@ -2132,10 +2185,11 @@ Partial Class Program
         'LinkLabel_LoA3_Add_fwd
         '
         Me.LinkLabel_LoA3_Add_fwd.AutoSize = True
+        Me.LinkLabel_LoA3_Add_fwd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA3_Add_fwd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA3_Add_fwd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA3_Add_fwd.Name = "LinkLabel_LoA3_Add_fwd"
-        Me.LinkLabel_LoA3_Add_fwd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_LoA3_Add_fwd.Size = New System.Drawing.Size(40, 19)
         Me.LinkLabel_LoA3_Add_fwd.TabIndex = 65
         Me.LinkLabel_LoA3_Add_fwd.TabStop = True
         Me.LinkLabel_LoA3_Add_fwd.Text = "fwd"
@@ -2152,10 +2206,11 @@ Partial Class Program
         'LinkLabel_LoA3_Thd_bkd
         '
         Me.LinkLabel_LoA3_Thd_bkd.AutoSize = True
+        Me.LinkLabel_LoA3_Thd_bkd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA3_Thd_bkd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA3_Thd_bkd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA3_Thd_bkd.Name = "LinkLabel_LoA3_Thd_bkd"
-        Me.LinkLabel_LoA3_Thd_bkd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_LoA3_Thd_bkd.Size = New System.Drawing.Size(39, 19)
         Me.LinkLabel_LoA3_Thd_bkd.TabIndex = 65
         Me.LinkLabel_LoA3_Thd_bkd.TabStop = True
         Me.LinkLabel_LoA3_Thd_bkd.Text = "bkd"
@@ -2172,10 +2227,11 @@ Partial Class Program
         'LinkLabel_LoA3_Thd_fwd
         '
         Me.LinkLabel_LoA3_Thd_fwd.AutoSize = True
+        Me.LinkLabel_LoA3_Thd_fwd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA3_Thd_fwd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA3_Thd_fwd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA3_Thd_fwd.Name = "LinkLabel_LoA3_Thd_fwd"
-        Me.LinkLabel_LoA3_Thd_fwd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_LoA3_Thd_fwd.Size = New System.Drawing.Size(40, 19)
         Me.LinkLabel_LoA3_Thd_fwd.TabIndex = 65
         Me.LinkLabel_LoA3_Thd_fwd.TabStop = True
         Me.LinkLabel_LoA3_Thd_fwd.Text = "fwd"
@@ -2192,10 +2248,11 @@ Partial Class Program
         'LinkLabel_LoA3_Sec_bkd
         '
         Me.LinkLabel_LoA3_Sec_bkd.AutoSize = True
+        Me.LinkLabel_LoA3_Sec_bkd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA3_Sec_bkd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA3_Sec_bkd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA3_Sec_bkd.Name = "LinkLabel_LoA3_Sec_bkd"
-        Me.LinkLabel_LoA3_Sec_bkd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_LoA3_Sec_bkd.Size = New System.Drawing.Size(39, 19)
         Me.LinkLabel_LoA3_Sec_bkd.TabIndex = 65
         Me.LinkLabel_LoA3_Sec_bkd.TabStop = True
         Me.LinkLabel_LoA3_Sec_bkd.Text = "bkd"
@@ -2212,10 +2269,11 @@ Partial Class Program
         'LinkLabel_LoA3_Sec_fwd
         '
         Me.LinkLabel_LoA3_Sec_fwd.AutoSize = True
+        Me.LinkLabel_LoA3_Sec_fwd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA3_Sec_fwd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA3_Sec_fwd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA3_Sec_fwd.Name = "LinkLabel_LoA3_Sec_fwd"
-        Me.LinkLabel_LoA3_Sec_fwd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_LoA3_Sec_fwd.Size = New System.Drawing.Size(40, 19)
         Me.LinkLabel_LoA3_Sec_fwd.TabIndex = 65
         Me.LinkLabel_LoA3_Sec_fwd.TabStop = True
         Me.LinkLabel_LoA3_Sec_fwd.Text = "fwd"
@@ -2232,10 +2290,11 @@ Partial Class Program
         'LinkLabel_LoA3_Fst_bkd
         '
         Me.LinkLabel_LoA3_Fst_bkd.AutoSize = True
+        Me.LinkLabel_LoA3_Fst_bkd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA3_Fst_bkd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA3_Fst_bkd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA3_Fst_bkd.Name = "LinkLabel_LoA3_Fst_bkd"
-        Me.LinkLabel_LoA3_Fst_bkd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_LoA3_Fst_bkd.Size = New System.Drawing.Size(39, 19)
         Me.LinkLabel_LoA3_Fst_bkd.TabIndex = 65
         Me.LinkLabel_LoA3_Fst_bkd.TabStop = True
         Me.LinkLabel_LoA3_Fst_bkd.Text = "bkd"
@@ -2252,10 +2311,11 @@ Partial Class Program
         'LinkLabel_LoA3_Fst_fwd
         '
         Me.LinkLabel_LoA3_Fst_fwd.AutoSize = True
+        Me.LinkLabel_LoA3_Fst_fwd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_LoA3_Fst_fwd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_LoA3_Fst_fwd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_LoA3_Fst_fwd.Name = "LinkLabel_LoA3_Fst_fwd"
-        Me.LinkLabel_LoA3_Fst_fwd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_LoA3_Fst_fwd.Size = New System.Drawing.Size(40, 19)
         Me.LinkLabel_LoA3_Fst_fwd.TabIndex = 65
         Me.LinkLabel_LoA3_Fst_fwd.TabStop = True
         Me.LinkLabel_LoA3_Fst_fwd.Text = "fwd"
@@ -2263,10 +2323,11 @@ Partial Class Program
         'Label_Ex_A3
         '
         Me.Label_Ex_A3.AutoSize = True
+        Me.Label_Ex_A3.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Label_Ex_A3.Location = New System.Drawing.Point(8, -1)
         Me.Label_Ex_A3.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label_Ex_A3.Name = "Label_Ex_A3"
-        Me.Label_Ex_A3.Size = New System.Drawing.Size(21, 12)
+        Me.Label_Ex_A3.Size = New System.Drawing.Size(29, 16)
         Me.Label_Ex_A3.TabIndex = 68
         Me.Label_Ex_A3.Text = "A3"
         '
@@ -2275,7 +2336,7 @@ Partial Class Program
         Me.stopButton.Font = New System.Drawing.Font("新細明體", 15.0!, System.Drawing.FontStyle.Bold)
         Me.stopButton.Location = New System.Drawing.Point(170, 7)
         Me.stopButton.Name = "stopButton"
-        Me.stopButton.Size = New System.Drawing.Size(75, 84)
+        Me.stopButton.Size = New System.Drawing.Size(75, 50)
         Me.stopButton.TabIndex = 17
         Me.stopButton.Text = "Stop"
         Me.stopButton.UseVisualStyleBackColor = True
@@ -2314,10 +2375,11 @@ Partial Class Program
         '
         Me.LinkLabel_ExA2_Add_3rd.AutoSize = True
         Me.LinkLabel_ExA2_Add_3rd.Enabled = False
+        Me.LinkLabel_ExA2_Add_3rd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_ExA2_Add_3rd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA2_Add_3rd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA2_Add_3rd.Name = "LinkLabel_ExA2_Add_3rd"
-        Me.LinkLabel_ExA2_Add_3rd.Size = New System.Drawing.Size(24, 12)
+        Me.LinkLabel_ExA2_Add_3rd.Size = New System.Drawing.Size(36, 19)
         Me.LinkLabel_ExA2_Add_3rd.TabIndex = 65
         Me.LinkLabel_ExA2_Add_3rd.TabStop = True
         Me.LinkLabel_ExA2_Add_3rd.Text = "3rd"
@@ -2335,10 +2397,11 @@ Partial Class Program
         '
         Me.LinkLabel_ExA2_Sec_2nd.AutoSize = True
         Me.LinkLabel_ExA2_Sec_2nd.Enabled = False
+        Me.LinkLabel_ExA2_Sec_2nd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_ExA2_Sec_2nd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA2_Sec_2nd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA2_Sec_2nd.Name = "LinkLabel_ExA2_Sec_2nd"
-        Me.LinkLabel_ExA2_Sec_2nd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_ExA2_Sec_2nd.Size = New System.Drawing.Size(39, 19)
         Me.LinkLabel_ExA2_Sec_2nd.TabIndex = 65
         Me.LinkLabel_ExA2_Sec_2nd.TabStop = True
         Me.LinkLabel_ExA2_Sec_2nd.Text = "2nd"
@@ -2356,10 +2419,11 @@ Partial Class Program
         '
         Me.LinkLabel_ExA2_Add_2nd.AutoSize = True
         Me.LinkLabel_ExA2_Add_2nd.Enabled = False
+        Me.LinkLabel_ExA2_Add_2nd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_ExA2_Add_2nd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA2_Add_2nd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA2_Add_2nd.Name = "LinkLabel_ExA2_Add_2nd"
-        Me.LinkLabel_ExA2_Add_2nd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_ExA2_Add_2nd.Size = New System.Drawing.Size(39, 19)
         Me.LinkLabel_ExA2_Add_2nd.TabIndex = 65
         Me.LinkLabel_ExA2_Add_2nd.TabStop = True
         Me.LinkLabel_ExA2_Add_2nd.Text = "2nd"
@@ -2376,10 +2440,11 @@ Partial Class Program
         'LinkLabel_ExA2_Add_1st
         '
         Me.LinkLabel_ExA2_Add_1st.AutoSize = True
+        Me.LinkLabel_ExA2_Add_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_ExA2_Add_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA2_Add_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA2_Add_1st.Name = "LinkLabel_ExA2_Add_1st"
-        Me.LinkLabel_ExA2_Add_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_ExA2_Add_1st.Size = New System.Drawing.Size(33, 19)
         Me.LinkLabel_ExA2_Add_1st.TabIndex = 65
         Me.LinkLabel_ExA2_Add_1st.TabStop = True
         Me.LinkLabel_ExA2_Add_1st.Text = "1st"
@@ -2397,10 +2462,11 @@ Partial Class Program
         '
         Me.LinkLabel_ExA2_Thd_3rd.AutoSize = True
         Me.LinkLabel_ExA2_Thd_3rd.Enabled = False
+        Me.LinkLabel_ExA2_Thd_3rd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_ExA2_Thd_3rd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA2_Thd_3rd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA2_Thd_3rd.Name = "LinkLabel_ExA2_Thd_3rd"
-        Me.LinkLabel_ExA2_Thd_3rd.Size = New System.Drawing.Size(24, 12)
+        Me.LinkLabel_ExA2_Thd_3rd.Size = New System.Drawing.Size(36, 19)
         Me.LinkLabel_ExA2_Thd_3rd.TabIndex = 65
         Me.LinkLabel_ExA2_Thd_3rd.TabStop = True
         Me.LinkLabel_ExA2_Thd_3rd.Text = "3rd"
@@ -2418,10 +2484,11 @@ Partial Class Program
         '
         Me.LinkLabel_ExA2_Thd_2nd.AutoSize = True
         Me.LinkLabel_ExA2_Thd_2nd.Enabled = False
+        Me.LinkLabel_ExA2_Thd_2nd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_ExA2_Thd_2nd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA2_Thd_2nd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA2_Thd_2nd.Name = "LinkLabel_ExA2_Thd_2nd"
-        Me.LinkLabel_ExA2_Thd_2nd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_ExA2_Thd_2nd.Size = New System.Drawing.Size(39, 19)
         Me.LinkLabel_ExA2_Thd_2nd.TabIndex = 65
         Me.LinkLabel_ExA2_Thd_2nd.TabStop = True
         Me.LinkLabel_ExA2_Thd_2nd.Text = "2nd"
@@ -2438,10 +2505,11 @@ Partial Class Program
         'LinkLabel_ExA2_Thd_1st
         '
         Me.LinkLabel_ExA2_Thd_1st.AutoSize = True
+        Me.LinkLabel_ExA2_Thd_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_ExA2_Thd_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA2_Thd_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA2_Thd_1st.Name = "LinkLabel_ExA2_Thd_1st"
-        Me.LinkLabel_ExA2_Thd_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_ExA2_Thd_1st.Size = New System.Drawing.Size(33, 19)
         Me.LinkLabel_ExA2_Thd_1st.TabIndex = 65
         Me.LinkLabel_ExA2_Thd_1st.TabStop = True
         Me.LinkLabel_ExA2_Thd_1st.Text = "1st"
@@ -2459,10 +2527,11 @@ Partial Class Program
         '
         Me.LinkLabel_ExA2_Sec_3rd.AutoSize = True
         Me.LinkLabel_ExA2_Sec_3rd.Enabled = False
+        Me.LinkLabel_ExA2_Sec_3rd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_ExA2_Sec_3rd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA2_Sec_3rd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA2_Sec_3rd.Name = "LinkLabel_ExA2_Sec_3rd"
-        Me.LinkLabel_ExA2_Sec_3rd.Size = New System.Drawing.Size(24, 12)
+        Me.LinkLabel_ExA2_Sec_3rd.Size = New System.Drawing.Size(36, 19)
         Me.LinkLabel_ExA2_Sec_3rd.TabIndex = 65
         Me.LinkLabel_ExA2_Sec_3rd.TabStop = True
         Me.LinkLabel_ExA2_Sec_3rd.Text = "3rd"
@@ -2479,10 +2548,11 @@ Partial Class Program
         'LinkLabel_ExA2_Sec_1st
         '
         Me.LinkLabel_ExA2_Sec_1st.AutoSize = True
+        Me.LinkLabel_ExA2_Sec_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_ExA2_Sec_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA2_Sec_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA2_Sec_1st.Name = "LinkLabel_ExA2_Sec_1st"
-        Me.LinkLabel_ExA2_Sec_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_ExA2_Sec_1st.Size = New System.Drawing.Size(33, 19)
         Me.LinkLabel_ExA2_Sec_1st.TabIndex = 65
         Me.LinkLabel_ExA2_Sec_1st.TabStop = True
         Me.LinkLabel_ExA2_Sec_1st.Text = "1st"
@@ -2500,10 +2570,11 @@ Partial Class Program
         '
         Me.LinkLabel_ExA2_Fst_3rd.AutoSize = True
         Me.LinkLabel_ExA2_Fst_3rd.Enabled = False
+        Me.LinkLabel_ExA2_Fst_3rd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_ExA2_Fst_3rd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA2_Fst_3rd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA2_Fst_3rd.Name = "LinkLabel_ExA2_Fst_3rd"
-        Me.LinkLabel_ExA2_Fst_3rd.Size = New System.Drawing.Size(24, 12)
+        Me.LinkLabel_ExA2_Fst_3rd.Size = New System.Drawing.Size(36, 19)
         Me.LinkLabel_ExA2_Fst_3rd.TabIndex = 65
         Me.LinkLabel_ExA2_Fst_3rd.TabStop = True
         Me.LinkLabel_ExA2_Fst_3rd.Text = "3rd"
@@ -2521,10 +2592,11 @@ Partial Class Program
         '
         Me.LinkLabel_ExA2_Fst_2nd.AutoSize = True
         Me.LinkLabel_ExA2_Fst_2nd.Enabled = False
+        Me.LinkLabel_ExA2_Fst_2nd.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_ExA2_Fst_2nd.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA2_Fst_2nd.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA2_Fst_2nd.Name = "LinkLabel_ExA2_Fst_2nd"
-        Me.LinkLabel_ExA2_Fst_2nd.Size = New System.Drawing.Size(26, 12)
+        Me.LinkLabel_ExA2_Fst_2nd.Size = New System.Drawing.Size(39, 19)
         Me.LinkLabel_ExA2_Fst_2nd.TabIndex = 65
         Me.LinkLabel_ExA2_Fst_2nd.TabStop = True
         Me.LinkLabel_ExA2_Fst_2nd.Text = "2nd"
@@ -2532,10 +2604,11 @@ Partial Class Program
         'Label_Ex_A2
         '
         Me.Label_Ex_A2.AutoSize = True
+        Me.Label_Ex_A2.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Label_Ex_A2.Location = New System.Drawing.Point(8, 0)
         Me.Label_Ex_A2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label_Ex_A2.Name = "Label_Ex_A2"
-        Me.Label_Ex_A2.Size = New System.Drawing.Size(21, 12)
+        Me.Label_Ex_A2.Size = New System.Drawing.Size(29, 16)
         Me.Label_Ex_A2.TabIndex = 68
         Me.Label_Ex_A2.Text = "A2"
         '
@@ -2551,10 +2624,11 @@ Partial Class Program
         'LinkLabel_ExA2_Fst_1st
         '
         Me.LinkLabel_ExA2_Fst_1st.AutoSize = True
+        Me.LinkLabel_ExA2_Fst_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_ExA2_Fst_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA2_Fst_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA2_Fst_1st.Name = "LinkLabel_ExA2_Fst_1st"
-        Me.LinkLabel_ExA2_Fst_1st.Size = New System.Drawing.Size(21, 12)
+        Me.LinkLabel_ExA2_Fst_1st.Size = New System.Drawing.Size(33, 19)
         Me.LinkLabel_ExA2_Fst_1st.TabIndex = 65
         Me.LinkLabel_ExA2_Fst_1st.TabStop = True
         Me.LinkLabel_ExA2_Fst_1st.Text = "1st"
@@ -2562,6 +2636,7 @@ Partial Class Program
         'Panel_RSS
         '
         Me.Panel_RSS.Controls.Add(Me.LinkLabel_RSS)
+        Me.Panel_RSS.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.Panel_RSS.Location = New System.Drawing.Point(8, 345)
         Me.Panel_RSS.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Panel_RSS.Name = "Panel_RSS"
@@ -2573,7 +2648,7 @@ Partial Class Program
         Me.LinkLabel_RSS.AutoSize = True
         Me.LinkLabel_RSS.Location = New System.Drawing.Point(3, 13)
         Me.LinkLabel_RSS.Name = "LinkLabel_RSS"
-        Me.LinkLabel_RSS.Size = New System.Drawing.Size(28, 12)
+        Me.LinkLabel_RSS.Size = New System.Drawing.Size(35, 15)
         Me.LinkLabel_RSS.TabIndex = 44
         Me.LinkLabel_RSS.TabStop = True
         Me.LinkLabel_RSS.Text = "RSS"
@@ -2581,12 +2656,13 @@ Partial Class Program
         'Label2
         '
         Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Label2.Location = New System.Drawing.Point(111, 178)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(45, 12)
+        Me.Label2.Size = New System.Drawing.Size(17, 16)
         Me.Label2.TabIndex = 61
-        Me.Label2.Text = "Second"
+        Me.Label2.Text = "2"
         '
         'Panel_PreCal
         '
@@ -2601,10 +2677,11 @@ Partial Class Program
         '
         Me.LinkLabel_preCal.AutoSize = True
         Me.LinkLabel_preCal.Enabled = False
+        Me.LinkLabel_preCal.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_preCal.LinkColor = System.Drawing.Color.Black
         Me.LinkLabel_preCal.Location = New System.Drawing.Point(3, 13)
         Me.LinkLabel_preCal.Name = "LinkLabel_preCal"
-        Me.LinkLabel_preCal.Size = New System.Drawing.Size(46, 12)
+        Me.LinkLabel_preCal.Size = New System.Drawing.Size(56, 15)
         Me.LinkLabel_preCal.TabIndex = 52
         Me.LinkLabel_preCal.TabStop = True
         Me.LinkLabel_preCal.Text = "Pre Cal"
@@ -2634,10 +2711,11 @@ Partial Class Program
         'LinkLabel_ExA1_Add_1st
         '
         Me.LinkLabel_ExA1_Add_1st.AutoSize = True
+        Me.LinkLabel_ExA1_Add_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_ExA1_Add_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA1_Add_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA1_Add_1st.Name = "LinkLabel_ExA1_Add_1st"
-        Me.LinkLabel_ExA1_Add_1st.Size = New System.Drawing.Size(28, 12)
+        Me.LinkLabel_ExA1_Add_1st.Size = New System.Drawing.Size(42, 19)
         Me.LinkLabel_ExA1_Add_1st.TabIndex = 65
         Me.LinkLabel_ExA1_Add_1st.TabStop = True
         Me.LinkLabel_ExA1_Add_1st.Text = "Run"
@@ -2654,10 +2732,11 @@ Partial Class Program
         'LinkLabel_ExA1_Thd_1st
         '
         Me.LinkLabel_ExA1_Thd_1st.AutoSize = True
+        Me.LinkLabel_ExA1_Thd_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_ExA1_Thd_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA1_Thd_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA1_Thd_1st.Name = "LinkLabel_ExA1_Thd_1st"
-        Me.LinkLabel_ExA1_Thd_1st.Size = New System.Drawing.Size(28, 12)
+        Me.LinkLabel_ExA1_Thd_1st.Size = New System.Drawing.Size(42, 19)
         Me.LinkLabel_ExA1_Thd_1st.TabIndex = 65
         Me.LinkLabel_ExA1_Thd_1st.TabStop = True
         Me.LinkLabel_ExA1_Thd_1st.Text = "Run"
@@ -2675,10 +2754,11 @@ Partial Class Program
         '
         Me.LinkLabel_ExA1_Sec_1st.AutoSize = True
         Me.LinkLabel_ExA1_Sec_1st.Enabled = False
+        Me.LinkLabel_ExA1_Sec_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_ExA1_Sec_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA1_Sec_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA1_Sec_1st.Name = "LinkLabel_ExA1_Sec_1st"
-        Me.LinkLabel_ExA1_Sec_1st.Size = New System.Drawing.Size(28, 12)
+        Me.LinkLabel_ExA1_Sec_1st.Size = New System.Drawing.Size(42, 19)
         Me.LinkLabel_ExA1_Sec_1st.TabIndex = 65
         Me.LinkLabel_ExA1_Sec_1st.TabStop = True
         Me.LinkLabel_ExA1_Sec_1st.Text = "Run"
@@ -2686,10 +2766,11 @@ Partial Class Program
         'Label_Ex_A1
         '
         Me.Label_Ex_A1.AutoSize = True
+        Me.Label_Ex_A1.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Label_Ex_A1.Location = New System.Drawing.Point(8, 0)
         Me.Label_Ex_A1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label_Ex_A1.Name = "Label_Ex_A1"
-        Me.Label_Ex_A1.Size = New System.Drawing.Size(21, 12)
+        Me.Label_Ex_A1.Size = New System.Drawing.Size(29, 16)
         Me.Label_Ex_A1.TabIndex = 68
         Me.Label_Ex_A1.Text = "A1"
         '
@@ -2705,10 +2786,11 @@ Partial Class Program
         'LinkLabel_ExA1_Fst_1st
         '
         Me.LinkLabel_ExA1_Fst_1st.AutoSize = True
+        Me.LinkLabel_ExA1_Fst_1st.Font = New System.Drawing.Font("新細明體", 14.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_ExA1_Fst_1st.Location = New System.Drawing.Point(2, 4)
         Me.LinkLabel_ExA1_Fst_1st.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel_ExA1_Fst_1st.Name = "LinkLabel_ExA1_Fst_1st"
-        Me.LinkLabel_ExA1_Fst_1st.Size = New System.Drawing.Size(28, 12)
+        Me.LinkLabel_ExA1_Fst_1st.Size = New System.Drawing.Size(42, 19)
         Me.LinkLabel_ExA1_Fst_1st.TabIndex = 65
         Me.LinkLabel_ExA1_Fst_1st.TabStop = True
         Me.LinkLabel_ExA1_Fst_1st.Text = "Run"
@@ -2716,12 +2798,13 @@ Partial Class Program
         'Label4
         '
         Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
         Me.Label4.Location = New System.Drawing.Point(106, 220)
         Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(64, 12)
+        Me.Label4.Size = New System.Drawing.Size(34, 15)
         Me.Label4.TabIndex = 81
-        Me.Label4.Text = "Additional"
+        Me.Label4.Text = "Add"
         '
         'Panel_Bkg
         '
@@ -2735,9 +2818,10 @@ Partial Class Program
         'LinkLabel_BG
         '
         Me.LinkLabel_BG.AutoSize = True
+        Me.LinkLabel_BG.Font = New System.Drawing.Font("新細明體", 10.0!, System.Drawing.FontStyle.Bold)
         Me.LinkLabel_BG.Location = New System.Drawing.Point(3, 14)
         Me.LinkLabel_BG.Name = "LinkLabel_BG"
-        Me.LinkLabel_BG.Size = New System.Drawing.Size(73, 12)
+        Me.LinkLabel_BG.Size = New System.Drawing.Size(84, 14)
         Me.LinkLabel_BG.TabIndex = 39
         Me.LinkLabel_BG.TabStop = True
         Me.LinkLabel_BG.Text = "Background"
@@ -2745,22 +2829,24 @@ Partial Class Program
         'Label1
         '
         Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Label1.Location = New System.Drawing.Point(111, 152)
         Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(30, 12)
+        Me.Label1.Size = New System.Drawing.Size(17, 16)
         Me.Label1.TabIndex = 60
-        Me.Label1.Text = "First"
+        Me.Label1.Text = "1"
         '
         'Label3
         '
         Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
         Me.Label3.Location = New System.Drawing.Point(118, 198)
         Me.Label3.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(36, 12)
+        Me.Label3.Size = New System.Drawing.Size(17, 16)
         Me.Label3.TabIndex = 62
-        Me.Label3.Text = "Third"
+        Me.Label3.Text = "3"
         '
         'TabPageTimer
         '

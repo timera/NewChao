@@ -80,7 +80,7 @@ Public Class Program
     Const seconds As Integer = 3
     Const graphW As Integer = 650
     Const graphH As Integer = 200
-    Dim ASize As Size = New Size(51, 387)
+    Dim ASize As Size = New Size(50, 460)
     'used for first time clicking start button
     Dim NewGraph As Boolean
 
@@ -283,11 +283,11 @@ Public Class Program
         'LinkLabel_postCal.Location = New Point(50, 302)
 
 
-        startButton.Location = New Point(119, 0)
-        Accept_Button.Location = New Point(119, 59)
+        startButton.Location = New Point(129, 0)
+        Accept_Button.Location = New Point(219, 0)
         Accept_Button.Enabled = False
         timeLabel.Location = New Point(5, 5)
-        stopButton.Location = New Point(224, 0)
+        stopButton.Location = New Point(309, 0)
 
 
         NoisesArray = {Noise1, Noise2, Noise3, Noise4, Noise5, Noise6, Noise_Avg}
@@ -374,83 +374,100 @@ Public Class Program
         array_step_display(8) = Label_step9_second
 
 
-        Label1.Location = New Point(100, 188)
-        Label2.Location = New Point(100, 266)
-        Label3.Location = New Point(100, 348)
-        Label4.Location = New Point(100, 431)
+        Label1.Location = New Point(103, 120)
+        Label2.Location = New Point(103, 228)
+        Label3.Location = New Point(103, 336)
+        Label4.Location = New Point(100, 444)
 
-        Panel_PreCal.Location = New Point(10, 10)
-        Panel_PreCal_Sub.Location = New Point(10, 40)
-        Panel_Bkg.Location = New Point(10, 225)
-        Panel_RSS.Location = New Point(10, 253)
-        Panel_PostCal.Location = New Point(10, 285)
-        Panel_PostCal_Sub.Location = New Point(10, 315)
+        TabControl2.Size = New Size(450, 550)
 
-        Panel_PreCal_1st.Location = New Point(20, 0)
-        Panel_PreCal_2nd.Location = New Point(20, 28)
-        Panel_PreCal_3rd.Location = New Point(20, 56)
-        Panel_PreCal_4th.Location = New Point(20, 84)
-        Panel_PreCal_5th.Location = New Point(20, 112)
-        Panel_PreCal_6th.Location = New Point(20, 140)
+        Panel_PreCal.Location = New Point(10, 30)
+        Panel_PreCal_Sub.Location = New Point(10, 60)
+        Panel_Bkg.Location = New Point(10, 245)
+        Panel_RSS.Location = New Point(10, 273)
+        Panel_PostCal.Location = New Point(10, 305)
+        Panel_PostCal_Sub.Location = New Point(10, 335)
 
-        Panel_PostCal_1st.Location = New Point(20, 0)
-        Panel_PostCal_2nd.Location = New Point(20, 28)
-        Panel_PostCal_3rd.Location = New Point(20, 56)
-        Panel_PostCal_4th.Location = New Point(20, 84)
-        Panel_PostCal_5th.Location = New Point(20, 112)
-        Panel_PostCal_6th.Location = New Point(20, 140)
+        Panel_PreCal_1st.Location = New Point(0, 0)
+        Panel_PreCal_2nd.Location = New Point(0, 28)
+        Panel_PreCal_3rd.Location = New Point(0, 56)
+        Panel_PreCal_4th.Location = New Point(0, 84)
+        Panel_PreCal_5th.Location = New Point(0, 112)
+        Panel_PreCal_6th.Location = New Point(0, 140)
+
+        Panel_PostCal_1st.Location = New Point(0, 0)
+        Panel_PostCal_2nd.Location = New Point(0, 28)
+        Panel_PostCal_3rd.Location = New Point(0, 56)
+        Panel_PostCal_4th.Location = New Point(0, 84)
+        Panel_PostCal_5th.Location = New Point(0, 112)
+        Panel_PostCal_6th.Location = New Point(0, 140)
+
+        Panel_ExA1_Fst_1st.Location = New Point(0, 16)
+        Panel_ExA1_Sec_1st.Location = New Point(0, 124)
+        Panel_ExA1_Thd_1st.Location = New Point(0, 232)
+        Panel_ExA1_Add_1st.Location = New Point(0, 340)
+
+        Panel_LoA1_Fst_1st.Location = New Point(0, 16)
+        Panel_LoA1_Sec_1st.Location = New Point(0, 124)
+        Panel_LoA1_Thd_1st.Location = New Point(0, 232)
+        Panel_LoA1_Add_1st.Location = New Point(0, 340)
+
+        Panel_TrA1_Fst_1st.Location = New Point(0, 16)
+        Panel_TrA1_Sec_1st.Location = New Point(0, 124)
+        Panel_TrA1_Thd_1st.Location = New Point(0, 232)
+        Panel_TrA1_Add_1st.Location = New Point(0, 340)
 
         Panel_ExA2_Fst_1st.Location = New Point(2, 16)
-        Panel_ExA2_Fst_2nd.Location = New Point(2, 44)
-        Panel_ExA2_Fst_3rd.Location = New Point(2, 72)
-        Panel_ExA2_Sec_1st.Location = New Point(2, 106)
-        Panel_ExA2_Sec_2nd.Location = New Point(2, 134)
-        Panel_ExA2_Sec_3rd.Location = New Point(2, 162)
-        Panel_ExA2_Thd_1st.Location = New Point(2, 196)
-        Panel_ExA2_Thd_2nd.Location = New Point(2, 224)
-        Panel_ExA2_Thd_3rd.Location = New Point(2, 252)
-        Panel_ExA2_Add_1st.Location = New Point(2, 286)
-        Panel_ExA2_Add_2nd.Location = New Point(2, 314)
-        Panel_ExA2_Add_3rd.Location = New Point(2, 342)
+        Panel_ExA2_Fst_2nd.Location = New Point(2, 52)
+        Panel_ExA2_Fst_3rd.Location = New Point(2, 88)
+        Panel_ExA2_Sec_1st.Location = New Point(2, 124)
+        Panel_ExA2_Sec_2nd.Location = New Point(2, 160)
+        Panel_ExA2_Sec_3rd.Location = New Point(2, 196)
+        Panel_ExA2_Thd_1st.Location = New Point(2, 232)
+        Panel_ExA2_Thd_2nd.Location = New Point(2, 268)
+        Panel_ExA2_Thd_3rd.Location = New Point(2, 304)
+        Panel_ExA2_Add_1st.Location = New Point(2, 340)
+        Panel_ExA2_Add_2nd.Location = New Point(2, 376)
+        Panel_ExA2_Add_3rd.Location = New Point(2, 412)
 
         Panel_LoA2_Fst_1st.Location = New Point(2, 16)
-        Panel_LoA2_Fst_2nd.Location = New Point(2, 44)
-        Panel_LoA2_Fst_3rd.Location = New Point(2, 72)
-        Panel_LoA2_Sec_1st.Location = New Point(2, 106)
-        Panel_LoA2_Sec_2nd.Location = New Point(2, 134)
-        Panel_LoA2_Sec_3rd.Location = New Point(2, 162)
-        Panel_LoA2_Thd_1st.Location = New Point(2, 196)
-        Panel_LoA2_Thd_2nd.Location = New Point(2, 224)
-        Panel_LoA2_Thd_3rd.Location = New Point(2, 252)
-        Panel_LoA2_Add_1st.Location = New Point(2, 286)
-        Panel_LoA2_Add_2nd.Location = New Point(2, 314)
-        Panel_LoA2_Add_3rd.Location = New Point(2, 342)
+        Panel_LoA2_Fst_2nd.Location = New Point(2, 52)
+        Panel_LoA2_Fst_3rd.Location = New Point(2, 88)
+        Panel_LoA2_Sec_1st.Location = New Point(2, 124)
+        Panel_LoA2_Sec_2nd.Location = New Point(2, 160)
+        Panel_LoA2_Sec_3rd.Location = New Point(2, 196)
+        Panel_LoA2_Thd_1st.Location = New Point(2, 232)
+        Panel_LoA2_Thd_2nd.Location = New Point(2, 268)
+        Panel_LoA2_Thd_3rd.Location = New Point(2, 304)
+        Panel_LoA2_Add_1st.Location = New Point(2, 340)
+        Panel_LoA2_Add_2nd.Location = New Point(2, 376)
+        Panel_LoA2_Add_3rd.Location = New Point(2, 412)
 
-        Panel_LoA3_Fst_fwd.Location = New Point(2, 31)
-        Panel_LoA3_Fst_bkd.Location = New Point(2, 59)
-        Panel_LoA3_Sec_fwd.Location = New Point(2, 95)
-        Panel_LoA3_Sec_bkd.Location = New Point(2, 123)
-        Panel_LoA3_Thd_fwd.Location = New Point(2, 178)
-        Panel_LoA3_Thd_bkd.Location = New Point(2, 206)
-        Panel_LoA3_Add_fwd.Location = New Point(2, 269)
-        Panel_LoA3_Add_bkd.Location = New Point(2, 297)
+        Panel_LoA3_Fst_fwd.Location = New Point(2, 16)
+        Panel_LoA3_Fst_bkd.Location = New Point(2, 70)
+        Panel_LoA3_Sec_fwd.Location = New Point(2, 124)
+        Panel_LoA3_Sec_bkd.Location = New Point(2, 178)
+        Panel_LoA3_Thd_fwd.Location = New Point(2, 232)
+        Panel_LoA3_Thd_bkd.Location = New Point(2, 286)
+        Panel_LoA3_Add_fwd.Location = New Point(2, 340)
+        Panel_LoA3_Add_bkd.Location = New Point(2, 394)
 
-        Panel_LoA3_Fst_fwd.Location = New Point(2, 31)
-        Panel_LoA3_Fst_bkd.Location = New Point(2, 59)
-        Panel_LoA3_Sec_fwd.Location = New Point(2, 95)
-        Panel_LoA3_Sec_bkd.Location = New Point(2, 123)
-        Panel_LoA3_Thd_fwd.Location = New Point(2, 178)
-        Panel_LoA3_Thd_bkd.Location = New Point(2, 206)
-        Panel_LoA3_Add_fwd.Location = New Point(2, 269)
-        Panel_LoA3_Add_bkd.Location = New Point(2, 297)
+        Panel_TrA3_Fst_fwd.Location = New Point(2, 16)
+        Panel_TrA3_Fst_bkd.Location = New Point(2, 70)
+        Panel_TrA3_Sec_fwd.Location = New Point(2, 124)
+        Panel_TrA3_Sec_bkd.Location = New Point(2, 178)
+        Panel_TrA3_Thd_fwd.Location = New Point(2, 232)
+        Panel_TrA3_Thd_bkd.Location = New Point(2, 286)
+        Panel_TrA3_Add_fwd.Location = New Point(2, 340)
+        Panel_TrA3_Add_bkd.Location = New Point(2, 394)
 
-        Panel_A4_Fst.Location = New Point(3, 40)
-        Panel_A4_Sec_Mid_Background.Location = New Point(3, 121)
-        Panel_A4_Sec.Location = New Point(3, 149)
-        Panel_A4_Thd_Mid_Background.Location = New Point(3, 195)
-        Panel_A4_Thd.Location = New Point(3, 223)
-        Panel_A4_Add_Mid_Background.Location = New Point(3, 277)
-        Panel_A4_Add.Location = New Point(3, 305)
+        Panel_A4_Fst.Location = New Point(2, 16)
+        Panel_A4_Sec_Mid_Background.Location = New Point(2, 124)
+        Panel_A4_Sec.Location = New Point(2, 178)
+        Panel_A4_Thd_Mid_Background.Location = New Point(2, 232)
+        Panel_A4_Thd.Location = New Point(2, 286)
+        Panel_A4_Add_Mid_Background.Location = New Point(2, 340)
+        Panel_A4_Add.Location = New Point(2, 394)
 
         Button_change_machine.Enabled = False
 
@@ -883,23 +900,33 @@ Public Class Program
     End Sub
 
     Sub Set_Panel(ByRef p As Panel, ByRef l As Label)
-        If p.Name = "Panel_PreCal_1st" Then
-            p.Size = New Size(33, 26)
-            p.BackColor = Color.Yellow
-            p.Controls.Add(l)
-            l.Location = New Point(3, 5)
-            l.ForeColor = Color.IndianRed
-        ElseIf p.Name = "Panel_Bkg" Or p.Name = "Panel_RSS" Or p.Name = "Panel_PostCal" Then
-            p.Size = New Size(85, 26)
+        If p.Name = "Panel_Bkg" Or p.Name = "Panel_RSS" Or p.Name.Contains("Panel_P") Then
+            p.Size = New Size(80, 26)
             p.BackColor = Color.IndianRed
             p.Controls.Add(l)
-            l.Location = New Point(3, 5)
+            If p.Name.Contains("Panel_P") Or p.Name = "Panel_RSS" Then
+                l.Location = New Point(28, 7)
+            Else
+                l.Location = New Point(0, 5)
+            End If
+            l.ForeColor = Color.IndianRed
+        ElseIf p.Name.Contains("A1") Or p.Name.Contains("A4_Fst") Then
+            p.Size = New Size(43, 106)
+            p.BackColor = Color.IndianRed
+            p.Controls.Add(l)
+            l.Location = New Point(1, 46)
+            l.ForeColor = Color.IndianRed
+        ElseIf p.Name.Contains("A3") Or p.Name.Contains("A4_Sec") Or p.Name.Contains("A4_Thd") Or p.Name.Contains("A4_Add") Then
+            p.Size = New Size(43, 52)
+            p.BackColor = Color.IndianRed
+            p.Controls.Add(l)
+            l.Location = New Point(1, 19)
             l.ForeColor = Color.IndianRed
         Else
-            p.Size = New Size(33, 26)
+            p.Size = New Size(43, 34)
             p.BackColor = Color.IndianRed
             p.Controls.Add(l)
-            l.Location = New Point(3, 5)
+            l.Location = New Point(1, 10)
             l.ForeColor = Color.IndianRed
         End If
 
@@ -1040,9 +1067,9 @@ Public Class Program
         PanelTractorA1.Visible = False
         PanelTractorA3.Visible = False
         PanelExcavatorA1.Size = ASize
-        PanelExcavatorA1.Location = New Point(180, 140)
+        PanelExcavatorA1.Location = New Point(135, 55)
         PanelExcavatorA2.Size = ASize
-        PanelExcavatorA2.Location = New Point(225, 140)
+        PanelExcavatorA2.Location = New Point(185, 55)
 
         LinkLabel_PreCal_PostCal_BG_RSS_enable()
         LinkLabel_PreCal_PostCal_visible()
@@ -1208,11 +1235,11 @@ Public Class Program
         PanelTractorA1.Visible = False
         PanelTractorA3.Visible = False
         PanelLoaderA1.Size = ASize
-        PanelLoaderA1.Location = New Point(180, 140)
+        PanelLoaderA1.Location = New Point(135, 55)
         PanelLoaderA2.Size = ASize
-        PanelLoaderA2.Location = New Point(225, 140)
+        PanelLoaderA2.Location = New Point(185, 55)
         PanelLoaderA3.Size = ASize
-        PanelLoaderA3.Location = New Point(270, 140)
+        PanelLoaderA3.Location = New Point(235, 55)
 
         LinkLabel_PreCal_PostCal_BG_RSS_enable()
         LinkLabel_PreCal_PostCal_visible()
@@ -1475,15 +1502,15 @@ Public Class Program
         LinkLabel_LoA3_Add_bkd.Enabled = False
 
         PanelExcavatorA1.Size = ASize
-        PanelExcavatorA1.Location = New Point(180, 140)
+        PanelExcavatorA1.Location = New Point(135, 55)
         PanelExcavatorA2.Size = ASize
-        PanelExcavatorA2.Location = New Point(225, 140)
+        PanelExcavatorA2.Location = New Point(185, 55)
         PanelLoaderA1.Size = ASize
-        PanelLoaderA1.Location = New Point(270, 140)
+        PanelLoaderA1.Location = New Point(235, 55)
         PanelLoaderA2.Size = ASize
-        PanelLoaderA2.Location = New Point(320, 140)
+        PanelLoaderA2.Location = New Point(285, 55)
         PanelLoaderA3.Size = ASize
-        PanelLoaderA3.Location = New Point(365, 140)
+        PanelLoaderA3.Location = New Point(335, 55)
 
         PanelExcavatorA1.Controls.Add(Panel_ExA1_Fst_1st)
         PanelExcavatorA1.Controls.Add(Panel_ExA1_Sec_1st)
@@ -1571,9 +1598,9 @@ Public Class Program
         PanelLoaderA1.Visible = False
         PanelLoaderA2.Visible = False
         PanelTractorA1.Size = ASize
-        PanelTractorA1.Location = New Point(180, 140)
+        PanelTractorA1.Location = New Point(135, 55)
         PanelTractorA3.Size = ASize
-        PanelTractorA3.Location = New Point(225, 140)
+        PanelTractorA3.Location = New Point(185, 55)
 
         LinkLabel_PreCal_PostCal_BG_RSS_enable()
         LinkLabel_PreCal_PostCal_visible()
@@ -1733,7 +1760,7 @@ Public Class Program
         PanelTractorA1.Visible = False
         PanelTractorA3.Visible = False
         PanelA4.Size = ASize
-        PanelA4.Location = New Point(180, 140)
+        PanelA4.Location = New Point(135, 55)
         PanelA4.Controls.Add(Panel_A4_Fst)
         PanelA4.Controls.Add(Panel_A4_Sec)
         PanelA4.Controls.Add(Panel_A4_Thd)

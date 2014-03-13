@@ -42,12 +42,12 @@ Partial Class Program
         Me.ButtonMeters = New Chao.DisButton()
         Me.ButtonSim = New Chao.DisButton()
         Me.Button_change_machine = New Chao.DisButton()
-        Me.p2Label = New ColorLabel()
-        Me.p4Label = New ColorLabel()
-        Me.p6Label = New ColorLabel()
-        Me.p8Label = New ColorLabel()
-        Me.p10Label = New ColorLabel()
-        Me.p12Label = New ColorLabel()
+        Me.p6Label = New Chao.ColorLabel()
+        Me.p12Label = New Chao.ColorLabel()
+        Me.p4Label = New Chao.ColorLabel()
+        Me.p10Label = New Chao.ColorLabel()
+        Me.p2Label = New Chao.ColorLabel()
+        Me.p8Label = New Chao.ColorLabel()
         Me.GroupBox_Plot = New System.Windows.Forms.GroupBox()
         Me.yLabel = New System.Windows.Forms.Label()
         Me.xLabel = New System.Windows.Forms.Label()
@@ -85,7 +85,7 @@ Partial Class Program
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPageProcedure = New System.Windows.Forms.TabPage()
         Me.Panel_Temp = New System.Windows.Forms.Panel()
-        Me.startButton = New DisButton()
+        Me.startButton = New Chao.DisButton()
         Me.Panel_PostCal_Sub = New System.Windows.Forms.Panel()
         Me.Panel_PostCal_6th = New System.Windows.Forms.Panel()
         Me.LinkLabel_PostCal_6th = New System.Windows.Forms.LinkLabel()
@@ -143,7 +143,7 @@ Partial Class Program
         Me.Panel_TrA3_Fst_fwd = New System.Windows.Forms.Panel()
         Me.LinkLabel_TrA3_Fst_fwd = New System.Windows.Forms.LinkLabel()
         Me.Label_Tr_A3 = New System.Windows.Forms.Label()
-        Me.Accept_Button = New DisButton()
+        Me.Accept_Button = New Chao.DisButton()
         Me.Panel_PostCal = New System.Windows.Forms.Panel()
         Me.LinkLabel_postCal = New System.Windows.Forms.LinkLabel()
         Me.PanelLoaderA2 = New System.Windows.Forms.Panel()
@@ -213,7 +213,7 @@ Partial Class Program
         Me.Panel_LoA3_Fst_fwd = New System.Windows.Forms.Panel()
         Me.LinkLabel_LoA3_Fst_fwd = New System.Windows.Forms.LinkLabel()
         Me.Label_Ex_A3 = New System.Windows.Forms.Label()
-        Me.stopButton = New DisButton()
+        Me.stopButton = New Chao.DisButton()
         Me.PanelExcavatorA2 = New System.Windows.Forms.Panel()
         Me.Panel_ExA2_Add_3rd = New System.Windows.Forms.Panel()
         Me.LinkLabel_ExA2_Add_3rd = New System.Windows.Forms.LinkLabel()
@@ -270,7 +270,7 @@ Partial Class Program
         Me.Light3 = New System.Windows.Forms.Label()
         Me.Light2 = New System.Windows.Forms.Label()
         Me.Light1 = New System.Windows.Forms.Label()
-        Me.Test_StopButton = New DisButton()
+        Me.Test_StopButton = New Chao.DisButton()
         Me.Test_Input_S_Panel = New System.Windows.Forms.Panel()
         Me.S9 = New System.Windows.Forms.Label()
         Me.S8 = New System.Windows.Forms.Label()
@@ -290,9 +290,9 @@ Partial Class Program
         Me.Input_S_Step7 = New Chao.ChaoTextBox()
         Me.Input_S_Step6 = New Chao.ChaoTextBox()
         Me.Input_S_Step1 = New Chao.ChaoTextBox()
-        Me.Test_ConfirmButton = New DisButton()
-        Me.Test_NextButton = New DisButton()
-        Me.Test_StartButton = New DisButton()
+        Me.Test_ConfirmButton = New Chao.DisButton()
+        Me.Test_NextButton = New Chao.DisButton()
+        Me.Test_StartButton = New Chao.DisButton()
         Me.Step1 = New System.Windows.Forms.Label()
         Me.Noise_Avg = New System.Windows.Forms.Label()
         Me.Chart2 = New System.Windows.Forms.DataVisualization.Charting.Chart()
@@ -314,7 +314,7 @@ Partial Class Program
         Me.Step3 = New System.Windows.Forms.Label()
         Me.Step2 = New System.Windows.Forms.Label()
         Me.TabPageCharts = New System.Windows.Forms.TabPage()
-        Me.SaveButton = New System.Windows.Forms.Button()
+        Me.SaveButton = New Chao.DisButton()
         Me.TabPageSettings = New System.Windows.Forms.TabPage()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.TabControl1.SuspendLayout()
@@ -588,63 +588,81 @@ Partial Class Program
         '
         'p6Label
         '
-        Me.p6Label.AutoSize = True
         Me.p6Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
         Me.p6Label.Location = New System.Drawing.Point(481, 390)
         Me.p6Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.p6Label.Name = "p6Label"
+        Me.p6Label.P = "P"
         Me.p6Label.Size = New System.Drawing.Size(0, 31)
         Me.p6Label.TabIndex = 45
+        Me.p6Label.X = New Decimal(New Integer() {0, 0, 0, 0})
+        Me.p6Label.Y = New Decimal(New Integer() {0, 0, 0, 0})
+        Me.p6Label.Z = New Decimal(New Integer() {0, 0, 0, 0})
         '
         'p12Label
         '
-        Me.p12Label.AutoSize = True
         Me.p12Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
         Me.p12Label.Location = New System.Drawing.Point(473, 381)
         Me.p12Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.p12Label.Name = "p12Label"
+        Me.p12Label.P = "P"
         Me.p12Label.Size = New System.Drawing.Size(0, 31)
         Me.p12Label.TabIndex = 44
+        Me.p12Label.X = New Decimal(New Integer() {0, 0, 0, 0})
+        Me.p12Label.Y = New Decimal(New Integer() {0, 0, 0, 0})
+        Me.p12Label.Z = New Decimal(New Integer() {0, 0, 0, 0})
         '
         'p4Label
         '
-        Me.p4Label.AutoSize = True
         Me.p4Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
         Me.p4Label.Location = New System.Drawing.Point(465, 373)
         Me.p4Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.p4Label.Name = "p4Label"
+        Me.p4Label.P = "P"
         Me.p4Label.Size = New System.Drawing.Size(0, 31)
         Me.p4Label.TabIndex = 43
+        Me.p4Label.X = New Decimal(New Integer() {0, 0, 0, 0})
+        Me.p4Label.Y = New Decimal(New Integer() {0, 0, 0, 0})
+        Me.p4Label.Z = New Decimal(New Integer() {0, 0, 0, 0})
         '
         'p10Label
         '
-        Me.p10Label.AutoSize = True
         Me.p10Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
         Me.p10Label.Location = New System.Drawing.Point(457, 364)
         Me.p10Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.p10Label.Name = "p10Label"
+        Me.p10Label.P = "P"
         Me.p10Label.Size = New System.Drawing.Size(0, 31)
         Me.p10Label.TabIndex = 42
+        Me.p10Label.X = New Decimal(New Integer() {0, 0, 0, 0})
+        Me.p10Label.Y = New Decimal(New Integer() {0, 0, 0, 0})
+        Me.p10Label.Z = New Decimal(New Integer() {0, 0, 0, 0})
         '
         'p2Label
         '
-        Me.p2Label.AutoSize = True
         Me.p2Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
         Me.p2Label.Location = New System.Drawing.Point(449, 355)
         Me.p2Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.p2Label.Name = "p2Label"
+        Me.p2Label.P = "P"
         Me.p2Label.Size = New System.Drawing.Size(0, 31)
         Me.p2Label.TabIndex = 41
+        Me.p2Label.X = New Decimal(New Integer() {0, 0, 0, 0})
+        Me.p2Label.Y = New Decimal(New Integer() {0, 0, 0, 0})
+        Me.p2Label.Z = New Decimal(New Integer() {0, 0, 0, 0})
         '
         'p8Label
         '
-        Me.p8Label.AutoSize = True
         Me.p8Label.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
         Me.p8Label.Location = New System.Drawing.Point(441, 347)
         Me.p8Label.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.p8Label.Name = "p8Label"
+        Me.p8Label.P = "P"
         Me.p8Label.Size = New System.Drawing.Size(0, 31)
         Me.p8Label.TabIndex = 40
+        Me.p8Label.X = New Decimal(New Integer() {0, 0, 0, 0})
+        Me.p8Label.Y = New Decimal(New Integer() {0, 0, 0, 0})
+        Me.p8Label.Z = New Decimal(New Integer() {0, 0, 0, 0})
         '
         'GroupBox_Plot
         '
@@ -1084,13 +1102,15 @@ Partial Class Program
         '
         'startButton
         '
+        Me.startButton.BackColor = System.Drawing.Color.Transparent
         Me.startButton.Font = New System.Drawing.Font("新細明體", 15.0!, System.Drawing.FontStyle.Bold)
+        Me.startButton.ForeColor = System.Drawing.SystemColors.ControlText
         Me.startButton.Location = New System.Drawing.Point(8, 6)
         Me.startButton.Name = "startButton"
         Me.startButton.Size = New System.Drawing.Size(75, 50)
         Me.startButton.TabIndex = 13
         Me.startButton.Text = "Start"
-        Me.startButton.UseVisualStyleBackColor = True
+        Me.startButton.UseVisualStyleBackColor = False
         '
         'Panel_PostCal_Sub
         '
@@ -1712,14 +1732,16 @@ Partial Class Program
         '
         'Accept_Button
         '
+        Me.Accept_Button.BackColor = System.Drawing.Color.Transparent
         Me.Accept_Button.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Accept_Button.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Accept_Button.Location = New System.Drawing.Point(8, 65)
         Me.Accept_Button.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Accept_Button.Name = "Accept_Button"
         Me.Accept_Button.Size = New System.Drawing.Size(75, 25)
         Me.Accept_Button.TabIndex = 59
         Me.Accept_Button.Text = "Accept"
-        Me.Accept_Button.UseVisualStyleBackColor = True
+        Me.Accept_Button.UseVisualStyleBackColor = False
         '
         'Panel_PostCal
         '
@@ -2481,13 +2503,15 @@ Partial Class Program
         '
         'stopButton
         '
+        Me.stopButton.BackColor = System.Drawing.Color.Transparent
         Me.stopButton.Font = New System.Drawing.Font("新細明體", 15.0!, System.Drawing.FontStyle.Bold)
+        Me.stopButton.ForeColor = System.Drawing.SystemColors.ControlText
         Me.stopButton.Location = New System.Drawing.Point(170, 7)
         Me.stopButton.Name = "stopButton"
         Me.stopButton.Size = New System.Drawing.Size(75, 50)
         Me.stopButton.TabIndex = 17
         Me.stopButton.Text = "Stop"
-        Me.stopButton.UseVisualStyleBackColor = True
+        Me.stopButton.UseVisualStyleBackColor = False
         '
         'PanelExcavatorA2
         '
@@ -3543,12 +3567,14 @@ Partial Class Program
         '
         'SaveButton
         '
+        Me.SaveButton.BackColor = System.Drawing.Color.Transparent
+        Me.SaveButton.ForeColor = System.Drawing.SystemColors.ControlText
         Me.SaveButton.Location = New System.Drawing.Point(37, 570)
         Me.SaveButton.Name = "SaveButton"
         Me.SaveButton.Size = New System.Drawing.Size(75, 23)
         Me.SaveButton.TabIndex = 0
         Me.SaveButton.Text = "Save"
-        Me.SaveButton.UseVisualStyleBackColor = True
+        Me.SaveButton.UseVisualStyleBackColor = False
         '
         'TabPageSettings
         '
@@ -4027,7 +4053,7 @@ Partial Class Program
     Friend WithEvents Input_S_Step1 As Chao.ChaoTextBox
     Friend WithEvents ConnectButton As DisButton
     Friend WithEvents DisconnButton As DisButton
-    Friend WithEvents SaveButton As System.Windows.Forms.Button
+    Friend WithEvents SaveButton As DisButton
     Friend WithEvents ButtonMeters As DisButton
     Friend WithEvents ButtonSim As DisButton
     Friend WithEvents ComboBoxComs As System.Windows.Forms.ComboBox

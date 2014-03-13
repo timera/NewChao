@@ -201,7 +201,6 @@ Public Class Program
         Dim hwnd As IntPtr = Handle
         Dim result As Integer = DwmExtendFrameIntoClientArea(hwnd, margins)
 
-
         TabControl1.Location = New Point(2, 102)
         'Set up Choose Machine Page
         TextBox_L.Parent = GroupBox_A1_A2_A3
@@ -284,9 +283,14 @@ Public Class Program
         'LinkLabel_RSS.Location = New Point(50, 262)
         'LinkLabel_postCal.Location = New Point(50, 302)
 
+        Me.Size = New Size(1220, 732)
         startButton.Size = New Size(75, 50)
         Accept_Button.Size = New Size(75, 25)
         stopButton.Size = New Size(75, 50)
+        TabControl2.Size = New Size(450, 550)
+        TabPageProcedure.Size = New Size(442, 524)
+        TabPageTimer.Size = New Size(442, 524)
+
         startButton.Location = New Point(129, 0)
         Accept_Button.Location = New Point(219, 0)
         Accept_Button.Enabled = False

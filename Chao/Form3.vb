@@ -309,6 +309,21 @@ Public Class Program
         Label2.Size = New Size(17, 16)
         Label3.Size = New Size(17, 16)
         Label4.Size = New Size(34, 15)
+        Test_Input_S_Panel.Size = New Size(140, 362)
+        Test_StartButton.Size = New Size(75, 70)
+        Test_StopButton.Size = New Size(75, 70)
+        Test_NextButton.Size = New Size(75, 40)
+        Test_ConfirmButton.Size = New Size(75, 60)
+        S1.Size = New Size(12, 12)
+        S2.Size = New Size(12, 12)
+        S3.Size = New Size(12, 12)
+        S4.Size = New Size(12, 12)
+        S5.Size = New Size(12, 12)
+        S6.Size = New Size(12, 12)
+        S7.Size = New Size(12, 12)
+        S8.Size = New Size(12, 12)
+        S9.Size = New Size(12, 12)
+        timeLabel.Size = New Size(77, 84)
 
 
         startButton.Location = New Point(129, 0)
@@ -316,7 +331,11 @@ Public Class Program
         Accept_Button.Enabled = False
         timeLabel.Location = New Point(5, 5)
         stopButton.Location = New Point(309, 0)
-
+        Test_StartButton.Location = New Point(60, 20)
+        Test_StopButton.Location = New Point(60, 100)
+        Test_NextButton.Location = New Point(60, 180)
+        Test_ConfirmButton.Location = New Point(60, 322)
+        Test_Input_S_Panel.Location = New Point(155, 20)
 
         NoisesArray = {Noise1, Noise2, Noise3, Noise4, Noise5, Noise6, Noise_Avg}
         Dim meterFigWidth = 47
@@ -332,6 +351,11 @@ Public Class Program
         For i = 0 To 6
             NoisesArray(i).Parent = TabPage2
             NoisesArray(i).Visible = False
+            If Not i = 6 Then
+                NoisesArray(i).Size = New Size(46, 39)
+            Else
+                NoisesArray(i).Size = New Size(60, 39)
+            End If
         Next
         Dim stepX As Integer = 500
         Dim stepY As Integer = 63
@@ -380,6 +404,9 @@ Public Class Program
         array_light(6) = Light7
         array_light(7) = Light8
         array_light(8) = Light9
+        For i = 0 To 8
+            array_light(i).Location = New Point(310, (i * 40) + 30)
+        Next
 
         array_step_s(0) = Input_S_Step1
         array_step_s(1) = Input_S_Step2
@@ -393,7 +420,19 @@ Public Class Program
         For i = 0 To 8
             array_step_s(i).Text = 0
             array_step_s(i).Enabled = False
+            array_step_s(i).Size = New Size(85, 22)
+            array_step_s(i).Location = New Point(20, (i * 40) + 10)
         Next
+
+        S1.Location = New Point(110, 15)
+        S2.Location = New Point(110, 55)
+        S3.Location = New Point(110, 95)
+        S4.Location = New Point(110, 135)
+        S5.Location = New Point(110, 175)
+        S6.Location = New Point(110, 215)
+        S7.Location = New Point(110, 255)
+        S8.Location = New Point(110, 295)
+        S9.Location = New Point(110, 335)
 
         array_step_display(0) = Label_step1_second
         array_step_display(1) = Label_step2_second

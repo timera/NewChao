@@ -85,7 +85,7 @@ Partial Class Program
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPageProcedure = New System.Windows.Forms.TabPage()
         Me.Panel_Temp = New System.Windows.Forms.Panel()
-        Me.startButton = New System.Windows.Forms.Button()
+        Me.startButton = New DisButton()
         Me.Panel_PostCal_Sub = New System.Windows.Forms.Panel()
         Me.Panel_PostCal_6th = New System.Windows.Forms.Panel()
         Me.LinkLabel_PostCal_6th = New System.Windows.Forms.LinkLabel()
@@ -143,7 +143,7 @@ Partial Class Program
         Me.Panel_TrA3_Fst_fwd = New System.Windows.Forms.Panel()
         Me.LinkLabel_TrA3_Fst_fwd = New System.Windows.Forms.LinkLabel()
         Me.Label_Tr_A3 = New System.Windows.Forms.Label()
-        Me.Accept_Button = New System.Windows.Forms.Button()
+        Me.Accept_Button = New DisButton()
         Me.Panel_PostCal = New System.Windows.Forms.Panel()
         Me.LinkLabel_postCal = New System.Windows.Forms.LinkLabel()
         Me.PanelLoaderA2 = New System.Windows.Forms.Panel()
@@ -213,7 +213,7 @@ Partial Class Program
         Me.Panel_LoA3_Fst_fwd = New System.Windows.Forms.Panel()
         Me.LinkLabel_LoA3_Fst_fwd = New System.Windows.Forms.LinkLabel()
         Me.Label_Ex_A3 = New System.Windows.Forms.Label()
-        Me.stopButton = New System.Windows.Forms.Button()
+        Me.stopButton = New DisButton()
         Me.PanelExcavatorA2 = New System.Windows.Forms.Panel()
         Me.Panel_ExA2_Add_3rd = New System.Windows.Forms.Panel()
         Me.LinkLabel_ExA2_Add_3rd = New System.Windows.Forms.LinkLabel()
@@ -270,7 +270,7 @@ Partial Class Program
         Me.Light3 = New System.Windows.Forms.Label()
         Me.Light2 = New System.Windows.Forms.Label()
         Me.Light1 = New System.Windows.Forms.Label()
-        Me.Test_StopButton = New System.Windows.Forms.Button()
+        Me.Test_StopButton = New DisButton()
         Me.Test_Input_S_Panel = New System.Windows.Forms.Panel()
         Me.S9 = New System.Windows.Forms.Label()
         Me.S8 = New System.Windows.Forms.Label()
@@ -290,9 +290,9 @@ Partial Class Program
         Me.Input_S_Step7 = New Chao.ChaoTextBox()
         Me.Input_S_Step6 = New Chao.ChaoTextBox()
         Me.Input_S_Step1 = New Chao.ChaoTextBox()
-        Me.Test_ConfirmButton = New System.Windows.Forms.Button()
-        Me.Test_NextButton = New System.Windows.Forms.Button()
-        Me.Test_StartButton = New System.Windows.Forms.Button()
+        Me.Test_ConfirmButton = New DisButton()
+        Me.Test_NextButton = New DisButton()
+        Me.Test_StartButton = New DisButton()
         Me.Step1 = New System.Windows.Forms.Label()
         Me.Noise_Avg = New System.Windows.Forms.Label()
         Me.Chart2 = New System.Windows.Forms.DataVisualization.Charting.Chart()
@@ -3786,9 +3786,9 @@ Partial Class Program
     Friend WithEvents Label_input_L2 As System.Windows.Forms.Label
     Friend WithEvents Label_input_L3 As System.Windows.Forms.Label
     Friend WithEvents Label_input_L1 As System.Windows.Forms.Label
-    Friend WithEvents stopButton As System.Windows.Forms.Button
+    Friend WithEvents stopButton As DisButton
     Friend WithEvents timeLabel As System.Windows.Forms.Label
-    Friend WithEvents startButton As System.Windows.Forms.Button
+    Friend WithEvents startButton As DisButton
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents Step6 As System.Windows.Forms.Label
     Friend WithEvents Step5 As System.Windows.Forms.Label
@@ -3818,7 +3818,7 @@ Partial Class Program
     Friend WithEvents Step9 As System.Windows.Forms.Label
     Friend WithEvents LinkLabel_postCal As System.Windows.Forms.LinkLabel
     Friend WithEvents LinkLabel_preCal As System.Windows.Forms.LinkLabel
-    Friend WithEvents Accept_Button As System.Windows.Forms.Button
+    Friend WithEvents Accept_Button As DisButton
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents PanelExcavatorA1 As System.Windows.Forms.Panel
     Friend WithEvents Label_Ex_A1 As System.Windows.Forms.Label
@@ -4004,13 +4004,13 @@ Partial Class Program
     Friend WithEvents S3 As System.Windows.Forms.Label
     Friend WithEvents S2 As System.Windows.Forms.Label
     Friend WithEvents S1 As System.Windows.Forms.Label
-    Friend WithEvents Test_ConfirmButton As System.Windows.Forms.Button
-    Friend WithEvents Test_NextButton As System.Windows.Forms.Button
-    Friend WithEvents Test_StartButton As System.Windows.Forms.Button
+    Friend WithEvents Test_ConfirmButton As DisButton
+    Friend WithEvents Test_NextButton As DisButton
+    Friend WithEvents Test_StartButton As DisButton
     Friend WithEvents LinkLabel_Temp As System.Windows.Forms.LinkLabel
     Friend WithEvents Panel_Temp As System.Windows.Forms.Panel
     Friend WithEvents TabPageCharts As System.Windows.Forms.TabPage
-    Friend WithEvents Test_StopButton As System.Windows.Forms.Button
+    Friend WithEvents Test_StopButton As DisButton
     Friend WithEvents Step10 As System.Windows.Forms.Label
     Friend WithEvents TextBox_L As Chao.ChaoTextBox
     Friend WithEvents TextBox_L3 As Chao.ChaoTextBox

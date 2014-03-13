@@ -290,6 +290,26 @@ Public Class Program
         TabControl2.Size = New Size(450, 550)
         TabPageProcedure.Size = New Size(442, 524)
         TabPageTimer.Size = New Size(442, 524)
+        Label_Ex_A1.Size = New Size(29, 16)
+        Label_Ex_A2.Size = New Size(29, 16)
+        Label_Lo_A1.Size = New Size(29, 16)
+        Label_Lo_A2.Size = New Size(29, 16)
+        Label_Lo_A3.Size = New Size(29, 16)
+        Label_Tr_A1.Size = New Size(29, 16)
+        Label_Tr_A3.Size = New Size(29, 16)
+        Label_A4.Size = New Size(29, 16)
+        Panel_PreCal.Size = New Size(82, 40)
+        LinkLabel_preCal.Size = New Size(56, 15)
+        LinkLabel_postCal.Size = New Size(56, 15)
+        Panel_PreCal_Sub.Size = New Size(80, 170)
+        Panel_PostCal_Sub.Size = New Size(80, 170)
+        Panel_PreCal.Size = New Size(80, 40)
+        Panel_PostCal.Size = New Size(80, 40)
+        Label1.Size = New Size(17, 16)
+        Label2.Size = New Size(17, 16)
+        Label3.Size = New Size(17, 16)
+        Label4.Size = New Size(34, 15)
+
 
         startButton.Location = New Point(129, 0)
         Accept_Button.Location = New Point(219, 0)
@@ -336,6 +356,10 @@ Public Class Program
         array_step(8) = Step9
         array_step(9) = Step10
 
+        For i = 0 To 9
+            array_step(i).Size = New Size(255, 52)
+        Next
+
         stepX = 460
         Label_step1_second.Location = New Point(stepX, 110)
         Label_step2_second.Location = New Point(stepX, 110 + stepY * 1)
@@ -380,7 +404,9 @@ Public Class Program
         array_step_display(6) = Label_step7_second
         array_step_display(7) = Label_step8_second
         array_step_display(8) = Label_step9_second
-
+        For i = 0 To 9
+            array_step_display(0).Size = New Size(35, 52)
+        Next
 
         Label1.Location = New Point(103, 120)
         Label2.Location = New Point(103, 228)
@@ -390,11 +416,13 @@ Public Class Program
         TabControl2.Size = New Size(450, 550)
 
         Panel_PreCal.Location = New Point(10, 30)
+        LinkLabel_preCal.Location = New Point(3, 13)
         Panel_PreCal_Sub.Location = New Point(10, 60)
         Panel_Bkg.Location = New Point(10, 245)
         Panel_RSS.Location = New Point(10, 273)
         Panel_PostCal.Location = New Point(10, 305)
         Panel_PostCal_Sub.Location = New Point(10, 335)
+        LinkLabel_postCal.Location = New Point(3, 13)
 
         Panel_PreCal_1st.Location = New Point(0, 0)
         Panel_PreCal_2nd.Location = New Point(0, 28)

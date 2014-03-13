@@ -284,7 +284,9 @@ Public Class Program
         'LinkLabel_RSS.Location = New Point(50, 262)
         'LinkLabel_postCal.Location = New Point(50, 302)
 
-
+        startButton.Size = New Size(75, 50)
+        Accept_Button.Size = New Size(75, 25)
+        stopButton.Size = New Size(75, 50)
         startButton.Location = New Point(129, 0)
         Accept_Button.Location = New Point(219, 0)
         Accept_Button.Enabled = False

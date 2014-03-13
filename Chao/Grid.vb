@@ -4,9 +4,10 @@ Imports System.Text
 
 Public Class Grid
     'contains a grid
-    Public Form As DataGridView
+    Public WithEvents Form As DataGridView
     Private _R As Double
     Private _Machine As Program.Machines
+    Private _Parent As Control
 
     Private _Background As Grid_Run_Unit
     Public ReadOnly Property Background As Grid_Run_Unit
@@ -50,6 +51,7 @@ Public Class Grid
             Return
         End If
         Form = New DataGridView()
+        _Parent = Parent
         Form.Parent = Parent
         Form.Size = Size
         Form.Location = Position
@@ -783,7 +785,7 @@ Public Class Grid
     End Function
 
     'contains recording
-    Public Sub Save()
+    Public Function Save() As Boolean
 
         Dim saveFileDialog1 As New SaveFileDialog()
 
@@ -813,10 +815,15 @@ Public Class Grid
                 outfile.Write(sb.ToString())
             End If
             outfile.Close()
+            Return True
         End If
+        Return False
+    End Function
 
+    Private Sub Form_CellValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Form.CellValueChanged
+        Dim savebutton As DisButton = _Parent.Controls.Find("SaveButton", False)(0)
+        savebutton.Enabled = True
     End Sub
-
 End Class
 
 

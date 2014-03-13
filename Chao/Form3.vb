@@ -185,6 +185,7 @@ Public Class Program
 
     End Sub
 
+
     ' things that need to be instantiated at startup
     Private Sub Program_Load_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         '##COMMUNICATION
@@ -231,6 +232,7 @@ Public Class Program
         Test_ConfirmButton.Enabled = False
         ConnectButton.Enabled = True
         DisconnButton.Enabled = False
+        SaveButton.Enabled = False
 
         GroupBox_Plot.Visible = True
 
@@ -478,8 +480,20 @@ Public Class Program
 
     End Sub
 
-
-
+    Private Sub Program_Close(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+        If SaveButton.Enabled Then
+            Dim answer As DialogResult = MessageBox.Show("尚未儲存資料，是否儲存?", "Save?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+            If answer = DialogResult.Yes Then
+                If DataGrid.Save() Then
+                    SaveButton.Enabled = False
+                Else
+                    e.Cancel = True
+                End If
+            ElseIf answer = DialogResult.Cancel Then
+                e.Cancel = True
+            End If
+        End If
+    End Sub
 
     'prevents user from clicking on tab b4 choosing machinery
     Private Sub TabControl1_IndexChanged(ByVal sender As TabControl, ByVal e As System.EventArgs) Handles TabControl1.SelectedIndexChanged
@@ -3888,7 +3902,9 @@ Public Class Program
     End Sub
 
     Private Sub SaveButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveButton.Click
-        DataGrid.Save()
+        If DataGrid.Save() Then
+            SaveButton.Enabled = False
+        End If
     End Sub
 
     Public sim As Boolean = True
@@ -3920,4 +3936,10 @@ Public Class Program
         Next
     End Sub
 
+    Private Sub pLabel_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles p8Label.MouseUp, p6Label.MouseUp, p4Label.MouseUp, p2Label.MouseUp, p12Label.MouseUp, p10Label.MouseUp
+
+    End Sub
+    Private Sub pLabel_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles p8Label.MouseMove, p6Label.MouseMove, p4Label.MouseMove, p2Label.MouseMove, p12Label.MouseMove, p10Label.MouseMove
+
+    End Sub
 End Class

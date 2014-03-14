@@ -183,7 +183,6 @@ Public Class ColorLabel
 
     Public Sub New()
         MyBase.New()
-        Me.Size = New Size(100, 100)
     End Sub
 
     Public Sub ClearXYZ()
@@ -242,7 +241,8 @@ Public Class ColorLabel
 
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         MyBase.OnPaint(e)
-
+        Me.Size = New Size(120, 100)
+        Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!)
         If _X = 0 And _Y = 0 And _Z = 0 Then
             e.Graphics.Clear(SystemColors.Control)
             Return

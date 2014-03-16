@@ -544,6 +544,23 @@ Public Class Program
         Panel_A4_Add_Mid_Background.Location = New Point(2, 340)
         Panel_A4_Add.Location = New Point(2, 394)
 
+        Panel_Setting_Bargraph_Max_Min.Location = New Point(17, 20)
+        Setting_Bargraph_Title.Location = New Point(3, 11)
+        Setting_Bargraph_Max.Location = New Point(3, 83)
+        Setting_Bargraph_Min.Location = New Point(3, 135)
+        TextBox_Setting_Bargraph_Max.Location = New Point(93, 83)
+        TextBox_Setting_Bargraph_Min.Location = New Point(93, 135)
+        Button_Setting_Bargraph.Location = New Point(215, 160)
+
+        Panel_Setting_Bargraph_Max_Min.Size = New Size(300, 225)
+        Setting_Bargraph_Title.Size = New Size(293, 43)
+        Setting_Bargraph_Max.Size = New Size(73, 33)
+        Setting_Bargraph_Min.Size = New Size(73, 33)
+        TextBox_Setting_Bargraph_Max.Size = New Size(142, 20)
+        TextBox_Setting_Bargraph_Min.Size = New Size(142, 20)
+        Button_Setting_Bargraph.Size = New Size(75, 50)
+
+
         Button_change_machine.Enabled = False
 
         MachChosen = False
@@ -4014,5 +4031,18 @@ Public Class Program
     End Sub
     Private Sub pLabel_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles p8Label.MouseMove, p6Label.MouseMove, p4Label.MouseMove, p2Label.MouseMove, p12Label.MouseMove, p10Label.MouseMove
 
+    End Sub
+
+    Private Sub Button_Setting_Bargraph_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_Setting_Bargraph.Click
+        If String.IsNullOrWhiteSpace(TextBox_Setting_Bargraph_Max.Text) Then
+            MessageBox.Show("請輸入最大值!")
+            Return
+        ElseIf String.IsNullOrWhiteSpace(TextBox_Setting_Bargraph_Min.Text) Then
+            MessageBox.Show("請輸入最小值!")
+            Return
+        End If
+        MainBarGraph.chart.ChartAreas(0).AxisY.Crossing = TextBox_Setting_Bargraph_Min.Text
+        MainBarGraph.chart.ChartAreas(0).AxisY.Maximum = TextBox_Setting_Bargraph_Max.Text
+        MainBarGraph.chart.ChartAreas(0).AxisY.Minimum = TextBox_Setting_Bargraph_Min.Text
     End Sub
 End Class

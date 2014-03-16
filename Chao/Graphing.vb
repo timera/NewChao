@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.PowerPacks
 
 Public Class CGraph
     'protected global variables
-    Protected chart As Chart
+    Public chart As Chart
     Protected series As System.Collections.Generic.List(Of Series)
     Protected legend As Legend
     Protected TestMode As Modes
@@ -194,7 +194,6 @@ Public Class BarGraph
     'private global vars
     Dim Labels As List(Of Label)
     Dim listOfNames As List(Of String)
-
     'constructor
     Public Sub New(ByVal loc As Point,
                    ByVal size As Size,
@@ -249,6 +248,7 @@ Public Class BarGraph
         chart.Dispose()
         Panel.Dispose()
     End Sub
+
 End Class
 
 'helper classes for keeping track of labels and points

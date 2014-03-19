@@ -1334,7 +1334,7 @@ Public Class Grid_Run_Unit
                     _K1A = 0
                     Return
                 ElseIf _deltaLA < 3 Then
-                    MsgBox("deltaLA < 3dB 所以背景噪音修正值K1A無法計算!")
+                    MsgBox("ΔLA < 3dB 所以背景噪音修正值K1A無法計算!")
                     Return
                 End If
                 _K1A = -10 * Math.Log10(1 - 10 ^ (-0.1 * _deltaLA))

@@ -912,17 +912,15 @@ Public Class Program
         Dim L1 As Double
         Dim L2 As Double
         Dim L3 As Double
-        Dim D0_2 As Double
         L1 = TextBox_L1.Text
         L2 = TextBox_L2.Text
         L3 = TextBox_L3.Text
-        D0_2 = 2 * Math.Sqrt(((L1 / 2) ^ 2) + ((L2 / 2) ^ 2) + (L3 ^ 2))
-        TextBox_r2.Text = Math.Ceiling(D0_2)
-        Dim r = D0_2
-        pos(0).Coors = New ThreeDPoint(D0_2 * -0.45, D0_2 * 0.77, D0_2 * 0.45)
-        pos(1).Coors = New ThreeDPoint(D0_2 * -0.45, D0_2 * -0.77, D0_2 * 0.45)
-        pos(2).Coors = New ThreeDPoint(D0_2 * 0.89, 0, D0_2 * 0.45)
-        pos(3).Coors = New ThreeDPoint(0, 0, D0_2)
+        Dim r As Double = Math.Ceiling(2 * Math.Sqrt(((L1 / 2) ^ 2) + ((L2 / 2) ^ 2) + (L3 ^ 2)))
+        TextBox_r2.Text = r
+        pos(0).Coors = New ThreeDPoint(r * -0.45, r * 0.77, r * 0.45)
+        pos(1).Coors = New ThreeDPoint(r * -0.45, r * -0.77, r * 0.45)
+        pos(2).Coors = New ThreeDPoint(r * 0.89, 0, r * 0.45)
+        pos(3).Coors = New ThreeDPoint(0, 0, r)
 
         plot(xCor, yCor, GroupBox_Plot, r, pos)
         If choice = "鐵輪壓路機(Road roller)" Then

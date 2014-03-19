@@ -23,12 +23,12 @@ Partial Class Program
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea9 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend9 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series9 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea10 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend10 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series10 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Label_A4_Hint2 = New System.Windows.Forms.Label()
@@ -70,7 +70,6 @@ Partial Class Program
         Me.Picture_machine = New System.Windows.Forms.PictureBox()
         Me.Label_machine_pic = New System.Windows.Forms.Label()
         Me.ComboBox_machine_list = New System.Windows.Forms.ComboBox()
-        Me.Label_machine_choose = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.Label_step9_second = New System.Windows.Forms.Label()
         Me.Label_step8_second = New System.Windows.Forms.Label()
@@ -445,6 +444,7 @@ Partial Class Program
         '
         'TabPage1
         '
+        Me.TabPage1.AutoScroll = True
         Me.TabPage1.BackColor = System.Drawing.Color.DarkGray
         Me.TabPage1.Controls.Add(Me.Label_A4_Hint2)
         Me.TabPage1.Controls.Add(Me.Label_A4_Hint1)
@@ -462,7 +462,6 @@ Partial Class Program
         Me.TabPage1.Controls.Add(Me.Picture_machine)
         Me.TabPage1.Controls.Add(Me.Label_machine_pic)
         Me.TabPage1.Controls.Add(Me.ComboBox_machine_list)
-        Me.TabPage1.Controls.Add(Me.Label_machine_choose)
         Me.TabPage1.Font = New System.Drawing.Font("新細明體", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Margin = New System.Windows.Forms.Padding(0)
@@ -501,9 +500,9 @@ Partial Class Program
         Me.GroupBox1.Controls.Add(Me.PanelMeterSetup)
         Me.GroupBox1.Controls.Add(Me.ButtonMeters)
         Me.GroupBox1.Controls.Add(Me.ButtonSim)
-        Me.GroupBox1.Location = New System.Drawing.Point(8, 522)
+        Me.GroupBox1.Location = New System.Drawing.Point(10, 500)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(274, 143)
+        Me.GroupBox1.Size = New System.Drawing.Size(275, 145)
         Me.GroupBox1.TabIndex = 52
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Meter Controls"
@@ -587,10 +586,10 @@ Partial Class Program
         '
         Me.Button_change_machine.BackColor = System.Drawing.Color.Transparent
         Me.Button_change_machine.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Button_change_machine.Location = New System.Drawing.Point(312, 34)
+        Me.Button_change_machine.Location = New System.Drawing.Point(300, 10)
         Me.Button_change_machine.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Button_change_machine.Name = "Button_change_machine"
-        Me.Button_change_machine.Size = New System.Drawing.Size(74, 20)
+        Me.Button_change_machine.Size = New System.Drawing.Size(75, 20)
         Me.Button_change_machine.TabIndex = 46
         Me.Button_change_machine.Text = "更換機具"
         Me.Button_change_machine.UseVisualStyleBackColor = False
@@ -678,7 +677,7 @@ Partial Class Program
         Me.GroupBox_Plot.BackColor = System.Drawing.Color.DarkGray
         Me.GroupBox_Plot.Controls.Add(Me.yLabel)
         Me.GroupBox_Plot.Controls.Add(Me.xLabel)
-        Me.GroupBox_Plot.Location = New System.Drawing.Point(364, 86)
+        Me.GroupBox_Plot.Location = New System.Drawing.Point(365, 40)
         Me.GroupBox_Plot.Name = "GroupBox_Plot"
         Me.GroupBox_Plot.Size = New System.Drawing.Size(600, 600)
         Me.GroupBox_Plot.TabIndex = 39
@@ -715,9 +714,9 @@ Partial Class Program
         Me.GroupBox_A4.Controls.Add(Me.Label_input_L2)
         Me.GroupBox_A4.Controls.Add(Me.Label_input_L3)
         Me.GroupBox_A4.Controls.Add(Me.Label_input_L1)
-        Me.GroupBox_A4.Location = New System.Drawing.Point(8, 373)
+        Me.GroupBox_A4.Location = New System.Drawing.Point(10, 350)
         Me.GroupBox_A4.Name = "GroupBox_A4"
-        Me.GroupBox_A4.Size = New System.Drawing.Size(274, 146)
+        Me.GroupBox_A4.Size = New System.Drawing.Size(275, 145)
         Me.GroupBox_A4.TabIndex = 19
         Me.GroupBox_A4.TabStop = False
         Me.GroupBox_A4.Text = "A4"
@@ -817,9 +816,9 @@ Partial Class Program
         Me.GroupBox_A1_A2_A3.Controls.Add(Me.TextBox_L)
         Me.GroupBox_A1_A2_A3.Controls.Add(Me.Label_r1)
         Me.GroupBox_A1_A2_A3.Controls.Add(Me.Label_input_L)
-        Me.GroupBox_A1_A2_A3.Location = New System.Drawing.Point(8, 279)
+        Me.GroupBox_A1_A2_A3.Location = New System.Drawing.Point(10, 260)
         Me.GroupBox_A1_A2_A3.Name = "GroupBox_A1_A2_A3"
-        Me.GroupBox_A1_A2_A3.Size = New System.Drawing.Size(274, 81)
+        Me.GroupBox_A1_A2_A3.Size = New System.Drawing.Size(275, 80)
         Me.GroupBox_A1_A2_A3.TabIndex = 10
         Me.GroupBox_A1_A2_A3.TabStop = False
         Me.GroupBox_A1_A2_A3.Text = "A1 or A2 or A3"
@@ -878,9 +877,9 @@ Partial Class Program
         '
         Me.Picture_machine.BackColor = System.Drawing.SystemColors.ButtonHighlight
         Me.Picture_machine.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Picture_machine.Location = New System.Drawing.Point(8, 86)
+        Me.Picture_machine.Location = New System.Drawing.Point(10, 65)
         Me.Picture_machine.Name = "Picture_machine"
-        Me.Picture_machine.Size = New System.Drawing.Size(306, 187)
+        Me.Picture_machine.Size = New System.Drawing.Size(320, 190)
         Me.Picture_machine.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.Picture_machine.TabIndex = 6
         Me.Picture_machine.TabStop = False
@@ -889,7 +888,7 @@ Partial Class Program
         '
         Me.Label_machine_pic.AutoSize = True
         Me.Label_machine_pic.Font = New System.Drawing.Font("微軟正黑體", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_machine_pic.Location = New System.Drawing.Point(6, 56)
+        Me.Label_machine_pic.Location = New System.Drawing.Point(10, 40)
         Me.Label_machine_pic.Name = "Label_machine_pic"
         Me.Label_machine_pic.Size = New System.Drawing.Size(74, 21)
         Me.Label_machine_pic.TabIndex = 5
@@ -899,21 +898,11 @@ Partial Class Program
         '
         Me.ComboBox_machine_list.FormattingEnabled = True
         Me.ComboBox_machine_list.Items.AddRange(New Object() {"A1+A2", "開挖機(Excavator)", "A1+A3", "推土機(Crawler and wheel tractor)", "A1+A2+A3", "裝料機(Crawler and wheel loader)", "裝料開挖機", "A4", "鐵輪壓路機(Road roller)", "膠輪壓路機(Wheel roller)", "振動式壓路機(Vibrating roller)", "履帶起重機(Crawler crane)", "卡車起重機(Truck crane)", "輪形起重機(Wheel crane)", "振動式樁錘(Vibrating hammer)", "油壓式打樁機(Hydraulic pile driver)", "拔樁機", "油壓式拔樁機", "土壤取樣器(地鑽) (Earth auger)", "全套管鑽掘機", "鑽土機(Earth drill)", "鑽岩機(Rock breaker)", "混凝土泵車(Concrete pump)", "混凝土破碎機(Concrete breaker)", "瀝青混凝土舖築機(Asphalt finisher)", "混凝土割切機(Concrete cutter)", "發電機(Generator)", "空氣壓縮機(Compressor)"})
-        Me.ComboBox_machine_list.Location = New System.Drawing.Point(8, 35)
+        Me.ComboBox_machine_list.Location = New System.Drawing.Point(10, 10)
         Me.ComboBox_machine_list.Name = "ComboBox_machine_list"
-        Me.ComboBox_machine_list.Size = New System.Drawing.Size(287, 20)
+        Me.ComboBox_machine_list.Size = New System.Drawing.Size(280, 20)
         Me.ComboBox_machine_list.TabIndex = 4
         Me.ComboBox_machine_list.Text = "請選擇"
-        '
-        'Label_machine_choose
-        '
-        Me.Label_machine_choose.AutoSize = True
-        Me.Label_machine_choose.Font = New System.Drawing.Font("微軟正黑體", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_machine_choose.Location = New System.Drawing.Point(5, 0)
-        Me.Label_machine_choose.Name = "Label_machine_choose"
-        Me.Label_machine_choose.Size = New System.Drawing.Size(96, 26)
-        Me.Label_machine_choose.TabIndex = 2
-        Me.Label_machine_choose.Text = "機具選擇"
         '
         'TabPage2
         '
@@ -3394,17 +3383,17 @@ Partial Class Program
         '
         'Chart2
         '
-        ChartArea1.Name = "ChartArea1"
-        Me.Chart2.ChartAreas.Add(ChartArea1)
-        Legend1.Name = "Legend1"
-        Me.Chart2.Legends.Add(Legend1)
+        ChartArea9.Name = "ChartArea1"
+        Me.Chart2.ChartAreas.Add(ChartArea9)
+        Legend9.Name = "Legend1"
+        Me.Chart2.Legends.Add(Legend9)
         Me.Chart2.Location = New System.Drawing.Point(602, 98)
         Me.Chart2.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Chart2.Name = "Chart2"
-        Series1.ChartArea = "ChartArea1"
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Me.Chart2.Series.Add(Series1)
+        Series9.ChartArea = "ChartArea1"
+        Series9.Legend = "Legend1"
+        Series9.Name = "Series1"
+        Me.Chart2.Series.Add(Series9)
         Me.Chart2.Size = New System.Drawing.Size(271, 466)
         Me.Chart2.TabIndex = 83
         Me.Chart2.Text = "Chart2"
@@ -3412,17 +3401,17 @@ Partial Class Program
         '
         'Chart1
         '
-        ChartArea2.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea2)
-        Legend2.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend2)
+        ChartArea10.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea10)
+        Legend10.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend10)
         Me.Chart1.Location = New System.Drawing.Point(-41, 5)
         Me.Chart1.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Chart1.Name = "Chart1"
-        Series2.ChartArea = "ChartArea1"
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series1"
-        Me.Chart1.Series.Add(Series2)
+        Series10.ChartArea = "ChartArea1"
+        Series10.Legend = "Legend1"
+        Series10.Name = "Series1"
+        Me.Chart1.Series.Add(Series10)
         Me.Chart1.Size = New System.Drawing.Size(914, 84)
         Me.Chart1.TabIndex = 82
         Me.Chart1.Text = "Chart1"
@@ -3627,6 +3616,7 @@ Partial Class Program
         '
         'Panel_Setting_Bargraph_Max_Min
         '
+        Me.Panel_Setting_Bargraph_Max_Min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel_Setting_Bargraph_Max_Min.Controls.Add(Me.TextBox_Setting_Bargraph_Min)
         Me.Panel_Setting_Bargraph_Max_Min.Controls.Add(Me.TextBox_Setting_Bargraph_Max)
         Me.Panel_Setting_Bargraph_Max_Min.Controls.Add(Me.Button_Setting_Bargraph)
@@ -3659,7 +3649,7 @@ Partial Class Program
         'Button_Setting_Bargraph
         '
         Me.Button_Setting_Bargraph.BackColor = System.Drawing.Color.Transparent
-        Me.Button_Setting_Bargraph.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button_Setting_Bargraph.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold)
         Me.Button_Setting_Bargraph.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Button_Setting_Bargraph.Location = New System.Drawing.Point(209, 161)
         Me.Button_Setting_Bargraph.Name = "Button_Setting_Bargraph"
@@ -3908,7 +3898,6 @@ Partial Class Program
     Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
     Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
     Friend WithEvents TabPage2 As System.Windows.Forms.TabPage
-    Friend WithEvents Label_machine_choose As System.Windows.Forms.Label
     Friend WithEvents ComboBox_machine_list As System.Windows.Forms.ComboBox
     Friend WithEvents Label_machine_pic As System.Windows.Forms.Label
     Friend WithEvents Picture_machine As System.Windows.Forms.PictureBox

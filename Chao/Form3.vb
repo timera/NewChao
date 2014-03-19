@@ -326,6 +326,7 @@ Public Class Program
         timeLabel.Size = New Size(77, 84)
 
 
+
         startButton.Location = New Point(129, 0)
         Accept_Button.Location = New Point(219, 0)
         Accept_Button.Enabled = False
@@ -571,6 +572,74 @@ Public Class Program
         '''SETTINGS TAB
         Button_Setting_Bargraph.Enabled = False
 
+        'all size and location in machine choose 
+        ComboBox_machine_list.Location = New Point(10, 10)
+        ComboBox_machine_list.Size = New Size(280, 20)
+        Button_change_machine.Location = New Point(300, 10)
+        Button_change_machine.Size = New Size(75, 20)
+        Label_machine_pic.Location = New Point(10, 40)
+        Label_machine_pic.Size = New Size(74, 21)
+        Picture_machine.Location = New Point(10, 65)
+        Picture_machine.Size = New Size(320, 190)
+
+        GroupBox_A1_A2_A3.Location = New Point(10, 260)
+        GroupBox_A1_A2_A3.Size = New Size(275, 80)
+        Label_input_L.Location = New Point(6, 18)
+        Label_input_L.Size = New Size(75, 26)
+        Label_r1.Location = New Point(49, 49)
+        Label_r1.Size = New Size(30, 26)
+        TextBox_L.Location = New Point(105, 24)
+        TextBox_L.Size = New Size(99, 22)
+        TextBox_r1.Location = New Point(105, 55)
+        TextBox_r1.Size = New Size(99, 22)
+        Button_L_check.Location = New Point(220, 24)
+        Button_L_check.Size = New Size(42, 23)
+
+        GroupBox_A4.Location = New Point(10, 350)
+        GroupBox_A4.Size = New Size(275, 145)
+        Label_input_L1.Location = New Point(6, 18)
+        Label_input_L1.Size = New Size(88, 26)
+        Label_input_L2.Location = New Point(6, 47)
+        Label_input_L2.Size = New Size(88, 26)
+        Label_input_L3.Location = New Point(6, 75)
+        Label_input_L3.Size = New Size(88, 26)
+        Label_r2.Location = New Point(52, 111)
+        Label_r2.Size = New Size(30, 26)
+        TextBox_L1.Location = New Point(103, 23)
+        TextBox_L1.Size = New Size(99, 22)
+        TextBox_L2.Location = New Point(103, 51)
+        TextBox_L2.Size = New Size(99, 22)
+        TextBox_L3.Location = New Point(103, 79)
+        TextBox_L3.Size = New Size(99, 22)
+        TextBox_r2.Location = New Point(103, 119)
+        TextBox_r2.Size = New Size(99, 22)
+        Button_L1_L2_L3_check.Location = New Point(217, 80)
+        Button_L1_L2_L3_check.Size = New Size(42, 23)
+
+        GroupBox1.Location = New Point(10, 500)
+        GroupBox1.Size = New Size(275, 145)
+        PanelMeterSetup.Location = New Point(16, 21)
+        PanelMeterSetup.Size = New Size(252, 68)
+        ComboBoxComs.Location = New Point(9, 3)
+        ComboBoxComs.Size = New Size(168, 20)
+        ButtonComRefresh.Location = New Point(183, 3)
+        ButtonComRefresh.Size = New Size(64, 23)
+        ConnectButton.Location = New Point(7, 30)
+        ConnectButton.Size = New Size(75, 37)
+        DisconnButton.Location = New Point(104, 30)
+        DisconnButton.Size = New Size(75, 37)
+        ButtonSim.Location = New Point(22, 94)
+        ButtonSim.Size = New Size(75, 23)
+        ButtonMeters.Location = New Point(119, 94)
+        ButtonMeters.Size = New Size(75, 23)
+
+        GroupBox_Plot.Location = New Point(365, 40)
+        GroupBox_Plot.Size = New Size(600, 600)
+
+        Label_A4_Hint1.Location = New Point(288, 328)
+        Label_A4_Hint1.Size = New Size(32, 273)
+        Label_A4_Hint2.Location = New Point(323, 328)
+        Label_A4_Hint2.Size = New Size(35, 164)
     End Sub
 
     Private Sub Program_Close(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing

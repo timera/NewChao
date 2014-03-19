@@ -1005,7 +1005,7 @@ Public Class Program
 
     Sub Set_Panel(ByRef p As Panel, ByRef l As Label)
         If p.Name = "Panel_Bkg" Or p.Name = "Panel_RSS" Or p.Name.Contains("Panel_P") Then
-            p.Size = New Size(80, 26)
+            p.Size = New Size(82, 26)
             If p.Name = "Panel_PreCal_1st" Then
                 p.BackColor = Color.Yellow
             Else
@@ -1013,7 +1013,7 @@ Public Class Program
             End If
             p.Controls.Add(l)
             If p.Name.Contains("Panel_P") Or p.Name = "Panel_RSS" Then
-                l.Location = New Point(28, 7)
+                l.Location = New Point(29, 7)
             Else
                 l.Location = New Point(0, 5)
             End If

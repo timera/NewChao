@@ -374,6 +374,16 @@ Public Class Grid
         End If
     End Sub
 
+    Public Shared Function Round(ByVal value As Double) As Double
+        Dim diff As Double = value * 100 Mod 10
+        Dim low As Double = (value * 100 - diff) / 100
+        If diff >= 5 Then
+            Return low + 0.01
+        Else
+            Return low
+        End If
+    End Function
+
     Function ConnectGRU_RU_COL(ByVal colName As String, ByVal subHeader As String, ByVal colNum As Integer, ByRef tempRU As Run_Unit) As Run_Unit
 
         Dim A3overall As Boolean = False
@@ -465,6 +475,8 @@ Public Class Grid
     Public Sub LinkGrid_Run_Unit(ByRef gru As Grid_Run_Unit, ByVal index As Integer)
         gru.Column = Form.Columns(index)
     End Sub
+
+
 
     'show GRU on the Form so we can see figures
     Public Sub ShowGRUonForm(ByRef Run As Grid_Run_Unit)
@@ -781,7 +793,7 @@ Public Class Grid
     End Function
 
     Private Function LeqK1A(ByRef Run As Grid_Run_Unit) As Decimal
-        Return Decimal.op_Explicit(Run.LpAeqAvg + Run.K1A)
+        Return Decimal.op_Explicit(Round(Run.LpAeqAvg + Run.K1A))
     End Function
 
     'contains recording
@@ -866,7 +878,7 @@ Public Class Meter_Measure_Unit
         End While
         Dim t1 = m1.Measurements.Count
         Dim t2 = m2.Measurements.Count
-        Dim leq = 10 * Math.Log10((t1 * 10 ^ (0.1 * m1.Leq) + (t2 * 10 ^ (0.1 * m2.Leq))) / (t1 + t2))
+        Dim leq = Grid.Round(10 * Math.Log10((t1 * 10 ^ (0.1 * m1.Leq) + (t2 * 10 ^ (0.1 * m2.Leq))) / (t1 + t2)))
         Return New Meter_Measure_Unit(num, list, leq)
     End Operator
 
@@ -876,7 +888,7 @@ Public Class Meter_Measure_Unit
             Return _Leq
         End Get
         Set(ByVal value As Double)
-            _Leq = value
+            _Leq = Grid.Round(value)
         End Set
     End Property
 
@@ -1275,7 +1287,7 @@ Public Class Grid_Run_Unit
             For i = 0 To num - 1
                 total += 10 ^ (0.1 * MeterList(i).Leq)
             Next
-            _LpAeqAvg = 10 * Math.Log10(total / num)
+            _LpAeqAvg = Grid.Round(10 * Math.Log10(total / num))
 
         Catch ex As Exception
             MsgBox("In Calc_LpAeqAvg():" & ex.Message)
@@ -1317,7 +1329,7 @@ Public Class Grid_Run_Unit
                 _deltaLA = 0
                 Return
             End If
-            _deltaLA = Me._LpAeqAvg - _Background.LpAeqAvg
+            _deltaLA = Grid.Round(Me._LpAeqAvg - _Background.LpAeqAvg)
         Catch ex As Exception
             MsgBox("In Calc_deltaLA():" & ex.Message)
             _deltaLA = -1
@@ -1337,7 +1349,7 @@ Public Class Grid_Run_Unit
                     MsgBox("ΔLA < 3dB 所以背景噪音修正值K1A無法計算!")
                     Return
                 End If
-                _K1A = -10 * Math.Log10(1 - 10 ^ (-0.1 * _deltaLA))
+                _K1A = Grid.Round(-10 * Math.Log10(1 - 10 ^ (-0.1 * _deltaLA)))
             Catch ex As Exception
                 MsgBox("In Calc_K1A():" & ex.Message)
                 _K1A = -1
@@ -1387,7 +1399,7 @@ Public Class Grid_Run_Unit
     Public Function Calc_LWA(ByVal K2A As Double, ByVal r As Double)
         Try
             If isRegular Then
-                _LWA = LpAeqAvg - K1A - K2A + 10 * Math.Log10(2 * Math.PI * r * r)
+                _LWA = Grid.Round(LpAeqAvg - K1A - K2A + 10 * Math.Log10(2 * Math.PI * r * r))
                 Return _LWA
             End If
         Catch ex As Exception

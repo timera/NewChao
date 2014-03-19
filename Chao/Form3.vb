@@ -641,8 +641,17 @@ Public Class Program
     End Sub
 
     Private Sub Button_change_machine_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_change_machine.Click
-        If MessageBox.Show("是否放棄目前測量數據?", "My application", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.OK Then
-
+        If SaveButton.Enabled Then
+            Dim answer As DialogResult = MessageBox.Show("尚未儲存資料，是否儲存?", "Save?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+            If answer = DialogResult.Yes Then
+                If DataGrid.Save() Then
+                    SaveButton.Enabled = False
+                Else
+                    Return
+                End If
+            ElseIf answer = DialogResult.Cancel Then
+                Return
+            End If
             'can choose machine again
             ComboBox_machine_list.Enabled = True
             Button_change_machine.Enabled = False
@@ -706,6 +715,9 @@ Public Class Program
             Label_A4_Hint1.Visible = False
             Label_A4_Hint2.Visible = False
         End If
+
+        'If MessageBox.Show("是否放棄目前測量數據?", "My application", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.OK Then
+        'End If
     End Sub
 
     Private Sub ComboBox_machine_list_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBox_machine_list.SelectedIndexChanged

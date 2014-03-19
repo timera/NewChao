@@ -1005,7 +1005,7 @@ Public Class Program
 
     Sub Set_Panel(ByRef p As Panel, ByRef l As Label)
         If p.Name = "Panel_Bkg" Or p.Name = "Panel_RSS" Or p.Name.Contains("Panel_P") Then
-            p.Size = New Size(82, 26)
+            p.Size = New Size(80, 26)
             If p.Name = "Panel_PreCal_1st" Then
                 p.BackColor = Color.Yellow
             Else
@@ -1013,7 +1013,7 @@ Public Class Program
             End If
             p.Controls.Add(l)
             If p.Name.Contains("Panel_P") Or p.Name = "Panel_RSS" Then
-                l.Location = New Point(29, 7)
+                l.Location = New Point(28, 7)
             Else
                 l.Location = New Point(0, 5)
             End If
@@ -2519,7 +2519,7 @@ Public Class Program
                     value = CurRun.GRU.LpAeq12
                 End If
                 If value > 94.7 Or value < 93.3 Then
-                    MsgBox("校正值超出94+-0.7dB範圍，建議修正!")
+                    MsgBox("校正值超出94 ± 0.7dB範圍，建議修正!")
                 End If
                 'IF PostCal
             ElseIf CurRun.Name.Contains("PostCal") Then

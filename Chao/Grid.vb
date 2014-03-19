@@ -378,7 +378,7 @@ Public Class Grid
         Dim diff As Double = value * 100 Mod 10
         Dim low As Double = (value * 100 - diff) / 100
         If diff >= 5 Then
-            Return low + 0.01
+            Return low + 0.1
         Else
             Return low
         End If

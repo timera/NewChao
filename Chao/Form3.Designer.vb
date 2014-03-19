@@ -319,7 +319,7 @@ Partial Class Program
         Me.Panel_Setting_Bargraph_Max_Min = New System.Windows.Forms.Panel()
         Me.TextBox_Setting_Bargraph_Min = New Chao.ChaoTextBox()
         Me.TextBox_Setting_Bargraph_Max = New Chao.ChaoTextBox()
-        Me.Button_Setting_Bargraph = New DisButton()
+        Me.Button_Setting_Bargraph = New Chao.DisButton()
         Me.Setting_Bargraph_Min = New System.Windows.Forms.Label()
         Me.Setting_Bargraph_Max = New System.Windows.Forms.Label()
         Me.Setting_Bargraph_Title = New System.Windows.Forms.Label()
@@ -3658,13 +3658,15 @@ Partial Class Program
         '
         'Button_Setting_Bargraph
         '
+        Me.Button_Setting_Bargraph.BackColor = System.Drawing.Color.Transparent
         Me.Button_Setting_Bargraph.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button_Setting_Bargraph.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Button_Setting_Bargraph.Location = New System.Drawing.Point(209, 161)
         Me.Button_Setting_Bargraph.Name = "Button_Setting_Bargraph"
         Me.Button_Setting_Bargraph.Size = New System.Drawing.Size(75, 48)
         Me.Button_Setting_Bargraph.TabIndex = 4
         Me.Button_Setting_Bargraph.Text = "Confirm"
-        Me.Button_Setting_Bargraph.UseVisualStyleBackColor = True
+        Me.Button_Setting_Bargraph.UseVisualStyleBackColor = False
         '
         'Setting_Bargraph_Min
         '

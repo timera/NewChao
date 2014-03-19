@@ -568,6 +568,9 @@ Public Class Program
         Null_CurRun = New Run_Unit(LinkLabel_Temp, Panel_Temp, Nothing, Nothing, 0, "Temp", 0, 0, 0)
         Temp_CurRun = Null_CurRun
 
+        '''SETTINGS TAB
+        Button_Setting_Bargraph.Enabled = False
+
     End Sub
 
     Private Sub Program_Close(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
@@ -4042,9 +4045,17 @@ Public Class Program
         ElseIf String.IsNullOrWhiteSpace(TextBox_Setting_Bargraph_Min.Text) Then
             MessageBox.Show("請輸入最小值!")
             Return
+        ElseIf Convert.ToInt32(TextBox_Setting_Bargraph_Min.Text) > Convert.ToInt32(TextBox_Setting_Bargraph_Max.Text) Then
+            MessageBox.Show("最大值不能小於最小值!")
+            Return
         End If
         MainBarGraph.chart.ChartAreas(0).AxisY.Crossing = TextBox_Setting_Bargraph_Min.Text
         MainBarGraph.chart.ChartAreas(0).AxisY.Maximum = TextBox_Setting_Bargraph_Max.Text
         MainBarGraph.chart.ChartAreas(0).AxisY.Minimum = TextBox_Setting_Bargraph_Min.Text
+        Button_Setting_Bargraph.Enabled = False
+    End Sub
+
+    Private Sub TextBox_Setting_Bargraph_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBox_Setting_Bargraph_Max.TextChanged, TextBox_Setting_Bargraph_Min.TextChanged
+        Button_Setting_Bargraph.Enabled = True
     End Sub
 End Class

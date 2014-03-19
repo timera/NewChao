@@ -2562,6 +2562,10 @@ Public Class Program
                     End If
                     tempRun = tempRun.PrevUnit
                 End While
+            ElseIf CurRun.Name.Contains("RSS") Then
+                If CurRun.GRU.LpAeqAvg - CurRun.GRU.Background.LpAeqAvg < 7 Then
+                    MsgBox("RSS-背景噪音未達7dB!!")
+                End If
             End If
         Else
             Timer1.Stop()

@@ -233,30 +233,7 @@ Public Class Program
         DisconnButton.Enabled = False
         SaveButton.Enabled = False
 
-        GroupBox_Plot.Visible = True
-
-        'x
-        origin(0) = GroupBox_Plot.Width / 2
-        'y
-        origin(1) = GroupBox_Plot.Height / 2
-        length = 275
-        'xStart
-        xCor(0, 0) = origin(0) - length 'x
-        xCor(0, 1) = origin(1) 'y
-        'xEnd
-        xCor(1, 0) = origin(0) + length 'x
-        xCor(1, 1) = origin(1) 'y
-
-        'yStart
-        yCor(0, 0) = origin(0) 'x
-        yCor(0, 1) = origin(1) - length 'y
-        'yEnd
-        yCor(1, 0) = origin(0) 'x
-        yCor(1, 1) = origin(1) + length 'y
-        'draw coordinates
-        canvas.Parent = GroupBox_Plot
-        canvas.Location = New System.Drawing.Point(0, 0)
-        plotCor(xCor, yCor)
+        
 
 
 
@@ -325,7 +302,76 @@ Public Class Program
         S9.Size = New Size(12, 12)
         timeLabel.Size = New Size(77, 84)
 
+        'Timer Tab
+        'Dim input_step_gap As Integer = 40
+        'Dim input_step_x As Integer = 18
+        'Dim input_step_size As Size = New Size(85, 22)
+        'Dim input_light_size As Size = New Size(100, 30)
 
+        'Input_S_Step1.Location = New Point(input_step_x, 23)
+        'Input_S_Step1.Size = input_step_size
+
+        'Light1.Parent = Test_Input_S_Panel
+        'Light1.Location = New Point(input_step_x - 5, 23 - 5)
+        'Light1.Size = input_light_size
+
+
+        'Input_S_Step2.Location = New Point(input_step_x, 23 + input_step_gap)
+        'Input_S_Step2.Size = input_step_size
+
+        'Light2.Parent = Test_Input_S_Panel
+        'Light2.Location = New Point(input_step_x - 5, 23 + input_step_gap - 5)
+        'Light2.Size = input_light_size
+
+        'Input_S_Step3.Location = New Point(input_step_x, 23 + input_step_gap * 2)
+        'Input_S_Step3.Size = input_step_size
+
+        'Light3.Parent = Test_Input_S_Panel
+        'Light3.Location = New Point(input_step_x - 5, 23 + input_step_gap * 2 - 5)
+        'Light3.Size = input_light_size
+
+        'Input_S_Step4.Location = New Point(input_step_x, 23 + input_step_gap * 3)
+        'Input_S_Step4.Size = input_step_size
+
+        'Light4.Parent = Test_Input_S_Panel
+        'Light4.Location = New Point(input_step_x - 5, 23 + input_step_gap * 3 - 5)
+        'Light4.Size = input_light_size
+
+        'Input_S_Step5.Location = New Point(input_step_x, 23 + input_step_gap * 4)
+        'Input_S_Step5.Size = input_step_size
+
+        'Light5.Parent = Test_Input_S_Panel
+        'Light5.Location = New Point(input_step_x - 5, 23 + input_step_gap * 4 - 5)
+        'Light5.Size = input_light_size
+
+        'Input_S_Step6.Location = New Point(input_step_x, 23 + input_step_gap * 5)
+        'Input_S_Step6.Size = input_step_size
+
+        'Light6.Parent = Test_Input_S_Panel
+        'Light6.Location = New Point(input_step_x - 5, 23 + input_step_gap * 5 - 5)
+        'Light6.Size = input_light_size
+
+        'Input_S_Step7.Location = New Point(input_step_x, 23 + input_step_gap * 6)
+        'Input_S_Step7.Size = input_step_size
+
+        'Light7.Parent = Test_Input_S_Panel
+        'Light7.Location = New Point(input_step_x - 5, 23 + input_step_gap * 6 - 5)
+        'Light7.Size = input_light_size
+
+        'Input_S_Step8.Location = New Point(input_step_x, 23 + input_step_gap * 7)
+        'Input_S_Step8.Size = input_step_size
+
+        'Light8.Parent = Test_Input_S_Panel
+        'Light8.Location = New Point(input_step_x - 5, 23 + input_step_gap * 7 - 5)
+        'Light8.Size = input_light_size
+
+        'Input_S_Step9.Location = New Point(input_step_x, 23 + input_step_gap * 8)
+        'Input_S_Step9.Size = input_step_size
+
+        'Light9.Parent = Test_Input_S_Panel
+        'Light9.Location = New Point(input_step_x - 5, 23 + input_step_gap * 8 - 5)
+        'Light9.Size = input_light_size
+        
 
         startButton.Location = New Point(129, 0)
         Accept_Button.Location = New Point(219, 0)
@@ -635,6 +681,30 @@ Public Class Program
 
         GroupBox_Plot.Location = New Point(365, 40)
         GroupBox_Plot.Size = New Size(600, 600)
+        GroupBox_Plot.Visible = True
+        'COOR PLOT
+        'x
+        origin(0) = GroupBox_Plot.Width / 2
+        'y
+        origin(1) = GroupBox_Plot.Height / 2
+        length = 275
+        'xStart
+        xCor(0, 0) = origin(0) - length 'x
+        xCor(0, 1) = origin(1) 'y
+        'xEnd
+        xCor(1, 0) = origin(0) + length 'x
+        xCor(1, 1) = origin(1) 'y
+
+        'yStart
+        yCor(0, 0) = origin(0) 'x
+        yCor(0, 1) = origin(1) - length 'y
+        'yEnd
+        yCor(1, 0) = origin(0) 'x
+        yCor(1, 1) = origin(1) + length 'y
+        'draw coordinates
+        canvas.Parent = GroupBox_Plot
+        canvas.Location = New System.Drawing.Point(0, 0)
+        plotCor(xCor, yCor)
 
         Label_A4_Hint1.Location = New Point(288, 328)
         Label_A4_Hint1.Size = New Size(32, 273)

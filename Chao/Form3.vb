@@ -962,6 +962,7 @@ Public Class Program
                 TextBox_L1.Enabled = True
                 TextBox_L2.Enabled = True
                 TextBox_L3.Enabled = True
+                TextBox_r2.Enabled = True
                 Button_L1_L2_L3_check.Enabled = True
             End If
 
@@ -1059,18 +1060,26 @@ Public Class Program
             pos(i).Label.ForeColor = posColors(i)
             Points.Add(pos(i))
         Next
-
-        If String.IsNullOrWhiteSpace(TextBox_L1.Text) Or String.IsNullOrWhiteSpace(TextBox_L2.Text) Or String.IsNullOrWhiteSpace(TextBox_L3.Text) Then
-            Return
-        End If
         Dim L1 As Double
         Dim L2 As Double
         Dim L3 As Double
-        L1 = TextBox_L1.Text
-        L2 = TextBox_L2.Text
-        L3 = TextBox_L3.Text
-        Dim r As Double = Math.Ceiling(2 * Math.Sqrt(((L1 / 2) ^ 2) + ((L2 / 2) ^ 2) + (L3 ^ 2)))
-        TextBox_r2.Text = r
+        Dim r As Double
+        If String.IsNullOrWhiteSpace(TextBox_L1.Text) Or String.IsNullOrWhiteSpace(TextBox_L2.Text) Or String.IsNullOrWhiteSpace(TextBox_L3.Text) Then
+            If String.IsNullOrWhiteSpace(TextBox_r2.Text) Then
+                Return
+            Else
+                r = TextBox_r2.Text
+            End If
+        Else
+            L1 = TextBox_L1.Text
+            L2 = TextBox_L2.Text
+            L3 = TextBox_L3.Text
+            r = Math.Ceiling(2 * Math.Sqrt(((L1 / 2) ^ 2) + ((L2 / 2) ^ 2) + (L3 ^ 2)))
+            TextBox_r2.Text = r
+        End If
+        
+       
+       
         pos(0).Coors = New ThreeDPoint(r * -0.45, r * 0.77, r * 0.45)
         pos(1).Coors = New ThreeDPoint(r * -0.45, r * -0.77, r * 0.45)
         pos(2).Coors = New ThreeDPoint(r * 0.89, 0, r * 0.45)

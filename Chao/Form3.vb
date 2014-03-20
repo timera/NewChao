@@ -706,6 +706,9 @@ Public Class Program
         canvas.Location = New System.Drawing.Point(0, 0)
         plotCor(xCor, yCor)
 
+        RichTextBox_Info.Size = New Size(200, GroupBox_Plot.Height)
+        RichTextBox_Info.Location = New Point(GroupBox_Plot.Left + GroupBox_Plot.Width + 10, GroupBox_Plot.Top)
+
         Label_A4_Hint1.Location = New Point(288, 328)
         Label_A4_Hint1.Size = New Size(32, 273)
         Label_A4_Hint2.Location = New Point(323, 328)

@@ -3925,7 +3925,7 @@ Partial Class Program
     Friend WithEvents Label_input_L As System.Windows.Forms.Label
     Friend WithEvents GroupBox_A4 As System.Windows.Forms.GroupBox
     Friend WithEvents Button_L1_L2_L3_check As DisButton
-    Friend WithEvents TextBox_r2 As DisTextBox
+    Friend WithEvents TextBox_r2 As Chao.DisTextBox
     Friend WithEvents Label_r2 As System.Windows.Forms.Label
     Friend WithEvents Label_input_L2 As System.Windows.Forms.Label
     Friend WithEvents Label_input_L3 As System.Windows.Forms.Label

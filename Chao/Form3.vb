@@ -965,6 +965,7 @@ Public Class Program
                 TextBox_L1.Enabled = True
                 TextBox_L2.Enabled = True
                 TextBox_L3.Enabled = True
+                TextBox_r2.Enabled = True
                 Button_L1_L2_L3_check.Enabled = True
             End If
 
@@ -1062,18 +1063,26 @@ Public Class Program
             pos(i).Label.ForeColor = posColors(i)
             Points.Add(pos(i))
         Next
-
-        If String.IsNullOrWhiteSpace(TextBox_L1.Text) Or String.IsNullOrWhiteSpace(TextBox_L2.Text) Or String.IsNullOrWhiteSpace(TextBox_L3.Text) Then
-            Return
-        End If
         Dim L1 As Double
         Dim L2 As Double
         Dim L3 As Double
-        L1 = TextBox_L1.Text
-        L2 = TextBox_L2.Text
-        L3 = TextBox_L3.Text
-        Dim r As Double = Math.Ceiling(2 * Math.Sqrt(((L1 / 2) ^ 2) + ((L2 / 2) ^ 2) + (L3 ^ 2)))
-        TextBox_r2.Text = r
+        Dim r As Double
+        If String.IsNullOrWhiteSpace(TextBox_L1.Text) Or String.IsNullOrWhiteSpace(TextBox_L2.Text) Or String.IsNullOrWhiteSpace(TextBox_L3.Text) Then
+            If String.IsNullOrWhiteSpace(TextBox_r2.Text) Then
+                Return
+            Else
+                r = TextBox_r2.Text
+            End If
+        Else
+            L1 = TextBox_L1.Text
+            L2 = TextBox_L2.Text
+            L3 = TextBox_L3.Text
+            r = Math.Ceiling(2 * Math.Sqrt(((L1 / 2) ^ 2) + ((L2 / 2) ^ 2) + (L3 ^ 2)))
+            TextBox_r2.Text = r
+        End If
+        
+       
+       
         pos(0).Coors = New ThreeDPoint(r * -0.45, r * 0.77, r * 0.45)
         pos(1).Coors = New ThreeDPoint(r * -0.45, r * -0.77, r * 0.45)
         pos(2).Coors = New ThreeDPoint(r * 0.89, 0, r * 0.45)
@@ -2257,7 +2266,7 @@ Public Class Program
             tempRun.Steps = New Steps(My.Resources.A3_Tractor_step4, Step1, Nothing, True, array_TrA3_time(3))
             tempRun.HeadStep = tempRun.Steps
         ElseIf tempRun.Name = "A4" Or tempRun.Name = "A4_Add" Then
-            tempRun.Steps = New Steps(A4_step_text, Step1, Nothing, True, 5)
+            tempRun.Steps = New Steps(A4_step_text, Step1, Nothing, True, 0)
             tempRun.HeadStep = tempRun.Steps
         End If
 
@@ -2340,7 +2349,9 @@ Public Class Program
         If Countdown = False Then
             timeLeft = timeLeft + 1
             timeLabel.Text = timeLeft & " s"
-
+            If timeLeft = 30 Then
+                stopButton.Enabled = True
+            End If
             'send values to display as text and graphs
             SetScreenValuesAndGraphs(GetInstantData())
         Else
@@ -2519,7 +2530,12 @@ Public Class Program
         If Countdown = False Then
             startButton.Enabled = False
             Accept_Button.Enabled = False
-            stopButton.Enabled = True
+            If CurRun.Name.Contains("A4") Or CurRun.Name.Contains("RSS") Or CurRun.Name.Contains("Background") Then
+                stopButton.Enabled = False
+            Else
+                stopButton.Enabled = True
+            End If
+
             Timer1.Start()
         Else
             startButton.Enabled = False
@@ -3391,7 +3407,11 @@ Public Class Program
                         'jump to next Run_Unit and change countdown False to True(for A1 A2 A3 A4 test)
                         CurRun = CurRun.NextUnit
                         Set_Run_Unit()
-                        Countdown = True
+                        If CurRun.Name.Contains("A4") Then
+                            Countdown = False
+                        Else
+                            Countdown = True
+                        End If
                         'load A1's steps
                         Clear_Steps()
                         Load_Steps()
@@ -3443,8 +3463,108 @@ Public Class Program
                         timeLabel.Text = timeLeft & " s"
 
 
+                    ElseIf CurRun.Name = "A4" Then
+                        All_Panel_Enable()
+                        If CurRun.NextUnit.Name = "A4_Mid_BG" Then
+                            'Case: now is A4 and next is A4_Mid_BG
+                            ' change light
+                            Set_Panel_BackColor()
+                            CurRun.Link.Enabled = True
+                            'jump to next Run_Unit
+                            CurRun = CurRun.NextUnit
+                            timeLeft = CurRun.Time
+                            timeLabel.Text = timeLeft & " s"
+                            Clear_Steps()
+                            'dispose old graph and create new graph
+                            Load_New_Graph_CD_False()
+                        ElseIf CurRun.NextUnit.Name = "A4_Mid_BG_Add" Then
+                            'have an additional test?
+                            'call a function 
+                            'if want_add()=true then ... elseif want_add()=false then ... endif
 
+                            CurRun.Set_BackColor(Color.Green)
+                            CurRun.Link.Enabled = True
+                            'CurRun.Link.Enabled = True
+                            'jump to next Run_Unit and change light
+                            'Add?
+                            Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                            list.Add(CurRun.GRU) 'adding test 3 
+                            list.Add(CurRun.PrevUnit.PrevUnit.GRU) 'adding testing 2
+                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
+                            If DataGrid.NeedAdd(list) Then
+                                'True: add test
+                                CurRun = CurRun.NextUnit
+                                Set_Add_GRU(0, "Background", "")    'True: add test
+                                ' change light
+                                CurRun.Set_BackColor(Color.Yellow)
+                                timeLeft = CurRun.Time
+                                timeLabel.Text = timeLeft & " s"
+                                Clear_Steps()
+                                'dispose old graph and create new graph
+                                Load_New_Graph_CD_False()
+                            Else
+                                'False: not add test , jump to RSS
+                                CurRun = CurRun.NextUnit.NextUnit.NextUnit
+                                CurRun.Set_BackColor(Color.Yellow)
+                                timeLeft = CurRun.Time
+                                timeLabel.Text = timeLeft & " s"
+                                Clear_Steps()
+                                For index = 0 To 8
+                                    array_step_display(index).Text = ""
+                                Next
+                                'dispose old graph and create new graph
+                                Load_New_Graph_CD_False()
+                            End If
+                        End If
 
+                    ElseIf CurRun.Name = "A4_Add" Then
+                        All_Panel_Enable()
+                        'have an additional test?
+                        'call a function 
+                        'if want_add()=true then ... elseif want_add()=false then ... endif
+                        CurRun.Link.Enabled = True
+                        'CurRun.Link.Enabled = True
+                        'Add?
+                        Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                        list.Add(CurRun.PrevUnit.GRU) 'adding test 3 
+                        list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding testing 2
+                        list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
+                        Dim tempGRU = CurRun.GRU
+                        Dim i As Integer = 4
+                        While Not IsNothing(tempGRU)
+                            list.Add(tempGRU)
+                            tempGRU = tempGRU.NextGRU
+                            i += 1
+                        End While
+                        If DataGrid.NeedAdd(list) Then
+                            CurRun.PrevUnit.Set_BackColor(Color.Yellow)
+                            CurRun.Set_BackColor(Color.IndianRed)
+                            CurRun = CurRun.PrevUnit
+                            'True: add test
+                            Set_Add_GRU(4, "Background", "")    'True: add test
+                            'True: add test , jump to A4_Mid_BG_Add
+
+                            timeLeft = CurRun.Time
+                            timeLabel.Text = timeLeft & " s"
+
+                            Clear_Steps()
+
+                            'dispose old graph and create new graph
+                            Load_New_Graph_CD_True()
+                        Else
+                            'False: not add test , jump to RSS
+                            Set_Panel_BackColor()
+                            CurRun = CurRun.NextUnit
+                            CurRun.Steps = Load_Steps_helper(CurRun)
+                            timeLeft = CurRun.Time
+                            timeLabel.Text = timeLeft & " s"
+                            Clear_Steps()
+                            For index = 0 To 8
+                                array_step_display(index).Text = ""
+                            Next
+                            'dispose old graph and create new graph
+                            Load_New_Graph_CD_True()
+                        End If
 
                     ElseIf CurRun.Name = "A4_Mid_BG" Or CurRun.Name = "A4_Mid_BG_Add" Then
                         All_Panel_Enable()
@@ -3467,7 +3587,6 @@ Public Class Program
                             Set_Add_GRU(4, "Run " & i, "")
                         End If
                         Set_Run_Unit()
-                        Countdown = True
                         'load A4's steps
                         Clear_Steps()
                         Load_Steps()
@@ -3849,114 +3968,7 @@ Public Class Program
                         End If
 
 
-                    ElseIf CurRun.Name = "A4" Then
-                        All_Panel_Enable()
-                        If CurRun.NextUnit.Name = "A4_Mid_BG" Then
-                            'Case: now is A4 and next is A4_Mid_BG
-                            ' change light
-                            Set_Panel_BackColor()
-                            CurRun.Link.Enabled = True
-                            'jump to next Run_Unit
-                            CurRun = CurRun.NextUnit
-                            timeLeft = CurRun.Time
-                            timeLabel.Text = timeLeft & " s"
-                            Countdown = False
-                            Clear_Steps()
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_False()
-                        ElseIf CurRun.NextUnit.Name = "A4_Mid_BG_Add" Then
-                            'have an additional test?
-                            'call a function 
-                            'if want_add()=true then ... elseif want_add()=false then ... endif
-
-                            CurRun.Set_BackColor(Color.Green)
-                            CurRun.Link.Enabled = True
-                            'CurRun.Link.Enabled = True
-                            'jump to next Run_Unit and change light
-                            'Add?
-                            Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
-                            list.Add(CurRun.GRU) 'adding test 3 
-                            list.Add(CurRun.PrevUnit.PrevUnit.GRU) 'adding testing 2
-                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
-                            If DataGrid.NeedAdd(list) Then
-                                'True: add test
-                                CurRun = CurRun.NextUnit
-                                Set_Add_GRU(0, "Background", "")    'True: add test
-                                ' change light
-                                CurRun.Set_BackColor(Color.Yellow)
-                                timeLeft = CurRun.Time
-                                timeLabel.Text = timeLeft & " s"
-                                Countdown = False
-                                Clear_Steps()
-                                'dispose old graph and create new graph
-                                Load_New_Graph_CD_False()
-                            Else
-                                'False: not add test , jump to RSS
-                                CurRun = CurRun.NextUnit.NextUnit.NextUnit
-                                CurRun.Set_BackColor(Color.Yellow)
-                                timeLeft = CurRun.Time
-                                timeLabel.Text = timeLeft & " s"
-                                Countdown = False
-                                Clear_Steps()
-                                For index = 0 To 8
-                                    array_step_display(index).Text = ""
-                                Next
-                                'dispose old graph and create new graph
-                                Load_New_Graph_CD_False()
-                            End If
-                        End If
-
-                    ElseIf CurRun.Name = "A4_Add" Then
-                        All_Panel_Enable()
-                        'have an additional test?
-                        'call a function 
-                        'if want_add()=true then ... elseif want_add()=false then ... endif
-                        CurRun.Link.Enabled = True
-                        'CurRun.Link.Enabled = True
-                        'Add?
-                        Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
-                        list.Add(CurRun.PrevUnit.GRU) 'adding test 3 
-                        list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding testing 2
-                        list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
-                        Dim tempGRU = CurRun.GRU
-                        Dim i As Integer = 4
-                        While Not IsNothing(tempGRU)
-                            list.Add(tempGRU)
-                            tempGRU = tempGRU.NextGRU
-                            i += 1
-                        End While
-                        If DataGrid.NeedAdd(list) Then
-                            CurRun.PrevUnit.Set_BackColor(Color.Yellow)
-                            CurRun.Set_BackColor(Color.IndianRed)
-                            CurRun = CurRun.PrevUnit
-                            'True: add test
-                            Set_Add_GRU(4, "Background", "")    'True: add test
-                            'True: add test , jump to A4_Mid_BG_Add
-
-                            timeLeft = CurRun.Time
-                            timeLabel.Text = timeLeft & " s"
-                            Countdown = False
-
-                            Clear_Steps()
-
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_True()
-                        Else
-                            'False: not add test , jump to RSS
-                            Set_Panel_BackColor()
-                            CurRun = CurRun.NextUnit
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            timeLeft = CurRun.Time
-                            timeLabel.Text = timeLeft & " s"
-                            Countdown = False
-                            Clear_Steps()
-                            For index = 0 To 8
-                                array_step_display(index).Text = ""
-                            Next
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_False()
-                        End If
-
+                    
                     End If
                 End If
 

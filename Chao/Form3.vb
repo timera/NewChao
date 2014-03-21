@@ -16,7 +16,7 @@ Public Class Program
     'coordinates for 6 points
     Dim pos() As CoorPoint
     'Dim pos(5, 2) As Double
-    Dim posColors() As Color = {Color.Red, Color.Orange, Color.Yellow, Color.Green, Color.Blue, Color.Cyan}
+    Dim posColors() As Color = {Color.DarkRed, Color.DarkOliveGreen, Color.DarkMagenta, Color.DeepPink, Color.DarkBlue, Color.Chocolate}
 
     'Origin for the coordinates system
     Dim origin(1) As Double
@@ -4103,15 +4103,15 @@ Public Class Program
             'Text
             If pos.Length = 6 Then
                 If labels(index) = "P6" Or labels(index) = "P8" Or labels(index) = "P12" Then
-                    gp.DrawString(labels(index), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y - pHeight))
-                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y - e))
-                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight - e))
-                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight * 2 - e))
+                    gp.DrawString(labels(index), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y))
+                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y - pHeight * 3))
+                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y - pHeight * 2))
+                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y - pHeight * 1))
                 Else
                     gp.DrawString(labels(index), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y))
-                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight - e))
-                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight * 2 - e))
-                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight * 3 - e))
+                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y + pHeight - e))
+                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y + pHeight * 2 - e))
+                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y + pHeight * 3 - e))
                 End If
             Else
                 If labels(index) = "P4" Then

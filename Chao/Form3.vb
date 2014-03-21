@@ -31,6 +31,9 @@ Public Class Program
     Dim yCor(1, 1) As Double
     Dim ratio As Double
     Dim Points As ArrayList
+    Dim GP As Graphics
+    Dim R As Integer
+    Dim PlotRatio As Double
 
 
 
@@ -217,9 +220,8 @@ Public Class Program
 
         GroupBox_Plot.Parent = TabPage1
         GroupBox_Plot.AllowDrop = True
-        xLabel.Parent = GroupBox_Plot
-        yLabel.Parent = GroupBox_Plot
         GroupBox_Plot.BackColor = Color.Transparent
+
 
         Me.TabPageTimer.Enabled = False
 
@@ -682,6 +684,7 @@ Public Class Program
         GroupBox_Plot.Location = New Point(365, 40)
         GroupBox_Plot.Size = New Size(600, 600)
         GroupBox_Plot.Visible = True
+        GP = GroupBox_Plot.CreateGraphics()
         'COOR PLOT
         'x
         origin(0) = GroupBox_Plot.Width / 2
@@ -702,9 +705,10 @@ Public Class Program
         yCor(1, 0) = origin(0) 'x
         yCor(1, 1) = origin(1) + length 'y
         'draw coordinates
-        canvas.Parent = GroupBox_Plot
-        canvas.Location = New System.Drawing.Point(0, 0)
-        plotCor(xCor, yCor)
+        'canvas.Parent = GroupBox_Plot
+        'canvas.Location = New System.Drawing.Point(0, 0)
+
+        plotCor(GroupBox_Plot.CreateGraphics, xCor, yCor)
 
         RichTextBox_Info.Size = New Size(200, GroupBox_Plot.Height)
         RichTextBox_Info.Location = New Point(GroupBox_Plot.Left + GroupBox_Plot.Width + 10, GroupBox_Plot.Top)
@@ -990,13 +994,8 @@ Public Class Program
 
     Private Sub Button_L_check_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L_check.Click
         'Set up Plotting
-        Points = New ArrayList
-        pos = {New CoorPoint(p2Label), New CoorPoint(p4Label), New CoorPoint(p6Label), New CoorPoint(p8Label), New CoorPoint(p10Label), New CoorPoint(p12Label)}
-        For i = 0 To 5
-            pos(i).Label.Parent = TabPage1
-            pos(i).Label.ForeColor = posColors(i)
-            Points.Add(pos(i))
-        Next
+        'Points = New ArrayList
+        pos = {New CoorPoint(), New CoorPoint(), New CoorPoint(), New CoorPoint(), New CoorPoint(), New CoorPoint()}
 
         Dim r1 As Integer
         If String.IsNullOrWhiteSpace(TextBox_L.Text) Then
@@ -1021,8 +1020,8 @@ Public Class Program
         pos(3).Coors = New ThreeDPoint(r1 * 0.7, -1 * r1 * 0.7, 1.5)
         pos(4).Coors = New ThreeDPoint(r1 * -0.27, r1 * 0.65, r1 * 0.71)
         pos(5).Coors = New ThreeDPoint(r1 * 0.27, r1 * -0.65, r1 * 0.71)
-
-        plot(xCor, yCor, GroupBox_Plot, r1, pos)
+        R = r1
+        plot(False, GP, xCor, yCor, GroupBox_Plot)
 
         If choice = "開挖機(Excavator)" Then
             Load_Excavator()
@@ -1056,39 +1055,34 @@ Public Class Program
         Label_A4_Hint1.Visible = True
         Label_A4_Hint2.Visible = True
         'Set up Plotting
-        Points = New ArrayList
-        pos = {New CoorPoint(p2Label), New CoorPoint(p4Label), New CoorPoint(p6Label), New CoorPoint(p8Label)}
-        For i = 0 To 3
-            pos(i).Label.Parent = TabPage1
-            pos(i).Label.ForeColor = posColors(i)
-            Points.Add(pos(i))
-        Next
+        pos = {New CoorPoint(), New CoorPoint(), New CoorPoint(), New CoorPoint()}
         Dim L1 As Double
         Dim L2 As Double
         Dim L3 As Double
-        Dim r As Double
+        Dim r2 As Double
         If String.IsNullOrWhiteSpace(TextBox_L1.Text) Or String.IsNullOrWhiteSpace(TextBox_L2.Text) Or String.IsNullOrWhiteSpace(TextBox_L3.Text) Then
             If String.IsNullOrWhiteSpace(TextBox_r2.Text) Then
                 Return
             Else
-                r = TextBox_r2.Text
+                r2 = TextBox_r2.Text
             End If
         Else
             L1 = TextBox_L1.Text
             L2 = TextBox_L2.Text
             L3 = TextBox_L3.Text
-            r = Math.Ceiling(2 * Math.Sqrt(((L1 / 2) ^ 2) + ((L2 / 2) ^ 2) + (L3 ^ 2)))
-            TextBox_r2.Text = r
+            r2 = Math.Ceiling(2 * Math.Sqrt(((L1 / 2) ^ 2) + ((L2 / 2) ^ 2) + (L3 ^ 2)))
+            TextBox_r2.Text = r2
         End If
-        
-       
-       
-        pos(0).Coors = New ThreeDPoint(r * -0.45, r * 0.77, r * 0.45)
-        pos(1).Coors = New ThreeDPoint(r * -0.45, r * -0.77, r * 0.45)
-        pos(2).Coors = New ThreeDPoint(r * 0.89, 0, r * 0.45)
-        pos(3).Coors = New ThreeDPoint(0, 0, r)
 
-        plot(xCor, yCor, GroupBox_Plot, r, pos)
+
+
+        pos(0).Coors = New ThreeDPoint(r2 * -0.45, r2 * 0.77, r2 * 0.45)
+        pos(1).Coors = New ThreeDPoint(r2 * -0.45, r2 * -0.77, r2 * 0.45)
+        pos(2).Coors = New ThreeDPoint(r2 * 0.89, 0, r2 * 0.45)
+        pos(3).Coors = New ThreeDPoint(0, 0, r2)
+
+        R = r2
+        plot(False, GP, xCor, yCor, GroupBox_Plot)
         If choice = "鐵輪壓路機(Road roller)" Then
             Load_Others(choice)
             MachChosen = True
@@ -1154,7 +1148,7 @@ Public Class Program
         End If
 
         DisposeChart()
-        CreateChart(r)
+        CreateChart(r2)
 
         '選擇機具後可更換
         If MachChosen = True Then
@@ -3968,7 +3962,7 @@ Public Class Program
                         End If
 
 
-                    
+
                     End If
                 End If
 
@@ -4020,20 +4014,27 @@ Public Class Program
 
 
     'plot the coordinate system on startup
-    Private Sub plotCor(ByVal xCor, ByVal yCor)
-
+    Private Sub plotCor(ByRef gp As Graphics, ByVal xCor As Double(,), ByVal yCor As Double(,))
+        Dim fn As Font = New Font("Microsoft Sans MS", 20)
         'x axis
-        xAxis = New LineShape(xCor(0, 0), xCor(0, 1), xCor(1, 0), xCor(1, 1))
-        xAxis.Parent = canvas
-        xLabel.Text = "x"
-        xLabel.Size = New System.Drawing.Size(20, 20)
-        xLabel.Location = New System.Drawing.Point(xCor(1, 0), xCor(1, 1))
+        gp.DrawLine(Pens.Black, New Point(xCor(0, 0), xCor(0, 1)), New Point(xCor(1, 0), xCor(1, 1)))
+        gp.DrawString("X", fn, Brushes.Black, New Point(xCor(1, 0) + 3, xCor(1, 1)))
 
         'y axis
-        yAxis = New LineShape(yCor(0, 0), yCor(0, 1), yCor(1, 0), yCor(1, 1))
-        yAxis.Parent = canvas
-        yLabel.Text = "y"
-        yLabel.Location = New System.Drawing.Point(yCor(0, 0), yCor(0, 1))
+        gp.DrawLine(Pens.Black, New Point(yCor(0, 0), yCor(0, 1)), New Point(yCor(1, 0), yCor(1, 1)))
+        gp.DrawString("Y", fn, Brushes.Black, New Point(yCor(0, 0), yCor(0, 1)))
+
+        'xAxis = New LineShape(xCor(0, 0), xCor(0, 1), xCor(1, 0), xCor(1, 1))
+        'xAxis.Parent = canvas
+        'xLabel.Text = "x"
+        'xLabel.Size = New System.Drawing.Size(20, 20)
+        'xLabel.Location = New System.Drawing.Point(xCor(1, 0), xCor(1, 1))
+
+        'y axis
+        'yAxis = New LineShape(yCor(0, 0), yCor(0, 1), yCor(1, 0), yCor(1, 1))
+        'yAxis.Parent = canvas
+        'yLabel.Text = "y"
+        'yLabel.Location = New System.Drawing.Point(yCor(0, 0), yCor(0, 1))
     End Sub
 
     'given an array of coordinates, plot them out using the given coordinate system
@@ -4042,64 +4043,87 @@ Public Class Program
     'parent is the parent control to canvas
     'r is the radius for the circle
     'coors is the coordinates for the points to be plotted
-    Private Sub plot(ByVal xCor As Double(,), ByVal yCor As Double(,), ByVal parent As Control, ByVal r As Double, ByVal coors As CoorPoint())
-        'clear canvas first
-        If Not IsNothing(canvas) Then
-            canvas.Dispose()
-        End If
+    Private Sub plot(ByRef repaint As Boolean, ByRef gp As Graphics, ByVal xCor As Double(,), ByVal yCor As Double(,), ByVal parent As Control)
+        ''clear canvas first
+        'If canvas IsNot Nothing Then
+        '    canvas.Dispose()
+        'End If
 
-        'clear labels
-        p2Label.ClearXYZ()
-        p4Label.ClearXYZ()
-        p6Label.ClearXYZ()
-        p8Label.ClearXYZ()
-        p10Label.ClearXYZ()
-        p12Label.ClearXYZ()
-
-        'p2Label.X = 1
-        'p2Label.Y = 2
-        'p2Label.Z = 3
-        'p2Label.Parent = TabPage1
-        'p2Label.Size = New Size(100, 100)
-
-        canvas = New ShapeContainer()
-        canvas.Parent = parent
-        canvas.BackColor = Color.Transparent
-        'plot the coordinates
-        plotCor(xCor, yCor)
+        'canvas = New ShapeContainer()
+        'canvas.Parent = parent
+        'canvas.BackColor = Color.Transparent
+        ''plot the coordinates
+        plotCor(gp, xCor, yCor)
 
         'plot the circle with r
-        Dim temp As Double = length / r
-        ratio = CInt(temp)
+        If Not repaint Then
+            Dim temp As Double = length / R
+            ratio = CInt(temp)
 
-        If ratio > temp Then
-            ratio = ratio - 1
-        ElseIf ratio = 0 Then
-            ratio = temp
+            If ratio > temp Then
+                ratio = ratio - 1
+            ElseIf ratio = 0 Then
+                ratio = temp
+            End If
+            PlotRatio = ratio
+            R = R * ratio
         End If
-        r = r * ratio
-        Dim rCircle = New OvalShape((origin(0) - r), (origin(1) - r), 2 * r, 2 * r)
-        rCircle.Parent = canvas
+        Dim rCircle As Rectangle = New Rectangle(New Point((origin(0) - R), (origin(1) - R)), New Size(R * 2, R * 2))
+        gp.DrawEllipse(Pens.Black, rCircle)
+        'rCircle.Parent = canvas
         'plot normalized points
         Dim labels = {"P2", "P4", "P6", "P8", "P10", "P12"}
-        For index = 0 To coors.GetLength(0) - 1
-            Dim x = coors(index).Coors.Xc * ratio
-            Dim y = coors(index).Coors.Yc * ratio
-            Dim rPoint = New OvalShape((origin(0) + x - 2), (origin(1) - y - 2), 5, 5)
+
+        For index = 0 To pos.GetLength(0) - 1
+            Dim x = pos(index).Coors.Xc * ratio
+            Dim y = pos(index).Coors.Yc * ratio
+
+            Dim fn As Font = New Font("Microsoft Sans MS", 20)
+            Dim solidBrush As SolidBrush = New SolidBrush(posColors(index))
+            Dim bBrush As SolidBrush = New SolidBrush(Color.Blue)
+            Dim rBrush As SolidBrush = New SolidBrush(Color.Red)
+            Dim gBrush As SolidBrush = New SolidBrush(Color.DarkGreen)
+            Dim pHeight As Integer = TextRenderer.MeasureText(gp, labels(index), fn).Height
+            Dim pWidth As Integer = TextRenderer.MeasureText(gp, labels(index), fn).Width
+            Dim rect As Rectangle = New Rectangle(New Point((origin(0) + x - 2), (origin(1) - y - 2)), New Size(5, 5))
+            Dim d As Integer = 40
+            Dim e As Integer = 10
+            gp.FillEllipse(solidBrush, rect)
+
+            'Text
+            If labels(index) = "P6" Or labels(index) = "P8" Or labels(index) = "P12" Then
+                gp.DrawString(labels(index), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y - pHeight))
+                gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y - e))
+                gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight - e))
+                gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight * 2 - e))
+            Else
+                gp.DrawString(labels(index), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y))
+                gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight - e))
+                gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight * 2 - e))
+                gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight * 3 - e))
+            End If
+            'Dim rPoint = New OvalShape((origin(0) + x - 2), (origin(1) - y - 2), 5, 5)
 
 
-            rPoint.Parent = canvas
-            rPoint.BorderColor = posColors(index)
-            rPoint.BackColor = posColors(index)
-            rPoint.BackStyle = BackStyle.Opaque
-            coors(index).Label.Size = New Size(170, 100)
-            coors(index).Label.P = labels(index)
-            coors(index).Label.X = coors(index).Coors.Xc
-            coors(index).Label.Y = coors(index).Coors.Yc
-            coors(index).Label.Z = coors(index).Coors.Zc
-            coors(index).Label.Location = translate(New System.Drawing.Point(origin(0) + x, origin(1) - y), GroupBox_Plot.Location, TabPage1.Location)
-            coors(index).Label.BringToFront()
+            'rPoint.Parent = canvas
+            'rPoint.BorderColor = posColors(index)
+            'rPoint.BackColor = posColors(index)
+            'rPoint.BackStyle = BackStyle.Opaque
+            'coors(index).Label.Size = New Size(170, 100)
+            'coors(index).Label.P = labels(index)
+            'coors(index).Label.X = coors(index).Coors.Xc
+            'coors(index).Label.Y = coors(index).Coors.Yc
+            'coors(index).Label.Z = coors(index).Coors.Zc
+            'coors(index).Label.Location = translate(New System.Drawing.Point(origin(0) + x, origin(1) - y), GroupBox_Plot.Location, TabPage1.Location)
+            'coors(index).Label.BringToFront()
         Next
+    End Sub
+
+    Private Sub GroupBox_Plot_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles GroupBox_Plot.Paint
+        If R = 0 Or pos Is Nothing Then
+            Return
+        End If
+        plot(True, e.Graphics, xCor, yCor, GroupBox_Plot)
     End Sub
 
     'translate the location of point 1 from control 2's coordinates to control 3's coordinates
@@ -4111,42 +4135,42 @@ Public Class Program
         Return New System.Drawing.Point(x, y)
     End Function
 
-    Private MouseIsDown As Boolean = False
-    Private lastPos As Point
+    'Private MouseIsDown As Boolean = False
+    'Private lastPos As Point
 
-    Private Sub pLabel_MouseDown(ByVal sender As Object, ByVal e As  _
-    System.Windows.Forms.MouseEventArgs) Handles p8Label.MouseDown, p2Label.MouseDown, p10Label.MouseDown, p4Label.MouseDown, p12Label.MouseDown, p6Label.MouseDown
-        ' Set a flag to show that the mouse is down.
-        MouseIsDown = True
-        lastPos = Cursor.Position
-        For Each l As CoorPoint In Points
-            If l.Label.Name = sender.Name Then
-                If Not IsNothing(l.Line) Then
-                    l.Line.Dispose()
-                End If
-            End If
-        Next
-    End Sub
+    'Private Sub pLabel_MouseDown(ByVal sender As Object, ByVal e As  _
+    'System.Windows.Forms.MouseEventArgs) Handles p8Label.MouseDown, p2Label.MouseDown, p10Label.MouseDown, p4Label.MouseDown, p12Label.MouseDown, p6Label.MouseDown
+    '    ' Set a flag to show that the mouse is down.
+    '    MouseIsDown = True
+    '    lastPos = Cursor.Position
+    '    For Each l As CoorPoint In Points
+    '        If l.Label.Name = sender.Name Then
+    '            If Not IsNothing(l.Line) Then
+    '                l.Line.Dispose()
+    '            End If
+    '        End If
+    '    Next
+    'End Sub
 
-    Private Sub pLabel_MouseUp(ByVal sender As ColorLabel, ByVal e As System.Windows.Forms.MouseEventArgs) Handles p6Label.MouseUp, p12Label.MouseUp, p4Label.MouseUp, p10Label.MouseUp, p2Label.MouseUp, p8Label.MouseUp
-        MouseIsDown = False
-        For Each l As CoorPoint In Points
-            If l.Label.Name = sender.Name Then
-                l.Line = New LineShape(canvas)
-                l.Line.BorderColor = sender.ForeColor
-                l.Line.StartPoint = New System.Drawing.Point((origin(0) + ratio * l.Coors.Xc), (origin(1) - ratio * l.Coors.Yc))
-                l.Line.EndPoint = translate(New Point(l.Label.Location.X + l.Label.Size.Width / 2, l.Label.Location.Y), TabPage1.Location, GroupBox_Plot.Location + canvas.Location)
-            End If
-        Next
-    End Sub
-    Private Sub pLabel_MouseMove(ByVal sender As ColorLabel, ByVal e As System.Windows.Forms.MouseEventArgs) Handles p6Label.MouseMove, p12Label.MouseMove, p4Label.MouseMove, p10Label.MouseMove, p2Label.MouseMove, p8Label.MouseMove
-        If MouseIsDown Then
-            ' Initiate dragging.
-            Dim temp As Point = Cursor.Position
-            sender.Location = temp - lastPos + sender.Location
-            lastPos = temp
-        End If
-    End Sub
+    'Private Sub pLabel_MouseUp(ByVal sender As ColorLabel, ByVal e As System.Windows.Forms.MouseEventArgs) Handles p6Label.MouseUp, p12Label.MouseUp, p4Label.MouseUp, p10Label.MouseUp, p2Label.MouseUp, p8Label.MouseUp
+    '    MouseIsDown = False
+    '    For Each l As CoorPoint In Points
+    '        If l.Label.Name = sender.Name Then
+    '            l.Line = New LineShape(canvas)
+    '            l.Line.BorderColor = sender.ForeColor
+    '            l.Line.StartPoint = New System.Drawing.Point((origin(0) + ratio * l.Coors.Xc), (origin(1) - ratio * l.Coors.Yc))
+    '            l.Line.EndPoint = translate(New Point(l.Label.Location.X + l.Label.Size.Width / 2, l.Label.Location.Y), TabPage1.Location, GroupBox_Plot.Location + canvas.Location)
+    '        End If
+    '    Next
+    'End Sub
+    'Private Sub pLabel_MouseMove(ByVal sender As ColorLabel, ByVal e As System.Windows.Forms.MouseEventArgs) Handles p6Label.MouseMove, p12Label.MouseMove, p4Label.MouseMove, p10Label.MouseMove, p2Label.MouseMove, p8Label.MouseMove
+    '    If MouseIsDown Then
+    '        ' Initiate dragging.
+    '        Dim temp As Point = Cursor.Position
+    '        sender.Location = temp - lastPos + sender.Location
+    '        lastPos = temp
+    '    End If
+    'End Sub
 
     Private Sub ConnectButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ConnectButton.Click
         If Comm.Open() Then
@@ -4201,13 +4225,6 @@ Public Class Program
         Next
     End Sub
 
-    Private Sub pLabel_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles p8Label.MouseUp, p6Label.MouseUp, p4Label.MouseUp, p2Label.MouseUp, p12Label.MouseUp, p10Label.MouseUp
-
-    End Sub
-    Private Sub pLabel_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles p8Label.MouseMove, p6Label.MouseMove, p4Label.MouseMove, p2Label.MouseMove, p12Label.MouseMove, p10Label.MouseMove
-
-    End Sub
-
     Private Sub Button_Setting_Bargraph_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_Setting_Bargraph.Click
         If String.IsNullOrWhiteSpace(TextBox_Setting_Bargraph_Max.Text) Then
             MessageBox.Show("請輸入最大值!")
@@ -4227,5 +4244,9 @@ Public Class Program
 
     Private Sub TextBox_Setting_Bargraph_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBox_Setting_Bargraph_Max.TextChanged, TextBox_Setting_Bargraph_Min.TextChanged
         Button_Setting_Bargraph.Enabled = True
+    End Sub
+
+    Private Sub pLabel_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+
     End Sub
 End Class

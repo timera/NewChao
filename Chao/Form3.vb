@@ -259,10 +259,8 @@ Public Class Program
         startButton.Size = New Size(75, 50)
         Accept_Button.Size = New Size(75, 25)
         stopButton.Size = New Size(75, 50)
-        Button_Skip_Add.Size = New Size(75, 20)
-        TabControl2.Size = New Size(450, 526)
-        TabPageProcedure.Size = New Size(442, 500)
-        TabPageTimer.Size = New Size(442, 500)
+        Button_Skip_Add.Size = New Size(75, 23)
+        TabControl2.Size = New Size(400, 535)
         Label_Ex_A1.Size = New Size(29, 16)
         Label_Ex_A2.Size = New Size(29, 16)
         Label_Lo_A1.Size = New Size(29, 16)
@@ -274,8 +272,8 @@ Public Class Program
         Panel_PreCal.Size = New Size(82, 40)
         LinkLabel_preCal.Size = New Size(56, 15)
         LinkLabel_postCal.Size = New Size(56, 15)
-        Panel_PreCal_Sub.Size = New Size(80, 170)
-        Panel_PostCal_Sub.Size = New Size(80, 170)
+        Panel_PreCal_Sub.Size = New Size(80, 166)
+        Panel_PostCal_Sub.Size = New Size(80, 166)
         Panel_PreCal.Size = New Size(80, 40)
         Panel_PostCal.Size = New Size(80, 40)
         Label1.Size = New Size(17, 16)
@@ -296,7 +294,7 @@ Public Class Program
         S7.Size = New Size(12, 12)
         S8.Size = New Size(12, 12)
         S9.Size = New Size(12, 12)
-        timeLabel.Size = New Size(80, 85)
+        timeLabel.Size = New Size(80, 80)
         Panel_Setting_Bargraph_Max_Min.Size = New Size(300, 225)
         Setting_Bargraph_Title.Size = New Size(293, 43)
         Setting_Bargraph_Max.Size = New Size(73, 33)
@@ -386,7 +384,7 @@ Public Class Program
 
         startButton.Location = New Point(129, 0)
         Accept_Button.Location = New Point(219, 0)
-        Button_Skip_Add.Location = New Point(219, 30)
+        Button_Skip_Add.Location = New Point(219, 27)
         Accept_Button.Enabled = False
         timeLabel.Location = New Point(5, 5)
         stopButton.Location = New Point(309, 0)
@@ -399,7 +397,7 @@ Public Class Program
 
         NoisesArray = {Noise1, Noise2, Noise3, Noise4, Noise5, Noise6, Noise_Avg}
         Dim meterFigWidth = 47
-        Dim meterX = 800
+        Dim meterX = 790
         Dim metery = 560
         Noise1.Location = New Point(meterX, metery)
         Noise2.Location = New Point(meterX + meterFigWidth, metery)
@@ -417,7 +415,7 @@ Public Class Program
                 NoisesArray(i).Size = New Size(60, 39)
             End If
         Next
-        Dim stepX As Integer = 500
+        Dim stepX As Integer = 450
         Dim stepY As Integer = 55
         Dim stepY_start As Integer = 93
         Step1.Location = New Point(stepX, stepY_start)
@@ -442,10 +440,10 @@ Public Class Program
         array_step(9) = Step10
 
         For i = 0 To 9
-            array_step(i).Size = New Size(255, 52)
+            array_step(i).Size = New Size(305, 52)
         Next
 
-        stepX = 460
+        stepX = 410
         Label_step1_second.Location = New Point(stepX, stepY_start)
         Label_step2_second.Location = New Point(stepX, stepY_start + stepY * 1)
         Label_step3_second.Location = New Point(stepX, stepY_start + stepY * 2)
@@ -513,7 +511,6 @@ Public Class Program
         Label3.Location = New Point(103, 336)
         Label4.Location = New Point(100, 444)
 
-        TabControl2.Size = New Size(450, 550)
 
         Panel_PreCal.Location = New Point(10, 30)
         LinkLabel_preCal.Location = New Point(3, 13)
@@ -1403,8 +1400,8 @@ Public Class Program
 
         Load_PostCal(tempRun)
 
-        MainLineGraph = New LineGraph(New Point(90, 2), New Size(1120, 88), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
-        MainBarGraph = New BarGraph(New Point(775, 93), New Size(380, 450), TabPage2, CGraph.Modes.A1A2A3)
+        MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
+        MainBarGraph = New BarGraph(New Point(765, 93), New Size(380, 450), TabPage2, CGraph.Modes.A1A2A3)
         For i = 0 To 6
             NoisesArray(i).Visible = True
         Next
@@ -1591,8 +1588,8 @@ Public Class Program
         Load_PostCal(tempRun)
 
 
-        MainLineGraph = New LineGraph(New Point(90, 2), New Size(1120, 88), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
-        MainBarGraph = New BarGraph(New Point(775, 106), New Size(380, 450), TabPage2, CGraph.Modes.A1A2A3)
+        MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
+        MainBarGraph = New BarGraph(New Point(765, 93), New Size(380, 450), TabPage2, CGraph.Modes.A1A2A3)
         For i = 0 To 6
             NoisesArray(i).Visible = True
         Next
@@ -1856,8 +1853,8 @@ Public Class Program
 
         Load_PostCal(tempRun)
 
-        MainLineGraph = New LineGraph(New Point(90, 2), New Size(1120, 88), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
-        MainBarGraph = New BarGraph(New Point(775, 106), New Size(380, 450), TabPage2, CGraph.Modes.A1A2A3)
+        MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
+        MainBarGraph = New BarGraph(New Point(765, 93), New Size(380, 450), TabPage2, CGraph.Modes.A1A2A3)
         For i = 0 To 6
             NoisesArray(i).Visible = True
         Next
@@ -1936,8 +1933,8 @@ Public Class Program
         'PostCal
         Load_PostCal(tempRun)
 
-        MainLineGraph = New LineGraph(New Point(90, 2), New Size(1120, 88), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
-        MainBarGraph = New BarGraph(New Point(775, 106), New Size(380, 450), TabPage2, CGraph.Modes.A1A2A3)
+        MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
+        MainBarGraph = New BarGraph(New Point(765, 93), New Size(380, 450), TabPage2, CGraph.Modes.A1A2A3)
         For i = 0 To 6
             NoisesArray(i).Visible = True
         Next
@@ -2159,8 +2156,8 @@ Public Class Program
         tempRun = tempRun.NextUnit
         PostCal_4th = tempRun
 
-        MainLineGraph = New LineGraph(New Point(90, 2), New Size(1120, 88), TabPage2, CGraph.Modes.A4, HeadRun.Time)
-        MainBarGraph = New BarGraph(New Point(775, 106), New Size(380, 450), TabPage2, CGraph.Modes.A4)
+        MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A4, HeadRun.Time)
+        MainBarGraph = New BarGraph(New Point(765, 93), New Size(380, 450), TabPage2, CGraph.Modes.A4)
         For i = 0 To 6
             NoisesArray(i).Visible = True
         Next
@@ -2516,18 +2513,18 @@ Public Class Program
         'load new graph (when variable countdown = false)
         MainLineGraph.Dispose()
         If Machine = Machines.Others Then
-            MainLineGraph = New LineGraph(New Point(90, 2), New Size(1120, 88), TabPage2, CGraph.Modes.A4, CurRun.Time)  'A4 mode
+            MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A4, CurRun.Time)  'A4 mode
         Else
-            MainLineGraph = New LineGraph(New Point(90, 2), New Size(1120, 88), TabPage2, CGraph.Modes.A1A2A3, CurRun.Time) 'A1 A2 A3 mode
+            MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A1A2A3, CurRun.Time) 'A1 A2 A3 mode
         End If
     End Sub
     Sub Load_New_Graph_CD_True()
         'load new graph(when variable countdown = true)
         MainLineGraph.Dispose()
         If Machine = Machines.Others Then
-            MainLineGraph = New LineGraph(New Point(90, 2), New Size(1120, 88), TabPage2, CGraph.Modes.A4, sum_steps)  'A4 mode
+            MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A4, sum_steps)  'A4 mode
         Else
-            MainLineGraph = New LineGraph(New Point(90, 2), New Size(1120, 88), TabPage2, CGraph.Modes.A1A2A3, sum_steps) 'A1 A2 A3 mode
+            MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A1A2A3, sum_steps) 'A1 A2 A3 mode
         End If
         sum_steps = 0
     End Sub
@@ -4238,6 +4235,5 @@ Public Class Program
     Private Sub TextBox_Setting_Bargraph_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBox_Setting_Bargraph_Max.TextChanged, TextBox_Setting_Bargraph_Min.TextChanged
         Button_Setting_Bargraph.Enabled = True
     End Sub
-
 
 End Class

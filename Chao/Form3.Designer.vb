@@ -430,7 +430,7 @@ Partial Class Program
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(945, 571)
+        Me.TabControl1.Size = New System.Drawing.Size(1184, 662)
         Me.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.TabControl1.TabIndex = 0
         '
@@ -453,7 +453,7 @@ Partial Class Program
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Size = New System.Drawing.Size(937, 545)
+        Me.TabPage1.Size = New System.Drawing.Size(1176, 636)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "機具選擇"
         '
@@ -696,7 +696,6 @@ Partial Class Program
         Me.TabPage2.Controls.Add(Me.Label_step3_second)
         Me.TabPage2.Controls.Add(Me.Label_step2_second)
         Me.TabPage2.Controls.Add(Me.Label_step1_second)
-        Me.TabPage2.Controls.Add(Me.LinkLabel_Temp)
         Me.TabPage2.Controls.Add(Me.TabControl2)
         Me.TabPage2.Controls.Add(Me.Step1)
         Me.TabPage2.Controls.Add(Me.Noise_Avg)
@@ -720,7 +719,7 @@ Partial Class Program
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Size = New System.Drawing.Size(937, 545)
+        Me.TabPage2.Size = New System.Drawing.Size(1176, 636)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "測試主畫面"
         '
@@ -728,7 +727,7 @@ Partial Class Program
         '
         Me.Label_step9_second.BackColor = System.Drawing.Color.DarkGray
         Me.Label_step9_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_step9_second.Location = New System.Drawing.Point(508, 291)
+        Me.Label_step9_second.Location = New System.Drawing.Point(508, 251)
         Me.Label_step9_second.Name = "Label_step9_second"
         Me.Label_step9_second.Size = New System.Drawing.Size(35, 52)
         Me.Label_step9_second.TabIndex = 122
@@ -738,7 +737,7 @@ Partial Class Program
         '
         Me.Label_step8_second.BackColor = System.Drawing.Color.DarkGray
         Me.Label_step8_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_step8_second.Location = New System.Drawing.Point(506, 234)
+        Me.Label_step8_second.Location = New System.Drawing.Point(506, 194)
         Me.Label_step8_second.Name = "Label_step8_second"
         Me.Label_step8_second.Size = New System.Drawing.Size(35, 52)
         Me.Label_step8_second.TabIndex = 121
@@ -748,7 +747,7 @@ Partial Class Program
         '
         Me.Label_step7_second.BackColor = System.Drawing.Color.DarkGray
         Me.Label_step7_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_step7_second.Location = New System.Drawing.Point(506, 179)
+        Me.Label_step7_second.Location = New System.Drawing.Point(506, 139)
         Me.Label_step7_second.Name = "Label_step7_second"
         Me.Label_step7_second.Size = New System.Drawing.Size(35, 52)
         Me.Label_step7_second.TabIndex = 120
@@ -758,7 +757,7 @@ Partial Class Program
         '
         Me.Label_step6_second.BackColor = System.Drawing.Color.DarkGray
         Me.Label_step6_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_step6_second.Location = New System.Drawing.Point(506, 126)
+        Me.Label_step6_second.Location = New System.Drawing.Point(506, 86)
         Me.Label_step6_second.Name = "Label_step6_second"
         Me.Label_step6_second.Size = New System.Drawing.Size(35, 52)
         Me.Label_step6_second.TabIndex = 119
@@ -768,7 +767,7 @@ Partial Class Program
         '
         Me.Label_step5_second.BackColor = System.Drawing.Color.DarkGray
         Me.Label_step5_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_step5_second.Location = New System.Drawing.Point(465, 332)
+        Me.Label_step5_second.Location = New System.Drawing.Point(465, 292)
         Me.Label_step5_second.Name = "Label_step5_second"
         Me.Label_step5_second.Size = New System.Drawing.Size(35, 52)
         Me.Label_step5_second.TabIndex = 118
@@ -778,7 +777,7 @@ Partial Class Program
         '
         Me.Label_step4_second.BackColor = System.Drawing.Color.DarkGray
         Me.Label_step4_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_step4_second.Location = New System.Drawing.Point(465, 274)
+        Me.Label_step4_second.Location = New System.Drawing.Point(465, 234)
         Me.Label_step4_second.Name = "Label_step4_second"
         Me.Label_step4_second.Size = New System.Drawing.Size(35, 52)
         Me.Label_step4_second.TabIndex = 117
@@ -788,7 +787,7 @@ Partial Class Program
         '
         Me.Label_step3_second.BackColor = System.Drawing.Color.DarkGray
         Me.Label_step3_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_step3_second.Location = New System.Drawing.Point(465, 218)
+        Me.Label_step3_second.Location = New System.Drawing.Point(465, 178)
         Me.Label_step3_second.Name = "Label_step3_second"
         Me.Label_step3_second.Size = New System.Drawing.Size(35, 52)
         Me.Label_step3_second.TabIndex = 116
@@ -798,7 +797,7 @@ Partial Class Program
         '
         Me.Label_step2_second.BackColor = System.Drawing.Color.DarkGray
         Me.Label_step2_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_step2_second.Location = New System.Drawing.Point(465, 157)
+        Me.Label_step2_second.Location = New System.Drawing.Point(465, 117)
         Me.Label_step2_second.Name = "Label_step2_second"
         Me.Label_step2_second.Size = New System.Drawing.Size(35, 52)
         Me.Label_step2_second.TabIndex = 115
@@ -808,7 +807,7 @@ Partial Class Program
         '
         Me.Label_step1_second.BackColor = System.Drawing.Color.DarkGray
         Me.Label_step1_second.Font = New System.Drawing.Font("新細明體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label_step1_second.Location = New System.Drawing.Point(464, 104)
+        Me.Label_step1_second.Location = New System.Drawing.Point(464, 64)
         Me.Label_step1_second.Name = "Label_step1_second"
         Me.Label_step1_second.Size = New System.Drawing.Size(35, 52)
         Me.Label_step1_second.TabIndex = 114
@@ -817,7 +816,7 @@ Partial Class Program
         'LinkLabel_Temp
         '
         Me.LinkLabel_Temp.AutoSize = True
-        Me.LinkLabel_Temp.Location = New System.Drawing.Point(440, 189)
+        Me.LinkLabel_Temp.Location = New System.Drawing.Point(0, 0)
         Me.LinkLabel_Temp.Name = "LinkLabel_Temp"
         Me.LinkLabel_Temp.Size = New System.Drawing.Size(0, 12)
         Me.LinkLabel_Temp.TabIndex = 113
@@ -826,11 +825,11 @@ Partial Class Program
         '
         Me.TabControl2.Controls.Add(Me.TabPageProcedure)
         Me.TabControl2.Controls.Add(Me.TabPageTimer)
-        Me.TabControl2.Location = New System.Drawing.Point(7, 43)
+        Me.TabControl2.Location = New System.Drawing.Point(7, 12)
         Me.TabControl2.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
-        Me.TabControl2.Size = New System.Drawing.Size(469, 526)
+        Me.TabControl2.Size = New System.Drawing.Size(390, 500)
         Me.TabControl2.TabIndex = 112
         '
         'TabPageProcedure
@@ -864,7 +863,7 @@ Partial Class Program
         Me.TabPageProcedure.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.TabPageProcedure.Name = "TabPageProcedure"
         Me.TabPageProcedure.Padding = New System.Windows.Forms.Padding(2, 3, 2, 3)
-        Me.TabPageProcedure.Size = New System.Drawing.Size(461, 500)
+        Me.TabPageProcedure.Size = New System.Drawing.Size(382, 474)
         Me.TabPageProcedure.TabIndex = 0
         Me.TabPageProcedure.Text = "Procedure"
         '
@@ -1023,7 +1022,7 @@ Partial Class Program
         Me.PanelTractorA1.Controls.Add(Me.Panel_TrA1_Sec_1st)
         Me.PanelTractorA1.Controls.Add(Me.Label_Tr_A1)
         Me.PanelTractorA1.Controls.Add(Me.Panel_TrA1_Fst_1st)
-        Me.PanelTractorA1.Location = New System.Drawing.Point(127, 56)
+        Me.PanelTractorA1.Location = New System.Drawing.Point(174, 63)
         Me.PanelTractorA1.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.PanelTractorA1.Name = "PanelTractorA1"
         Me.PanelTractorA1.Size = New System.Drawing.Size(38, 351)
@@ -1311,7 +1310,7 @@ Partial Class Program
         Me.PanelTractorA3.Controls.Add(Me.Panel_TrA3_Fst_bkd)
         Me.PanelTractorA3.Controls.Add(Me.Panel_TrA3_Fst_fwd)
         Me.PanelTractorA3.Controls.Add(Me.Label_Tr_A3)
-        Me.PanelTractorA3.Location = New System.Drawing.Point(254, 75)
+        Me.PanelTractorA3.Location = New System.Drawing.Point(247, 2)
         Me.PanelTractorA3.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.PanelTractorA3.Name = "PanelTractorA3"
         Me.PanelTractorA3.Size = New System.Drawing.Size(52, 335)
@@ -1533,7 +1532,7 @@ Partial Class Program
         Me.PanelLoaderA2.Controls.Add(Me.Panel_LoA2_Fst_2nd)
         Me.PanelLoaderA2.Controls.Add(Me.Label_Lo_A2)
         Me.PanelLoaderA2.Controls.Add(Me.Panel_LoA2_Fst_1st)
-        Me.PanelLoaderA2.Location = New System.Drawing.Point(310, 37)
+        Me.PanelLoaderA2.Location = New System.Drawing.Point(303, 6)
         Me.PanelLoaderA2.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.PanelLoaderA2.Name = "PanelLoaderA2"
         Me.PanelLoaderA2.Size = New System.Drawing.Size(38, 380)
@@ -2269,7 +2268,7 @@ Partial Class Program
         Me.PanelExcavatorA2.Controls.Add(Me.Panel_ExA2_Fst_2nd)
         Me.PanelExcavatorA2.Controls.Add(Me.Label_Ex_A2)
         Me.PanelExcavatorA2.Controls.Add(Me.Panel_ExA2_Fst_1st)
-        Me.PanelExcavatorA2.Location = New System.Drawing.Point(161, 72)
+        Me.PanelExcavatorA2.Location = New System.Drawing.Point(131, 16)
         Me.PanelExcavatorA2.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.PanelExcavatorA2.Name = "PanelExcavatorA2"
         Me.PanelExcavatorA2.Size = New System.Drawing.Size(38, 380)
@@ -2607,7 +2606,7 @@ Partial Class Program
         Me.PanelExcavatorA1.Controls.Add(Me.Panel_ExA1_Sec_1st)
         Me.PanelExcavatorA1.Controls.Add(Me.Label_Ex_A1)
         Me.PanelExcavatorA1.Controls.Add(Me.Panel_ExA1_Fst_1st)
-        Me.PanelExcavatorA1.Location = New System.Drawing.Point(207, 142)
+        Me.PanelExcavatorA1.Location = New System.Drawing.Point(207, 70)
         Me.PanelExcavatorA1.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.PanelExcavatorA1.Name = "PanelExcavatorA1"
         Me.PanelExcavatorA1.Size = New System.Drawing.Size(38, 335)
@@ -2775,6 +2774,7 @@ Partial Class Program
         Me.TabPageTimer.Controls.Add(Me.Light3)
         Me.TabPageTimer.Controls.Add(Me.Light2)
         Me.TabPageTimer.Controls.Add(Me.Light1)
+        Me.TabPageTimer.Controls.Add(Me.LinkLabel_Temp)
         Me.TabPageTimer.Controls.Add(Me.Test_Input_S_Panel)
         Me.TabPageTimer.Controls.Add(Me.Test_StopButton)
         Me.TabPageTimer.Controls.Add(Me.Test_ConfirmButton)
@@ -2784,7 +2784,7 @@ Partial Class Program
         Me.TabPageTimer.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.TabPageTimer.Name = "TabPageTimer"
         Me.TabPageTimer.Padding = New System.Windows.Forms.Padding(2, 3, 2, 3)
-        Me.TabPageTimer.Size = New System.Drawing.Size(461, 500)
+        Me.TabPageTimer.Size = New System.Drawing.Size(382, 474)
         Me.TabPageTimer.TabIndex = 1
         Me.TabPageTimer.Text = "Timer"
         '
@@ -2980,7 +2980,7 @@ Partial Class Program
         '
         Me.Step1.BackColor = System.Drawing.Color.White
         Me.Step1.Font = New System.Drawing.Font("新細明體", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.Step1.Location = New System.Drawing.Point(664, 86)
+        Me.Step1.Location = New System.Drawing.Point(664, 46)
         Me.Step1.Name = "Step1"
         Me.Step1.Size = New System.Drawing.Size(255, 52)
         Me.Step1.TabIndex = 31
@@ -2991,7 +2991,7 @@ Partial Class Program
         Me.Noise_Avg.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Noise_Avg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Noise_Avg.Font = New System.Drawing.Font("新細明體", 11.0!, System.Drawing.FontStyle.Bold)
-        Me.Noise_Avg.Location = New System.Drawing.Point(862, 491)
+        Me.Noise_Avg.Location = New System.Drawing.Point(862, 451)
         Me.Noise_Avg.Name = "Noise_Avg"
         Me.Noise_Avg.Size = New System.Drawing.Size(60, 39)
         Me.Noise_Avg.TabIndex = 99
@@ -3000,7 +3000,7 @@ Partial Class Program
         'Step10
         '
         Me.Step10.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Step10.Location = New System.Drawing.Point(505, 89)
+        Me.Step10.Location = New System.Drawing.Point(505, 49)
         Me.Step10.Name = "Step10"
         Me.Step10.Size = New System.Drawing.Size(255, 52)
         Me.Step10.TabIndex = 58
@@ -3009,7 +3009,7 @@ Partial Class Program
         '
         Me.Step9.BackColor = System.Drawing.Color.White
         Me.Step9.Font = New System.Drawing.Font("新細明體", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.Step9.Location = New System.Drawing.Point(941, 486)
+        Me.Step9.Location = New System.Drawing.Point(753, 431)
         Me.Step9.Name = "Step9"
         Me.Step9.Size = New System.Drawing.Size(255, 52)
         Me.Step9.TabIndex = 51
@@ -3020,7 +3020,7 @@ Partial Class Program
         Me.Noise6.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Noise6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Noise6.Font = New System.Drawing.Font("新細明體", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.Noise6.Location = New System.Drawing.Point(796, 491)
+        Me.Noise6.Location = New System.Drawing.Point(796, 451)
         Me.Noise6.Name = "Noise6"
         Me.Noise6.Size = New System.Drawing.Size(46, 39)
         Me.Noise6.TabIndex = 50
@@ -3031,7 +3031,7 @@ Partial Class Program
         Me.Noise5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Noise5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Noise5.Font = New System.Drawing.Font("新細明體", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.Noise5.Location = New System.Drawing.Point(731, 491)
+        Me.Noise5.Location = New System.Drawing.Point(731, 451)
         Me.Noise5.Name = "Noise5"
         Me.Noise5.Size = New System.Drawing.Size(46, 39)
         Me.Noise5.TabIndex = 49
@@ -3042,7 +3042,7 @@ Partial Class Program
         Me.Noise4.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Noise4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Noise4.Font = New System.Drawing.Font("新細明體", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.Noise4.Location = New System.Drawing.Point(663, 491)
+        Me.Noise4.Location = New System.Drawing.Point(663, 451)
         Me.Noise4.Name = "Noise4"
         Me.Noise4.Size = New System.Drawing.Size(46, 39)
         Me.Noise4.TabIndex = 48
@@ -3053,7 +3053,7 @@ Partial Class Program
         Me.timeLabel.BackColor = System.Drawing.Color.NavajoWhite
         Me.timeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.timeLabel.Font = New System.Drawing.Font("微軟正黑體", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.timeLabel.Location = New System.Drawing.Point(481, 273)
+        Me.timeLabel.Location = New System.Drawing.Point(481, 233)
         Me.timeLabel.Name = "timeLabel"
         Me.timeLabel.Size = New System.Drawing.Size(77, 84)
         Me.timeLabel.TabIndex = 15
@@ -3063,7 +3063,7 @@ Partial Class Program
         Me.Noise3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Noise3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Noise3.Font = New System.Drawing.Font("新細明體", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.Noise3.Location = New System.Drawing.Point(596, 491)
+        Me.Noise3.Location = New System.Drawing.Point(596, 451)
         Me.Noise3.Name = "Noise3"
         Me.Noise3.Size = New System.Drawing.Size(46, 39)
         Me.Noise3.TabIndex = 47
@@ -3074,7 +3074,7 @@ Partial Class Program
         Me.Noise2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Noise2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Noise2.Font = New System.Drawing.Font("新細明體", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.Noise2.Location = New System.Drawing.Point(512, 491)
+        Me.Noise2.Location = New System.Drawing.Point(512, 451)
         Me.Noise2.Name = "Noise2"
         Me.Noise2.Size = New System.Drawing.Size(46, 39)
         Me.Noise2.TabIndex = 46
@@ -3085,7 +3085,7 @@ Partial Class Program
         Me.Noise1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Noise1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Noise1.Font = New System.Drawing.Font("新細明體", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.Noise1.Location = New System.Drawing.Point(462, 491)
+        Me.Noise1.Location = New System.Drawing.Point(462, 451)
         Me.Noise1.Name = "Noise1"
         Me.Noise1.Size = New System.Drawing.Size(46, 39)
         Me.Noise1.TabIndex = 45
@@ -3095,7 +3095,7 @@ Partial Class Program
         '
         Me.Step8.BackColor = System.Drawing.Color.White
         Me.Step8.Font = New System.Drawing.Font("新細明體", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.Step8.Location = New System.Drawing.Point(664, 474)
+        Me.Step8.Location = New System.Drawing.Point(664, 434)
         Me.Step8.Name = "Step8"
         Me.Step8.Size = New System.Drawing.Size(255, 52)
         Me.Step8.TabIndex = 38
@@ -3105,7 +3105,7 @@ Partial Class Program
         '
         Me.Step7.BackColor = System.Drawing.Color.White
         Me.Step7.Font = New System.Drawing.Font("新細明體", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.Step7.Location = New System.Drawing.Point(664, 419)
+        Me.Step7.Location = New System.Drawing.Point(664, 379)
         Me.Step7.Name = "Step7"
         Me.Step7.Size = New System.Drawing.Size(255, 52)
         Me.Step7.TabIndex = 37
@@ -3115,7 +3115,7 @@ Partial Class Program
         '
         Me.Step6.BackColor = System.Drawing.Color.White
         Me.Step6.Font = New System.Drawing.Font("新細明體", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.Step6.Location = New System.Drawing.Point(664, 363)
+        Me.Step6.Location = New System.Drawing.Point(664, 323)
         Me.Step6.Name = "Step6"
         Me.Step6.Size = New System.Drawing.Size(255, 52)
         Me.Step6.TabIndex = 36
@@ -3125,7 +3125,7 @@ Partial Class Program
         '
         Me.Step5.BackColor = System.Drawing.Color.White
         Me.Step5.Font = New System.Drawing.Font("新細明體", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.Step5.Location = New System.Drawing.Point(664, 308)
+        Me.Step5.Location = New System.Drawing.Point(664, 268)
         Me.Step5.Name = "Step5"
         Me.Step5.Size = New System.Drawing.Size(255, 52)
         Me.Step5.TabIndex = 35
@@ -3135,7 +3135,7 @@ Partial Class Program
         '
         Me.Step4.BackColor = System.Drawing.Color.White
         Me.Step4.Font = New System.Drawing.Font("新細明體", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.Step4.Location = New System.Drawing.Point(664, 252)
+        Me.Step4.Location = New System.Drawing.Point(664, 212)
         Me.Step4.Name = "Step4"
         Me.Step4.Size = New System.Drawing.Size(255, 52)
         Me.Step4.TabIndex = 34
@@ -3145,7 +3145,7 @@ Partial Class Program
         '
         Me.Step3.BackColor = System.Drawing.Color.White
         Me.Step3.Font = New System.Drawing.Font("新細明體", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.Step3.Location = New System.Drawing.Point(664, 197)
+        Me.Step3.Location = New System.Drawing.Point(664, 157)
         Me.Step3.Name = "Step3"
         Me.Step3.Size = New System.Drawing.Size(255, 52)
         Me.Step3.TabIndex = 33
@@ -3155,7 +3155,7 @@ Partial Class Program
         '
         Me.Step2.BackColor = System.Drawing.Color.White
         Me.Step2.Font = New System.Drawing.Font("新細明體", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.Step2.Location = New System.Drawing.Point(664, 141)
+        Me.Step2.Location = New System.Drawing.Point(664, 101)
         Me.Step2.Name = "Step2"
         Me.Step2.Size = New System.Drawing.Size(255, 52)
         Me.Step2.TabIndex = 32
@@ -3167,7 +3167,7 @@ Partial Class Program
         Me.TabPageCharts.Location = New System.Drawing.Point(4, 22)
         Me.TabPageCharts.Name = "TabPageCharts"
         Me.TabPageCharts.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPageCharts.Size = New System.Drawing.Size(937, 545)
+        Me.TabPageCharts.Size = New System.Drawing.Size(1176, 636)
         Me.TabPageCharts.TabIndex = 2
         Me.TabPageCharts.Text = "數據"
         Me.TabPageCharts.UseVisualStyleBackColor = True
@@ -3179,7 +3179,7 @@ Partial Class Program
         Me.TabPageSettings.Location = New System.Drawing.Point(4, 22)
         Me.TabPageSettings.Name = "TabPageSettings"
         Me.TabPageSettings.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPageSettings.Size = New System.Drawing.Size(937, 545)
+        Me.TabPageSettings.Size = New System.Drawing.Size(1176, 636)
         Me.TabPageSettings.TabIndex = 3
         Me.TabPageSettings.Text = "設定"
         '
@@ -3460,7 +3460,7 @@ Partial Class Program
         'Button_Skip_Add
         '
         Me.Button_Skip_Add.BackColor = System.Drawing.Color.Transparent
-        Me.Button_Skip_Add.Font = New System.Drawing.Font("新細明體", 8.0!, System.Drawing.FontStyle.Bold)
+        Me.Button_Skip_Add.Font = New System.Drawing.Font("新細明體", 7.0!, System.Drawing.FontStyle.Bold)
         Me.Button_Skip_Add.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Button_Skip_Add.Location = New System.Drawing.Point(352, 7)
         Me.Button_Skip_Add.Name = "Button_Skip_Add"
@@ -3677,7 +3677,7 @@ Partial Class Program
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DarkGray
-        Me.ClientSize = New System.Drawing.Size(945, 571)
+        Me.ClientSize = New System.Drawing.Size(1184, 662)
         Me.Controls.Add(Me.TabControl1)
         Me.Name = "Program"
         Me.Text = "Program"
@@ -3694,7 +3694,6 @@ Partial Class Program
         Me.GroupBox_A1_A2_A3.PerformLayout()
         CType(Me.Picture_machine, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage2.ResumeLayout(False)
-        Me.TabPage2.PerformLayout()
         Me.TabControl2.ResumeLayout(False)
         Me.TabPageProcedure.ResumeLayout(False)
         Me.TabPageProcedure.PerformLayout()
@@ -3867,6 +3866,7 @@ Partial Class Program
         Me.Panel_Bkg.ResumeLayout(False)
         Me.Panel_Bkg.PerformLayout()
         Me.TabPageTimer.ResumeLayout(False)
+        Me.TabPageTimer.PerformLayout()
         Me.Test_Input_S_Panel.ResumeLayout(False)
         Me.Test_Input_S_Panel.PerformLayout()
         Me.TabPageCharts.ResumeLayout(False)

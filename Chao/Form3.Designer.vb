@@ -40,7 +40,7 @@ Partial Class Program
         Me.GroupBox_Plot = New System.Windows.Forms.GroupBox()
         Me.GroupBox_A4 = New System.Windows.Forms.GroupBox()
         Me.Button_L1_L2_L3_check = New Chao.DisButton()
-        Me.TextBox_r2 = New Chao.DisTextBox()
+        Me.TextBox_r2 = New Chao.ChaoTextBox()
         Me.TextBox_L3 = New Chao.ChaoTextBox()
         Me.TextBox_L2 = New Chao.ChaoTextBox()
         Me.TextBox_L1 = New Chao.ChaoTextBox()
@@ -631,7 +631,6 @@ Partial Class Program
         Me.TextBox_r2.ForeColor = System.Drawing.SystemColors.WindowText
         Me.TextBox_r2.Location = New System.Drawing.Point(105, 110)
         Me.TextBox_r2.Name = "TextBox_r2"
-        Me.TextBox_r2.ReadOnly = True
         Me.TextBox_r2.Size = New System.Drawing.Size(99, 22)
         Me.TextBox_r2.TabIndex = 17
         '
@@ -3771,7 +3770,7 @@ Partial Class Program
     Friend WithEvents Label_input_L As System.Windows.Forms.Label
     Friend WithEvents GroupBox_A4 As System.Windows.Forms.GroupBox
     Friend WithEvents Button_L1_L2_L3_check As DisButton
-    Friend WithEvents TextBox_r2 As Chao.DisTextBox
+    Friend WithEvents TextBox_r2 As Chao.ChaoTextBox
     Friend WithEvents Label_r2 As System.Windows.Forms.Label
     Friend WithEvents Label_input_L2 As System.Windows.Forms.Label
     Friend WithEvents Label_input_L3 As System.Windows.Forms.Label

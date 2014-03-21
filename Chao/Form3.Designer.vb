@@ -685,7 +685,6 @@ Partial Class Program
         '
         'TabPage2
         '
-        Me.TabPage2.AutoScroll = True
         Me.TabPage2.BackColor = System.Drawing.Color.DarkGray
         Me.TabPage2.Controls.Add(Me.Label_step9_second)
         Me.TabPage2.Controls.Add(Me.Label_step8_second)

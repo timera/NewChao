@@ -255,7 +255,7 @@ Public Class Program
         PanelTractorA3.Visible = False
 
         '###SIZE of OBJECTS
-        Me.Size = New Size(1200, 700)
+        Me.Size = New Size(1150, 700)
         startButton.Size = New Size(75, 50)
         Accept_Button.Size = New Size(75, 25)
         stopButton.Size = New Size(75, 50)

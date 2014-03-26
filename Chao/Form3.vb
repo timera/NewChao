@@ -16,7 +16,7 @@ Public Class Program
     'coordinates for 6 points
     Dim pos() As CoorPoint
     'Dim pos(5, 2) As Double
-    Dim posColors() As Color = {Color.Red, Color.Orange, Color.Yellow, Color.Green, Color.Blue, Color.Cyan}
+    Dim posColors() As Color = {Color.DarkRed, Color.DarkOliveGreen, Color.DarkMagenta, Color.DeepPink, Color.DarkBlue, Color.Chocolate}
 
     'Origin for the coordinates system
     Dim origin(1) As Double
@@ -979,6 +979,7 @@ Public Class Program
                 TextBox_L2.Enabled = True
                 TextBox_L3.Enabled = True
                 TextBox_r2.Enabled = True
+                TextBox_r2.ReadOnly = False
                 Button_L1_L2_L3_check.Enabled = True
             End If
 
@@ -1030,6 +1031,7 @@ Public Class Program
         pos(4).Coors = New ThreeDPoint(r1 * -0.27, r1 * 0.65, r1 * 0.71)
         pos(5).Coors = New ThreeDPoint(r1 * 0.27, r1 * -0.65, r1 * 0.71)
         R = r1
+        GP.Clear(Color.DarkGray)
         plot(False, GP, xCor, yCor, GroupBox_Plot)
 
         If choice = "開挖機(Excavator)" Then
@@ -1060,7 +1062,7 @@ Public Class Program
     End Sub
 
     Private Sub Button_L1_L2_L3_check_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L1_L2_L3_check.Click
-
+        TextBox_r2.ReadOnly = True
         Label_A4_Hint1.Visible = True
         Label_A4_Hint2.Visible = True
         'Set up Plotting
@@ -1091,6 +1093,7 @@ Public Class Program
         pos(3).Coors = New ThreeDPoint(0, 0, r2)
 
         R = r2
+        GP.Clear(Color.DarkGray)
         plot(False, GP, xCor, yCor, GroupBox_Plot)
         If choice = "鐵輪壓路機(Road roller)" Then
             Load_Others(choice)
@@ -4060,7 +4063,7 @@ Public Class Program
         Dim fn As Font = New Font("Microsoft Sans MS", 20)
         'x axis
         gp.DrawLine(Pens.Black, New Point(xCor(0, 0), xCor(0, 1)), New Point(xCor(1, 0), xCor(1, 1)))
-        gp.DrawString("X", fn, Brushes.Black, New Point(xCor(1, 0) + 3, xCor(1, 1)))
+        gp.DrawString("X", fn, Brushes.Black, New Point(xCor(1, 0) - 10, xCor(1, 1) + 2))
 
         'y axis
         gp.DrawLine(Pens.Black, New Point(yCor(0, 0), yCor(0, 1)), New Point(yCor(1, 0), yCor(1, 1)))
@@ -4085,7 +4088,7 @@ Public Class Program
     'parent is the parent control to canvas
     'r is the radius for the circle
     'coors is the coordinates for the points to be plotted
-    Private Sub plot(ByRef repaint As Boolean, ByRef gp As Graphics, ByVal xCor As Double(,), ByVal yCor As Double(,), ByVal parent As Control)
+    Private Sub plot(ByVal repaint As Boolean, ByRef gp As Graphics, ByVal xCor As Double(,), ByVal yCor As Double(,), ByVal parent As Control)
         ''clear canvas first
         'If canvas IsNot Nothing Then
         '    canvas.Dispose()
@@ -4094,8 +4097,6 @@ Public Class Program
         'canvas = New ShapeContainer()
         'canvas.Parent = parent
         'canvas.BackColor = Color.Transparent
-        ''plot the coordinates
-        plotCor(gp, xCor, yCor)
 
         'plot the circle with r
         If Not repaint Then
@@ -4110,6 +4111,8 @@ Public Class Program
             PlotRatio = ratio
             R = R * ratio
         End If
+        'plot the coordinates
+        plotCor(gp, xCor, yCor)
         Dim rCircle As Rectangle = New Rectangle(New Point((origin(0) - R), (origin(1) - R)), New Size(R * 2, R * 2))
         gp.DrawEllipse(Pens.Black, rCircle)
         'rCircle.Parent = canvas
@@ -4127,22 +4130,42 @@ Public Class Program
             Dim gBrush As SolidBrush = New SolidBrush(Color.DarkGreen)
             Dim pHeight As Integer = TextRenderer.MeasureText(gp, labels(index), fn).Height
             Dim pWidth As Integer = TextRenderer.MeasureText(gp, labels(index), fn).Width
-            Dim rect As Rectangle = New Rectangle(New Point((origin(0) + x - 2), (origin(1) - y - 2)), New Size(5, 5))
+            Dim rect As Rectangle = New Rectangle(New Point((origin(0) + x - 2), (origin(1) - y - 2)), New Size(10, 10))
             Dim d As Integer = 40
             Dim e As Integer = 10
             gp.FillEllipse(solidBrush, rect)
 
             'Text
-            If labels(index) = "P6" Or labels(index) = "P8" Or labels(index) = "P12" Then
-                gp.DrawString(labels(index), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y - pHeight))
-                gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y - e))
-                gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight - e))
-                gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight * 2 - e))
+            If pos.Length = 6 Then
+                If labels(index) = "P6" Or labels(index) = "P8" Or labels(index) = "P12" Then
+                    gp.DrawString(labels(index), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y))
+                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y - pHeight * 3))
+                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y - pHeight * 2))
+                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y - pHeight * 1))
+                Else
+                    gp.DrawString(labels(index), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y))
+                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y + pHeight - e))
+                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y + pHeight * 2 - e))
+                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y + pHeight * 3 - e))
+                End If
             Else
-                gp.DrawString(labels(index), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y))
-                gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight - e))
-                gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight * 2 - e))
-                gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight * 3 - e))
+                If labels(index) = "P4" Then
+                    gp.DrawString(labels(index), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y))
+                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y - pHeight * 3 + e))
+                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y - pHeight * 2 + e))
+                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y - pHeight * 1 + e))
+                ElseIf labels(index) = "P6" Then
+                    gp.DrawString(labels(index), fn, solidBrush, New System.Drawing.Point(origin(0) + x - pWidth + d, origin(1) - y))
+
+                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x - 2 * d, origin(1) - y - pHeight * 3))
+                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x - 2 * d, origin(1) - y - pHeight * 2))
+                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x - 2 * d, origin(1) - y - pHeight * 1))
+                Else
+                    gp.DrawString(labels(index), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y))
+                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight - e))
+                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight * 2 - e))
+                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight * 3 - e))
+                End If
             End If
             'Dim rPoint = New OvalShape((origin(0) + x - 2), (origin(1) - y - 2), 5, 5)
 

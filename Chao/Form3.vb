@@ -222,6 +222,8 @@ Public Class Program
         GroupBox_Plot.AllowDrop = True
         GroupBox_Plot.BackColor = Color.Transparent
 
+        BasicInfoGrid = New DataGridView()
+        BasicInfoGrid.Parent = TabPage1
 
         Me.TabPageTimer.Enabled = False
 
@@ -399,7 +401,7 @@ Public Class Program
 
         NoisesArray = {Noise1, Noise2, Noise3, Noise4, Noise5, Noise6, Noise_Avg}
         Dim meterFigWidth = 47
-        Dim meterX = 790
+        Dim meterX = 868
         Dim metery = 560
         Noise1.Location = New Point(meterX, metery)
         Noise2.Location = New Point(meterX + meterFigWidth, metery)
@@ -690,6 +692,10 @@ Public Class Program
         GroupBox_Plot.Size = New Size(580, 580)
         GroupBox_Plot.Visible = True
         GP = GroupBox_Plot.CreateGraphics()
+
+        BasicInfoGrid.Location = New Point(GroupBox_Plot.Location.X + GroupBox_Plot.Size.Width + 5, GroupBox_Plot.Location.Y)
+        BasicInfoGrid.Size = New Size(200, GroupBox_Plot.Size.Height)
+
         'COOR PLOT
         'x
         origin(0) = GroupBox_Plot.Width / 2
@@ -715,8 +721,18 @@ Public Class Program
 
         plotCor(GroupBox_Plot.CreateGraphics, xCor, yCor)
 
-        RichTextBox_Info.Size = New Size(200, GroupBox_Plot.Height)
-        RichTextBox_Info.Location = New Point(GroupBox_Plot.Left + GroupBox_Plot.Width + 10, GroupBox_Plot.Top)
+        BasicInfoGrid.RowHeadersVisible = False
+        BasicInfoGrid.Columns.Add("Data", "")
+        BasicInfoGrid.Rows.Add(25)
+        BasicInfoGrid.ColumnHeadersVisible = False
+        Dim tempString As String = "測試編號：,測試日期：,機具名稱：,廠牌：,型號：,規格：,附屬配備：,減音裝置：,馬力：,最大轉速：,基本尺寸：,量測位置（量測點及其高度、聲音感應器高度等、與施工機具音源相對位置）：,測試環境反射面的實際描述：,周圍地形的位置、周圍之情況（周圍之建築物、地形、地貌、防音設施等）："
+        Dim strings() As String = tempString.Split(",")
+        For i = 0 To 12
+            BasicInfoGrid.Rows(i * 2).Cells(0).Value = strings(i)
+            BasicInfoGrid.Rows(i * 2).Cells(0).ReadOnly = True
+            BasicInfoGrid.Rows(i * 2).Cells(0).Style.BackColor = Color.Aqua
+
+        Next
 
         Label_A4_Hint1.Location = New Point(288, 328)
         Label_A4_Hint1.Size = New Size(32, 273)
@@ -985,6 +1001,7 @@ Public Class Program
     End Sub
 
     Private DataGrid As Grid
+    Private BasicInfoGrid As DataGridView
     Private A_Unit_Size As Size = New Size(1250, 450)
     'Create charts for chosen machine
     Private Sub CreateChart(ByVal r As Double)
@@ -1397,8 +1414,8 @@ Public Class Program
 
         Load_PostCal(tempRun)
 
-        MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
-        MainBarGraph = New BarGraph(New Point(765, 93), New Size(380, 450), TabPage2, CGraph.Modes.A1A2A3)
+        MainLineGraph = New LineGraph(New Point(90, 2), New Size(1100, 83), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
+        MainBarGraph = New BarGraph(New Point(810, 93), New Size(380, 450), TabPage2, CGraph.Modes.A1A2A3)
         For i = 0 To 6
             NoisesArray(i).Visible = True
         Next

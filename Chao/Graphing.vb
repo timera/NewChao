@@ -39,17 +39,17 @@ Public Class CGraph
         parent.Controls.Add(Panel)
         Panel.Controls.Add(chart)
         'Panel.Name = "Panel"
-        Panel.Size = size
+        Panel.Size = New Size(size.Width + 20, size.Height)
         Panel.Location = loc
 
         series = New List(Of Series)
 
-        chart.Location = New Point(0, 0) 'so it hugs the border
+        chart.Location = New Point(0, 0)
         chart.Size = size
         chart.ChartAreas.Add(New ChartArea("ChartArea1"))
         chart.Legends.Add(New Legend("Legend1"))
-
-
+        chart.BackColor = Color.DarkGray
+        
 
 
         TestMode = mode
@@ -201,6 +201,9 @@ Public Class BarGraph
                    ByVal mode As Modes)
 
         MyBase.New(loc, size, parent, mode)
+
+        chart.Location = New Point(-20, 20) 'so it hugs the border
+        chart.Size = New Size(size.Width + 80, size.Height)
         Labels = New List(Of Label)
 
         'set up series
@@ -209,6 +212,7 @@ Public Class BarGraph
         s.ChartType = SeriesChartType.Column
         s.IsVisibleInLegend = False
         s.IsValueShownAsLabel = False
+        's("PointWidth") = "1.2"
         chart.Series.Add(s)
         chart.ChartAreas(0).AxisY.Crossing = 40
         chart.ChartAreas(0).AxisY.Maximum = 120

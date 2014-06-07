@@ -179,6 +179,9 @@ Public Class Program
 
     Public Comm As Communication
 
+    'if it is have additional test => true
+    Dim Add_Test_Record As Boolean = False
+
     Public Sub New()
 
         ' 此為設計工具所需的呼叫。
@@ -259,12 +262,12 @@ Public Class Program
         PanelTractorA3.Visible = False
 
         '###SIZE of OBJECTS
-        Me.Size = New Size(1150, 700)
+        Me.Size = New Size(1200, 700)
         startButton.Size = New Size(75, 50)
         Accept_Button.Size = New Size(75, 25)
         stopButton.Size = New Size(75, 50)
         Button_Skip_Add.Size = New Size(75, 23)
-        TabControl2.Size = New Size(400, 535)
+        TabControl2.Size = New Size(400, 540)
         Label_Ex_A1.Size = New Size(29, 16)
         Label_Ex_A2.Size = New Size(29, 16)
         Label_Lo_A1.Size = New Size(29, 16)
@@ -799,6 +802,7 @@ Public Class Program
                     tabpage.Enabled = False
                 ElseIf tabpage.Name = "TabPageProcedure" Then
                     tabpage.Enabled = True
+                    stopButton.Enabled = False
                 End If
             Next
             For i = 0 To 8
@@ -2368,7 +2372,9 @@ Public Class Program
         If Countdown = False Then
             timeLeft = timeLeft + 1
             timeLabel.Text = timeLeft & " s"
-            If timeLeft = 30 Then
+
+            ''''
+            If timeLeft = 2 Then
                 stopButton.Enabled = True
             End If
             'send values to display as text and graphs
@@ -2415,6 +2421,7 @@ Public Class Program
 
                         Else 'Countdown finally stop for entire run
                             Accept_Button.Enabled = True
+                            Button_Skip_Add.Enabled = False
                             startButton.Enabled = False
                             stopButton.Enabled = False
                             array_step(CurRun.CurStep - 1).BackColor = Color.Green
@@ -2684,6 +2691,7 @@ Public Class Program
             Timer1.Stop()
             'startButton.Enabled = True
             Accept_Button.Enabled = True
+            Button_Skip_Add.Enabled = False
             stopButton.Enabled = False
 
             'final Leq
@@ -3379,6 +3387,7 @@ Public Class Program
     Sub Accept_Cancel()
         startButton.Enabled = False
         Accept_Button.Enabled = True
+        Button_Skip_Add.Enabled = False
     End Sub
 
     Private Sub AcceptButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Accept_Button.Click
@@ -3540,6 +3549,7 @@ Public Class Program
 
                     ElseIf CurRun.Name = "A4_Add" Then
                         All_Panel_Enable()
+                        Add_Test_Record = True
                         'have an additional test?
                         'call a function 
                         'if want_add()=true then ... elseif want_add()=false then ... endif
@@ -3572,6 +3582,8 @@ Public Class Program
 
                             'dispose old graph and create new graph
                             Load_New_Graph_CD_True()
+                            'skip button enable
+                            Button_Skip_Add.Enabled = True
                         Else
                             'False: not add test , jump to RSS
                             Set_Panel_BackColor()
@@ -3585,6 +3597,8 @@ Public Class Program
                             Next
                             'dispose old graph and create new graph
                             Load_New_Graph_CD_True()
+                            'skip button disable
+                            Button_Skip_Add.Enabled = False
                         End If
 
                     ElseIf CurRun.Name = "A4_Mid_BG" Or CurRun.Name = "A4_Mid_BG_Add" Then
@@ -3656,6 +3670,8 @@ Public Class Program
                                 Set_Add_GRU(0, "Run 4", "")
                                 CurRun.Set_BackColor(Color.Yellow)
                                 Set_Run_Unit()
+                                'skip button enable
+                                Button_Skip_Add.Enabled = True
                             Else
                                 'False: not add test , jump to ExA2_1st or jump to TrA3_fwd or jump to LoA2_1st
                                 CurRun = CurRun.NextUnit.NextUnit
@@ -3672,6 +3688,7 @@ Public Class Program
 
                     ElseIf CurRun.Name = "ExA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "LoA1_Add" Then
                         All_Panel_Enable()
+                        Add_Test_Record = True
                         'Case2: now is ExA1_Add and next is ExA2_1st or now is TrA1_Add and next is TrA3_fwd or now is LoA1_Add and next is LoA2_1st
                         'have an additional test?
                         'call a function 
@@ -3696,11 +3713,15 @@ Public Class Program
                             CurRun.Set_BackColor(Color.Yellow)
                             Set_Add_GRU(0, "Run " & i, "")
                             Set_Run_Unit()
+                            'skip button enable
+                            Button_Skip_Add.Enabled = True
                         Else
                             'False: not add test
                             Set_Panel_BackColor()
                             CurRun = CurRun.NextUnit
                             Reset_Test_Time()
+                            'skip button disable
+                            Button_Skip_Add.Enabled = False
                         End If
                         'load steps
                         Clear_Steps()
@@ -3737,6 +3758,8 @@ Public Class Program
                                 Load_Steps()
                                 'dispose old graph and create new graph
                                 Load_New_Graph_CD_True()
+                                'skip button enable
+                                Button_Skip_Add.Enabled = True
                             Else
                                 'False: not add test , jump to RSS(Ex) or LoA1(Ex) or LoA3_fwd(Lo)
                                 CurRun = CurRun.NextUnit.NextUnit.NextUnit.NextUnit
@@ -3782,6 +3805,7 @@ Public Class Program
 
                     ElseIf CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
                         All_Panel_Enable()
+                        Add_Test_Record = True
                         'CurRun.PrevUnit.PrevUnit.Link.Enabled = True
                         If CurRun.NextUnit.Name = "RSS" Or CurRun.NextUnit.Name = "LoA1" Or CurRun.NextUnit.Name = "LoA3_fwd" Then
                             'have an additional test?
@@ -3811,11 +3835,14 @@ Public Class Program
 
                                 'dispose old graph and create new graph
                                 Load_New_Graph_CD_True()
+                                'skip button enable
+                                Button_Skip_Add.Enabled = True
                             Else
                                 'False: not add test ,  jump to RSS or LoA1
                                 Set_Panel_BackColor()
                                 CurRun = CurRun.NextUnit
-
+                                'skip button disable
+                                Button_Skip_Add.Enabled = False
                                 If CurRun.Name = "RSS" Then
                                     CurRun.Steps = Load_Steps_helper(CurRun)
                                     timeLeft = CurRun.Time
@@ -3893,6 +3920,8 @@ Public Class Program
 
                                 'dispose old graph and create new graph
                                 Load_New_Graph_CD_True()
+                                'skip button enable
+                                Button_Skip_Add.Enabled = True
                             Else
                                 'False: not add test , jump to RSS
                                 CurRun = CurRun.NextUnit.NextUnit.NextUnit
@@ -3912,6 +3941,7 @@ Public Class Program
                     ElseIf CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "LoA3_bkd_Add" Or CurRun.Name = "TrA3_fwd_Add" Or CurRun.Name = "TrA3_bkd_Add" Then
                         All_Panel_Enable()
                         If CurRun.NextUnit.Name = "LoA3_bkd_Add" Or CurRun.NextUnit.Name = "TrA3_bkd_Add" Then
+                            Button_Skip_Add.Enabled = True
                             'Case: LoA3_fwd_Add to LoA3_bkd_Add or TrA3_fwd_Add to TrA3_bkd_Add
                             ' change light
                             Set_Panel_BackColor()
@@ -3942,6 +3972,7 @@ Public Class Program
                             'dispose old graph and create new graph
                             Load_New_Graph_CD_True()
                         ElseIf CurRun.NextUnit.Name = "RSS" Then
+                            Add_Test_Record = True
                             'Case: LoA3_bkd_Add to RSS or TrA3_bkd_Add to RSS
                             'have an additional test?
                             'call a function 
@@ -3972,6 +4003,8 @@ Public Class Program
 
                                 'dispose old graph and create new graph
                                 Load_New_Graph_CD_True()
+                                'skip button enable
+                                Button_Skip_Add.Enabled = True
                             Else
                                 'False: not add test , jump to RSS
                                 Set_Panel_BackColor()
@@ -3985,15 +4018,17 @@ Public Class Program
                                 Next
                                 'dispose old graph and create new graph
                                 Load_New_Graph_CD_False()
+                                'skip button disable
+                                Button_Skip_Add.Enabled = False
                             End If
                         End If
-
-
-
                     End If
                 End If
 
             ElseIf Result = DialogResult.No Then
+                If CurRun.Name.Contains("Add") Then
+                    Button_Skip_Add.Enabled = True
+                End If
 
                 If CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_2nd_3rd" Then
                     All_Panel_Enable()
@@ -4293,4 +4328,94 @@ Public Class Program
         Button_Setting_Bargraph.Enabled = True
     End Sub
 
+    Private Sub Button_Skip_Add_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_Skip_Add.Click
+        Timer1.Stop()
+        Button_Skip_Add.Enabled = False
+        startButton.Enabled = True
+        stopButton.Enabled = False
+        Accept_Button.Enabled = False
+
+        'for change run_unit back_color
+        If Add_Test_Record = True Then
+            If CurRun.Name.Contains("A1") Then
+                CurRun.Set_BackColor(Color.Green)
+            ElseIf CurRun.Name.Contains("A3_fwd_Add") Or CurRun.Name = "A4_Mid_BG_Add" Then
+                CurRun.Set_BackColor(Color.Green)
+                CurRun.NextUnit.Set_BackColor(Color.Green)
+            ElseIf CurRun.Name.Contains("A3_bkd_Add") Or CurRun.Name = "A4_Add" Then
+                CurRun.PrevUnit.Set_BackColor(Color.Green)
+                CurRun.Set_BackColor(Color.Green)
+            ElseIf CurRun.Name.Contains("A2_1st") Then
+                CurRun.Set_BackColor(Color.Green)
+                CurRun.NextUnit.Set_BackColor(Color.Green)
+                CurRun.NextUnit.NextUnit.Set_BackColor(Color.Green)
+            ElseIf CurRun.Name.Contains("A2_2nd") And CurRun.PrevUnit.Name.Contains("A2_1st") Then
+                CurRun.PrevUnit.Set_BackColor(Color.Green)
+                CurRun.Set_BackColor(Color.Green)
+                CurRun.NextUnit.Set_BackColor(Color.Green)
+            ElseIf CurRun.Name.Contains("A2_2nd") And CurRun.PrevUnit.Name.Contains("A2_2nd") Then
+                CurRun.PrevUnit.PrevUnit.Set_BackColor(Color.Green)
+                CurRun.PrevUnit.Set_BackColor(Color.Green)
+                CurRun.Set_BackColor(Color.Green)
+            End If
+            Add_Test_Record = False
+        Else
+            If CurRun.Name.Contains("A1") Then
+                CurRun.Set_BackColor(Color.IndianRed)
+            ElseIf CurRun.Name.Contains("A3_fwd_Add") Or CurRun.Name = "A4_Mid_BG_Add" Then
+                CurRun.Set_BackColor(Color.IndianRed)
+                CurRun.NextUnit.Set_BackColor(Color.IndianRed)
+            ElseIf CurRun.Name.Contains("A3_bkd_Add") Or CurRun.Name = "A4_Add" Then
+                CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
+                CurRun.Set_BackColor(Color.IndianRed)
+            ElseIf CurRun.Name.Contains("A2_1st") Then
+                CurRun.Set_BackColor(Color.IndianRed)
+                CurRun.NextUnit.Set_BackColor(Color.IndianRed)
+                CurRun.NextUnit.NextUnit.Set_BackColor(Color.IndianRed)
+            ElseIf CurRun.Name.Contains("A2_2nd") And CurRun.PrevUnit.Name.Contains("A2_1st") Then
+                CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
+                CurRun.Set_BackColor(Color.IndianRed)
+                CurRun.NextUnit.Set_BackColor(Color.IndianRed)
+            ElseIf CurRun.Name.Contains("A2_2nd") And CurRun.PrevUnit.Name.Contains("A2_2nd") Then
+                CurRun.PrevUnit.PrevUnit.Set_BackColor(Color.IndianRed)
+                CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
+                CurRun.Set_BackColor(Color.IndianRed)
+            End If
+        End If
+
+        If CurRun.Name.Contains("A4_Add") Or CurRun.Name.Contains("A1") Or CurRun.Name.Contains("A3_bkd") Or CurRun.NextUnit.Name = "RSS" Or CurRun.NextUnit.Name = "LoA1" Or CurRun.NextUnit.Name = "LoA3_fwd" Then
+            'skip 1 unit (include self)
+            CurRun = CurRun.NextUnit
+        ElseIf CurRun.Name.Contains("A3_fwd") Or CurRun.PrevUnit.Name.Contains("A2_1st_Add") Or CurRun.Name = "A4_Mid_BG_Add" Then
+            'skip 2 unit (include self)
+            CurRun = CurRun.NextUnit.NextUnit
+        ElseIf CurRun.Name.Contains("A2_1st_Add") Then
+            'skip 3 unit (include self)
+            CurRun = CurRun.NextUnit.NextUnit.NextUnit
+        End If
+
+
+        If CurRun.Name = "RSS" Then
+            CurRun.Steps = Load_Steps_helper(CurRun)
+            timeLeft = CurRun.Time
+            timeLabel.Text = timeLeft & " s"
+            Countdown = False
+            Load_New_Graph_CD_False()
+            Clear_Steps()
+            For index = 0 To 8
+                array_step_display(index).Text = ""
+            Next
+        Else
+            CurRun.Set_BackColor(Color.Yellow)
+            If CurRun.Name.Contains("A2") Or CurRun.Name.Contains("A3") Then
+                Reset_Test_Time()
+            Else
+                Set_Run_Unit()
+            End If
+            Clear_Steps()
+            Load_Steps()
+            'dispose old graph and create new graph
+            Load_New_Graph_CD_True()
+        End If
+    End Sub
 End Class

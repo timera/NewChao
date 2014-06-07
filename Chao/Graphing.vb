@@ -28,30 +28,9 @@ Public Class CGraph
     'parent = Parent control
     'sDimensions = series dimensions
     'type = chart type
-    Public Sub New(ByVal loc As Point,
-                   ByVal size As Size,
-                   ByVal parent As Control,
+    Public Sub New(
                    ByVal mode As Modes
                    )
-        'Plot controls
-        chart = New Chart
-        Panel = New Panel()
-        parent.Controls.Add(Panel)
-        Panel.Controls.Add(chart)
-        'Panel.Name = "Panel"
-        Panel.Size = New Size(size.Width + 20, size.Height)
-        Panel.Location = loc
-
-        series = New List(Of Series)
-
-        chart.Location = New Point(0, 0)
-        chart.Size = size
-        chart.ChartAreas.Add(New ChartArea("ChartArea1"))
-        chart.Legends.Add(New Legend("Legend1"))
-        chart.BackColor = Color.DarkGray
-        
-
-
         TestMode = mode
         If mode = Modes.A1A2A3 Then
             NumOfMics = 6
@@ -72,24 +51,43 @@ End Class
 
 Public Class LineGraph
     Inherits CGraph
+
+    Dim _DefaultLineGraphSize As Size = New Size(1200, 83)
+    Dim _DefaultLineGraphPos As Point = New Point(90, 2)
     'private global vars
     'Dim SecTextBox As MaskedTextBox
     Dim TimeInSec As Integer
     'Dim SetTimeButton As Button
 
     'constructor
-    Public Sub New(ByVal loc As Point,
-                   ByVal size As Size,
+    Public Sub New(
                    ByVal parent As Control,
                    ByVal mode As Modes,
                    ByVal time As Integer
                    )
-        MyBase.New(loc, size, parent, mode)
+        MyBase.New(mode)
         'Offset the chart a bit to the right to allow room for the button and textbox
         'chart.Location = New Point(SetTimeButtonSize.Width, 0)
         'chart.Size = New Size(size.Width - SecTextBoxSize.Width, size.Height)
-        chart.Location = New Point(0, 0)
-        chart.Size = New Size(size.Width, size.Height)
+        'Plot controls
+        chart = New Chart
+        Panel = New Panel()
+        parent.Controls.Add(Panel)
+        Panel.Controls.Add(chart)
+        'Panel.Name = "Panel"
+        Panel.Size = _DefaultLineGraphSize
+        Panel.Location = _DefaultLineGraphPos
+        Panel.BackColor = Color.DarkGray
+
+        series = New List(Of Series)
+        chart.Location = New Point(0, -5)
+        chart.Size = New Size(_DefaultLineGraphSize.Width, _DefaultLineGraphSize.Height + 15)
+
+        chart.ChartAreas.Add(New ChartArea("ChartArea1"))
+        chart.Legends.Add(New Legend("Legend1"))
+        chart.BackColor = Color.DarkGray
+
+
         'Set Time TextBox
         'SecTextBox = New MaskedTextBox()
         'Panel.Controls.Add(SecTextBox)
@@ -200,10 +198,25 @@ Public Class BarGraph
                    ByVal parent As Control,
                    ByVal mode As Modes)
 
-        MyBase.New(loc, size, parent, mode)
+        MyBase.New(mode)
+        'Plot controls
+        chart = New Chart
+        Panel = New Panel()
+        parent.Controls.Add(Panel)
+        Panel.Controls.Add(chart)
+        'Panel.Name = "Panel"
+        Panel.Size = New Size(size.Width + 20, size.Height)
+        Panel.Location = loc
 
+        series = New List(Of Series)
         chart.Location = New Point(-20, 20) 'so it hugs the border
         chart.Size = New Size(size.Width + 80, size.Height)
+
+        chart.ChartAreas.Add(New ChartArea("ChartArea1"))
+        chart.Legends.Add(New Legend("Legend1"))
+        chart.BackColor = Color.DarkGray
+
+
         Labels = New List(Of Label)
 
         'set up series

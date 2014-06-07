@@ -1418,7 +1418,7 @@ Public Class Program
 
         Load_PostCal(tempRun)
 
-        MainLineGraph = New LineGraph(New Point(90, 2), New Size(1100, 83), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
+        MainLineGraph = New LineGraph(TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
         MainBarGraph = New BarGraph(New Point(810, 93), New Size(380, 450), TabPage2, CGraph.Modes.A1A2A3)
         For i = 0 To 6
             NoisesArray(i).Visible = True
@@ -1606,7 +1606,7 @@ Public Class Program
         Load_PostCal(tempRun)
 
 
-        MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
+        MainLineGraph = New LineGraph(TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
         MainBarGraph = New BarGraph(New Point(765, 93), New Size(380, 450), TabPage2, CGraph.Modes.A1A2A3)
         For i = 0 To 6
             NoisesArray(i).Visible = True
@@ -1871,7 +1871,7 @@ Public Class Program
 
         Load_PostCal(tempRun)
 
-        MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
+        MainLineGraph = New LineGraph(TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
         MainBarGraph = New BarGraph(New Point(765, 93), New Size(380, 450), TabPage2, CGraph.Modes.A1A2A3)
         For i = 0 To 6
             NoisesArray(i).Visible = True
@@ -1951,7 +1951,7 @@ Public Class Program
         'PostCal
         Load_PostCal(tempRun)
 
-        MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
+        MainLineGraph = New LineGraph(TabPage2, CGraph.Modes.A1A2A3, HeadRun.Time)
         MainBarGraph = New BarGraph(New Point(765, 93), New Size(380, 450), TabPage2, CGraph.Modes.A1A2A3)
         For i = 0 To 6
             NoisesArray(i).Visible = True
@@ -2174,7 +2174,7 @@ Public Class Program
         tempRun = tempRun.NextUnit
         PostCal_4th = tempRun
 
-        MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A4, HeadRun.Time)
+        MainLineGraph = New LineGraph(TabPage2, CGraph.Modes.A4, HeadRun.Time)
         MainBarGraph = New BarGraph(New Point(765, 93), New Size(380, 450), TabPage2, CGraph.Modes.A4)
         For i = 0 To 6
             NoisesArray(i).Visible = True
@@ -2534,18 +2534,18 @@ Public Class Program
         'load new graph (when variable countdown = false)
         MainLineGraph.Dispose()
         If Machine = Machines.Others Then
-            MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A4, CurRun.Time)  'A4 mode
+            MainLineGraph = New LineGraph(TabPage2, CGraph.Modes.A4, CurRun.Time)  'A4 mode
         Else
-            MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A1A2A3, CurRun.Time) 'A1 A2 A3 mode
+            MainLineGraph = New LineGraph(TabPage2, CGraph.Modes.A1A2A3, CurRun.Time) 'A1 A2 A3 mode
         End If
     End Sub
     Sub Load_New_Graph_CD_True()
         'load new graph(when variable countdown = true)
         MainLineGraph.Dispose()
         If Machine = Machines.Others Then
-            MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A4, sum_steps)  'A4 mode
+            MainLineGraph = New LineGraph(TabPage2, CGraph.Modes.A4, sum_steps)  'A4 mode
         Else
-            MainLineGraph = New LineGraph(New Point(90, 2), New Size(1055, 83), TabPage2, CGraph.Modes.A1A2A3, sum_steps) 'A1 A2 A3 mode
+            MainLineGraph = New LineGraph(TabPage2, CGraph.Modes.A1A2A3, sum_steps) 'A1 A2 A3 mode
         End If
         sum_steps = 0
     End Sub

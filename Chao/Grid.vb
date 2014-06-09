@@ -796,45 +796,10 @@ Public Class Grid
         Return Decimal.op_Explicit(Round(Run.LpAeqAvg + Run.K1A))
     End Function
 
-    'contains recording
-    Public Function Save() As Boolean
-
-        Dim saveFileDialog1 As New SaveFileDialog()
-
-        saveFileDialog1.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*"
-        saveFileDialog1.RestoreDirectory = True
-        Dim outfile As StreamWriter
-
-        If saveFileDialog1.ShowDialog() = DialogResult.OK Then
-            outfile = New StreamWriter(saveFileDialog1.OpenFile(), System.Text.Encoding.Unicode)
-            If (outfile IsNot Nothing) Then
-                'write column headers first
-                Dim sb As StringBuilder = New StringBuilder()
-                For i = 0 To Form.Columns.Count - 1
-                    sb.Append("," & Form.Columns(i).HeaderText)
-                Next
-                outfile.WriteLine(sb.ToString())
-                sb.Clear()
-
-                'write actual data now
-                For j = 0 To Form.Rows.Count - 1
-                    sb.Append(Form.Rows(j).HeaderCell.Value)
-                    For i = 0 To Form.Columns.Count - 1
-                        sb.Append("," & Form.Rows(j).Cells(i).Value)
-                    Next
-                    sb.AppendLine()
-                Next
-                outfile.Write(sb.ToString())
-            End If
-            outfile.Close()
-            Return True
-        End If
-        Return False
-    End Function
+    
 
     Private Sub Form_CellValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Form.CellValueChanged
-        Dim savebutton As DisButton = _Parent.Controls.Find("SaveButton", False)(0)
-        savebutton.Enabled = True
+        CType(_Parent.FindForm().MainMenuStrip.Items.Find("SaveToolStripMenuItem", True)(0), ToolStripMenuItem).Enabled = True
     End Sub
 End Class
 

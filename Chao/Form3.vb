@@ -1,5 +1,7 @@
 ﻿Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.PowerPacks
+Imports System.IO
+Imports System.Text
 
 Public Class Program
     <StructLayout(LayoutKind.Sequential)> _
@@ -239,7 +241,7 @@ Public Class Program
         Test_ConfirmButton.Enabled = False
         ConnectButton.Enabled = True
         DisconnButton.Enabled = False
-        SaveButton.Enabled = False
+        SaveToolStripMenuItem.Enabled = False
 
 
 
@@ -301,7 +303,7 @@ Public Class Program
         S7.Size = New Size(12, 12)
         S8.Size = New Size(12, 12)
         S9.Size = New Size(12, 12)
-        timeLabel.Size = New Size(80, 80)
+        timeLabel.Size = New Size(80, 60)
         Panel_Setting_Bargraph_Max_Min.Size = New Size(300, 225)
         Setting_Bargraph_Title.Size = New Size(293, 43)
         Setting_Bargraph_Max.Size = New Size(73, 33)
@@ -726,7 +728,7 @@ Public Class Program
 
         BasicInfoGrid.RowHeadersVisible = False
         BasicInfoGrid.Columns.Add("Data", "")
-        BasicInfoGrid.Rows.Add(25)
+        BasicInfoGrid.Rows.Add(26)
         BasicInfoGrid.ColumnHeadersVisible = False
         Dim tempString As String = "測試編號：,測試日期：,機具名稱：,廠牌：,型號：,規格：,附屬配備：,減音裝置：,馬力：,最大轉速：,基本尺寸：,量測位置（量測點及其高度、聲音感應器高度等、與施工機具音源相對位置）：,測試環境反射面的實際描述：,周圍地形的位置、周圍之情況（周圍之建築物、地形、地貌、防音設施等）："
         Dim strings() As String = tempString.Split(",")
@@ -736,6 +738,7 @@ Public Class Program
             BasicInfoGrid.Rows(i * 2).Cells(0).Style.BackColor = Color.Aqua
 
         Next
+        BasicInfoGrid.AllowUserToAddRows = False
 
         Label_A4_Hint1.Location = New Point(288, 328)
         Label_A4_Hint1.Size = New Size(32, 273)
@@ -744,11 +747,11 @@ Public Class Program
     End Sub
 
     Private Sub Program_Close(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
-        If SaveButton.Enabled Then
+        If SaveToolStripMenuItem.Enabled Then
             Dim answer As DialogResult = MessageBox.Show("尚未儲存資料，是否儲存?", "Save?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
             If answer = DialogResult.Yes Then
-                If DataGrid.Save() Then
-                    SaveButton.Enabled = False
+                If Save() Then
+                    SaveToolStripMenuItem.Enabled = False
                 Else
                     e.Cancel = True
                 End If
@@ -812,11 +815,11 @@ Public Class Program
     End Sub
 
     Private Sub Button_change_machine_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_change_machine.Click
-        If SaveButton.Enabled Then
+        If SaveToolStripMenuItem.Enabled Then
             Dim answer As DialogResult = MessageBox.Show("尚未儲存資料，是否儲存?", "Save?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
             If answer = DialogResult.Yes Then
-                If DataGrid.Save() Then
-                    SaveButton.Enabled = False
+                If Save() Then
+                    SaveToolStripMenuItem.Enabled = False
                 Else
                     Return
                 End If
@@ -1224,7 +1227,6 @@ Public Class Program
             l.Location = New Point(1, 10)
             l.ForeColor = Color.IndianRed
         End If
-
     End Sub
 
     Sub LinkLabel_PreCal_PostCal_visible()
@@ -4272,9 +4274,9 @@ Public Class Program
         End If
     End Sub
 
-    Private Sub SaveButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveButton.Click
-        If DataGrid.Save() Then
-            SaveButton.Enabled = False
+    Private Sub SaveToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveToolStripMenuItem.Click
+        If Save() Then
+            SaveToolStripMenuItem.Enabled = False
         End If
     End Sub
 
@@ -4418,4 +4420,41 @@ Public Class Program
             Load_New_Graph_CD_True()
         End If
     End Sub
+
+    'Menu Strip Functions
+    'contains recording
+    Public Function Save() As Boolean
+
+        Dim saveFileDialog1 As New SaveFileDialog()
+
+        saveFileDialog1.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*"
+        saveFileDialog1.RestoreDirectory = True
+        Dim outfile As StreamWriter
+
+        If saveFileDialog1.ShowDialog() = DialogResult.OK Then
+            outfile = New StreamWriter(saveFileDialog1.OpenFile(), System.Text.Encoding.Unicode)
+            If (outfile IsNot Nothing) Then
+                'write column headers first
+                Dim sb As StringBuilder = New StringBuilder()
+                For i = 0 To DataGrid.Form.Columns.Count - 1
+                    sb.Append("," & DataGrid.Form.Columns(i).HeaderText)
+                Next
+                outfile.WriteLine(sb.ToString())
+                sb.Clear()
+
+                'write actual data now
+                For j = 0 To DataGrid.Form.Rows.Count - 1
+                    sb.Append(DataGrid.Form.Rows(j).HeaderCell.Value)
+                    For i = 0 To DataGrid.Form.Columns.Count - 1
+                        sb.Append("," & DataGrid.Form.Rows(j).Cells(i).Value)
+                    Next
+                    sb.AppendLine()
+                Next
+                outfile.Write(sb.ToString())
+            End If
+            outfile.Close()
+            Return True
+        End If
+        Return False
+    End Function
 End Class

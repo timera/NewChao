@@ -814,17 +814,17 @@ Public Class Program
         End If
     End Sub
 
-    Private Sub Button_change_machine_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_change_machine.Click
+    Private Function Change_Machine()
         If SaveToolStripMenuItem.Enabled Then
             Dim answer As DialogResult = MessageBox.Show("尚未儲存資料，是否儲存?", "Save?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
             If answer = DialogResult.Yes Then
                 If Save() Then
                     SaveToolStripMenuItem.Enabled = False
                 Else
-                    Return
+                    Return False
                 End If
             ElseIf answer = DialogResult.Cancel Then
-                Return
+                Return False
             End If
             'can choose machine again
             ComboBox_machine_list.Enabled = True
@@ -889,9 +889,11 @@ Public Class Program
             Label_A4_Hint1.Visible = False
             Label_A4_Hint2.Visible = False
         End If
+        Return True
+    End Function
 
-        'If MessageBox.Show("是否放棄目前測量數據?", "My application", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.OK Then
-        'End If
+    Private Sub Button_change_machine_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_change_machine.Click
+        Change_Machine()
     End Sub
 
     Private Sub ComboBox_machine_list_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBox_machine_list.SelectedIndexChanged
@@ -900,83 +902,7 @@ Public Class Program
         Clear_Steps()
 
         Dim inner_choice As String = ComboBox_machine_list.Text
-
-        If inner_choice = "開挖機(Excavator)" Then
-            Picture_machine.Image = My.Resources.小型開挖機_compact_excavator_
-            Machine = Machines.Excavator
-        ElseIf inner_choice = "推土機(Crawler and wheel tractor)" Then  'A1+A3
-            Picture_machine.Image = My.Resources.履帶式推土機_crawler_dozer_
-            Machine = Machines.Tractor
-        ElseIf inner_choice = "鐵輪壓路機(Road roller)" Then
-            Picture_machine.Image = My.Resources.壓路機_rollers_
-            Machine = Machines.Others
-        ElseIf inner_choice = "膠輪壓路機(Wheel roller)" Then
-            Picture_machine.Image = My.Resources.壓路機_rollers_
-            Machine = Machines.Others
-        ElseIf inner_choice = "振動式壓路機(Vibrating roller)" Then
-            Picture_machine.Image = My.Resources.壓路機_rollers_
-            Machine = Machines.Others
-        ElseIf inner_choice = "裝料機(Crawler and wheel loader)" Then
-            Picture_machine.Image = My.Resources.履帶式裝料機_crawler_loader_
-            Machine = Machines.Loader
-        ElseIf inner_choice = "裝料開挖機" Then
-            Picture_machine.Image = My.Resources.履帶式開挖裝料機_crawler_backhoe_loader_
-            Machine = Machines.Loader_Excavator
-        ElseIf inner_choice = "履帶起重機(Crawler crane)" Then
-            Picture_machine.Image = My.Resources.履帶起重機
-            Machine = Machines.Others
-        ElseIf inner_choice = "卡車起重機(Truck crane)" Then
-            Picture_machine.Image = My.Resources.卡車起重機
-            Machine = Machines.Others
-        ElseIf inner_choice = "輪形起重機(Wheel crane)" Then
-            Picture_machine.Image = My.Resources.輪式起重機
-            Machine = Machines.Others
-        ElseIf inner_choice = "振動式樁錘(Vibrating hammer)" Then
-            Picture_machine.Image = My.Resources.vibrating_hammer
-            Machine = Machines.Others
-        ElseIf inner_choice = "油壓式打樁機(Hydraulic pile driver)" Then
-            Picture_machine.Image = My.Resources.油壓式打樁機_Hydraulic_pile_driver_
-            Machine = Machines.Others
-        ElseIf inner_choice = "拔樁機" Then
-            Picture_machine.Image = My.Resources.拔樁機
-            Machine = Machines.Others
-        ElseIf inner_choice = "油壓式拔樁機" Then
-            Picture_machine.Image = My.Resources.油壓式打樁機_Hydraulic_pile_driver_
-            Machine = Machines.Others
-        ElseIf inner_choice = "土壤取樣器(地鑽) (Earth auger)" Then
-            Picture_machine.Image = My.Resources.土壤取樣器_地鑽___Earth_auger_
-            Machine = Machines.Others
-        ElseIf inner_choice = "全套管鑽掘機" Then
-            Picture_machine.Image = My.Resources.全套管鑽掘機
-            Machine = Machines.Others
-        ElseIf inner_choice = "鑽土機(Earth drill)" Then
-            Picture_machine.Image = My.Resources.鑽土機_Earth_drill_
-            Machine = Machines.Others
-        ElseIf inner_choice = "鑽岩機(Rock breaker)" Then
-            Picture_machine.Image = My.Resources.鑽岩機_Rock_breaker_
-            Machine = Machines.Others
-        ElseIf inner_choice = "混凝土泵車(Concrete pump)" Then
-            Picture_machine.Image = My.Resources.混凝土泵車_Concrete_pump_
-            Machine = Machines.Others
-        ElseIf inner_choice = "混凝土破碎機(Concrete breaker)" Then
-            Picture_machine.Image = My.Resources.混凝土破碎機_Concrete_breaker_
-            Machine = Machines.Others
-        ElseIf inner_choice = "瀝青混凝土舖築機(Asphalt finisher)" Then
-            Picture_machine.Image = My.Resources.瀝青混凝土舖築機_Asphalt_finisher_
-            Machine = Machines.Others
-        ElseIf inner_choice = "混凝土割切機(Concrete cutter)" Then
-            Picture_machine.Image = My.Resources.混凝土割切機_Concrete_cutter_
-            Machine = Machines.Others
-        ElseIf inner_choice = "發電機(Generator)" Then
-            Picture_machine.Image = My.Resources.發電機_Generator_
-            Machine = Machines.Others
-        ElseIf inner_choice = "空氣壓縮機(Compressor)" Then
-            Picture_machine.Image = My.Resources.空氣壓縮機_Compressor_
-            Machine = Machines.Others
-        Else
-            Machine = Nothing
-        End If
-
+        Decide_Machine(inner_choice)
         choice = inner_choice
 
         'mach區分要輸入至哪個 groupbox for plotting the coordinates
@@ -1007,6 +933,110 @@ Public Class Program
         End If
     End Sub
 
+    Private Function Decide_Machine(ByVal name As String) As String
+        If name = "開挖機(Excavator)" Then
+            Picture_machine.Image = My.Resources.小型開挖機_compact_excavator_
+            Machine = Machines.Excavator
+            Return "A1,A2"
+        ElseIf name = "推土機(Crawler and wheel tractor)" Then  'A1+A3
+            Picture_machine.Image = My.Resources.履帶式推土機_crawler_dozer_
+            Machine = Machines.Tractor
+            Return "A1,A3"
+        ElseIf name = "鐵輪壓路機(Road roller)" Then
+            Picture_machine.Image = My.Resources.壓路機_rollers_
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "膠輪壓路機(Wheel roller)" Then
+            Picture_machine.Image = My.Resources.壓路機_rollers_
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "振動式壓路機(Vibrating roller)" Then
+            Picture_machine.Image = My.Resources.壓路機_rollers_
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "裝料機(Crawler and wheel loader)" Then
+            Picture_machine.Image = My.Resources.履帶式裝料機_crawler_loader_
+            Machine = Machines.Loader
+            Return "A1,A2,A3"
+        ElseIf name = "裝料開挖機" Then
+            Picture_machine.Image = My.Resources.履帶式開挖裝料機_crawler_backhoe_loader_
+            Machine = Machines.Loader_Excavator
+            Return "A1,A2,A1,A2,A3"
+        ElseIf name = "履帶起重機(Crawler crane)" Then
+            Picture_machine.Image = My.Resources.履帶起重機
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "卡車起重機(Truck crane)" Then
+            Picture_machine.Image = My.Resources.卡車起重機
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "輪形起重機(Wheel crane)" Then
+            Picture_machine.Image = My.Resources.輪式起重機
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "振動式樁錘(Vibrating hammer)" Then
+            Picture_machine.Image = My.Resources.vibrating_hammer
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "油壓式打樁機(Hydraulic pile driver)" Then
+            Picture_machine.Image = My.Resources.油壓式打樁機_Hydraulic_pile_driver_
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "拔樁機" Then
+            Picture_machine.Image = My.Resources.拔樁機
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "油壓式拔樁機" Then
+            Picture_machine.Image = My.Resources.油壓式打樁機_Hydraulic_pile_driver_
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "土壤取樣器(地鑽) (Earth auger)" Then
+            Picture_machine.Image = My.Resources.土壤取樣器_地鑽___Earth_auger_
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "全套管鑽掘機" Then
+            Picture_machine.Image = My.Resources.全套管鑽掘機
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "鑽土機(Earth drill)" Then
+            Picture_machine.Image = My.Resources.鑽土機_Earth_drill_
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "鑽岩機(Rock breaker)" Then
+            Picture_machine.Image = My.Resources.鑽岩機_Rock_breaker_
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "混凝土泵車(Concrete pump)" Then
+            Picture_machine.Image = My.Resources.混凝土泵車_Concrete_pump_
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "混凝土破碎機(Concrete breaker)" Then
+            Picture_machine.Image = My.Resources.混凝土破碎機_Concrete_breaker_
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "瀝青混凝土舖築機(Asphalt finisher)" Then
+            Picture_machine.Image = My.Resources.瀝青混凝土舖築機_Asphalt_finisher_
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "混凝土割切機(Concrete cutter)" Then
+            Picture_machine.Image = My.Resources.混凝土割切機_Concrete_cutter_
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "發電機(Generator)" Then
+            Picture_machine.Image = My.Resources.發電機_Generator_
+            Machine = Machines.Others
+            Return "A4"
+        ElseIf name = "空氣壓縮機(Compressor)" Then
+            Picture_machine.Image = My.Resources.空氣壓縮機_Compressor_
+            Machine = Machines.Others
+            Return "A4"
+        Else
+            Machine = Nothing
+
+        End If
+        Return ""
+    End Function
+
     Private DataGrid As Grid
     Private BasicInfoGrid As DataGridView
     Private A_Unit_Size As Size = New Size(1250, 450)
@@ -1023,6 +1053,10 @@ Public Class Program
     End Sub
 
     Private Sub Button_L_check_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L_check.Click
+        A123_Prepare()
+    End Sub
+
+    Private Sub A123_Prepare()
         'Set up Plotting
         'Points = New ArrayList
         pos = {New CoorPoint(), New CoorPoint(), New CoorPoint(), New CoorPoint(), New CoorPoint(), New CoorPoint()}
@@ -1081,7 +1115,11 @@ Public Class Program
         TextBox_L.Enabled = False
     End Sub
 
-    Private Sub Button_L1_L2_L3_check_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L1_L2_L3_check.Click
+    Private Sub Button_L1_L2_L3_check_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L1_L2_L3_check.Click
+        A4_Prepare()
+    End Sub
+
+    Private Sub A4_Prepare()
         TextBox_r2.ReadOnly = True
         Label_A4_Hint1.Visible = True
         Label_A4_Hint2.Visible = True
@@ -4421,9 +4459,8 @@ Public Class Program
         End If
     End Sub
 
-    'Menu Strip Functions
-    'contains recording
-    Public Function Save() As Boolean
+    'Export Function
+    Public Function ExportToCSV() As Boolean
 
         Dim saveFileDialog1 As New SaveFileDialog()
 
@@ -4434,8 +4471,13 @@ Public Class Program
         If saveFileDialog1.ShowDialog() = DialogResult.OK Then
             outfile = New StreamWriter(saveFileDialog1.OpenFile(), System.Text.Encoding.Unicode)
             If (outfile IsNot Nothing) Then
-                'write column headers first
                 Dim sb As StringBuilder = New StringBuilder()
+                'write basic data first
+                sb.AppendLine(ComboBox_machine_list.SelectedText & "," & TextBox_L.Text & "," & TextBox_r1.Text & "," & TextBox_L1.Text & "," & TextBox_L2.Text & "," & TextBox_L3.Text & "," & TextBox_r2.Text)
+                For k = 0 To BasicInfoGrid.Rows.Count - 1
+                    sb.AppendLine(BasicInfoGrid.Rows(k).Cells(0).Value)
+                Next
+                'write column headers second
                 For i = 0 To DataGrid.Form.Columns.Count - 1
                     sb.Append("," & DataGrid.Form.Columns(i).HeaderText)
                 Next
@@ -4455,6 +4497,130 @@ Public Class Program
             outfile.Close()
             Return True
         End If
+        Return False
+    End Function
+
+    'Menu Strip Functions
+    'contains recording
+    Public Function Save() As Boolean
+        Dim saveFileDialog1 As New SaveFileDialog()
+        Dim tempRun As Grid_Run_Unit = HeadRun.GRU
+        saveFileDialog1.Filter = "Chao files (*.cha)|*.chao|All files (*.*)|*.*"
+        saveFileDialog1.RestoreDirectory = True
+        Dim outfile As StreamWriter
+
+        If saveFileDialog1.ShowDialog() = DialogResult.OK Then
+            outfile = New StreamWriter(saveFileDialog1.OpenFile(), System.Text.Encoding.Unicode)
+            If (outfile IsNot Nothing) Then
+                Dim sb As StringBuilder = New StringBuilder()
+                'write basic data first
+                sb.AppendLine(ComboBox_machine_list.SelectedText & "," & TextBox_L.Text & "," & TextBox_r1.Text & "," & TextBox_L1.Text & "," & TextBox_L2.Text & "," & TextBox_L3.Text & "," & TextBox_r2.Text)
+                For k = 0 To BasicInfoGrid.Rows.Count - 1
+                    sb.AppendLine(BasicInfoGrid.Rows(k).Cells(0).Value)
+                Next
+                While tempRun IsNot Nothing
+                    sb.AppendLine(tempRun.Header & "," & tempRun.LpAeq2 & "," & tempRun.LpAeq4 & "," & tempRun.LpAeq6 & "," & tempRun.LpAeq8 & "," & tempRun.LpAeq10 & "," & tempRun.LpAeq12 & "," & tempRun.Time)
+                    tempRun = tempRun.NextGRU
+                End While
+                outfile.WriteLine(sb.ToString())
+            End If
+            outfile.Close()
+            Return True
+        End If
+        Return False
+    End Function
+
+    Public Function CheckFileFormat(ByVal inFile As StreamReader) As Boolean
+        'check basic data first
+        Dim type_l_r() As String = inFile.ReadLine().Split(",")
+        'not the correct format cuz it doesn't follow: machine name, L, r1, L1, L2, L3, r2
+        If Not type_l_r.Length = 7 Then
+            Return False
+        End If
+        ''check if machine matches r and L
+        'if A123
+
+        'if A4
+        'check if each row has the same num columns
+        Dim tempRow() As String = inFile.ReadLine().Split(",")
+        Dim numCol As Integer = tempRow.Length
+        While Not inFile.EndOfStream
+            tempRow = inFile.ReadLine().Split(",")
+            If Not tempRow.Length = numCol Then
+                Return False
+            End If
+        End While
+
+        Return True
+    End Function
+
+    Public Function LoadFile() As Boolean
+        'Dim loadFileDialog As New OpenFileDialog()
+        'Dim inFile As StreamReader
+        'If loadFileDialog.ShowDialog() = DialogResult.OK Then
+        '    inFile = New StreamReader(loadFileDialog.OpenFile(), System.Text.Encoding.Unicode)
+        '    If inFile IsNot Nothing Then
+        '        If CheckFileFormat(inFile) Then
+        '            'liberate data first
+        '            If Change_Machine() Then
+        '                'load and write basic data first
+        '                Dim type_l_r() As String = inFile.ReadLine().Split(",")
+
+        '                ComboBox_machine_list.SelectedText = type_l_r(0)
+        '                TextBox_L.Text = type_l_r(1)
+        '                TextBox_r1.Text = type_l_r(2)
+        '                TextBox_L1.Text = type_l_r(3)
+        '                TextBox_L2.Text = type_l_r(4)
+        '                TextBox_L3.Text = type_l_r(5)
+        '                TextBox_r2.Text = type_l_r(6)
+
+        '                For k = 0 To BasicInfoGrid.Rows.Count - 1
+        '                    BasicInfoGrid.Rows(k).Cells(0).Value = inFile.ReadLine()
+        '                Next
+        '                'A123
+        '                If Not Machine = Machines.Others Then
+        '                    A123_Prepare()
+        '                Else 'A4
+        '                    A4_Prepare()
+        '                End If
+
+        '                'write column headers second
+        '                Dim columnheads() As String = inFile.ReadLine().Split(",")
+        '                'deal with extra testings
+        '                For l = 0 To columnheads.Length - 1
+        '                    If columnheads(l).Contains("A") Then
+        '                        If columnheads(l).Contains("A1") Then
+
+        '                        ElseIf columnheads(l).Contains("A2") Then
+
+        '                        ElseIf columnheads(l).Contains("A3") Then
+
+        '                        Else 'A4
+
+        '                        End If
+        '                    End If
+        '                Next
+        '                For i = 0 To DataGrid.Form.Columns.Count - 1
+        '                    sb.Append("," & DataGrid.Form.Columns(i).HeaderText)
+        '                Next
+        '                outfile.WriteLine(sb.ToString())
+        '                sb.Clear()
+
+        '                'write actual data now
+        '                For j = 0 To DataGrid.Form.Rows.Count - 1
+        '                    sb.Append(DataGrid.Form.Rows(j).HeaderCell.Value)
+        '                    For i = 0 To DataGrid.Form.Columns.Count - 1
+        '                        sb.Append("," & DataGrid.Form.Rows(j).Cells(i).Value)
+        '                    Next
+        '                    sb.AppendLine()
+        '                Next
+        '                outfile.Write(sb.ToString())
+        '            End If
+        '        Else
+        '            MessageBox.Show("Load File Error!", "My application", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        '        End If
+        '    End If
+        'End If
         Return False
     End Function
 End Class

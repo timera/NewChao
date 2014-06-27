@@ -12,6 +12,7 @@
     Public StartStep As Integer
     Public EndStep As Integer
     Public Name As String
+    Public Executed As Boolean = False
 
     Public GRU As Grid_Run_Unit
 

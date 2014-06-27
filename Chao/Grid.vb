@@ -800,6 +800,7 @@ Public Class Grid
 
     Private Sub Form_CellValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Form.CellValueChanged
         CType(_Parent.FindForm().MainMenuStrip.Items.Find("SaveToolStripMenuItem", True)(0), ToolStripMenuItem).Enabled = True
+        CType(_Parent.Controls.Find("ButtonExport", True)(0), Button).Enabled = True
     End Sub
 End Class
 

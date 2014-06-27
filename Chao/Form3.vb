@@ -303,7 +303,7 @@ Public Class Program
         S7.Size = New Size(12, 12)
         S8.Size = New Size(12, 12)
         S9.Size = New Size(12, 12)
-        timeLabel.Size = New Size(80, 60)
+        timeLabel.Size = New Size(120, 60)
         Panel_Setting_Bargraph_Max_Min.Size = New Size(300, 225)
         Setting_Bargraph_Title.Size = New Size(293, 43)
         Setting_Bargraph_Max.Size = New Size(73, 33)
@@ -401,6 +401,7 @@ Public Class Program
         Test_StopButton.Location = New Point(60, 100)
         Test_NextButton.Location = New Point(60, 180)
         Test_ConfirmButton.Location = New Point(60, 322)
+        ButtonExport.Location = New Point(20, 500)
         Test_Input_S_Panel.Location = New Point(155, 20)
         TabControl2.Location = New Point(timeLabel.Left, timeLabel.Top + timeLabel.Height + 3)
 
@@ -2448,7 +2449,8 @@ Public Class Program
                             stopButton.Enabled = False
                             array_step(CurRun.CurStep - 1).BackColor = Color.Green
                             Set_Panel_BackColor()
-                            CurRun = CurRun.NextUnit
+                            CurRun.Executed = True
+                            MoveToRun(CurRun.NextUnit)
                             Set_Run_Unit()
 
                             'load A2's steps
@@ -2724,6 +2726,8 @@ Public Class Program
         End If
     End Sub
 
+
+
     '##BUTTON CLICKS
     Private Sub stopButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles stopButton.Click
 
@@ -2950,38 +2954,18 @@ Public Class Program
     Sub Restart_from_1st_Previous_Run_Unit()
         CurRun.PrevUnit.Set_BackColor(Color.Yellow)
         CurRun.Set_BackColor(Color.IndianRed)
-        CurRun = CurRun.PrevUnit
-        CurRun.Steps = Load_Steps_helper(CurRun)
-        CurStep = CurRun.HeadStep
-        CurRun.CurStep = 1
-        For index = CurRun.StartStep To CurRun.EndStep
-            If CurRun.Steps.Time = -1 Then
-                CurRun.Steps = CurRun.Steps.NextStep
-                CurRun.CurStep += 1
-            End If
-        Next
+        MoveToRun(CurRun.PrevUnit)
+        Set_Run_Unit()
         CurRun.NextUnit.CurStep = 1
-        timeLeft = CurRun.Steps.Time
-        timeLabel.Text = timeLeft & " s"
     End Sub
     Sub Restart_from_2nd_Previous_Run_Unit()
         CurRun.PrevUnit.PrevUnit.Set_BackColor(Color.Yellow)
         CurRun.PrevUnit.Set_BackColor(Color.IndianRed)
         CurRun.Set_BackColor(Color.IndianRed)
-        CurRun = CurRun.PrevUnit.PrevUnit
-        CurRun.Steps = Load_Steps_helper(CurRun)
-        CurStep = CurRun.HeadStep
-        CurRun.CurStep = 1
-        For index = CurRun.StartStep To CurRun.EndStep
-            If CurRun.Steps.Time = -1 Then
-                CurRun.Steps = CurRun.Steps.NextStep
-                CurRun.CurStep += 1
-            End If
-        Next
+        MoveToRun(CurRun.PrevUnit.PrevUnit)
+        Set_Run_Unit()
         CurRun.NextUnit.CurStep = 1
         CurRun.NextUnit.NextUnit.CurStep = 1
-        timeLeft = CurRun.Steps.Time
-        timeLabel.Text = timeLeft & " s"
     End Sub
 
     Private Sub Test_StartButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_StartButton.Click
@@ -3086,12 +3070,9 @@ Public Class Program
                 Set_Panel_BackColor()
                 Index_for_Setup_Time += 1
                 'jump to next Run_Unit
-                CurRun = CurRun.NextUnit
-                CurRun.Steps = Load_Steps_helper(CurRun)
-                CurStep = CurRun.HeadStep
+                MoveToRun(CurRun.NextUnit)
+                Set_Run_Unit()
                 timeLeft = 0
-                timeLabel.Text = timeLeft & " s"
-                'Load_Steps_helper(CurRun)
 
                 'load A1's steps
                 Clear_Steps()
@@ -3229,7 +3210,7 @@ Public Class Program
         If CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "ExA2_2nd_3rd" And CurRun.NextUnit.Name = "ExA2_2nd_3rd" Or CurRun.Name = "ExA2_2nd_3rd_Add" And CurRun.NextUnit.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_2nd_3rd" And CurRun.NextUnit.Name = "LoA2_2nd_3rd" Or CurRun.Name = "LoA2_2nd_3rd_Add" And CurRun.NextUnit.Name = "LoA2_2nd_3rd_Add" Then
             'MessageBox.Show("here")
             Set_Panel_BackColor()
-            CurRun = CurRun.NextUnit
+            MoveToRun(CurRun.NextUnit)
             Set_Run_Unit()
 
             'load A2's steps
@@ -3444,6 +3425,7 @@ Public Class Program
             Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
             If Result = DialogResult.Yes Then
                 keyGRU.Accept()
+                CurRun.Executed = True
                 If CurRun.Name.Contains("bkd") Then
                     keyGRU.OverallGRU.Accept()
                 End If
@@ -3461,7 +3443,7 @@ Public Class Program
                         'save info here
 
                         'jump to next Run_Unit and set second to zero(should be zero here)
-                        CurRun = CurRun.NextUnit
+                        MoveToRun(CurRun.NextUnit)
                         timeLeft = CurRun.Time
                         timeLabel.Text = timeLeft & " s"
 
@@ -3473,7 +3455,7 @@ Public Class Program
                         Set_Panel_BackColor()
                         CurRun.Link.Enabled = True
                         'jump to next Run_Unit and change countdown False to True(for A1 A2 A3 A4 test)
-                        CurRun = CurRun.NextUnit
+                        MoveToRun(CurRun.NextUnit)
                         Set_Run_Unit()
                         If CurRun.Name.Contains("A4") Then
                             Countdown = False
@@ -3501,7 +3483,7 @@ Public Class Program
 
                         'save info here
                         'jump to next Run_Unit and set second to zero(should be zero here)
-                        CurRun = CurRun.NextUnit
+                        MoveToRun(CurRun.NextUnit)
                         timeLeft = CurRun.Time
                         timeLabel.Text = timeLeft & " s"
 
@@ -3526,7 +3508,7 @@ Public Class Program
                         'save info here
 
                         'jump to next Run_Unit and set second to zero(should be zero here)
-                        CurRun = CurRun.NextUnit
+                        MoveToRun(CurRun.NextUnit)
                         timeLeft = CurRun.Time
                         timeLabel.Text = timeLeft & " s"
 
@@ -3539,7 +3521,7 @@ Public Class Program
                             Set_Panel_BackColor()
                             CurRun.Link.Enabled = True
                             'jump to next Run_Unit
-                            CurRun = CurRun.NextUnit
+                            MoveToRun(CurRun.NextUnit)
                             timeLeft = CurRun.Time
                             timeLabel.Text = timeLeft & " s"
                             Clear_Steps()
@@ -3561,7 +3543,7 @@ Public Class Program
                             list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
                             If DataGrid.NeedAdd(list) Then
                                 'True: add test
-                                CurRun = CurRun.NextUnit
+                                MoveToRun(CurRun.NextUnit)
                                 Set_Add_GRU(0, "Background", "")    'True: add test
                                 ' change light
                                 CurRun.Set_BackColor(Color.Yellow)
@@ -3574,7 +3556,7 @@ Public Class Program
                                 Button_Skip_Add.Enabled = True
                             Else
                                 'False: not add test , jump to RSS
-                                CurRun = CurRun.NextUnit.NextUnit.NextUnit
+                                MoveToRun(CurRun.NextUnit.NextUnit.NextUnit)
                                 CurRun.Set_BackColor(Color.Yellow)
                                 timeLeft = CurRun.Time
                                 timeLabel.Text = timeLeft & " s"
@@ -3610,7 +3592,7 @@ Public Class Program
                         If DataGrid.NeedAdd(list) Then
                             CurRun.PrevUnit.Set_BackColor(Color.Yellow)
                             CurRun.Set_BackColor(Color.IndianRed)
-                            CurRun = CurRun.PrevUnit
+                            MoveToRun(CurRun.PrevUnit)
                             'True: add test
                             Set_Add_GRU(4, "Background", "")    'True: add test
                             'True: add test , jump to A4_Mid_BG_Add
@@ -3627,7 +3609,7 @@ Public Class Program
                         Else
                             'False: not add test , jump to RSS
                             Set_Panel_BackColor()
-                            CurRun = CurRun.NextUnit
+                            MoveToRun(CurRun.NextUnit)
                             CurRun.Steps = Load_Steps_helper(CurRun)
                             timeLeft = CurRun.Time
                             timeLabel.Text = timeLeft & " s"
@@ -3648,7 +3630,7 @@ Public Class Program
                         Set_Panel_BackColor()
                         CurRun.Link.Enabled = True
 
-                        CurRun = CurRun.NextUnit
+                        MoveToRun(CurRun.NextUnit)
                         'jump to next Run_Unit
                         'case: next is A4_Add
                         If CurRun.Name.Contains("Add") Then
@@ -3659,7 +3641,7 @@ Public Class Program
                                 i += 1
                             End While
 
-                            Set_Add_GRU(4, "Run " & i, "")
+                            Set_Add_GRU(4, "Run" & i, "")
                         End If
                         Set_Run_Unit()
                         'load A4's steps
@@ -3680,7 +3662,7 @@ Public Class Program
                             Set_Panel_BackColor()
                             CurRun.Link.Enabled = True
                             'jump to next Run_Unit
-                            CurRun = CurRun.NextUnit
+                            MoveToRun(CurRun.NextUnit)
                             Set_Run_Unit()
 
                             'load A1's steps
@@ -3706,15 +3688,15 @@ Public Class Program
                             list.Add(CurRun.PrevUnit.PrevUnit.GRU) 'adding test 1
                             If DataGrid.NeedAdd(list) Then
                                 'True: add test
-                                CurRun = CurRun.NextUnit
-                                Set_Add_GRU(0, "Run 4", "")
+                                MoveToRun(CurRun.NextUnit)
+                                Set_Add_GRU(0, "Run4", "")
                                 CurRun.Set_BackColor(Color.Yellow)
                                 Set_Run_Unit()
                                 'skip button enable
                                 Button_Skip_Add.Enabled = True
                             Else
                                 'False: not add test , jump to ExA2_1st or jump to TrA3_fwd or jump to LoA2_1st
-                                CurRun = CurRun.NextUnit.NextUnit
+                                MoveToRun(CurRun.NextUnit.NextUnit)
                                 CurRun.Set_BackColor(Color.Yellow)
                                 Reset_Test_Time()
                             End If
@@ -3751,14 +3733,14 @@ Public Class Program
                         If DataGrid.NeedAdd(list) Then
                             'True: add test
                             CurRun.Set_BackColor(Color.Yellow)
-                            Set_Add_GRU(0, "Run " & i, "")
+                            Set_Add_GRU(0, "Run" & i, "")
                             Set_Run_Unit()
                             'skip button enable
                             Button_Skip_Add.Enabled = True
                         Else
                             'False: not add test
                             Set_Panel_BackColor()
-                            CurRun = CurRun.NextUnit
+                            MoveToRun(CurRun.NextUnit)
                             Reset_Test_Time()
                             'skip button disable
                             Button_Skip_Add.Enabled = False
@@ -3789,8 +3771,8 @@ Public Class Program
                             list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
                             If DataGrid.NeedAdd(list) Then
                                 'True: add test
-                                CurRun = CurRun.NextUnit
-                                Set_Add_GRU(2, "Run 4", "")    'True: add test
+                                MoveToRun(CurRun.NextUnit)
+                                Set_Add_GRU(2, "Run4", "")    'True: add test
                                 Set_Run_Unit()
                                 CurRun.Set_BackColor(Color.Yellow)
                                 'load A2's steps
@@ -3802,7 +3784,7 @@ Public Class Program
                                 Button_Skip_Add.Enabled = True
                             Else
                                 'False: not add test , jump to RSS(Ex) or LoA1(Ex) or LoA3_fwd(Lo)
-                                CurRun = CurRun.NextUnit.NextUnit.NextUnit.NextUnit
+                                MoveToRun(CurRun.NextUnit.NextUnit.NextUnit.NextUnit)
                                 CurRun.Set_BackColor(Color.Yellow)
                                 If CurRun.Name = "RSS" Then
                                     CurRun.Steps = Load_Steps_helper(CurRun)
@@ -3831,7 +3813,7 @@ Public Class Program
                             End If
                         ElseIf CurRun.NextUnit.Name = "ExA2_1st" Or CurRun.NextUnit.Name = "LoA2_1st" Then
                             Set_Panel_BackColor()
-                            CurRun = CurRun.NextUnit
+                            MoveToRun(CurRun.NextUnit)
                             Set_Run_Unit()
                             'load A2's steps
                             Clear_Steps()
@@ -3868,7 +3850,7 @@ Public Class Program
                             If DataGrid.NeedAdd(list) Then
                                 'True: add test
                                 Restart_from_2nd_Previous_Run_Unit()
-                                Set_Add_GRU(2, "Run " & i, "")
+                                Set_Add_GRU(2, "Run" & i, "")
                                 'load A2's steps
                                 Clear_Steps()
                                 Load_Steps()
@@ -3880,7 +3862,7 @@ Public Class Program
                             Else
                                 'False: not add test ,  jump to RSS or LoA1
                                 Set_Panel_BackColor()
-                                CurRun = CurRun.NextUnit
+                                MoveToRun(CurRun.NextUnit)
                                 'skip button disable
                                 Button_Skip_Add.Enabled = False
                                 If CurRun.Name = "RSS" Then
@@ -3923,7 +3905,7 @@ Public Class Program
                             '    DataGrid.AddA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU)
                             'End If
                             ''jump to next Run_Unit
-                            CurRun = CurRun.NextUnit
+                            MoveToRun(CurRun.NextUnit)
                             Set_Run_Unit()
                             'load LoA3 or TrA3's steps
                             Clear_Steps()
@@ -3949,8 +3931,8 @@ Public Class Program
                             list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU.NextGRU) 'adding test 1
                             If DataGrid.NeedAdd(list) Then
                                 'True: add test
-                                CurRun = CurRun.NextUnit
-                                Set_Add_GRU(3, "Run 4", "前進")    'True: add test
+                                MoveToRun(CurRun.NextUnit)
+                                Set_Add_GRU(3, "Run4", "前進")    'True: add test
 
                                 Set_Run_Unit()
                                 CurRun.Set_BackColor(Color.Yellow)
@@ -3964,7 +3946,7 @@ Public Class Program
                                 Button_Skip_Add.Enabled = True
                             Else
                                 'False: not add test , jump to RSS
-                                CurRun = CurRun.NextUnit.NextUnit.NextUnit
+                                MoveToRun(CurRun.NextUnit.NextUnit.NextUnit)
                                 CurRun.Set_BackColor(Color.Yellow)
                                 timeLeft = CurRun.Time
                                 timeLabel.Text = timeLeft & " s"
@@ -3987,7 +3969,7 @@ Public Class Program
                             Set_Panel_BackColor()
                             'CurRun.Link.Enabled = True
                             'jump to next Run_Unit
-                            CurRun = CurRun.NextUnit
+                            MoveToRun(CurRun.NextUnit)
 
                             If Not IsNothing(CurRun.GRU) Then
                                 Dim i As Integer = 5
@@ -3996,11 +3978,11 @@ Public Class Program
                                     tempGRU = tempGRU.NextGRU
                                     i += 1
                                 End While
-                                Set_Add_GRU(3, "Run " & i, "後退")
+                                Set_Add_GRU(3, "Run" & i, "後退")
                                 tempGRU = tempGRU.NextGRU
                                 DataGrid.AddA3OverallColumn(tempGRU)
                             Else
-                                Set_Add_GRU(3, "Run 4", "後退")
+                                Set_Add_GRU(3, "Run4", "後退")
                                 DataGrid.AddA3OverallColumn(CurRun.GRU)
                             End If
 
@@ -4035,7 +4017,7 @@ Public Class Program
                             If DataGrid.NeedAdd(list) Then
                                 Restart_from_1st_Previous_Run_Unit()
                                 'True: add test
-                                Set_Add_GRU(3, "Run " & i, "前進")
+                                Set_Add_GRU(3, "Run" & i, "前進")
 
                                 'load LoA3_fwd or TrA3_fwd's steps
                                 Clear_Steps()
@@ -4048,7 +4030,7 @@ Public Class Program
                             Else
                                 'False: not add test , jump to RSS
                                 Set_Panel_BackColor()
-                                CurRun = CurRun.NextUnit
+                                MoveToRun(CurRun.NextUnit)
                                 timeLeft = CurRun.Time
                                 timeLabel.Text = timeLeft & " s"
                                 Countdown = False
@@ -4425,13 +4407,13 @@ Public Class Program
 
         If CurRun.Name.Contains("A4_Add") Or CurRun.Name.Contains("A1") Or CurRun.Name.Contains("A3_bkd") Or CurRun.NextUnit.Name = "RSS" Or CurRun.NextUnit.Name = "LoA1" Or CurRun.NextUnit.Name = "LoA3_fwd" Then
             'skip 1 unit (include self)
-            CurRun = CurRun.NextUnit
+            MoveToRun(CurRun.NextUnit)
         ElseIf CurRun.Name.Contains("A3_fwd") Or CurRun.PrevUnit.Name.Contains("A2_1st_Add") Or CurRun.Name = "A4_Mid_BG_Add" Then
             'skip 2 unit (include self)
-            CurRun = CurRun.NextUnit.NextUnit
+            MoveToRun(CurRun.NextUnit.NextUnit)
         ElseIf CurRun.Name.Contains("A2_1st_Add") Then
             'skip 3 unit (include self)
-            CurRun = CurRun.NextUnit.NextUnit.NextUnit
+            MoveToRun(CurRun.NextUnit.NextUnit.NextUnit)
         End If
 
 
@@ -4473,7 +4455,7 @@ Public Class Program
             If (outfile IsNot Nothing) Then
                 Dim sb As StringBuilder = New StringBuilder()
                 'write basic data first
-                sb.AppendLine(ComboBox_machine_list.SelectedText & "," & TextBox_L.Text & "," & TextBox_r1.Text & "," & TextBox_L1.Text & "," & TextBox_L2.Text & "," & TextBox_L3.Text & "," & TextBox_r2.Text)
+                sb.AppendLine(ComboBox_machine_list.Text & "," & TextBox_L.Text & "," & TextBox_r1.Text & "," & TextBox_L1.Text & "," & TextBox_L2.Text & "," & TextBox_L3.Text & "," & TextBox_r2.Text)
                 For k = 0 To BasicInfoGrid.Rows.Count - 1
                     sb.AppendLine(BasicInfoGrid.Rows(k).Cells(0).Value)
                 Next
@@ -4500,11 +4482,41 @@ Public Class Program
         Return False
     End Function
 
+    Public Function DoubleArrayToString(ByRef array As List(Of Double)) As String
+        If array IsNot Nothing Then
+            Dim sb As StringBuilder = New StringBuilder()
+            For i = 0 To array.Count - 1
+                sb.Append(array(i))
+                If Not i = array.Count - 1 Then
+                    sb.Append(",")
+                End If
+            Next
+            Return sb.ToString()
+        End If
+        Return ""
+    End Function
+
+    Public Function StringToDoubleList(ByRef st As String) As List(Of Double)
+        Dim dbArray As List(Of Double) = New List(Of Double)
+        If st IsNot Nothing Then
+            Dim stArray() As String = st.Split(",")
+
+            If stArray IsNot Nothing Then
+                If Not stArray.Length = 0 Then
+                    For i = 0 To stArray.Length - 1
+                        dbArray.Add(CDbl(stArray(i)))
+                    Next
+                End If
+            End If
+        End If
+        Return dbArray
+    End Function
+
     'Menu Strip Functions
     'contains recording
     Public Function Save() As Boolean
         Dim saveFileDialog1 As New SaveFileDialog()
-        Dim tempRun As Grid_Run_Unit = HeadRun.GRU
+        Dim tempRun As Run_Unit = HeadRun
         saveFileDialog1.Filter = "Chao files (*.cha)|*.chao|All files (*.*)|*.*"
         saveFileDialog1.RestoreDirectory = True
         Dim outfile As StreamWriter
@@ -4514,13 +4526,38 @@ Public Class Program
             If (outfile IsNot Nothing) Then
                 Dim sb As StringBuilder = New StringBuilder()
                 'write basic data first
-                sb.AppendLine(ComboBox_machine_list.SelectedText & "," & TextBox_L.Text & "," & TextBox_r1.Text & "," & TextBox_L1.Text & "," & TextBox_L2.Text & "," & TextBox_L3.Text & "," & TextBox_r2.Text)
+                sb.AppendLine(ComboBox_machine_list.Text & "," & TextBox_L.Text & "," & TextBox_r1.Text & "," & TextBox_L1.Text & "," & TextBox_L2.Text & "," & TextBox_L3.Text & "," & TextBox_r2.Text)
                 For k = 0 To BasicInfoGrid.Rows.Count - 1
-                    sb.AppendLine(BasicInfoGrid.Rows(k).Cells(0).Value)
+                    If Not k Mod 2 = 0 Then
+                        sb.AppendLine(BasicInfoGrid.Rows(k).Cells(0).Value & "##")
+                    End If
                 Next
-                While tempRun IsNot Nothing
-                    sb.AppendLine(tempRun.Header & "," & tempRun.LpAeq2 & "," & tempRun.LpAeq4 & "," & tempRun.LpAeq6 & "," & tempRun.LpAeq8 & "," & tempRun.LpAeq10 & "," & tempRun.LpAeq12 & "," & tempRun.Time)
-                    tempRun = tempRun.NextGRU
+                While tempRun IsNot Nothing And (tempRun.Name.Contains("Add") Or tempRun.Executed)
+                    If tempRun.GRU IsNot Nothing Then
+                        Dim tempGRU As Grid_Run_Unit = tempRun.GRU
+                        'FORMAT: HEADER;SUBHEADER;LpAeq2|meter2second1,meter2second2,meter2second3,meter2second4,meter2second5...;LpAeq4|meter4second1,....;....
+                        sb.AppendLine(tempGRU.Header & ";" &
+                                      tempGRU.Subheader & ";" &
+                                      tempGRU.LpAeq2 & "|" & DoubleArrayToString(tempGRU.Meter2.Measurements) & ";" &
+                                      tempGRU.LpAeq4 & "|" & DoubleArrayToString(tempGRU.Meter4.Measurements) & ";" &
+                                      tempGRU.LpAeq6 & "|" & DoubleArrayToString(tempGRU.Meter6.Measurements) & ";" &
+                                      tempGRU.LpAeq8 & "|" & DoubleArrayToString(tempGRU.Meter8.Measurements) & ";" &
+                                      tempGRU.LpAeq10 & "|" & DoubleArrayToString(tempGRU.Meter10.Measurements) & ";" &
+                                      tempGRU.LpAeq12 & "|" & DoubleArrayToString(tempGRU.Meter12.Measurements))
+                        Dim addGRU As Grid_Run_Unit = tempGRU.NextGRU
+                        While addGRU IsNot Nothing
+                            sb.AppendLine(addGRU.Header & ";" &
+                                          addGRU.Subheader & ";" &
+                                      addGRU.LpAeq2 & "|" & DoubleArrayToString(addGRU.Meter2.Measurements) & ";" &
+                                      addGRU.LpAeq4 & "|" & DoubleArrayToString(addGRU.Meter4.Measurements) & ";" &
+                                      addGRU.LpAeq6 & "|" & DoubleArrayToString(addGRU.Meter6.Measurements) & ";" &
+                                      addGRU.LpAeq8 & "|" & DoubleArrayToString(addGRU.Meter8.Measurements) & ";" &
+                                      addGRU.LpAeq10 & "|" & DoubleArrayToString(addGRU.Meter10.Measurements) & ";" &
+                                      addGRU.LpAeq12 & "|" & DoubleArrayToString(addGRU.Meter12.Measurements))
+                            addGRU = addGRU.NextGRU
+                        End While
+                    End If
+                    tempRun = tempRun.NextUnit
                 End While
                 outfile.WriteLine(sb.ToString())
             End If
@@ -4529,6 +4566,10 @@ Public Class Program
         End If
         Return False
     End Function
+
+    Public Sub MoveToRun(ByRef Run As Run_Unit)
+        CurRun = Run
+    End Sub
 
     Public Function CheckFileFormat(ByVal inFile As StreamReader) As Boolean
         'check basic data first
@@ -4554,73 +4595,142 @@ Public Class Program
         Return True
     End Function
 
+    Public Sub ShowLoadedDataOnForm(ByRef gruInfo As String())
+        'Precal,postcal,RSS,background
+        'Dim series As List(Of DataVisualization.Charting.Series) = MainLineGraph.GetSeries()
+
+        'Dim Leqpoints As DataVisualization.Charting.DataPointCollection = MainBarGraph.GetSeries(0).Points()
+        
+        'precal and postcal
+        If CurRun.Name.Contains("Cal") Then
+            Dim num As Integer
+            If CurRun.Name.Contains("2") Then
+                num = 2
+            ElseIf CurRun.Name.Contains("4") Then
+                num = 4
+            ElseIf CurRun.Name.Contains("6") Then
+                num = 6
+            ElseIf CurRun.Name.Contains("8") Then
+                num = 8
+            ElseIf CurRun.Name.Contains("10") Then
+                num = 10
+            ElseIf CurRun.Name.Contains("12") Then
+                num = 12
+            End If
+            CurRun.GRU.SetM(New Meter_Measure_Unit(num, StringToDoubleList(gruInfo(num / 2 + 1).Split("|")(1)), CDbl(gruInfo(num / 2 + 1).Split("|")(0))), num)
+        End If
+
+        Dim count As Integer = StringToDoubleList(gruInfo(1).Split("|")(1)).Count
+        'everything else
+        Dim tempGRU As Grid_Run_Unit = CurRun.GRU
+        While Not IsNothing(tempGRU.NextGRU) 'for more than one additional runs
+            tempGRU = tempGRU.NextGRU
+        End While
+        If count = 4 Then
+            tempGRU.SetMs(New Meter_Measure_Unit(2, StringToDoubleList(gruInfo(2).Split("|")(1)), CDbl(gruInfo(2).Split("|")(0))),
+                                                 New Meter_Measure_Unit(4, StringToDoubleList(gruInfo(3).Split("|")(1)), CDbl(gruInfo(3).Split("|")(0))),
+                                                 New Meter_Measure_Unit(6, StringToDoubleList(gruInfo(4).Split("|")(1)), CDbl(gruInfo(4).Split("|")(0))),
+                                                 New Meter_Measure_Unit(8, StringToDoubleList(gruInfo(5).Split("|")(1)), CDbl(gruInfo(5).Split("|")(0))))
+        Else
+            tempGRU.SetMs(New Meter_Measure_Unit(2, StringToDoubleList(gruInfo(2).Split("|")(1)), CDbl(gruInfo(2).Split("|")(0))),
+                                                 New Meter_Measure_Unit(4, StringToDoubleList(gruInfo(3).Split("|")(1)), CDbl(gruInfo(3).Split("|")(0))),
+                                                 New Meter_Measure_Unit(6, StringToDoubleList(gruInfo(4).Split("|")(1)), CDbl(gruInfo(4).Split("|")(0))),
+                                                 New Meter_Measure_Unit(8, StringToDoubleList(gruInfo(5).Split("|")(1)), CDbl(gruInfo(5).Split("|")(0))),
+                                                 New Meter_Measure_Unit(10, StringToDoubleList(gruInfo(6).Split("|")(1)), CDbl(gruInfo(6).Split("|")(0))),
+                                                 New Meter_Measure_Unit(12, StringToDoubleList(gruInfo(7).Split("|")(1)), CDbl(gruInfo(7).Split("|")(0))))
+        End If
+
+        DataGrid.ShowGRUonForm(tempGRU)
+        If CurRun.Name.Contains("bkd") Then
+            Dim latestFwdGRU As Grid_Run_Unit = CurRun.PrevUnit.GRU
+            Dim latestBkdGRU As Grid_Run_Unit = CurRun.GRU
+            While Not IsNothing(latestFwdGRU.NextGRU)
+                latestFwdGRU = latestFwdGRU.NextGRU
+                latestBkdGRU = latestBkdGRU.NextGRU
+            End While
+            DataGrid.ShowA3Overall(latestFwdGRU, latestBkdGRU)
+        End If
+    End Sub
+
     Public Function LoadFile() As Boolean
-        'Dim loadFileDialog As New OpenFileDialog()
-        'Dim inFile As StreamReader
-        'If loadFileDialog.ShowDialog() = DialogResult.OK Then
-        '    inFile = New StreamReader(loadFileDialog.OpenFile(), System.Text.Encoding.Unicode)
-        '    If inFile IsNot Nothing Then
-        '        If CheckFileFormat(inFile) Then
-        '            'liberate data first
-        '            If Change_Machine() Then
-        '                'load and write basic data first
-        '                Dim type_l_r() As String = inFile.ReadLine().Split(",")
+        Dim loadFileDialog As New OpenFileDialog()
+        Dim inFile As StreamReader
+        If loadFileDialog.ShowDialog() = DialogResult.OK Then
+            inFile = New StreamReader(loadFileDialog.OpenFile(), System.Text.Encoding.Unicode)
+            If inFile IsNot Nothing Then
+                'liberate data first
+                If Change_Machine() Then
+                    'load and write basic data first
+                    Dim type_l_r() As String = inFile.ReadLine().Split(",")
 
-        '                ComboBox_machine_list.SelectedText = type_l_r(0)
-        '                TextBox_L.Text = type_l_r(1)
-        '                TextBox_r1.Text = type_l_r(2)
-        '                TextBox_L1.Text = type_l_r(3)
-        '                TextBox_L2.Text = type_l_r(4)
-        '                TextBox_L3.Text = type_l_r(5)
-        '                TextBox_r2.Text = type_l_r(6)
+                    ComboBox_machine_list.Text = type_l_r(0)
+                    TextBox_L.Text = type_l_r(1)
+                    TextBox_r1.Text = type_l_r(2)
+                    TextBox_L1.Text = type_l_r(3)
+                    TextBox_L2.Text = type_l_r(4)
+                    TextBox_L3.Text = type_l_r(5)
+                    TextBox_r2.Text = type_l_r(6)
 
-        '                For k = 0 To BasicInfoGrid.Rows.Count - 1
-        '                    BasicInfoGrid.Rows(k).Cells(0).Value = inFile.ReadLine()
-        '                Next
-        '                'A123
-        '                If Not Machine = Machines.Others Then
-        '                    A123_Prepare()
-        '                Else 'A4
-        '                    A4_Prepare()
-        '                End If
+                    For k = 0 To BasicInfoGrid.Rows.Count - 1
+                        If Not k Mod 2 = 0 Then 'skipping even number columns to avoid titles
+                            Dim tempBlob As StringBuilder = New StringBuilder(inFile.ReadLine())
+                            While Not tempBlob.ToString().EndsWith("##")
+                                tempBlob.AppendLine(inFile.ReadLine())
+                            End While
+                            BasicInfoGrid.Rows(k).Cells(0).Value = tempBlob
+                        End If
+                    Next
+                    'A123
+                    If Not Machine = Machines.Others Then
+                        A123_Prepare()
+                    Else 'A4
+                        A4_Prepare()
+                    End If
 
-        '                'write column headers second
-        '                Dim columnheads() As String = inFile.ReadLine().Split(",")
-        '                'deal with extra testings
-        '                For l = 0 To columnheads.Length - 1
-        '                    If columnheads(l).Contains("A") Then
-        '                        If columnheads(l).Contains("A1") Then
+                    'Grid_Run_Unit_Info gives you the format as such- Background;110.9|107.5,69.2,111.9;59.5|70.9,105.7,60.5;54.7|113.2,45.9,55.7;99.3|67.6,44.9,100.3
+                    Dim gruInfo() As String
 
-        '                        ElseIf columnheads(l).Contains("A2") Then
+                    Dim runsCount As Integer = 0
+                    Dim Aes() As String = Decide_Machine(ComboBox_machine_list.Text).Split(",")
+                    Dim AesIdx As Integer = 0
+                    Do
+                        gruInfo = inFile.ReadLine().Split(";")
+                        If Not gruInfo.Length = 0 Then
+                            runsCount += 1
+                            Dim title As String = gruInfo(0)
+                            Dim subh As String = gruInfo(1)
+                            'Dim time As Integer = CInt(gruInfo(gruInfo.Length - 1))
 
-        '                        ElseIf columnheads(l).Contains("A3") Then
+                            'no additional after 3rd or additional run
+                            If CurRun.Name.Contains("Add") And (title.EndsWith("Run1") Or title.EndsWith("Run2") Or title.EndsWith("Run3")) Then
+                                AesIdx += 1
+                                CurRun = CurRun.NextUnit 'skipping the additional Run_Unit
+                                ShowLoadedDataOnForm(gruInfo)
+                                CurRun = CurRun.NextUnit 'after showing move to next unit for the next iteration
+                                'any additional run
+                            ElseIf CurRun.Name.Contains("Add") And Not (title.EndsWith("Run1") Or title.EndsWith("Run2") Or title.EndsWith("Run3")) Then
+                                'create more gru for additional run
+                                Set_Add_GRU(AesIdx, title, subh)
+                                ShowLoadedDataOnForm(gruInfo)
+                                'regular run
+                            Else
+                                ShowLoadedDataOnForm(gruInfo)
+                                CurRun = CurRun.NextUnit 'after showing move to next unit for the next iteration
+                            End If
 
-        '                        Else 'A4
-
-        '                        End If
-        '                    End If
-        '                Next
-        '                For i = 0 To DataGrid.Form.Columns.Count - 1
-        '                    sb.Append("," & DataGrid.Form.Columns(i).HeaderText)
-        '                Next
-        '                outfile.WriteLine(sb.ToString())
-        '                sb.Clear()
-
-        '                'write actual data now
-        '                For j = 0 To DataGrid.Form.Rows.Count - 1
-        '                    sb.Append(DataGrid.Form.Rows(j).HeaderCell.Value)
-        '                    For i = 0 To DataGrid.Form.Columns.Count - 1
-        '                        sb.Append("," & DataGrid.Form.Rows(j).Cells(i).Value)
-        '                    Next
-        '                    sb.AppendLine()
-        '                Next
-        '                outfile.Write(sb.ToString())
-        '            End If
-        '        Else
-        '            MessageBox.Show("Load File Error!", "My application", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-        '        End If
-        '    End If
-        'End If
+                        End If
+                    Loop While gruInfo IsNot Nothing
+                End If
+            End If
+        Else
+            MessageBox.Show("Load File Error!", "My application", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        End If
         Return False
     End Function
+
+    Private Sub ButtonExport_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonExport.Click
+        If ExportToCSV() Then
+            ButtonExport.Enabled = False
+        End If
+    End Sub
 End Class

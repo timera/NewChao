@@ -2414,13 +2414,17 @@ Public Class Program
             timeLeft = timeLeft + 1
             timeLabel.Text = timeLeft & " s"
 
-            ''''
-            If timeLeft = 2 Then
+            'precal,postcal
+            If timeLeft = 1 And (CurRun.Name.Contains("PreCal") Or CurRun.Name.Contains("PostCal")) Then
+                stopButton.Enabled = True
+            ElseIf timeLeft = 2 Then            'A4,RSS,Background
                 stopButton.Enabled = True
             End If
+
             'send values to display as text and graphs
             SetScreenValuesAndGraphs(GetInstantData())
         Else
+            stopButton.Enabled = True
             If timeLeft > 0 Then 'counting
                 If Not timeLeft = 1 Then
                     timeLeft = timeLeft - 1
@@ -2598,11 +2602,12 @@ Public Class Program
         If Countdown = False Then
             startButton.Enabled = False
             Accept_Button.Enabled = False
-            If CurRun.Name.Contains("A4") Or CurRun.Name.Contains("RSS") Or CurRun.Name.Contains("Background") Then
-                stopButton.Enabled = False
-            Else
-                stopButton.Enabled = True
-            End If
+            stopButton.Enabled = False
+            'If CurRun.Name.Contains("A4") Or CurRun.Name.Contains("RSS") Or CurRun.Name.Contains("Background") Then
+            '    stopButton.Enabled = False
+            'Else
+            '    stopButton.Enabled = True
+            'End If
 
             Timer1.Start()
         Else
@@ -4597,10 +4602,7 @@ Public Class Program
 
     Public Sub ShowLoadedDataOnForm(ByRef gruInfo As String())
         'Precal,postcal,RSS,background
-        'Dim series As List(Of DataVisualization.Charting.Series) = MainLineGraph.GetSeries()
 
-        'Dim Leqpoints As DataVisualization.Charting.DataPointCollection = MainBarGraph.GetSeries(0).Points()
-        
         'precal and postcal
         If CurRun.Name.Contains("Cal") Then
             Dim num As Integer
@@ -4620,12 +4622,14 @@ Public Class Program
             CurRun.GRU.SetM(New Meter_Measure_Unit(num, StringToDoubleList(gruInfo(num / 2 + 1).Split("|")(1)), CDbl(gruInfo(num / 2 + 1).Split("|")(0))), num)
         End If
 
-        Dim count As Integer = StringToDoubleList(gruInfo(1).Split("|")(1)).Count
+        Dim count As Integer = StringToDoubleList(gruInfo(2).Split("|")(1)).Count
         'everything else
         Dim tempGRU As Grid_Run_Unit = CurRun.GRU
-        While Not IsNothing(tempGRU.NextGRU) 'for more than one additional runs
-            tempGRU = tempGRU.NextGRU
-        End While
+        If tempGRU IsNot Nothing Then
+            While Not IsNothing(tempGRU.NextGRU) 'for more than one additional runs
+                tempGRU = tempGRU.NextGRU
+            End While
+        End If
         If count = 4 Then
             tempGRU.SetMs(New Meter_Measure_Unit(2, StringToDoubleList(gruInfo(2).Split("|")(1)), CDbl(gruInfo(2).Split("|")(0))),
                                                  New Meter_Measure_Unit(4, StringToDoubleList(gruInfo(3).Split("|")(1)), CDbl(gruInfo(3).Split("|")(0))),
@@ -4677,7 +4681,7 @@ Public Class Program
                             While Not tempBlob.ToString().EndsWith("##")
                                 tempBlob.AppendLine(inFile.ReadLine())
                             End While
-                            BasicInfoGrid.Rows(k).Cells(0).Value = tempBlob
+                            BasicInfoGrid.Rows(k).Cells(0).Value = tempBlob.Remove(tempBlob.Length - 2, 2)
                         End If
                     Next
                     'A123
@@ -4695,7 +4699,7 @@ Public Class Program
                     Dim AesIdx As Integer = 0
                     Do
                         gruInfo = inFile.ReadLine().Split(";")
-                        If Not gruInfo.Length = 0 Then
+                        If Not gruInfo.Length = 0 And Not inFile.EndOfStream Then
                             runsCount += 1
                             Dim title As String = gruInfo(0)
                             Dim subh As String = gruInfo(1)
@@ -4705,6 +4709,9 @@ Public Class Program
                             If CurRun.Name.Contains("Add") And (title.EndsWith("Run1") Or title.EndsWith("Run2") Or title.EndsWith("Run3")) Then
                                 AesIdx += 1
                                 CurRun = CurRun.NextUnit 'skipping the additional Run_Unit
+                                If CurRun.Name.Contains("A2") Then
+                                    CurRun = CurRun.NextUnit.NextUnit
+                                End If
                                 ShowLoadedDataOnForm(gruInfo)
                                 CurRun = CurRun.NextUnit 'after showing move to next unit for the next iteration
                                 'any additional run
@@ -4714,12 +4721,15 @@ Public Class Program
                                 ShowLoadedDataOnForm(gruInfo)
                                 'regular run
                             Else
+                                If CurRun.Name.Contains("A2") Then
+                                    CurRun = CurRun.NextUnit.NextUnit
+                                End If
                                 ShowLoadedDataOnForm(gruInfo)
                                 CurRun = CurRun.NextUnit 'after showing move to next unit for the next iteration
                             End If
 
                         End If
-                    Loop While gruInfo IsNot Nothing
+                    Loop While gruInfo IsNot Nothing And Not inFile.EndOfStream
                 End If
             End If
         Else
@@ -4732,5 +4742,9 @@ Public Class Program
         If ExportToCSV() Then
             ButtonExport.Enabled = False
         End If
+    End Sub
+
+    Private Sub LoadToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LoadToolStripMenuItem.Click
+        LoadFile()
     End Sub
 End Class

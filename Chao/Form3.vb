@@ -4756,6 +4756,9 @@ Public Class Program
             End If
         End Try
         DataGrid.ShowGRUonForm(tempGRU)
+        if tempGRU.Header.Contains("RSS") then
+            DataGrid.ShowCalculated()
+        End If
         If CurRun.Name.Contains("bkd") Then
             Dim latestFwdGRU As Grid_Run_Unit = CurRun.PrevUnit.GRU
             Dim latestBkdGRU As Grid_Run_Unit = CurRun.GRU

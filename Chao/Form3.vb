@@ -4866,6 +4866,10 @@ Public Class Program
                         End If
                     Loop While gruInfo IsNot Nothing And Not inFile.EndOfStream
                     DataGrid._Warning = True
+                    If CurRun.PrevUnit IsNot Nothing Then
+                        CurRun = CurRun.PrevUnit
+                        MoveOnToNextRun(True, True, False)
+                    End If
                 End If
             End If
 

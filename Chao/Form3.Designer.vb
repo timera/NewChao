@@ -3125,24 +3125,24 @@ Partial Class Program
         'LoadToolStripMenuItem
         '
         Me.LoadToolStripMenuItem.Name = "LoadToolStripMenuItem"
-        Me.LoadToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+L"
-        Me.LoadToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.L), System.Windows.Forms.Keys)
-        Me.LoadToolStripMenuItem.Size = New System.Drawing.Size(166, 24)
-        Me.LoadToolStripMenuItem.Text = "Load"
+        Me.LoadToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+O"
+        Me.LoadToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
+        Me.LoadToolStripMenuItem.Size = New System.Drawing.Size(173, 24)
+        Me.LoadToolStripMenuItem.Text = "Open"
         '
         'SaveToolStripMenuItem
         '
         Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
         Me.SaveToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+S"
         Me.SaveToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(166, 24)
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(173, 24)
         Me.SaveToolStripMenuItem.Text = "Save"
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
         Me.ExitToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.F4), System.Windows.Forms.Keys)
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(166, 24)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(173, 24)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'ButtonComRefresh

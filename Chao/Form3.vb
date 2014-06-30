@@ -2705,20 +2705,25 @@ Public Class Program
         While Not IsNothing(tempGRU.NextGRU) 'for more than one additional runs
             tempGRU = tempGRU.NextGRU
         End While
-        If series.Count = 4 + 1 Then
-            tempGRU.SetMs(Meter_Measure_Unit.SeriesToMMU(series(0), Leqpoints(0).YValues(0)),
-                            Meter_Measure_Unit.SeriesToMMU(series(1), Leqpoints(1).YValues(0)),
-                            Meter_Measure_Unit.SeriesToMMU(series(2), Leqpoints(2).YValues(0)),
-                            Meter_Measure_Unit.SeriesToMMU(series(3), Leqpoints(3).YValues(0)))
-        Else
-            tempGRU.SetMs(Meter_Measure_Unit.SeriesToMMU(series(0), Leqpoints(0).YValues(0)),
-                            Meter_Measure_Unit.SeriesToMMU(series(1), Leqpoints(1).YValues(0)),
-                            Meter_Measure_Unit.SeriesToMMU(series(2), Leqpoints(2).YValues(0)),
-                            Meter_Measure_Unit.SeriesToMMU(series(3), Leqpoints(3).YValues(0)),
-                            Meter_Measure_Unit.SeriesToMMU(series(4), Leqpoints(4).YValues(0)),
-                            Meter_Measure_Unit.SeriesToMMU(series(5), Leqpoints(5).YValues(0)))
-        End If
-
+        Try
+            If series.Count = 4 + 1 Then
+                tempGRU.SetMs(Meter_Measure_Unit.SeriesToMMU(series(0), Leqpoints(0).YValues(0)),
+                                Meter_Measure_Unit.SeriesToMMU(series(1), Leqpoints(1).YValues(0)),
+                                Meter_Measure_Unit.SeriesToMMU(series(2), Leqpoints(2).YValues(0)),
+                                Meter_Measure_Unit.SeriesToMMU(series(3), Leqpoints(3).YValues(0)))
+            Else
+                tempGRU.SetMs(Meter_Measure_Unit.SeriesToMMU(series(0), Leqpoints(0).YValues(0)),
+                                Meter_Measure_Unit.SeriesToMMU(series(1), Leqpoints(1).YValues(0)),
+                                Meter_Measure_Unit.SeriesToMMU(series(2), Leqpoints(2).YValues(0)),
+                                Meter_Measure_Unit.SeriesToMMU(series(3), Leqpoints(3).YValues(0)),
+                                Meter_Measure_Unit.SeriesToMMU(series(4), Leqpoints(4).YValues(0)),
+                                Meter_Measure_Unit.SeriesToMMU(series(5), Leqpoints(5).YValues(0)))
+            End If
+        Catch ex As ChaoProblemException
+            If DataGrid._Warning Then
+                MsgBox(ex.Message)
+            End If
+        End Try
         DataGrid.ShowGRUonForm(tempGRU)
         If CurRun.Name.Contains("bkd") Then
             Dim latestFwdGRU As Grid_Run_Unit = CurRun.PrevUnit.GRU
@@ -2732,12 +2737,10 @@ Public Class Program
     End Sub
 
 
-
     '##BUTTON CLICKS
     Private Sub stopButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles stopButton.Click
-
+        Timer1.Stop()
         If Countdown = False Then
-            Timer1.Stop()
             'startButton.Enabled = True
             Accept_Button.Enabled = True
             Button_Skip_Add.Enabled = False
@@ -2814,7 +2817,6 @@ Public Class Program
                 End If
             End If
         Else
-            Timer1.Stop()
             'final Leq
             updateFinalBarGraph()
             'Tell meters to stop measuring
@@ -3416,6 +3418,728 @@ Public Class Program
         Button_Skip_Add.Enabled = False
     End Sub
 
+    Sub MoveOnToNextRun(ByVal showGraph As Boolean, ByVal needDetermineAdd As Boolean, ByVal needAdd As Boolean)
+        If IsNothing(CurRun.NextUnit) Then
+            All_Panel_Enable()
+            CurRun.Set_BackColor(Color.Green)
+            CurRun.Link.Enabled = True
+            MessageBox.Show("End")
+            startButton.Enabled = False
+            stopButton.Enabled = False
+            Accept_Button.Enabled = False
+        ElseIf CurRun.Name.Contains("PreCal") Then
+            'didn't move
+            All_Panel_Enable()
+            'Case1: now is PreCal
+            ' change light
+            Set_Panel_BackColor()
+            CurRun.Link.Enabled = True
+            'dispose old graph and create new graph
+            If showGraph Then
+                Load_New_Graph_CD_False()
+            End If
+            'save info here
+
+            'jump to next Run_Unit and set second to zero(should be zero here)
+            MoveToRun(CurRun.NextUnit)
+            timeLeft = CurRun.Time
+            timeLabel.Text = timeLeft & " s"
+
+
+        ElseIf CurRun.Name = "Background" Then
+            All_Panel_Enable()
+            'Case2: now is Background
+            ' change light
+            Set_Panel_BackColor()
+            CurRun.Link.Enabled = True
+            'jump to next Run_Unit and change countdown False to True(for A1 A2 A3 A4 test)
+            MoveToRun(CurRun.NextUnit)
+            Set_Run_Unit()
+            If CurRun.Name.Contains("A4") Then
+                Countdown = False
+            Else
+                Countdown = True
+            End If
+            'load A1's steps
+            Clear_Steps()
+            Load_Steps()
+
+            'dispose old graph and create new graph
+            Load_New_Graph_CD_True()
+
+        ElseIf CurRun.Name = "RSS" Then
+            All_Panel_Enable()
+            'Case3: now is RSS
+            ' change light
+            Set_Panel_BackColor()
+            CurRun.Link.Enabled = True
+            'dispose old graph and create new graph
+            If showGraph Then
+                Load_New_Graph_CD_False()
+            End If
+            'Show calculated results for chart
+            DataGrid.ShowCalculated()
+
+            'save info here
+            'jump to next Run_Unit and set second to zero(should be zero here)
+            MoveToRun(CurRun.NextUnit)
+            timeLeft = CurRun.Time
+            timeLabel.Text = timeLeft & " s"
+
+        ElseIf CurRun.Name.Contains("PostCal") Then
+            All_Panel_Enable()
+            'Case4: now is PostCal
+            ' change light
+            Set_Panel_BackColor()
+            CurRun.Link.Enabled = True
+            'dispose old graph and create new graph
+            If showGraph Then
+                Load_New_Graph_CD_False()
+            End If
+            'save info here
+
+            'jump to next Run_Unit and set second to zero(should be zero here)
+            MoveToRun(CurRun.NextUnit)
+            timeLeft = CurRun.Time
+            timeLabel.Text = timeLeft & " s"
+
+
+        ElseIf CurRun.Name = "A4" Then
+            All_Panel_Enable()
+            If CurRun.NextUnit.Name = "A4_Mid_BG" Then
+                'Case: now is A4 and next is A4_Mid_BG
+                ' change light
+                Set_Panel_BackColor()
+                CurRun.Link.Enabled = True
+                'jump to next Run_Unit
+                MoveToRun(CurRun.NextUnit)
+                timeLeft = CurRun.Time
+                timeLabel.Text = timeLeft & " s"
+                Clear_Steps()
+                'dispose old graph and create new graph
+                If showGraph Then
+                    Load_New_Graph_CD_False()
+                End If
+            ElseIf CurRun.NextUnit.Name = "A4_Mid_BG_Add" Then
+                'have an additional test?
+                'call a function 
+                'if want_add()=true then ... elseif want_add()=false then ... endif
+
+                CurRun.Set_BackColor(Color.Green)
+                CurRun.Link.Enabled = True
+                'CurRun.Link.Enabled = True
+                'jump to next Run_Unit and change light
+                'Add?
+                Dim reallyNeedAdd As Boolean
+                If needDetermineAdd Then
+                    Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                    list.Add(CurRun.GRU) 'adding test 3 
+                    list.Add(CurRun.PrevUnit.PrevUnit.GRU) 'adding testing 2
+                    list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
+                    reallyNeedAdd = DataGrid.NeedAdd(list)
+                Else
+                    reallyNeedAdd = needAdd
+                End If
+
+                If reallyNeedAdd Then
+                    'True: add test
+                    MoveToRun(CurRun.NextUnit)
+                    Set_Add_GRU(0, "Background", "")    'True: add test
+                    ' change light
+                    CurRun.Set_BackColor(Color.Yellow)
+                    timeLeft = CurRun.Time
+                    timeLabel.Text = timeLeft & " s"
+                    Clear_Steps()
+                    'dispose old graph and create new graph
+                    If showGraph Then
+                        Load_New_Graph_CD_False()
+                    End If
+                    'skip button enable
+                    Button_Skip_Add.Enabled = True
+                Else
+                    'False: not add test , jump to RSS
+                    MoveToRun(CurRun.NextUnit.NextUnit.NextUnit)
+                    CurRun.Set_BackColor(Color.Yellow)
+                    timeLeft = CurRun.Time
+                    timeLabel.Text = timeLeft & " s"
+                    Clear_Steps()
+                    For index = 0 To 8
+                        array_step_display(index).Text = ""
+                    Next
+                    'dispose old graph and create new graph
+                    If showGraph Then
+                        Load_New_Graph_CD_False()
+                    End If
+                End If
+            End If
+
+        ElseIf CurRun.Name = "A4_Add" Then
+            All_Panel_Enable()
+            Add_Test_Record = True
+            'have an additional test?
+            'call a function 
+            'if want_add()=true then ... elseif want_add()=false then ... endif
+            CurRun.Link.Enabled = True
+            'CurRun.Link.Enabled = True
+            'Add?
+            Dim reallyNeedAdd As Boolean
+            If needDetermineAdd Then
+                Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                list.Add(CurRun.PrevUnit.GRU) 'adding test 3 
+                list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding testing 2
+                list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
+                Dim tempGRU = CurRun.GRU
+                Dim i As Integer = 4
+                While Not IsNothing(tempGRU)
+                    list.Add(tempGRU)
+                    tempGRU = tempGRU.NextGRU
+                    i += 1
+                End While
+                reallyNeedAdd = DataGrid.NeedAdd(list)
+            Else
+                reallyNeedAdd = needAdd
+            End If
+
+            If reallyNeedAdd Then
+                CurRun.PrevUnit.Set_BackColor(Color.Yellow)
+                CurRun.Set_BackColor(Color.IndianRed)
+                MoveToRun(CurRun.PrevUnit)
+                'True: add test
+                Set_Add_GRU(4, "Background", "")    'True: add test
+                'True: add test , jump to A4_Mid_BG_Add
+
+                timeLeft = CurRun.Time
+                timeLabel.Text = timeLeft & " s"
+
+                Clear_Steps()
+
+                'dispose old graph and create new graph
+                If showGraph Then
+                    Load_New_Graph_CD_True()
+                End If
+                'skip button enable
+                Button_Skip_Add.Enabled = True
+            Else
+                'False: not add test , jump to RSS
+                Set_Panel_BackColor()
+                MoveToRun(CurRun.NextUnit)
+                CurRun.Steps = Load_Steps_helper(CurRun)
+                timeLeft = CurRun.Time
+                timeLabel.Text = timeLeft & " s"
+                Clear_Steps()
+                For index = 0 To 8
+                    array_step_display(index).Text = ""
+                Next
+                'dispose old graph and create new graph
+                If showGraph Then
+                    Load_New_Graph_CD_True()
+                End If
+                'skip button disable
+                Button_Skip_Add.Enabled = False
+            End If
+
+        ElseIf CurRun.Name = "A4_Mid_BG" Or CurRun.Name = "A4_Mid_BG_Add" Then
+            All_Panel_Enable()
+            'Case: now is A4_Mid_BG or A4_Mid_BG_Add and next is A4 or A4_Add
+            ' change light
+            Set_Panel_BackColor()
+            CurRun.Link.Enabled = True
+
+            MoveToRun(CurRun.NextUnit)
+            'jump to next Run_Unit
+            'case: next is A4_Add
+            If CurRun.Name.Contains("Add") Then
+                Dim tempGRU = CurRun.GRU
+                Dim i As Integer = 4
+                While Not IsNothing(tempGRU)
+                    tempGRU = tempGRU.NextGRU
+                    i += 1
+                End While
+
+                Set_Add_GRU(4, "Run" & i, "")
+            End If
+            Set_Run_Unit()
+            'load A4's steps
+            Clear_Steps()
+            Load_Steps()
+
+            'dispose old graph and create new graph
+            If showGraph Then
+                Load_New_Graph_CD_True()
+            End If
+
+        ElseIf CurRun.Name = "ExA1" Or CurRun.Name = "TrA1" Or CurRun.Name = "LoA1" Then
+            All_Panel_Enable()
+            If CurRun.NextUnit.Name = "ExA1" Or CurRun.NextUnit.Name = "TrA1" Or CurRun.NextUnit.Name = "LoA1" Then
+                'Case1: now is ExA1 and next is also ExA1 or now is TrA1 and next is also TrA1 or now is LoA1 and next is also LoA1
+                ' change light
+                Set_Panel_BackColor()
+                CurRun.Link.Enabled = True
+                'jump to next Run_Unit
+                MoveToRun(CurRun.NextUnit)
+                Set_Run_Unit()
+
+                'load A1's steps
+                Clear_Steps()
+                Load_Steps()
+
+                'dispose old graph and create new graph
+                If showGraph Then
+                    Load_New_Graph_CD_True()
+                End If
+            ElseIf CurRun.NextUnit.Name.Contains("A1_Add") Then
+                'Case2: now is ExA1 and next is ExA1_Add or now is TrA1 and next is TrA1_Add or now is LoA1 and next is LoA1_Add
+                'have an additional test?
+                'call a function 
+
+                CurRun.Set_BackColor(Color.Green)
+                CurRun.Link.Enabled = True
+                'jump to next Run_Unit and change light
+                Dim reallyNeedAdd As Boolean
+                If needDetermineAdd Then
+                    Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                    list.Add(CurRun.GRU) 'adding test 3
+                    list.Add(CurRun.PrevUnit.GRU) 'adding testing 2
+                    list.Add(CurRun.PrevUnit.PrevUnit.GRU) 'adding test 1
+                    reallyNeedAdd = DataGrid.NeedAdd(list)
+                Else
+                    reallyNeedAdd = needAdd
+                End If
+                'Add?
+
+                If reallyNeedAdd Then
+                    'True: add test
+                    MoveToRun(CurRun.NextUnit)
+                    Set_Add_GRU(0, "Run4", "")
+                    CurRun.Set_BackColor(Color.Yellow)
+                    Set_Run_Unit()
+                    'skip button enable
+                    Button_Skip_Add.Enabled = True
+                Else
+                    'False: not add test , jump to ExA2_1st or jump to TrA3_fwd or jump to LoA2_1st
+                    MoveToRun(CurRun.NextUnit.NextUnit)
+                    CurRun.Set_BackColor(Color.Yellow)
+                    Reset_Test_Time()
+                End If
+                'load steps
+                Clear_Steps()
+                Load_Steps()
+
+                'dispose old graph and create new graph
+                If showGraph Then
+                    Load_New_Graph_CD_True()
+                End If
+            End If
+
+        ElseIf CurRun.Name = "ExA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "LoA1_Add" Then
+            All_Panel_Enable()
+            Add_Test_Record = True
+            'Case2: now is ExA1_Add and next is ExA2_1st or now is TrA1_Add and next is TrA3_fwd or now is LoA1_Add and next is LoA2_1st
+            'have an additional test?
+            'call a function 
+            'if want_add()=true then ... elseif want_add()=false then ... endif
+
+
+            'CurRun.Link.Enabled = True
+            'Add?
+            Dim reallyNeedAdd As Boolean
+            Dim i As Integer = 4
+            If needDetermineAdd Then
+                Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                list.Add(CurRun.PrevUnit.GRU) 'adding test 3
+                list.Add(CurRun.PrevUnit.PrevUnit.GRU) 'adding testing 2
+                list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
+                Dim tempGRU = CurRun.GRU
+
+                While Not IsNothing(tempGRU)
+                    list.Add(tempGRU)
+                    tempGRU = tempGRU.NextGRU
+                    i += 1
+                End While
+                reallyNeedAdd = DataGrid.NeedAdd(list)
+            Else
+                reallyNeedAdd = needAdd
+            End If
+
+            If reallyNeedAdd Then
+                'True: add test
+                CurRun.Set_BackColor(Color.Yellow)
+                Set_Add_GRU(0, "Run" & i, "")
+                Set_Run_Unit()
+                'skip button enable
+                Button_Skip_Add.Enabled = True
+            Else
+                'False: not add test
+                Set_Panel_BackColor()
+                MoveToRun(CurRun.NextUnit)
+                Reset_Test_Time()
+                'skip button disable
+                Button_Skip_Add.Enabled = False
+            End If
+            'load steps
+            Clear_Steps()
+            Load_Steps()
+
+            'dispose old graph and create new graph
+            If showGraph Then
+                Load_New_Graph_CD_True()
+            End If
+        ElseIf CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_2nd_3rd" Then
+            All_Panel_Enable()
+            CurRun.PrevUnit.PrevUnit.Link.Enabled = True
+            If CurRun.NextUnit.Name = "ExA2_1st_Add" Or CurRun.NextUnit.Name = "LoA2_1st_Add" Then
+                'Case: ExA2_2nd_3rd to ExA2_1st_Add or LoA2_2nd_3rd to LoA2_1st_Add
+                'have an additional test?
+                'call a function 
+                'if want_add()=true then ... elseif want_add()=false then ... endif
+
+                CurRun.Set_BackColor(Color.Green)
+
+                'jump to next Run_Unit and change light
+                'Add?
+                Dim reallyNeedAdd As Boolean
+                If needDetermineAdd Then
+                    Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                    list.Add(CurRun.GRU) 'adding test 3
+                    list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding testing 2
+                    list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
+                    reallyNeedAdd = DataGrid.NeedAdd(list)
+                Else
+                    reallyNeedAdd = needAdd
+                End If
+
+                If reallyNeedAdd Then
+                    'True: add test
+                    MoveToRun(CurRun.NextUnit)
+                    Set_Add_GRU(2, "Run4", "")    'True: add test
+                    Set_Run_Unit()
+                    CurRun.Set_BackColor(Color.Yellow)
+                    'load A2's steps
+                    Clear_Steps()
+                    Load_Steps()
+                    'dispose old graph and create new graph
+                    If showGraph Then
+                        Load_New_Graph_CD_True()
+                    End If
+                    'skip button enable
+                    Button_Skip_Add.Enabled = True
+                Else
+                    'False: not add test , jump to RSS(Ex) or LoA1(Ex) or LoA3_fwd(Lo)
+                    MoveToRun(CurRun.NextUnit.NextUnit.NextUnit.NextUnit)
+                    CurRun.Set_BackColor(Color.Yellow)
+                    If CurRun.Name = "RSS" Then
+                        CurRun.Steps = Load_Steps_helper(CurRun)
+                        timeLeft = CurRun.Time
+                        timeLabel.Text = timeLeft & " s"
+                        Countdown = False
+                        If showGraph Then
+
+                            Load_New_Graph_CD_False()
+                        End If
+                        Clear_Steps()
+                        For index = 0 To 8
+                            array_step_display(index).Text = ""
+                        Next
+                    ElseIf CurRun.Name = "LoA1" Then
+                        Set_Run_Unit()
+                        'load steps
+                        Clear_Steps()
+                        Load_Steps()
+                        'dispose old graph and create new graph
+                        If showGraph Then
+                            Load_New_Graph_CD_True()
+                        End If
+                    ElseIf CurRun.Name = "LoA3_fwd" Then
+                        Reset_Test_Time()
+                        Clear_Steps()
+                        Load_Steps()
+                        'dispose old graph and create new graph
+                        If showGraph Then
+                            Load_New_Graph_CD_True()
+                        End If
+                    End If
+                End If
+            ElseIf CurRun.NextUnit.Name = "ExA2_1st" Or CurRun.NextUnit.Name = "LoA2_1st" Then
+                Set_Panel_BackColor()
+                MoveToRun(CurRun.NextUnit)
+                Set_Run_Unit()
+                'load A2's steps
+                Clear_Steps()
+                Load_Steps()
+
+                'dispose old graph and create new graph
+                If showGraph Then
+                    Load_New_Graph_CD_True()
+                End If
+            End If
+
+
+        ElseIf CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
+            All_Panel_Enable()
+            Add_Test_Record = True
+            'CurRun.PrevUnit.PrevUnit.Link.Enabled = True
+            If CurRun.NextUnit.Name = "RSS" Or CurRun.NextUnit.Name = "LoA1" Or CurRun.NextUnit.Name = "LoA3_fwd" Then
+                'have an additional test?
+                'call a function 
+                'if want_add()=true then ... elseif want_add()=false then ... endif
+
+                'jump to next Run_Unit
+                'Add?
+                Dim reallyNeedAdd As Boolean
+                Dim i As Integer = 4
+                If needDetermineAdd Then
+                    Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                    list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 3
+                    list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding testing 2
+                    list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
+                    Dim tempGRU = CurRun.GRU
+
+                    While Not IsNothing(tempGRU)
+                        list.Add(tempGRU)
+                        tempGRU = tempGRU.NextGRU
+                        i += 1
+                    End While
+                    reallyNeedAdd = DataGrid.NeedAdd(list)
+                Else
+                    reallyNeedAdd = needAdd
+                End If
+
+
+                If reallyNeedAdd Then
+                    'True: add test
+                    Restart_from_2nd_Previous_Run_Unit()
+                    Set_Add_GRU(2, "Run" & i, "")
+                    'load A2's steps
+                    Clear_Steps()
+                    Load_Steps()
+
+                    'dispose old graph and create new graph
+                    If showGraph Then
+                        Load_New_Graph_CD_True()
+                    End If
+                    'skip button enable
+                    Button_Skip_Add.Enabled = True
+                Else
+                    'False: not add test ,  jump to RSS or LoA1
+                    Set_Panel_BackColor()
+                    MoveToRun(CurRun.NextUnit)
+                    'skip button disable
+                    Button_Skip_Add.Enabled = False
+                    If CurRun.Name = "RSS" Then
+                        CurRun.Steps = Load_Steps_helper(CurRun)
+                        timeLeft = CurRun.Time
+                        timeLabel.Text = timeLeft & " s"
+                        Countdown = False
+                        If showGraph Then
+                            Load_New_Graph_CD_False()
+                        End If
+                        Clear_Steps()
+                        For index = 0 To 8
+                            array_step_display(index).Text = ""
+                        Next
+                    ElseIf CurRun.Name = "LoA1" Then
+                        Set_Run_Unit()
+                        'load LoA1's steps
+                        Clear_Steps()
+                        Load_Steps()
+                        'dispose old graph and create new graph
+                        If showGraph Then
+                            Load_New_Graph_CD_True()
+                        End If
+                    ElseIf CurRun.Name = "LoA3_fwd" Then
+                        Reset_Test_Time()
+                        Clear_Steps()
+                        Load_Steps()
+                        'dispose old graph and create new graph
+                        If showGraph Then
+                            Load_New_Graph_CD_True()
+                        End If
+                    End If
+                End If
+            End If
+
+        ElseIf CurRun.Name = "LoA3_fwd" Or CurRun.Name = "LoA3_bkd" Or CurRun.Name = "TrA3_fwd" Or CurRun.Name = "TrA3_bkd" Then
+            All_Panel_Enable()
+            If CurRun.NextUnit.Name = "LoA3_fwd" Or CurRun.NextUnit.Name = "LoA3_bkd" Or CurRun.NextUnit.Name = "TrA3_fwd" Or CurRun.NextUnit.Name = "TrA3_bkd" Then
+                'Case: LoA3_fwd to LoA3_bkd or LoA3_bkd to LoA3_fwd or TrA3_bkd to TrA3_fwd or TrA3_bkd to TrA3_fwd
+                ' change light
+                Set_Panel_BackColor()
+                CurRun.Link.Enabled = True
+
+                'Case:LoA3_bkd to LoA3_fwd or TrA3_bkd to TrA3_fwd or TrA3_bkd to TrA3_fwd
+                'If CurRun.NextUnit.Name.Contains("fwd") Then
+                '    DataGrid.AddA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU)
+                'End If
+                ''jump to next Run_Unit
+                MoveToRun(CurRun.NextUnit)
+                Set_Run_Unit()
+                'load LoA3 or TrA3's steps
+                Clear_Steps()
+                Load_Steps()
+
+                'dispose old graph and create new graph
+                If showGraph Then
+                    Load_New_Graph_CD_True()
+                End If
+            ElseIf CurRun.NextUnit.Name = "LoA3_fwd_Add" Or CurRun.NextUnit.Name = "TrA3_fwd_Add" Then
+                'Case: LoA3_bkd to LoA3_fwd_Add or TrA3_bkd to TrA3_fwd_Add
+                'have an additional test?
+                'call a function 
+                'if want_add()=true then ... elseif want_add()=false then ... endif
+
+                CurRun.Set_BackColor(Color.Green)
+                CurRun.Link.Enabled = True
+                'jump to next Run_Unit and change light
+
+                'DataGrid.AddA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU) 'adding overall column
+                'Add?
+                Dim reallyNeedAdd As Boolean
+                If needDetermineAdd Then
+                    Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                    list.Add(CurRun.GRU.NextGRU) 'adding test 3 overall
+                    list.Add(CurRun.PrevUnit.PrevUnit.GRU.NextGRU) 'adding testing 2 overall
+                    list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU.NextGRU) 'adding test 1
+                    reallyNeedAdd = DataGrid.NeedAdd(list)
+                Else
+                    reallyNeedAdd = needAdd
+                End If
+
+
+                If reallyNeedAdd Then
+                    'True: add test
+                    MoveToRun(CurRun.NextUnit)
+                    Set_Add_GRU(3, "Run4", "前進")    'True: add test
+
+                    Set_Run_Unit()
+                    CurRun.Set_BackColor(Color.Yellow)
+                    'load LoA3_fwd_Add or TrA3_fwd_Add's steps
+                    Clear_Steps()
+                    Load_Steps()
+
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_True()
+                    'skip button enable
+                    Button_Skip_Add.Enabled = True
+                Else
+                    'False: not add test , jump to RSS
+                    MoveToRun(CurRun.NextUnit.NextUnit.NextUnit)
+                    CurRun.Set_BackColor(Color.Yellow)
+                    timeLeft = CurRun.Time
+                    timeLabel.Text = timeLeft & " s"
+                    Countdown = False
+                    Clear_Steps()
+                    For index = 0 To 8
+                        array_step_display(index).Text = ""
+                    Next
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_False()
+                End If
+            End If
+
+        ElseIf CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "LoA3_bkd_Add" Or CurRun.Name = "TrA3_fwd_Add" Or CurRun.Name = "TrA3_bkd_Add" Then
+            All_Panel_Enable()
+            If CurRun.NextUnit.Name = "LoA3_bkd_Add" Or CurRun.NextUnit.Name = "TrA3_bkd_Add" Then
+                Button_Skip_Add.Enabled = True
+                'Case: LoA3_fwd_Add to LoA3_bkd_Add or TrA3_fwd_Add to TrA3_bkd_Add
+                ' change light
+                Set_Panel_BackColor()
+                'CurRun.Link.Enabled = True
+                'jump to next Run_Unit
+                MoveToRun(CurRun.NextUnit)
+
+                If Not IsNothing(CurRun.GRU) Then
+                    Dim i As Integer = 5
+                    Dim tempGRU As Grid_Run_Unit = CurRun.GRU
+                    While Not IsNothing(tempGRU.NextGRU)
+                        tempGRU = tempGRU.NextGRU
+                        i += 1
+                    End While
+                    Set_Add_GRU(3, "Run" & i, "後退")
+                    tempGRU = tempGRU.NextGRU
+                    DataGrid.AddA3OverallColumn(tempGRU)
+                Else
+                    Set_Add_GRU(3, "Run4", "後退")
+                    DataGrid.AddA3OverallColumn(CurRun.GRU)
+                End If
+
+                Set_Run_Unit()
+                'load LoA3 or TrA3's steps
+                Clear_Steps()
+                Load_Steps()
+
+                'dispose old graph and create new graph
+                If showGraph Then
+                    Load_New_Graph_CD_True()
+                End If
+            ElseIf CurRun.NextUnit.Name = "RSS" Then
+                Add_Test_Record = True
+                'Case: LoA3_bkd_Add to RSS or TrA3_bkd_Add to RSS
+                'have an additional test?
+                'call a function 
+                'if want_add()=true then ... elseif want_add()=false then ... endif
+
+                'CurRun.Link.Enabled = True
+                'Add?
+                Dim reallyNeedAdd As Boolean
+                Dim i As Integer = 4
+                If needDetermineAdd Then
+                    Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                    list.Add(CurRun.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding test 3
+                    list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding testing 2
+                    list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding test 1
+                    Dim tempGRU = CurRun.GRU
+                    'DataGrid.AddA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU) 'adding overall gru and column
+
+                    While Not IsNothing(tempGRU)
+                        list.Add(tempGRU)
+                        tempGRU = tempGRU.NextGRU
+                        i += 1
+                    End While
+                    reallyNeedAdd = DataGrid.NeedAdd(list)
+                Else
+                    reallyNeedAdd = needAdd
+                End If
+
+
+
+                If reallyNeedAdd Then
+                    Restart_from_1st_Previous_Run_Unit()
+                    'True: add test
+                    Set_Add_GRU(3, "Run" & i, "前進")
+
+                    'load LoA3_fwd or TrA3_fwd's steps
+                    Clear_Steps()
+                    Load_Steps()
+
+                    'dispose old graph and create new graph
+                    If showGraph Then
+                        Load_New_Graph_CD_True()
+                    End If
+                    'skip button enable
+                    Button_Skip_Add.Enabled = True
+                Else
+                    'False: not add test , jump to RSS
+                    Set_Panel_BackColor()
+                    MoveToRun(CurRun.NextUnit)
+                    timeLeft = CurRun.Time
+                    timeLabel.Text = timeLeft & " s"
+                    Countdown = False
+                    Clear_Steps()
+                    For index = 0 To 8
+                        array_step_display(index).Text = ""
+                    Next
+                    'dispose old graph and create new graph
+                    If showGraph Then
+                        Load_New_Graph_CD_False()
+                    End If
+                    'skip button disable
+                    Button_Skip_Add.Enabled = False
+                End If
+            End If
+
+        End If
+    End Sub
+
     Private Sub AcceptButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Accept_Button.Click
 
         Accept_Button.Enabled = False
@@ -3434,623 +4158,7 @@ Public Class Program
                 If CurRun.Name.Contains("bkd") Then
                     keyGRU.OverallGRU.Accept()
                 End If
-                If Countdown = False Then
-                    If CurRun.Name.Contains("PreCal") Then
-                        'didn't move
-                        All_Panel_Enable()
-                        'Case1: now is PreCal
-                        ' change light
-                        Set_Panel_BackColor()
-                        CurRun.Link.Enabled = True
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_False()
-
-                        'save info here
-
-                        'jump to next Run_Unit and set second to zero(should be zero here)
-                        MoveToRun(CurRun.NextUnit)
-                        timeLeft = CurRun.Time
-                        timeLabel.Text = timeLeft & " s"
-
-
-                    ElseIf CurRun.Name = "Background" Then
-                        All_Panel_Enable()
-                        'Case2: now is Background
-                        ' change light
-                        Set_Panel_BackColor()
-                        CurRun.Link.Enabled = True
-                        'jump to next Run_Unit and change countdown False to True(for A1 A2 A3 A4 test)
-                        MoveToRun(CurRun.NextUnit)
-                        Set_Run_Unit()
-                        If CurRun.Name.Contains("A4") Then
-                            Countdown = False
-                        Else
-                            Countdown = True
-                        End If
-                        'load A1's steps
-                        Clear_Steps()
-                        Load_Steps()
-
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_True()
-
-                    ElseIf CurRun.Name = "RSS" Then
-                        All_Panel_Enable()
-                        'Case3: now is RSS
-                        ' change light
-                        Set_Panel_BackColor()
-                        CurRun.Link.Enabled = True
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_False()
-
-                        'Show calculated results for chart
-                        DataGrid.ShowCalculated()
-
-                        'save info here
-                        'jump to next Run_Unit and set second to zero(should be zero here)
-                        MoveToRun(CurRun.NextUnit)
-                        timeLeft = CurRun.Time
-                        timeLabel.Text = timeLeft & " s"
-
-                    ElseIf IsNothing(CurRun.NextUnit) Then
-                        All_Panel_Enable()
-                        CurRun.Set_BackColor(Color.Green)
-                        CurRun.Link.Enabled = True
-                        MessageBox.Show("End")
-                        startButton.Enabled = False
-                        stopButton.Enabled = False
-                        Accept_Button.Enabled = False
-
-                    ElseIf CurRun.Name.Contains("PostCal") Then
-                        All_Panel_Enable()
-                        'Case4: now is PostCal
-                        ' change light
-                        Set_Panel_BackColor()
-                        CurRun.Link.Enabled = True
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_False()
-
-                        'save info here
-
-                        'jump to next Run_Unit and set second to zero(should be zero here)
-                        MoveToRun(CurRun.NextUnit)
-                        timeLeft = CurRun.Time
-                        timeLabel.Text = timeLeft & " s"
-
-
-                    ElseIf CurRun.Name = "A4" Then
-                        All_Panel_Enable()
-                        If CurRun.NextUnit.Name = "A4_Mid_BG" Then
-                            'Case: now is A4 and next is A4_Mid_BG
-                            ' change light
-                            Set_Panel_BackColor()
-                            CurRun.Link.Enabled = True
-                            'jump to next Run_Unit
-                            MoveToRun(CurRun.NextUnit)
-                            timeLeft = CurRun.Time
-                            timeLabel.Text = timeLeft & " s"
-                            Clear_Steps()
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_False()
-                        ElseIf CurRun.NextUnit.Name = "A4_Mid_BG_Add" Then
-                            'have an additional test?
-                            'call a function 
-                            'if want_add()=true then ... elseif want_add()=false then ... endif
-
-                            CurRun.Set_BackColor(Color.Green)
-                            CurRun.Link.Enabled = True
-                            'CurRun.Link.Enabled = True
-                            'jump to next Run_Unit and change light
-                            'Add?
-                            Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
-                            list.Add(CurRun.GRU) 'adding test 3 
-                            list.Add(CurRun.PrevUnit.PrevUnit.GRU) 'adding testing 2
-                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
-                            If DataGrid.NeedAdd(list) Then
-                                'True: add test
-                                MoveToRun(CurRun.NextUnit)
-                                Set_Add_GRU(0, "Background", "")    'True: add test
-                                ' change light
-                                CurRun.Set_BackColor(Color.Yellow)
-                                timeLeft = CurRun.Time
-                                timeLabel.Text = timeLeft & " s"
-                                Clear_Steps()
-                                'dispose old graph and create new graph
-                                Load_New_Graph_CD_False()
-                                'skip button enable
-                                Button_Skip_Add.Enabled = True
-                            Else
-                                'False: not add test , jump to RSS
-                                MoveToRun(CurRun.NextUnit.NextUnit.NextUnit)
-                                CurRun.Set_BackColor(Color.Yellow)
-                                timeLeft = CurRun.Time
-                                timeLabel.Text = timeLeft & " s"
-                                Clear_Steps()
-                                For index = 0 To 8
-                                    array_step_display(index).Text = ""
-                                Next
-                                'dispose old graph and create new graph
-                                Load_New_Graph_CD_False()
-                            End If
-                        End If
-
-                    ElseIf CurRun.Name = "A4_Add" Then
-                        All_Panel_Enable()
-                        Add_Test_Record = True
-                        'have an additional test?
-                        'call a function 
-                        'if want_add()=true then ... elseif want_add()=false then ... endif
-                        CurRun.Link.Enabled = True
-                        'CurRun.Link.Enabled = True
-                        'Add?
-                        Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
-                        list.Add(CurRun.PrevUnit.GRU) 'adding test 3 
-                        list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding testing 2
-                        list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
-                        Dim tempGRU = CurRun.GRU
-                        Dim i As Integer = 4
-                        While Not IsNothing(tempGRU)
-                            list.Add(tempGRU)
-                            tempGRU = tempGRU.NextGRU
-                            i += 1
-                        End While
-                        If DataGrid.NeedAdd(list) Then
-                            CurRun.PrevUnit.Set_BackColor(Color.Yellow)
-                            CurRun.Set_BackColor(Color.IndianRed)
-                            MoveToRun(CurRun.PrevUnit)
-                            'True: add test
-                            Set_Add_GRU(4, "Background", "")    'True: add test
-                            'True: add test , jump to A4_Mid_BG_Add
-
-                            timeLeft = CurRun.Time
-                            timeLabel.Text = timeLeft & " s"
-
-                            Clear_Steps()
-
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_True()
-                            'skip button enable
-                            Button_Skip_Add.Enabled = True
-                        Else
-                            'False: not add test , jump to RSS
-                            Set_Panel_BackColor()
-                            MoveToRun(CurRun.NextUnit)
-                            CurRun.Steps = Load_Steps_helper(CurRun)
-                            timeLeft = CurRun.Time
-                            timeLabel.Text = timeLeft & " s"
-                            Clear_Steps()
-                            For index = 0 To 8
-                                array_step_display(index).Text = ""
-                            Next
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_True()
-                            'skip button disable
-                            Button_Skip_Add.Enabled = False
-                        End If
-
-                    ElseIf CurRun.Name = "A4_Mid_BG" Or CurRun.Name = "A4_Mid_BG_Add" Then
-                        All_Panel_Enable()
-                        'Case: now is A4_Mid_BG or A4_Mid_BG_Add and next is A4 or A4_Add
-                        ' change light
-                        Set_Panel_BackColor()
-                        CurRun.Link.Enabled = True
-
-                        MoveToRun(CurRun.NextUnit)
-                        'jump to next Run_Unit
-                        'case: next is A4_Add
-                        If CurRun.Name.Contains("Add") Then
-                            Dim tempGRU = CurRun.GRU
-                            Dim i As Integer = 4
-                            While Not IsNothing(tempGRU)
-                                tempGRU = tempGRU.NextGRU
-                                i += 1
-                            End While
-
-                            Set_Add_GRU(4, "Run" & i, "")
-                        End If
-                        Set_Run_Unit()
-                        'load A4's steps
-                        Clear_Steps()
-                        Load_Steps()
-
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_True()
-
-
-                    End If
-                Else 'countdown = true
-                    If CurRun.Name = "ExA1" Or CurRun.Name = "TrA1" Or CurRun.Name = "LoA1" Then
-                        All_Panel_Enable()
-                        If CurRun.NextUnit.Name = "ExA1" Or CurRun.NextUnit.Name = "TrA1" Or CurRun.NextUnit.Name = "LoA1" Then
-                            'Case1: now is ExA1 and next is also ExA1 or now is TrA1 and next is also TrA1 or now is LoA1 and next is also LoA1
-                            ' change light
-                            Set_Panel_BackColor()
-                            CurRun.Link.Enabled = True
-                            'jump to next Run_Unit
-                            MoveToRun(CurRun.NextUnit)
-                            Set_Run_Unit()
-
-                            'load A1's steps
-                            Clear_Steps()
-                            Load_Steps()
-
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_True()
-
-                        ElseIf CurRun.NextUnit.Name.Contains("A1_Add") Then
-                            'Case2: now is ExA1 and next is ExA1_Add or now is TrA1 and next is TrA1_Add or now is LoA1 and next is LoA1_Add
-                            'have an additional test?
-                            'call a function 
-
-                            CurRun.Set_BackColor(Color.Green)
-                            CurRun.Link.Enabled = True
-                            'jump to next Run_Unit and change light
-
-                            'Add?
-                            Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
-                            list.Add(CurRun.GRU) 'adding test 3
-                            list.Add(CurRun.PrevUnit.GRU) 'adding testing 2
-                            list.Add(CurRun.PrevUnit.PrevUnit.GRU) 'adding test 1
-                            If DataGrid.NeedAdd(list) Then
-                                'True: add test
-                                MoveToRun(CurRun.NextUnit)
-                                Set_Add_GRU(0, "Run4", "")
-                                CurRun.Set_BackColor(Color.Yellow)
-                                Set_Run_Unit()
-                                'skip button enable
-                                Button_Skip_Add.Enabled = True
-                            Else
-                                'False: not add test , jump to ExA2_1st or jump to TrA3_fwd or jump to LoA2_1st
-                                MoveToRun(CurRun.NextUnit.NextUnit)
-                                CurRun.Set_BackColor(Color.Yellow)
-                                Reset_Test_Time()
-                            End If
-                            'load steps
-                            Clear_Steps()
-                            Load_Steps()
-
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_True()
-                        End If
-
-                    ElseIf CurRun.Name = "ExA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "LoA1_Add" Then
-                        All_Panel_Enable()
-                        Add_Test_Record = True
-                        'Case2: now is ExA1_Add and next is ExA2_1st or now is TrA1_Add and next is TrA3_fwd or now is LoA1_Add and next is LoA2_1st
-                        'have an additional test?
-                        'call a function 
-                        'if want_add()=true then ... elseif want_add()=false then ... endif
-
-
-                        'CurRun.Link.Enabled = True
-                        'Add?
-                        Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
-                        list.Add(CurRun.PrevUnit.GRU) 'adding test 3
-                        list.Add(CurRun.PrevUnit.PrevUnit.GRU) 'adding testing 2
-                        list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
-                        Dim tempGRU = CurRun.GRU
-                        Dim i As Integer = 4
-                        While Not IsNothing(tempGRU)
-                            list.Add(tempGRU)
-                            tempGRU = tempGRU.NextGRU
-                            i += 1
-                        End While
-                        If DataGrid.NeedAdd(list) Then
-                            'True: add test
-                            CurRun.Set_BackColor(Color.Yellow)
-                            Set_Add_GRU(0, "Run" & i, "")
-                            Set_Run_Unit()
-                            'skip button enable
-                            Button_Skip_Add.Enabled = True
-                        Else
-                            'False: not add test
-                            Set_Panel_BackColor()
-                            MoveToRun(CurRun.NextUnit)
-                            Reset_Test_Time()
-                            'skip button disable
-                            Button_Skip_Add.Enabled = False
-                        End If
-                        'load steps
-                        Clear_Steps()
-                        Load_Steps()
-
-                        'dispose old graph and create new graph
-                        Load_New_Graph_CD_True()
-
-                    ElseIf CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_2nd_3rd" Then
-                        All_Panel_Enable()
-                        CurRun.PrevUnit.PrevUnit.Link.Enabled = True
-                        If CurRun.NextUnit.Name = "ExA2_1st_Add" Or CurRun.NextUnit.Name = "LoA2_1st_Add" Then
-                            'Case: ExA2_2nd_3rd to ExA2_1st_Add or LoA2_2nd_3rd to LoA2_1st_Add
-                            'have an additional test?
-                            'call a function 
-                            'if want_add()=true then ... elseif want_add()=false then ... endif
-
-                            CurRun.Set_BackColor(Color.Green)
-
-                            'jump to next Run_Unit and change light
-                            'Add?
-                            Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
-                            list.Add(CurRun.GRU) 'adding test 3
-                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding testing 2
-                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
-                            If DataGrid.NeedAdd(list) Then
-                                'True: add test
-                                MoveToRun(CurRun.NextUnit)
-                                Set_Add_GRU(2, "Run4", "")    'True: add test
-                                Set_Run_Unit()
-                                CurRun.Set_BackColor(Color.Yellow)
-                                'load A2's steps
-                                Clear_Steps()
-                                Load_Steps()
-                                'dispose old graph and create new graph
-                                Load_New_Graph_CD_True()
-                                'skip button enable
-                                Button_Skip_Add.Enabled = True
-                            Else
-                                'False: not add test , jump to RSS(Ex) or LoA1(Ex) or LoA3_fwd(Lo)
-                                MoveToRun(CurRun.NextUnit.NextUnit.NextUnit.NextUnit)
-                                CurRun.Set_BackColor(Color.Yellow)
-                                If CurRun.Name = "RSS" Then
-                                    CurRun.Steps = Load_Steps_helper(CurRun)
-                                    timeLeft = CurRun.Time
-                                    timeLabel.Text = timeLeft & " s"
-                                    Countdown = False
-                                    Load_New_Graph_CD_False()
-                                    Clear_Steps()
-                                    For index = 0 To 8
-                                        array_step_display(index).Text = ""
-                                    Next
-                                ElseIf CurRun.Name = "LoA1" Then
-                                    Set_Run_Unit()
-                                    'load steps
-                                    Clear_Steps()
-                                    Load_Steps()
-                                    'dispose old graph and create new graph
-                                    Load_New_Graph_CD_True()
-                                ElseIf CurRun.Name = "LoA3_fwd" Then
-                                    Reset_Test_Time()
-                                    Clear_Steps()
-                                    Load_Steps()
-                                    'dispose old graph and create new graph
-                                    Load_New_Graph_CD_True()
-                                End If
-                            End If
-                        ElseIf CurRun.NextUnit.Name = "ExA2_1st" Or CurRun.NextUnit.Name = "LoA2_1st" Then
-                            Set_Panel_BackColor()
-                            MoveToRun(CurRun.NextUnit)
-                            Set_Run_Unit()
-                            'load A2's steps
-                            Clear_Steps()
-                            Load_Steps()
-
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_True()
-                        End If
-
-
-
-                    ElseIf CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
-                        All_Panel_Enable()
-                        Add_Test_Record = True
-                        'CurRun.PrevUnit.PrevUnit.Link.Enabled = True
-                        If CurRun.NextUnit.Name = "RSS" Or CurRun.NextUnit.Name = "LoA1" Or CurRun.NextUnit.Name = "LoA3_fwd" Then
-                            'have an additional test?
-                            'call a function 
-                            'if want_add()=true then ... elseif want_add()=false then ... endif
-
-                            'jump to next Run_Unit
-                            'Add?
-                            Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
-                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 3
-                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding testing 2
-                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU) 'adding test 1
-                            Dim tempGRU = CurRun.GRU
-                            Dim i As Integer = 4
-                            While Not IsNothing(tempGRU)
-                                list.Add(tempGRU)
-                                tempGRU = tempGRU.NextGRU
-                                i += 1
-                            End While
-                            If DataGrid.NeedAdd(list) Then
-                                'True: add test
-                                Restart_from_2nd_Previous_Run_Unit()
-                                Set_Add_GRU(2, "Run" & i, "")
-                                'load A2's steps
-                                Clear_Steps()
-                                Load_Steps()
-
-                                'dispose old graph and create new graph
-                                Load_New_Graph_CD_True()
-                                'skip button enable
-                                Button_Skip_Add.Enabled = True
-                            Else
-                                'False: not add test ,  jump to RSS or LoA1
-                                Set_Panel_BackColor()
-                                MoveToRun(CurRun.NextUnit)
-                                'skip button disable
-                                Button_Skip_Add.Enabled = False
-                                If CurRun.Name = "RSS" Then
-                                    CurRun.Steps = Load_Steps_helper(CurRun)
-                                    timeLeft = CurRun.Time
-                                    timeLabel.Text = timeLeft & " s"
-                                    Countdown = False
-                                    Load_New_Graph_CD_False()
-                                    Clear_Steps()
-                                    For index = 0 To 8
-                                        array_step_display(index).Text = ""
-                                    Next
-                                ElseIf CurRun.Name = "LoA1" Then
-                                    Set_Run_Unit()
-                                    'load LoA1's steps
-                                    Clear_Steps()
-                                    Load_Steps()
-                                    'dispose old graph and create new graph
-                                    Load_New_Graph_CD_True()
-                                ElseIf CurRun.Name = "LoA3_fwd" Then
-                                    Reset_Test_Time()
-                                    Clear_Steps()
-                                    Load_Steps()
-                                    'dispose old graph and create new graph
-                                    Load_New_Graph_CD_True()
-                                End If
-                            End If
-                        End If
-
-                    ElseIf CurRun.Name = "LoA3_fwd" Or CurRun.Name = "LoA3_bkd" Or CurRun.Name = "TrA3_fwd" Or CurRun.Name = "TrA3_bkd" Then
-                        All_Panel_Enable()
-                        If CurRun.NextUnit.Name = "LoA3_fwd" Or CurRun.NextUnit.Name = "LoA3_bkd" Or CurRun.NextUnit.Name = "TrA3_fwd" Or CurRun.NextUnit.Name = "TrA3_bkd" Then
-                            'Case: LoA3_fwd to LoA3_bkd or LoA3_bkd to LoA3_fwd or TrA3_bkd to TrA3_fwd or TrA3_bkd to TrA3_fwd
-                            ' change light
-                            Set_Panel_BackColor()
-                            CurRun.Link.Enabled = True
-
-                            'Case:LoA3_bkd to LoA3_fwd or TrA3_bkd to TrA3_fwd or TrA3_bkd to TrA3_fwd
-                            'If CurRun.NextUnit.Name.Contains("fwd") Then
-                            '    DataGrid.AddA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU)
-                            'End If
-                            ''jump to next Run_Unit
-                            MoveToRun(CurRun.NextUnit)
-                            Set_Run_Unit()
-                            'load LoA3 or TrA3's steps
-                            Clear_Steps()
-                            Load_Steps()
-
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_True()
-                        ElseIf CurRun.NextUnit.Name = "LoA3_fwd_Add" Or CurRun.NextUnit.Name = "TrA3_fwd_Add" Then
-                            'Case: LoA3_bkd to LoA3_fwd_Add or TrA3_bkd to TrA3_fwd_Add
-                            'have an additional test?
-                            'call a function 
-                            'if want_add()=true then ... elseif want_add()=false then ... endif
-
-                            CurRun.Set_BackColor(Color.Green)
-                            CurRun.Link.Enabled = True
-                            'jump to next Run_Unit and change light
-
-                            'DataGrid.AddA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU) 'adding overall column
-                            'Add?
-                            Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
-                            list.Add(CurRun.GRU.NextGRU) 'adding test 3 overall
-                            list.Add(CurRun.PrevUnit.PrevUnit.GRU.NextGRU) 'adding testing 2 overall
-                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU.NextGRU) 'adding test 1
-                            If DataGrid.NeedAdd(list) Then
-                                'True: add test
-                                MoveToRun(CurRun.NextUnit)
-                                Set_Add_GRU(3, "Run4", "前進")    'True: add test
-
-                                Set_Run_Unit()
-                                CurRun.Set_BackColor(Color.Yellow)
-                                'load LoA3_fwd_Add or TrA3_fwd_Add's steps
-                                Clear_Steps()
-                                Load_Steps()
-
-                                'dispose old graph and create new graph
-                                Load_New_Graph_CD_True()
-                                'skip button enable
-                                Button_Skip_Add.Enabled = True
-                            Else
-                                'False: not add test , jump to RSS
-                                MoveToRun(CurRun.NextUnit.NextUnit.NextUnit)
-                                CurRun.Set_BackColor(Color.Yellow)
-                                timeLeft = CurRun.Time
-                                timeLabel.Text = timeLeft & " s"
-                                Countdown = False
-                                Clear_Steps()
-                                For index = 0 To 8
-                                    array_step_display(index).Text = ""
-                                Next
-                                'dispose old graph and create new graph
-                                Load_New_Graph_CD_False()
-                            End If
-                        End If
-
-                    ElseIf CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "LoA3_bkd_Add" Or CurRun.Name = "TrA3_fwd_Add" Or CurRun.Name = "TrA3_bkd_Add" Then
-                        All_Panel_Enable()
-                        If CurRun.NextUnit.Name = "LoA3_bkd_Add" Or CurRun.NextUnit.Name = "TrA3_bkd_Add" Then
-                            Button_Skip_Add.Enabled = True
-                            'Case: LoA3_fwd_Add to LoA3_bkd_Add or TrA3_fwd_Add to TrA3_bkd_Add
-                            ' change light
-                            Set_Panel_BackColor()
-                            'CurRun.Link.Enabled = True
-                            'jump to next Run_Unit
-                            MoveToRun(CurRun.NextUnit)
-
-                            If Not IsNothing(CurRun.GRU) Then
-                                Dim i As Integer = 5
-                                Dim tempGRU As Grid_Run_Unit = CurRun.GRU
-                                While Not IsNothing(tempGRU.NextGRU)
-                                    tempGRU = tempGRU.NextGRU
-                                    i += 1
-                                End While
-                                Set_Add_GRU(3, "Run" & i, "後退")
-                                tempGRU = tempGRU.NextGRU
-                                DataGrid.AddA3OverallColumn(tempGRU)
-                            Else
-                                Set_Add_GRU(3, "Run4", "後退")
-                                DataGrid.AddA3OverallColumn(CurRun.GRU)
-                            End If
-
-                            Set_Run_Unit()
-                            'load LoA3 or TrA3's steps
-                            Clear_Steps()
-                            Load_Steps()
-
-                            'dispose old graph and create new graph
-                            Load_New_Graph_CD_True()
-                        ElseIf CurRun.NextUnit.Name = "RSS" Then
-                            Add_Test_Record = True
-                            'Case: LoA3_bkd_Add to RSS or TrA3_bkd_Add to RSS
-                            'have an additional test?
-                            'call a function 
-                            'if want_add()=true then ... elseif want_add()=false then ... endif
-
-                            'CurRun.Link.Enabled = True
-                            'Add?
-                            Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
-                            list.Add(CurRun.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding test 3
-                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding testing 2
-                            list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding test 1
-                            Dim tempGRU = CurRun.GRU
-                            'DataGrid.AddA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU) 'adding overall gru and column
-                            Dim i As Integer = 4
-                            While Not IsNothing(tempGRU)
-                                list.Add(tempGRU)
-                                tempGRU = tempGRU.NextGRU
-                                i += 1
-                            End While
-                            If DataGrid.NeedAdd(list) Then
-                                Restart_from_1st_Previous_Run_Unit()
-                                'True: add test
-                                Set_Add_GRU(3, "Run" & i, "前進")
-
-                                'load LoA3_fwd or TrA3_fwd's steps
-                                Clear_Steps()
-                                Load_Steps()
-
-                                'dispose old graph and create new graph
-                                Load_New_Graph_CD_True()
-                                'skip button enable
-                                Button_Skip_Add.Enabled = True
-                            Else
-                                'False: not add test , jump to RSS
-                                Set_Panel_BackColor()
-                                MoveToRun(CurRun.NextUnit)
-                                timeLeft = CurRun.Time
-                                timeLabel.Text = timeLeft & " s"
-                                Countdown = False
-                                Clear_Steps()
-                                For index = 0 To 8
-                                    array_step_display(index).Text = ""
-                                Next
-                                'dispose old graph and create new graph
-                                Load_New_Graph_CD_False()
-                                'skip button disable
-                                Button_Skip_Add.Enabled = False
-                            End If
-                        End If
-                    End If
-                End If
+                MoveOnToNextRun(True, True, False)
 
             ElseIf Result = DialogResult.No Then
                 If CurRun.Name.Contains("Add") Then
@@ -4601,8 +4709,6 @@ Public Class Program
     End Function
 
     Public Sub ShowLoadedDataOnForm(ByRef gruInfo As String())
-        'Precal,postcal,RSS,background
-
         'precal and postcal
         If CurRun.Name.Contains("Cal") Then
             Dim num As Integer
@@ -4630,20 +4736,25 @@ Public Class Program
                 tempGRU = tempGRU.NextGRU
             End While
         End If
-        If count = 4 Then
-            tempGRU.SetMs(New Meter_Measure_Unit(2, StringToDoubleList(gruInfo(2).Split("|")(1)), CDbl(gruInfo(2).Split("|")(0))),
-                                                 New Meter_Measure_Unit(4, StringToDoubleList(gruInfo(3).Split("|")(1)), CDbl(gruInfo(3).Split("|")(0))),
-                                                 New Meter_Measure_Unit(6, StringToDoubleList(gruInfo(4).Split("|")(1)), CDbl(gruInfo(4).Split("|")(0))),
-                                                 New Meter_Measure_Unit(8, StringToDoubleList(gruInfo(5).Split("|")(1)), CDbl(gruInfo(5).Split("|")(0))))
-        Else
-            tempGRU.SetMs(New Meter_Measure_Unit(2, StringToDoubleList(gruInfo(2).Split("|")(1)), CDbl(gruInfo(2).Split("|")(0))),
-                                                 New Meter_Measure_Unit(4, StringToDoubleList(gruInfo(3).Split("|")(1)), CDbl(gruInfo(3).Split("|")(0))),
-                                                 New Meter_Measure_Unit(6, StringToDoubleList(gruInfo(4).Split("|")(1)), CDbl(gruInfo(4).Split("|")(0))),
-                                                 New Meter_Measure_Unit(8, StringToDoubleList(gruInfo(5).Split("|")(1)), CDbl(gruInfo(5).Split("|")(0))),
-                                                 New Meter_Measure_Unit(10, StringToDoubleList(gruInfo(6).Split("|")(1)), CDbl(gruInfo(6).Split("|")(0))),
-                                                 New Meter_Measure_Unit(12, StringToDoubleList(gruInfo(7).Split("|")(1)), CDbl(gruInfo(7).Split("|")(0))))
-        End If
-
+        Try
+            If count = 4 Then
+                tempGRU.SetMs(New Meter_Measure_Unit(2, StringToDoubleList(gruInfo(2).Split("|")(1)), CDbl(gruInfo(2).Split("|")(0))),
+                                                     New Meter_Measure_Unit(4, StringToDoubleList(gruInfo(3).Split("|")(1)), CDbl(gruInfo(3).Split("|")(0))),
+                                                     New Meter_Measure_Unit(6, StringToDoubleList(gruInfo(4).Split("|")(1)), CDbl(gruInfo(4).Split("|")(0))),
+                                                     New Meter_Measure_Unit(8, StringToDoubleList(gruInfo(5).Split("|")(1)), CDbl(gruInfo(5).Split("|")(0))))
+            Else
+                tempGRU.SetMs(New Meter_Measure_Unit(2, StringToDoubleList(gruInfo(2).Split("|")(1)), CDbl(gruInfo(2).Split("|")(0))),
+                                                     New Meter_Measure_Unit(4, StringToDoubleList(gruInfo(3).Split("|")(1)), CDbl(gruInfo(3).Split("|")(0))),
+                                                     New Meter_Measure_Unit(6, StringToDoubleList(gruInfo(4).Split("|")(1)), CDbl(gruInfo(4).Split("|")(0))),
+                                                     New Meter_Measure_Unit(8, StringToDoubleList(gruInfo(5).Split("|")(1)), CDbl(gruInfo(5).Split("|")(0))),
+                                                     New Meter_Measure_Unit(10, StringToDoubleList(gruInfo(6).Split("|")(1)), CDbl(gruInfo(6).Split("|")(0))),
+                                                     New Meter_Measure_Unit(12, StringToDoubleList(gruInfo(7).Split("|")(1)), CDbl(gruInfo(7).Split("|")(0))))
+            End If
+        Catch ex As ChaoProblemException
+            If DataGrid._Warning Then
+                MsgBox(ex.Message)
+            End If
+        End Try
         DataGrid.ShowGRUonForm(tempGRU)
         If CurRun.Name.Contains("bkd") Then
             Dim latestFwdGRU As Grid_Run_Unit = CurRun.PrevUnit.GRU
@@ -4664,10 +4775,13 @@ Public Class Program
             If inFile IsNot Nothing Then
                 'liberate data first
                 If Change_Machine() Then
+
                     'load and write basic data first
                     Dim type_l_r() As String = inFile.ReadLine().Split(",")
 
                     ComboBox_machine_list.Text = type_l_r(0)
+
+
                     TextBox_L.Text = type_l_r(1)
                     TextBox_r1.Text = type_l_r(2)
                     TextBox_L1.Text = type_l_r(3)
@@ -4690,7 +4804,7 @@ Public Class Program
                     Else 'A4
                         A4_Prepare()
                     End If
-
+                    DataGrid._Warning = False
                     'Grid_Run_Unit_Info gives you the format as such- Background;110.9|107.5,69.2,111.9;59.5|70.9,105.7,60.5;54.7|113.2,45.9,55.7;99.3|67.6,44.9,100.3
                     Dim gruInfo() As String
 
@@ -4706,32 +4820,53 @@ Public Class Program
                             'Dim time As Integer = CInt(gruInfo(gruInfo.Length - 1))
 
                             'no additional after 3rd or additional run
-                            If CurRun.Name.Contains("Add") And (title.EndsWith("Run1") Or title.EndsWith("Run2") Or title.EndsWith("Run3")) Then
+                            If CurRun.Name.Contains("Add") And (title.EndsWith("Run1") Or title.EndsWith("Run2") Or title.EndsWith("Run3") Or title.EndsWith("RSS")) Then
                                 AesIdx += 1
                                 CurRun = CurRun.NextUnit 'skipping the additional Run_Unit
+                                If title.EndsWith("RSS") Then
+                                    CurRun = CurRun.NextUnit.NextUnit
+                                End If
                                 If CurRun.Name.Contains("A2") Then
+                                    CurRun.Set_BackColor(Color.Green)
+                                    CurRun.Link.Enabled = True
+                                    CurRun.NextUnit.Set_BackColor(Color.Green)
                                     CurRun = CurRun.NextUnit.NextUnit
                                 End If
                                 ShowLoadedDataOnForm(gruInfo)
+                                CurRun.Set_BackColor(Color.Green)
+                                If Not CurRun.Name.Contains("A2") Then
+                                    CurRun.Link.Enabled = True
+                                End If
                                 CurRun = CurRun.NextUnit 'after showing move to next unit for the next iteration
                                 'any additional run
                             ElseIf CurRun.Name.Contains("Add") And Not (title.EndsWith("Run1") Or title.EndsWith("Run2") Or title.EndsWith("Run3")) Then
                                 'create more gru for additional run
+                                CurRun.Set_BackColor(Color.Green)
                                 Set_Add_GRU(AesIdx, title, subh)
                                 ShowLoadedDataOnForm(gruInfo)
                                 'regular run
                             Else
                                 If CurRun.Name.Contains("A2") Then
+                                    CurRun.Set_BackColor(Color.Green)
+                                    CurRun.Link.Enabled = True
+                                    CurRun.NextUnit.Set_BackColor(Color.Green)
                                     CurRun = CurRun.NextUnit.NextUnit
                                 End If
                                 ShowLoadedDataOnForm(gruInfo)
+                                CurRun.Set_BackColor(Color.Green)
+                                If Not CurRun.Name.Contains("A2") Then
+                                    CurRun.Link.Enabled = True
+                                End If
                                 CurRun = CurRun.NextUnit 'after showing move to next unit for the next iteration
                             End If
 
                         End If
                     Loop While gruInfo IsNot Nothing And Not inFile.EndOfStream
+                    DataGrid._Warning = True
                 End If
             End If
+
+            Return True
         Else
             MessageBox.Show("Load File Error!", "My application", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End If

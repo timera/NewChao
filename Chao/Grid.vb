@@ -8,6 +8,7 @@ Public Class Grid
     Private _R As Double
     Private _Machine As Program.Machines
     Private _Parent As Control
+    Public _Warning As Boolean
 
     Private _Background As Grid_Run_Unit
     Public ReadOnly Property Background As Grid_Run_Unit
@@ -46,6 +47,7 @@ Public Class Grid
     Private ListAsGRUs As List(Of List(Of Grid_Run_Unit))
 
     Public Sub New(ByRef Parent As Control, ByVal Size As Size, ByVal Position As Point, ByVal R As Double, ByVal Machine As Program.Machines, ByVal headRU As Run_Unit)
+        _Warning = True
         If IsNothing(headRU) Then
             MsgBox("Cannot create chart because given head run_unit is null!")
             Return
@@ -584,13 +586,20 @@ Public Class Grid
     Public Sub ShowA3Overall(ByRef runFwd As Grid_Run_Unit, ByRef runBkd As Grid_Run_Unit)
         ' the only way to access the overall GRU is through the previous backward GRU
         Dim gru As Grid_Run_Unit = runBkd.OverallGRU
-        gru.SetMs(runFwd.Meter2 + runBkd.Meter2,
-                runFwd.Meter4 + runBkd.Meter4,
-                runFwd.Meter6 + runBkd.Meter6,
-                runFwd.Meter8 + runBkd.Meter8,
-                runFwd.Meter10 + runBkd.Meter10,
-                runFwd.Meter12 + runBkd.Meter12)
-        ShowGRUonForm(gru)
+        Try
+            gru.SetMs(runFwd.Meter2 + runBkd.Meter2,
+                    runFwd.Meter4 + runBkd.Meter4,
+                    runFwd.Meter6 + runBkd.Meter6,
+                    runFwd.Meter8 + runBkd.Meter8,
+                    runFwd.Meter10 + runBkd.Meter10,
+                    runFwd.Meter12 + runBkd.Meter12)
+            ShowGRUonForm(gru)
+        Catch ex As Exception
+            If _Warning Then
+                MsgBox(ex.Message)
+            End If
+        End Try
+
     End Sub
 
     'function that adds the overall column after runFwdard and runBwdard in additional runs
@@ -767,7 +776,9 @@ Public Class Grid
     Public Function NeedAdd(ByRef grus As List(Of Grid_Run_Unit)) As Boolean
         Dim r = New Random()
         If r.Next(2) Then
-            MsgBox("即將多增加一次測試，因為前幾次差距大於1!")
+            If _Warning Then
+                MsgBox("即將多增加一次測試，因為前幾次差距大於1!")
+            End If
             Return True
         End If
         Return False
@@ -1307,14 +1318,15 @@ Public Class Grid_Run_Unit
 
     Public Sub Calc_K1A()
         If isRegular Then
+
+            If _deltaLA = 0 Or _deltaLA > 10 Then
+                _K1A = 0
+                Return
+            ElseIf _deltaLA < 3 Then
+                Throw New ChaoProblemException("ΔLA < 3dB 所以背景噪音修正值K1A無法計算!")
+                Return
+            End If
             Try
-                If _deltaLA = 0 Or _deltaLA > 10 Then
-                    _K1A = 0
-                    Return
-                ElseIf _deltaLA < 3 Then
-                    MsgBox("ΔLA < 3dB 所以背景噪音修正值K1A無法計算!")
-                    Return
-                End If
                 _K1A = Grid.Round(-10 * Math.Log10(1 - 10 ^ (-0.1 * _deltaLA)))
             Catch ex As Exception
                 MsgBox("In Calc_K1A():" & ex.Message)
@@ -1374,4 +1386,29 @@ Public Class Grid_Run_Unit
         Return -1
     End Function
 
+End Class
+
+Public Class ChaoProblemException
+    Inherits Exception
+
+    Public Sub New()
+        ' Add other code for custom properties here.
+    End Sub
+
+    Public Sub New(ByVal message As String)
+        MyBase.New(message)
+        ' Add other code for custom properties here.
+    End Sub
+
+    Public Sub New(ByVal message As String, ByVal inner As Exception)
+        MyBase.New(message, inner)
+        ' Add other code for custom properties here.
+    End Sub
+
+    Public Sub New(
+        ByVal info As System.Runtime.Serialization.SerializationInfo,
+        ByVal context As System.Runtime.Serialization.StreamingContext)
+        MyBase.New(info, context)
+        ' Insert code here for custom properties here.
+    End Sub
 End Class

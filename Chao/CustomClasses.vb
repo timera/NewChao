@@ -162,18 +162,13 @@ Class ChaoTextBox
             ' Determine whether the keystroke is a number from the keypad. 
             If e.KeyCode < Keys.NumPad0 OrElse e.KeyCode > Keys.NumPad9 Then
                 ' Determine whether the keystroke is a backspace. 
-                If e.KeyCode <> Keys.Back And e.KeyCode <> Keys.Shift And e.KeyCode <> Keys.Alt And e.KeyCode <> Keys.Control And e.KeyCode <> Keys.LWin And e.KeyCode <> Keys.RWin Then
+                If e.KeyCode <> Keys.Enter And e.KeyCode <> Keys.Back And e.KeyCode <> Keys.Shift And e.KeyCode <> Keys.Alt And e.KeyCode <> Keys.Control And e.KeyCode <> Keys.LWin And e.KeyCode <> Keys.RWin Then
                     ' A non-numerical keystroke was pressed.  
                     ' Set the flag to true and evaluate in KeyPress event.
                     MsgBox("只能輸入數字!")
                     Me.Text = ""
                 End If
             End If
-        End If
-        'If shift key was pressed, it's not a number. 
-        If Control.ModifierKeys = Keys.Shift Then
-            MsgBox("只能輸入數字!")
-            Me.Text = ""
         End If
     End Sub
 End Class

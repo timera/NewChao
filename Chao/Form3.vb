@@ -2599,6 +2599,7 @@ Public Class Program
     Private Sub startButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles startButton.Click
         All_Panel_Disable()
         Comm.StartMeasure()
+        stopButton.Focus()
         If Countdown = False Then
             startButton.Enabled = False
             Accept_Button.Enabled = False
@@ -3428,6 +3429,7 @@ Public Class Program
             stopButton.Enabled = False
             Accept_Button.Enabled = False
         ElseIf CurRun.Name.Contains("PreCal") Then
+            Countdown = False
             'didn't move
             All_Panel_Enable()
             'Case1: now is PreCal
@@ -3447,6 +3449,7 @@ Public Class Program
 
 
         ElseIf CurRun.Name = "Background" Then
+            Countdown = False
             All_Panel_Enable()
             'Case2: now is Background
             ' change light
@@ -3468,6 +3471,7 @@ Public Class Program
             Load_New_Graph_CD_True()
 
         ElseIf CurRun.Name = "RSS" Then
+            Countdown = False
             All_Panel_Enable()
             'Case3: now is RSS
             ' change light
@@ -3487,6 +3491,7 @@ Public Class Program
             timeLabel.Text = timeLeft & " s"
 
         ElseIf CurRun.Name.Contains("PostCal") Then
+            Countdown = False
             All_Panel_Enable()
             'Case4: now is PostCal
             ' change light
@@ -3505,6 +3510,7 @@ Public Class Program
 
 
         ElseIf CurRun.Name = "A4" Then
+            Countdown = False
             All_Panel_Enable()
             If CurRun.NextUnit.Name = "A4_Mid_BG" Then
                 'Case: now is A4 and next is A4_Mid_BG
@@ -3574,6 +3580,7 @@ Public Class Program
             End If
 
         ElseIf CurRun.Name = "A4_Add" Then
+            Countdown = False
             All_Panel_Enable()
             Add_Test_Record = True
             'have an additional test?
@@ -3639,6 +3646,7 @@ Public Class Program
             End If
 
         ElseIf CurRun.Name = "A4_Mid_BG" Or CurRun.Name = "A4_Mid_BG_Add" Then
+            Countdown = False
             All_Panel_Enable()
             'Case: now is A4_Mid_BG or A4_Mid_BG_Add and next is A4 or A4_Add
             ' change light
@@ -3669,6 +3677,7 @@ Public Class Program
             End If
 
         ElseIf CurRun.Name = "ExA1" Or CurRun.Name = "TrA1" Or CurRun.Name = "LoA1" Then
+            Countdown = True
             All_Panel_Enable()
             If CurRun.NextUnit.Name = "ExA1" Or CurRun.NextUnit.Name = "TrA1" Or CurRun.NextUnit.Name = "LoA1" Then
                 'Case1: now is ExA1 and next is also ExA1 or now is TrA1 and next is also TrA1 or now is LoA1 and next is also LoA1
@@ -3732,6 +3741,7 @@ Public Class Program
             End If
 
         ElseIf CurRun.Name = "ExA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "LoA1_Add" Then
+            Countdown = True
             All_Panel_Enable()
             Add_Test_Record = True
             'Case2: now is ExA1_Add and next is ExA2_1st or now is TrA1_Add and next is TrA3_fwd or now is LoA1_Add and next is LoA2_1st
@@ -3785,6 +3795,7 @@ Public Class Program
                 Load_New_Graph_CD_True()
             End If
         ElseIf CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_2nd_3rd" Then
+            Countdown = True
             All_Panel_Enable()
             CurRun.PrevUnit.PrevUnit.Link.Enabled = True
             If CurRun.NextUnit.Name = "ExA2_1st_Add" Or CurRun.NextUnit.Name = "LoA2_1st_Add" Then
@@ -3875,6 +3886,7 @@ Public Class Program
 
 
         ElseIf CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
+            Countdown = True
             All_Panel_Enable()
             Add_Test_Record = True
             'CurRun.PrevUnit.PrevUnit.Link.Enabled = True
@@ -3959,6 +3971,7 @@ Public Class Program
             End If
 
         ElseIf CurRun.Name = "LoA3_fwd" Or CurRun.Name = "LoA3_bkd" Or CurRun.Name = "TrA3_fwd" Or CurRun.Name = "TrA3_bkd" Then
+            Countdown = True
             All_Panel_Enable()
             If CurRun.NextUnit.Name = "LoA3_fwd" Or CurRun.NextUnit.Name = "LoA3_bkd" Or CurRun.NextUnit.Name = "TrA3_fwd" Or CurRun.NextUnit.Name = "TrA3_bkd" Then
                 'Case: LoA3_fwd to LoA3_bkd or LoA3_bkd to LoA3_fwd or TrA3_bkd to TrA3_fwd or TrA3_bkd to TrA3_fwd
@@ -4037,6 +4050,7 @@ Public Class Program
             End If
 
         ElseIf CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "LoA3_bkd_Add" Or CurRun.Name = "TrA3_fwd_Add" Or CurRun.Name = "TrA3_bkd_Add" Then
+            Countdown = True
             All_Panel_Enable()
             If CurRun.NextUnit.Name = "LoA3_bkd_Add" Or CurRun.NextUnit.Name = "TrA3_bkd_Add" Then
                 Button_Skip_Add.Enabled = True
@@ -4159,7 +4173,7 @@ Public Class Program
                     keyGRU.OverallGRU.Accept()
                 End If
                 MoveOnToNextRun(True, True, False)
-
+                startButton.Focus()
             ElseIf Result = DialogResult.No Then
                 If CurRun.Name.Contains("Add") Then
                     Button_Skip_Add.Enabled = True
@@ -4642,33 +4656,59 @@ Public Class Program
                 sb.AppendLine(ComboBox_machine_list.Text & "," & TextBox_L.Text & "," & TextBox_r1.Text & "," & TextBox_L1.Text & "," & TextBox_L2.Text & "," & TextBox_L3.Text & "," & TextBox_r2.Text)
                 For k = 0 To BasicInfoGrid.Rows.Count - 1
                     If Not k Mod 2 = 0 Then
-                        sb.AppendLine(BasicInfoGrid.Rows(k).Cells(0).Value & "##")
+                        If BasicInfoGrid.Rows(k).Cells(0).Value IsNot Nothing Then
+                            sb.Append(BasicInfoGrid.Rows(k).Cells(0).Value.ToString())
+                        End If
+                        sb.AppendLine("##")
                     End If
                 Next
-                While tempRun IsNot Nothing And (tempRun.Name.Contains("Add") Or tempRun.Executed)
-                    If tempRun.GRU IsNot Nothing Then
-                        Dim tempGRU As Grid_Run_Unit = tempRun.GRU
-                        'FORMAT: HEADER;SUBHEADER;LpAeq2|meter2second1,meter2second2,meter2second3,meter2second4,meter2second5...;LpAeq4|meter4second1,....;....
-                        sb.AppendLine(tempGRU.Header & ";" &
-                                      tempGRU.Subheader & ";" &
-                                      tempGRU.LpAeq2 & "|" & DoubleArrayToString(tempGRU.Meter2.Measurements) & ";" &
-                                      tempGRU.LpAeq4 & "|" & DoubleArrayToString(tempGRU.Meter4.Measurements) & ";" &
-                                      tempGRU.LpAeq6 & "|" & DoubleArrayToString(tempGRU.Meter6.Measurements) & ";" &
-                                      tempGRU.LpAeq8 & "|" & DoubleArrayToString(tempGRU.Meter8.Measurements) & ";" &
-                                      tempGRU.LpAeq10 & "|" & DoubleArrayToString(tempGRU.Meter10.Measurements) & ";" &
-                                      tempGRU.LpAeq12 & "|" & DoubleArrayToString(tempGRU.Meter12.Measurements))
-                        Dim addGRU As Grid_Run_Unit = tempGRU.NextGRU
-                        While addGRU IsNot Nothing
-                            sb.AppendLine(addGRU.Header & ";" &
-                                          addGRU.Subheader & ";" &
-                                      addGRU.LpAeq2 & "|" & DoubleArrayToString(addGRU.Meter2.Measurements) & ";" &
-                                      addGRU.LpAeq4 & "|" & DoubleArrayToString(addGRU.Meter4.Measurements) & ";" &
-                                      addGRU.LpAeq6 & "|" & DoubleArrayToString(addGRU.Meter6.Measurements) & ";" &
-                                      addGRU.LpAeq8 & "|" & DoubleArrayToString(addGRU.Meter8.Measurements) & ";" &
-                                      addGRU.LpAeq10 & "|" & DoubleArrayToString(addGRU.Meter10.Measurements) & ";" &
-                                      addGRU.LpAeq12 & "|" & DoubleArrayToString(addGRU.Meter12.Measurements))
-                            addGRU = addGRU.NextGRU
-                        End While
+                While tempRun IsNot Nothing
+                    If tempRun.Name.Contains("Add") Or tempRun.Executed Then
+                        If tempRun.GRU IsNot Nothing Then
+                            Dim tempGRU As Grid_Run_Unit = tempRun.GRU
+                            'FORMAT: HEADER;SUBHEADER;LpAeq2|meter2second1,meter2second2,meter2second3,meter2second4,meter2second5...;LpAeq4|meter4second1,....;....
+                            If Machine = Machines.Others Then
+                                sb.AppendLine(tempGRU.Header & ";" &
+                                          tempGRU.Subheader & ";" &
+                                          tempGRU.LpAeq2 & "|" & DoubleArrayToString(tempGRU.Meter2.Measurements) & ";" &
+                                          tempGRU.LpAeq4 & "|" & DoubleArrayToString(tempGRU.Meter4.Measurements) & ";" &
+                                          tempGRU.LpAeq6 & "|" & DoubleArrayToString(tempGRU.Meter6.Measurements) & ";" &
+                                          tempGRU.LpAeq8 & "|" & DoubleArrayToString(tempGRU.Meter8.Measurements))
+                            Else
+                                sb.AppendLine(tempGRU.Header & ";" &
+                                          tempGRU.Subheader & ";" &
+                                          tempGRU.LpAeq2 & "|" & DoubleArrayToString(tempGRU.Meter2.Measurements) & ";" &
+                                          tempGRU.LpAeq4 & "|" & DoubleArrayToString(tempGRU.Meter4.Measurements) & ";" &
+                                          tempGRU.LpAeq6 & "|" & DoubleArrayToString(tempGRU.Meter6.Measurements) & ";" &
+                                          tempGRU.LpAeq8 & "|" & DoubleArrayToString(tempGRU.Meter8.Measurements) & ";" &
+                                          tempGRU.LpAeq10 & "|" & DoubleArrayToString(tempGRU.Meter10.Measurements) & ";" &
+                                          tempGRU.LpAeq12 & "|" & DoubleArrayToString(tempGRU.Meter12.Measurements))
+                            End If
+                            Dim addGRU As Grid_Run_Unit = tempGRU.NextGRU
+                            While addGRU IsNot Nothing
+                                If Machine = Machines.Others Then
+                                    sb.AppendLine(addGRU.Header & ";" &
+                                              addGRU.Subheader & ";" &
+                                          addGRU.LpAeq2 & "|" & DoubleArrayToString(addGRU.Meter2.Measurements) & ";" &
+                                          addGRU.LpAeq4 & "|" & DoubleArrayToString(addGRU.Meter4.Measurements) & ";" &
+                                          addGRU.LpAeq6 & "|" & DoubleArrayToString(addGRU.Meter6.Measurements) & ";" &
+                                          addGRU.LpAeq8 & "|" & DoubleArrayToString(addGRU.Meter8.Measurements))
+                                    addGRU = addGRU.NextGRU
+                                Else
+                                    sb.AppendLine(addGRU.Header & ";" &
+                                              addGRU.Subheader & ";" &
+                                          addGRU.LpAeq2 & "|" & DoubleArrayToString(addGRU.Meter2.Measurements) & ";" &
+                                          addGRU.LpAeq4 & "|" & DoubleArrayToString(addGRU.Meter4.Measurements) & ";" &
+                                          addGRU.LpAeq6 & "|" & DoubleArrayToString(addGRU.Meter6.Measurements) & ";" &
+                                          addGRU.LpAeq8 & "|" & DoubleArrayToString(addGRU.Meter8.Measurements) & ";" &
+                                          addGRU.LpAeq10 & "|" & DoubleArrayToString(addGRU.Meter10.Measurements) & ";" &
+                                          addGRU.LpAeq12 & "|" & DoubleArrayToString(addGRU.Meter12.Measurements))
+                                    addGRU = addGRU.NextGRU
+                                End If
+
+                            End While
+                        End If
+
                     End If
                     tempRun = tempRun.NextUnit
                 End While
@@ -4728,7 +4768,6 @@ Public Class Program
             CurRun.GRU.SetM(New Meter_Measure_Unit(num, StringToDoubleList(gruInfo(num / 2 + 1).Split("|")(1)), CDbl(gruInfo(num / 2 + 1).Split("|")(0))), num)
         End If
 
-        Dim count As Integer = StringToDoubleList(gruInfo(2).Split("|")(1)).Count
         'everything else
         Dim tempGRU As Grid_Run_Unit = CurRun.GRU
         If tempGRU IsNot Nothing Then
@@ -4737,7 +4776,7 @@ Public Class Program
             End While
         End If
         Try
-            If count = 4 Then
+            If Machine = Machines.Others Then
                 tempGRU.SetMs(New Meter_Measure_Unit(2, StringToDoubleList(gruInfo(2).Split("|")(1)), CDbl(gruInfo(2).Split("|")(0))),
                                                      New Meter_Measure_Unit(4, StringToDoubleList(gruInfo(3).Split("|")(1)), CDbl(gruInfo(3).Split("|")(0))),
                                                      New Meter_Measure_Unit(6, StringToDoubleList(gruInfo(4).Split("|")(1)), CDbl(gruInfo(4).Split("|")(0))),
@@ -4811,73 +4850,86 @@ Public Class Program
                     'Grid_Run_Unit_Info gives you the format as such- Background;110.9|107.5,69.2,111.9;59.5|70.9,105.7,60.5;54.7|113.2,45.9,55.7;99.3|67.6,44.9,100.3
                     Dim gruInfo() As String
 
-                    Dim runsCount As Integer = 0
+                    'Dim runsCount As Integer = 0
                     Dim Aes() As String = Decide_Machine(ComboBox_machine_list.Text).Split(",")
                     Dim AesIdx As Integer = 0
                     Do
                         gruInfo = inFile.ReadLine().Split(";")
                         If Not gruInfo.Length = 0 And Not inFile.EndOfStream Then
-                            runsCount += 1
+                            'runsCount += 1
                             Dim title As String = gruInfo(0)
                             Dim subh As String = gruInfo(1)
                             'Dim time As Integer = CInt(gruInfo(gruInfo.Length - 1))
 
-                            'no additional after 3rd or additional run
-                            If CurRun.Name.Contains("Add") And (title.EndsWith("Run1") Or title.EndsWith("Run2") Or title.EndsWith("Run3") Or title.EndsWith("RSS")) Then
+                            'no additional after 3rd run
+                            If CurRun.Name.Contains("Add") And (title.EndsWith("Run1") Or title.EndsWith("RSS")) Then
                                 AesIdx += 1
-                                CurRun = CurRun.NextUnit 'skipping the additional Run_Unit
-                                If title.EndsWith("RSS") Then
+                                'A2 or A3
+                                If CurRun.Name.Contains("A2") Or CurRun.Name.Contains("A3") Then
+                                    CurRun = CurRun.NextUnit.NextUnit.NextUnit
+
+                                ElseIf CurRun.Name.Contains("A4") Then 'A4
                                     CurRun = CurRun.NextUnit.NextUnit
+                                Else 'A1
+                                    CurRun = CurRun.NextUnit 'skipping the additional Run_Unit
                                 End If
-                                If CurRun.Name.Contains("A2") Then
-                                    CurRun.Set_BackColor(Color.Green)
-                                    CurRun.Link.Enabled = True
-                                    CurRun.NextUnit.Set_BackColor(Color.Green)
-                                    CurRun = CurRun.NextUnit.NextUnit
+                                'additional run (already passed the first run of additional, if there's more...)
+                            ElseIf (Not CurRun.Name.Contains("Add")) And title.Contains("Run") And Not (title = "Run1" Or title = "Run2" Or title = "Run3") Then
+                                'A2 or A3
+                                If CurRun.Name.Contains("A2") Or CurRun.Name.Contains("A3") Then
+                                    CurRun = CurRun.PrevUnit.PrevUnit.PrevUnit
+                                ElseIf CurRun.Name.Contains("A4") Then 'A4
+                                    CurRun = CurRun.PrevUnit.PrevUnit
+                                Else 'A1
+                                    CurRun = CurRun.PrevUnit
                                 End If
-                                ShowLoadedDataOnForm(gruInfo)
-                                CurRun.Set_BackColor(Color.Green)
-                                If Not CurRun.Name.Contains("A2") Then
-                                    CurRun.Link.Enabled = True
-                                End If
-                                CurRun = CurRun.NextUnit 'after showing move to next unit for the next iteration
-                                'any additional run
-                            ElseIf CurRun.Name.Contains("Add") And Not (title.EndsWith("Run1") Or title.EndsWith("Run2") Or title.EndsWith("Run3")) Then
+                            End If
+                            'A2
+                            If CurRun.Name.Contains("A2") Then
                                 'create more gru for additional run
                                 CurRun.Set_BackColor(Color.Green)
-                                Set_Add_GRU(AesIdx, title, subh)
-                                ShowLoadedDataOnForm(gruInfo)
-                                'regular run
-                            Else
-                                If CurRun.Name.Contains("A2") Then
-                                    CurRun.Set_BackColor(Color.Green)
-                                    CurRun.Link.Enabled = True
-                                    CurRun.NextUnit.Set_BackColor(Color.Green)
-                                    CurRun = CurRun.NextUnit.NextUnit
+                                CurRun.Link.Enabled = True
+                                CurRun.Executed = True
+                                If CurRun.Name.Contains("Add") Then
+                                    Set_Add_GRU(AesIdx, title, subh)
                                 End If
-                                ShowLoadedDataOnForm(gruInfo)
+                                CurRun.NextUnit.Set_BackColor(Color.Green)
+                                CurRun.NextUnit.Executed = True
+                                CurRun = CurRun.NextUnit.NextUnit
                                 CurRun.Set_BackColor(Color.Green)
-                                If Not CurRun.Name.Contains("A2") Then
-                                    CurRun.Link.Enabled = True
+                                CurRun.Executed = True
+                                ShowLoadedDataOnForm(gruInfo)
+                                CurRun = CurRun.NextUnit
+                                'A1,A3,A4
+                            Else
+                                'create more gru for additional run
+                                CurRun.Set_BackColor(Color.Green)
+                                CurRun.Executed = True
+                                CurRun.Link.Enabled = True
+                                If CurRun.Name.Contains("Add") Then
+                                    Set_Add_GRU(AesIdx, title, subh)
                                 End If
-                                CurRun = CurRun.NextUnit 'after showing move to next unit for the next iteration
-                            End If
+                                ShowLoadedDataOnForm(gruInfo)
+                                CurRun = CurRun.NextUnit
 
+                            End If
                         End If
                     Loop While gruInfo IsNot Nothing And Not inFile.EndOfStream
                     DataGrid._Warning = True
-                    If CurRun.PrevUnit IsNot Nothing Then
-                        CurRun = CurRun.PrevUnit
-                        MoveOnToNextRun(True, True, False)
+                    If CurRun IsNot Nothing Then
+                        If CurRun.PrevUnit IsNot Nothing Then
+                            CurRun = CurRun.PrevUnit
+                            MoveOnToNextRun(True, True, False)
+                        End If
                     End If
                 End If
             End If
 
             Return True
         Else
-            MessageBox.Show("Load File Error!", "My application", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return False
         End If
-        Return False
+
     End Function
 
     Private Sub ButtonExport_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonExport.Click

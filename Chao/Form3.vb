@@ -2271,6 +2271,9 @@ Public Class Program
         End While
     End Sub
     Dim BackgroundTime As Integer = 5
+
+    'before using Load_Steps_helper, array_time need to be set to the correct values
+    'creates steps for run and returns the pointer to the first step
     Function Load_Steps_helper(ByRef run As Run_Unit) As Steps
         Dim tempRun As Run_Unit = run
         Dim tempStep As Steps
@@ -2827,7 +2830,15 @@ Public Class Program
             startButton.Enabled = True
             stopButton.Enabled = False
             All_Panel_Enable()
-            If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then 'if not jump step
+
+            Dim isJumpStep As Boolean = False
+            If Temp_CurRun Is Nothing Then
+                isJumpStep = True
+            ElseIf Not Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
+                isJumpStep = True
+            End If
+
+            If Not isJumpStep Then 'if not jump step
                 'bounce back
                 If CurRun.Name = "ExA1" Or CurRun.Name = "LoA1" Or CurRun.Name = "TrA1" Or CurRun.Name = "A4" Or CurRun.Name = "ExA1_Add" Or CurRun.Name = "LoA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "A4_Add" Or CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA3_fwd" Or CurRun.Name = "LoA3_bkd" Or CurRun.Name = "TrA3_fwd" Or CurRun.Name = "TrA3_bkd" Or CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "LoA3_bkd_Add" Or CurRun.Name = "TrA3_fwd_Add" Or CurRun.Name = "TrA3_bkd_Add" Then
                     'dispose data
@@ -2872,31 +2883,42 @@ Public Class Program
                         CurRun.NextUnit.Set_BackColor(Color.Green)
                     End If
                 End If
+                'set the jump run green and the one we wanna jump back to yellow
                 CurRun.Set_BackColor(Color.Green)
-                Temp_CurRun.Set_BackColor(Color.Yellow)
-
+                If Temp_CurRun IsNot Nothing Then
+                    Temp_CurRun.Set_BackColor(Color.Yellow)
+                End If
                 CurRun = Temp_CurRun
                 Temp_CurRun = Null_CurRun
-
-                If Temp_Countdown = True Then
-                    Countdown = True
-                    Set_Run_Unit()
-                    Clear_Steps()
-                    Load_Steps()
-                    'dispose old graph and create new graph
-                    Load_New_Graph_CD_True()
-                Else
-                    Countdown = False
-                    timeLeft = CurRun.Time
-                    timeLabel.Text = timeLeft & " s"
-                    Clear_Steps()
-                    'dispose old graph and create new graph
-                    Load_New_Graph_CD_False()
+                If CurRun IsNot Nothing Then
+                    If Temp_Countdown = True Then
+                        Countdown = True
+                        Set_Run_Unit()
+                        Clear_Steps()
+                        Load_Steps()
+                        'dispose old graph and create new graph
+                        Load_New_Graph_CD_True()
+                    Else
+                        Countdown = False
+                        timeLeft = CurRun.Time
+                        timeLabel.Text = timeLeft & " s"
+                        Clear_Steps()
+                        'dispose old graph and create new graph
+                        Load_New_Graph_CD_False()
+                    End If
                 End If
                 timeLabel.Text = timeLeft & " s"
-
+                If CurRun Is Nothing Then
+                    BackToEnd()
+                End If
             End If
         End If
+    End Sub
+
+    Sub ClearSeconds()
+        For i = 0 To array_step_display.Length - 1
+            array_step_display(i).Text = ""
+        Next
     End Sub
 
     'two approaches, if there's already a GRU existent, add as next GRU, if not, attach to the RU
@@ -3013,45 +3035,139 @@ Public Class Program
         Index_for_Setup_Time += 1
         CurRun.Steps = CurRun.Steps.NextStep 'jump to next step
         CurRun.CurStep += 1 'curstep add 1
+        array_step_s(Index_for_Setup_Time).Focus()
+    End Sub
+
+    Public Sub Load_Array_Step_S()
+        Dim tempStep As Steps = CurRun.HeadStep
+        Dim i = 0
+        While tempStep IsNot Nothing
+            array_step_s(i).Text = tempStep.Time
+            tempStep = tempStep.NextStep
+            i += 1
+        End While
     End Sub
 
     ' This is called when 1) user input is entered for A2 and A3's time or 2) loading saved file that includes A2 or A3
-    Private Sub LoadInputTime()
-        'Dim array_time As Array
+    Public Sub LoadInputTime(ByVal mode As Integer, ByRef secList As List(Of Double))
+        'mode 1 is manually set
+        'mode 2 is load from file
+        'mode 3 is jump step
 
-        CurStep = Load_Steps_helper(CurRun)
-        If Not (CurRun.Name = "TrA3_bkd" Or CurRun.Name = "LoA3_bkd") Then
-            'If CurRun.Name = "ExA2_1st" Then
-            '    array_time = array_ExA2_time
-            'ElseIf CurRun.Name = "LoA2_1st" Then
-            '    array_time = array_LoA2_time
-            'ElseIf CurRun.Name = "LoA3_fwd" Then
-            '    array_time = array_LoA3_time
-            'ElseIf CurRun.Name = "TrA3_fwd" Then
-            '    array_time = array_TrA3_time
-            'End If
-            For i = 0 To CurRun.EndStep - 1
-                If Not CurStep.Time = -1 Then
-                    array_time(i) = array_step_s(i).Text
-                    CurStep.Time = array_step_s(i).Text
-                    CurStep = CurStep.NextStep
-                Else
-                    array_time(i) = -1
-                    CurStep = CurStep.NextStep
-                End If
+        'First, set array_time()
+        If mode = 1 Then 'used when manually set time is used
+            For i = 0 To array_time.Length - 1
+                array_time(i) = array_step_s(i).Text
             Next
-        Else
-            'bkd 的時間和 fwd的時間都放在同一個array裡
-            If CurRun.Name = "TrA3_bkd" Then
-                array_time(CurRun.PrevUnit.EndStep) = array_step_s(CurRun.PrevUnit.EndStep).Text
-            ElseIf CurRun.Name = "LoA3_bkd" Then
-                array_time(CurRun.PrevUnit.EndStep) = array_step_s(CurRun.PrevUnit.EndStep).Text
+        ElseIf mode = 2 Then 'used when we load from file
+            If secList IsNot Nothing Then
+                For i = 0 To secList.Count - 1
+                    array_time(i) = secList(i)
+                Next
             End If
+        Else 'jump step meaning the steps have been loaded already, so we only need to load into array_step_s
+            If Not CurRun.Name.Contains("bkd") Then 'not A3 backward
+                Dim tempStep As Steps = CurRun.HeadStep
+                Dim i As Integer = 0
+                While tempStep IsNot Nothing
+                    array_time(i) = tempStep.Time
+                    tempStep = tempStep.NextStep
+                    i += 1
+                End While
+            Else 'A3 backward
+                'first load A3 forward
+                Dim tempStep As Steps = CurRun.PrevUnit.HeadStep
+                Dim i As Integer = 0
+                While tempStep IsNot Nothing
+                    array_time(i) = tempStep.Time
+                    tempStep = tempStep.NextStep
+                    i += 1
+                End While
+                'then load A3 backward
+                tempStep = CurRun.HeadStep
+                While tempStep IsNot Nothing
+                    array_time(i) = tempStep.Time
+                    tempStep = tempStep.NextStep
+                    i += 1
+                End While
+            End If
+
+        End If
+
+        'Second, set up the steps
+        If mode = 2 Then
+            CurStep = Load_Steps_helper(CurRun)
+        Else
+            CurStep = CurRun.HeadStep
+        End If
+
+        'Last, Set up array_step_s
+        If Not CurRun.Name.Contains("A3") Then ' not A3
+            'this for loop leaves out the -1 for display
+            If Not mode = 1 Then
+                For i = 0 To CurRun.EndStep - 1
+                    If CurStep.Time = -1 Then
+                        array_step_s(i).Text = 0
+                    Else
+                        array_step_s(i).Text = array_time(i)
+                    End If
+                    CurStep = CurStep.NextStep
+                Next
+            End If
+        Else 'A3
+            If CurRun.Name.Contains("bkd") Then 'if already running backward
+                If mode = 1 Then 'manually set
+                    'bkd 的時間和 fwd的時間都放在同一個array裡
+                    array_time(CurRun.PrevUnit.EndStep) = array_step_s(CurRun.PrevUnit.EndStep).Text
+                ElseIf mode = 2 Then 'load from file
+                    array_step_s(CurRun.PrevUnit.EndStep).Text = secList(secList.Count - 1)
+                    array_time(CurRun.PrevUnit.EndStep) = secList(secList.Count - 1)
+                Else 'jump step
+                    CurRun.Steps = CurRun.HeadStep
+                    array_step_s(CurRun.PrevUnit.EndStep).Text = CurRun.Steps.Time
+                    array_time(CurRun.PrevUnit.EndStep) = CurRun.Steps.Time
+                End If
+            Else 'running forward
+                If mode = 1 Then 'manually set
+                    'bkd 的時間和 fwd的時間都放在同一個array裡
+                    Dim tempstep As Steps = CurRun.HeadStep
+                    Dim numSteps As Integer = 1
+                    While tempstep IsNot Nothing
+                        tempstep = tempstep.NextStep
+                        numSteps += 1
+                    End While
+                    CurRun.EndStep = numSteps - 1
+                ElseIf mode = 2 Then 'load from file
+                    Dim tempStep As Steps = CurRun.HeadStep
+                    For i = 0 To CurRun.EndStep - 1
+                        If tempStep.Time = -1 Then
+                            array_step_s(i).Text = 0
+                            CurStep = tempStep
+                        Else
+                            array_step_s(i).Text = array_time(i)
+                        End If
+                        tempStep = tempStep.NextStep
+                    Next
+                    array_step_s(CurRun.EndStep).Text = array_time(CurRun.EndStep)
+                Else 'jump step
+                    Dim tempStep As Steps = CurRun.HeadStep
+                    For i = 0 To CurRun.EndStep - 1
+                        If tempStep.Time = -1 Then
+                            array_step_s(i).Text = 0
+                            CurStep = tempStep
+                        Else
+                            array_step_s(i).Text = array_time(i)
+                        End If
+                        tempStep = tempStep.NextStep
+                    Next
+                End If
+            End If
+
         End If
     End Sub
     Private Sub Test_ConfirmButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_ConfirmButton.Click
         Dim Input_S_Apply As Boolean = True
-        
+
         CurStep = Load_Steps_helper(CurRun)
         If Not (CurRun.Name = "TrA3_bkd" Or CurRun.Name = "LoA3_bkd") Then
             For i = 0 To CurRun.EndStep - 1
@@ -3073,7 +3189,7 @@ Public Class Program
         End If
 
         If Input_S_Apply = True Then
-            LoadInputTime()
+            LoadInputTime(1, Nothing)
 
             If CurRun.NextUnit.Name = "LoA3_bkd" Or CurRun.NextUnit.Name = "TrA3_bkd" Then
                 'back to initial test condition
@@ -3124,12 +3240,20 @@ Public Class Program
         Set_Second_for_Steps()
     End Sub
     Sub Set_Second_for_Steps()
+        Dim isJumpStep As Boolean = False
+        If Temp_CurRun Is Nothing Then
+            isJumpStep = True
+        ElseIf Not Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
+            isJumpStep = True
+        End If
+
         If CurRun.Name.Contains("ExA2_1st") Then
-            If Not Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
+
+            If isJumpStep Then 'if jump step
                 For index = 8 To 1
                     array_step_display(index).Text = array_step_display(index - 1).Text
                 Next
-                array_step_display(0).Text = "0"
+                array_step_display(0).Text = ""
             Else
                 For index = 0 To 8
                     array_step_display(index).Text = ""
@@ -3139,7 +3263,8 @@ Public Class Program
                 Next
             End If
         ElseIf CurRun.Name.Contains("ExA2_2nd") Then
-            If Not Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
+
+            If isJumpStep Then
                 If CurRun.PrevUnit.Name.Contains("ExA2_1st") Then
                     For index = 0 To 7
                         array_step_display(index).Text = array_step_display(index + 1).Text
@@ -3156,11 +3281,11 @@ Public Class Program
             End If
 
         ElseIf CurRun.Name.Contains("LoA2_1st") Then
-            If Not Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
+            If isJumpStep Then
                 For index = 2 To 1
                     array_step_display(index).Text = array_step_display(index - 1).Text
                 Next
-                array_step_display(0).Text = "0"
+                array_step_display(0).Text = ""
             Else
                 For index = 0 To 8
                     array_step_display(index).Text = ""
@@ -3171,7 +3296,7 @@ Public Class Program
             End If
 
         ElseIf CurRun.Name.Contains("LoA2_2nd") Then
-            If Not Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
+            If isJumpStep Then
                 If CurRun.PrevUnit.Name.Contains("LoA2_1st") Then
                     For index = 0 To 1
                         array_step_display(index).Text = array_step_display(index + 1).Text
@@ -3226,7 +3351,7 @@ Public Class Program
         timeLabel.Text = timeLeft & " s"
     End Sub
 
-    Sub Jump_Back_Countdown_True()
+    Sub Jump_Back_Countdown_True(ByVal Result As DialogResult)
         If CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "ExA2_2nd_3rd" And CurRun.NextUnit.Name = "ExA2_2nd_3rd" Or CurRun.Name = "ExA2_2nd_3rd_Add" And CurRun.NextUnit.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_2nd_3rd" And CurRun.NextUnit.Name = "LoA2_2nd_3rd" Or CurRun.Name = "LoA2_2nd_3rd_Add" And CurRun.NextUnit.Name = "LoA2_2nd_3rd_Add" Then
             'MessageBox.Show("here")
             Set_Panel_BackColor()
@@ -3244,7 +3369,6 @@ Public Class Program
             While Not IsNothing(keyGRU.NextGRU) 'for more than one additional runs
                 keyGRU = keyGRU.NextGRU
             End While
-            Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
             If Result = DialogResult.Yes Then
                 'save data
                 keyGRU.Accept()
@@ -3257,25 +3381,27 @@ Public Class Program
 
                 All_Panel_Enable()
                 CurRun.Set_BackColor(Color.Green)
-                Temp_CurRun.Set_BackColor(Color.Yellow)
-
+                If Temp_CurRun IsNot Nothing Then
+                    Temp_CurRun.Set_BackColor(Color.Yellow)
+                End If
                 CurRun = Temp_CurRun
                 Temp_CurRun = Null_CurRun
-
-                If Temp_Countdown = True Then
-                    Countdown = True
-                    Set_Run_Unit()
-                    Clear_Steps()
-                    Load_Steps()
-                    'dispose old graph and create new graph
-                    Load_New_Graph_CD_True()
-                Else
-                    Countdown = False
-                    timeLeft = CurRun.Time
-                    timeLabel.Text = timeLeft & " s"
-                    Clear_Steps()
-                    'dispose old graph and create new graph
-                    Load_New_Graph_CD_False()
+                If CurRun IsNot Nothing Then
+                    If Temp_Countdown = True Then
+                        Countdown = True
+                        Set_Run_Unit()
+                        Clear_Steps()
+                        Load_Steps()
+                        'dispose old graph and create new graph
+                        Load_New_Graph_CD_True()
+                    Else
+                        Countdown = False
+                        timeLeft = CurRun.Time
+                        timeLabel.Text = timeLeft & " s"
+                        Clear_Steps()
+                        'dispose old graph and create new graph
+                        Load_New_Graph_CD_False()
+                    End If
                 End If
                 timeLabel.Text = timeLeft & " s"
             ElseIf Result = DialogResult.No Then
@@ -3292,25 +3418,27 @@ Public Class Program
                 All_Panel_Enable()
 
                 CurRun.Set_BackColor(Color.Green)
-                Temp_CurRun.Set_BackColor(Color.Yellow)
-
+                If Temp_CurRun IsNot Nothing Then
+                    Temp_CurRun.Set_BackColor(Color.Yellow)
+                End If
                 CurRun = Temp_CurRun
                 Temp_CurRun = Null_CurRun
-
-                If Temp_Countdown = True Then
-                    Countdown = True
-                    Set_Run_Unit()
-                    Clear_Steps()
-                    Load_Steps()
-                    'dispose old graph and create new graph
-                    Load_New_Graph_CD_True()
-                Else
-                    Countdown = False
-                    timeLeft = CurRun.Time
-                    timeLabel.Text = timeLeft & " s"
-                    Clear_Steps()
-                    'dispose old graph and create new graph
-                    Load_New_Graph_CD_False()
+                If CurRun IsNot Nothing Then
+                    If Temp_Countdown = True Then
+                        Countdown = True
+                        Set_Run_Unit()
+                        Clear_Steps()
+                        Load_Steps()
+                        'dispose old graph and create new graph
+                        Load_New_Graph_CD_True()
+                    Else
+                        Countdown = False
+                        timeLeft = CurRun.Time
+                        timeLabel.Text = timeLeft & " s"
+                        Clear_Steps()
+                        'dispose old graph and create new graph
+                        Load_New_Graph_CD_False()
+                    End If
                 End If
                 timeLabel.Text = timeLeft & " s"
 
@@ -3320,12 +3448,11 @@ Public Class Program
         End If
 
     End Sub
-    Sub Jump_Back_Countdown_False()
+    Sub Jump_Back_Countdown_False(ByVal Result As DialogResult)
         Dim keyGRU As Grid_Run_Unit = CurRun.GRU
         While Not IsNothing(keyGRU.NextGRU) 'for more than one additional runs
             keyGRU = keyGRU.NextGRU
         End While
-        Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
         If Result = DialogResult.Yes Then
             'save data
             keyGRU.Accept()
@@ -3342,25 +3469,29 @@ Public Class Program
 
             All_Panel_Enable()
             CurRun.Set_BackColor(Color.Green)
-            Temp_CurRun.Set_BackColor(Color.Yellow)
+            If Temp_CurRun IsNot Nothing Then
+                Temp_CurRun.Set_BackColor(Color.Yellow)
+            End If
             CurRun = Temp_CurRun
-            If Temp_Countdown = True Then
-                Countdown = True
-                CurRun.Steps = Load_Steps_helper(CurRun)
-                CurRun.CurStep = 1
-                CurStep = CurRun.Steps
-                timeLeft = CurRun.Steps.Time
-                timeLabel.Text = timeLeft & " s"
-                Clear_Steps()
-                Load_Steps()
-                'dispose old graph and create new graph
-                Load_New_Graph_CD_True()
-            Else
-                Countdown = False
-                timeLeft = CurRun.Time
-                timeLabel.Text = timeLeft & " s"
-                'dispose old graph and create new graph
-                Load_New_Graph_CD_False()
+            If CurRun IsNot Nothing Then
+                If Temp_Countdown = True Then
+                    Countdown = True
+                    CurRun.Steps = Load_Steps_helper(CurRun)
+                    CurRun.CurStep = 1
+                    CurStep = CurRun.Steps
+                    timeLeft = CurRun.Steps.Time
+                    timeLabel.Text = timeLeft & " s"
+                    Clear_Steps()
+                    Load_Steps()
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_True()
+                Else
+                    Countdown = False
+                    timeLeft = CurRun.Time
+                    timeLabel.Text = timeLeft & " s"
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_False()
+                End If
             End If
             Temp_CurRun = Null_CurRun
             timeLabel.Text = timeLeft & " s"
@@ -3376,25 +3507,29 @@ Public Class Program
 
             All_Panel_Enable()
             CurRun.Set_BackColor(Color.Green)
-            Temp_CurRun.Set_BackColor(Color.Yellow)
+            If Temp_CurRun IsNot Nothing Then
+                Temp_CurRun.Set_BackColor(Color.Yellow)
+            End If
             CurRun = Temp_CurRun
-            If Temp_Countdown = True Then
-                Countdown = True
-                CurRun.Steps = Load_Steps_helper(CurRun)
-                CurRun.CurStep = 1
-                CurStep = CurRun.Steps
-                timeLeft = CurRun.Steps.Time
-                timeLabel.Text = timeLeft & " s"
-                Clear_Steps()
-                Load_Steps()
-                'dispose old graph and create new graph
-                Load_New_Graph_CD_True()
-            Else
-                Countdown = False
-                timeLeft = CurRun.Time
-                timeLabel.Text = timeLeft & " s"
-                'dispose old graph and create new graph
-                Load_New_Graph_CD_False()
+            If CurRun IsNot Nothing Then
+                If Temp_Countdown = True Then
+                    Countdown = True
+                    CurRun.Steps = Load_Steps_helper(CurRun)
+                    CurRun.CurStep = 1
+                    CurStep = CurRun.Steps
+                    timeLeft = CurRun.Steps.Time
+                    timeLabel.Text = timeLeft & " s"
+                    Clear_Steps()
+                    Load_Steps()
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_True()
+                Else
+                    Countdown = False
+                    timeLeft = CurRun.Time
+                    timeLabel.Text = timeLeft & " s"
+                    'dispose old graph and create new graph
+                    Load_New_Graph_CD_False()
+                End If
             End If
             Temp_CurRun = Null_CurRun
             timeLabel.Text = timeLeft & " s"
@@ -3440,6 +3575,7 @@ Public Class Program
             startButton.Enabled = False
             stopButton.Enabled = False
             Accept_Button.Enabled = False
+            CurRun = Nothing
         ElseIf CurRun.Name.Contains("PreCal") Then
             Countdown = False
             'didn't move
@@ -4166,6 +4302,15 @@ Public Class Program
         End If
     End Sub
 
+    Private Sub BackToEnd()
+        startButton.Enabled = False
+        stopButton.Enabled = False
+        Clear_Steps()
+        ClearSeconds()
+        timeLeft = 0
+        timeLabel.Text = timeLeft & "s"
+    End Sub
+
     Private Sub AcceptButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Accept_Button.Click
 
         Accept_Button.Enabled = False
@@ -4176,8 +4321,33 @@ Public Class Program
             keyGRU = keyGRU.NextGRU
         End While
 
-        If Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
-            Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+        Result = MessageBox.Show("此步驟數據已測量完畢且接受此數據?", "My application", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+        Dim isJumpStep As Boolean = False
+        If Temp_CurRun Is Nothing Then
+            isJumpStep = True 'because it jumps from END
+        ElseIf Not Temp_CurRun.Link.Name = "LinkLabel_Temp" Then
+            isJumpStep = True
+        End If
+
+        If isJumpStep Then ' jump step
+            If Result = DialogResult.Yes Then
+                'save currun data
+                keyGRU.Accept()
+                CurRun.Executed = True
+                If CurRun.Name.Contains("bkd") Then
+                    keyGRU.OverallGRU.Accept()
+                End If
+                startButton.Focus()
+            End If
+            If CurRun.Name.Contains("PreCal") Or CurRun.Name = "Background" Or CurRun.Name = "RSS" Or IsNothing(CurRun.NextUnit) Or CurRun.Name.Contains("PostCal") Or CurRun.Name = "A4_Mid_BG" Or CurRun.Name = "A4_Mid_BG_Add" Then
+                Jump_Back_Countdown_False(Result)
+            Else
+                Jump_Back_Countdown_True(Result)
+            End If
+            If CurRun Is Nothing Then
+                BackToEnd()
+            End If
+        Else
             If Result = DialogResult.Yes Then
                 keyGRU.Accept()
                 CurRun.Executed = True
@@ -4193,7 +4363,6 @@ Public Class Program
 
                 If CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_2nd_3rd" Then
                     All_Panel_Enable()
-                    'dispose data
 
                     'reset run_unit
                     Restart_from_2nd_Previous_Run_Unit()
@@ -4226,10 +4395,6 @@ Public Class Program
             ElseIf Result = DialogResult.Cancel Then
                 Accept_Cancel()
             End If
-        ElseIf CurRun.Name.Contains("PreCal") Or CurRun.Name = "Background" Or CurRun.Name = "RSS" Or IsNothing(CurRun.NextUnit) Or CurRun.Name.Contains("PostCal") Or CurRun.Name = "A4_Mid_BG" Or CurRun.Name = "A4_Mid_BG_Add" Then
-            Jump_Back_Countdown_False()
-        Else
-            Jump_Back_Countdown_True()
         End If
     End Sub
 
@@ -4677,59 +4842,29 @@ Public Class Program
                 While tempRun IsNot Nothing
                     If tempRun.Name.Contains("Add") Or tempRun.Executed Then
                         If tempRun.GRU IsNot Nothing Then
-                            Dim tempGRU As Grid_Run_Unit = tempRun.GRU
-                            'FORMAT: HEADER;SUBHEADER;LpAeq2|meter2second1,meter2second2,meter2second3,meter2second4,meter2second5...;LpAeq4|meter4second1,....;....
-                            If Machine = Machines.Others Then
-                                sb.AppendLine(tempGRU.Header & ";" &
-                                          tempGRU.Subheader & ";" &
-                                          tempGRU.LpAeq2 & "|" & DoubleArrayToString(tempGRU.Meter2.Measurements) & ";" &
-                                          tempGRU.LpAeq4 & "|" & DoubleArrayToString(tempGRU.Meter4.Measurements) & ";" &
-                                          tempGRU.LpAeq6 & "|" & DoubleArrayToString(tempGRU.Meter6.Measurements) & ";" &
-                                          tempGRU.LpAeq8 & "|" & DoubleArrayToString(tempGRU.Meter8.Measurements))
-                            Else
-                                sb.Append(tempGRU.Header & ";" &
-                                          tempGRU.Subheader & ";" &
-                                          tempGRU.LpAeq2 & "|" & DoubleArrayToString(tempGRU.Meter2.Measurements) & ";" &
-                                          tempGRU.LpAeq4 & "|" & DoubleArrayToString(tempGRU.Meter4.Measurements) & ";" &
-                                          tempGRU.LpAeq6 & "|" & DoubleArrayToString(tempGRU.Meter6.Measurements) & ";" &
-                                          tempGRU.LpAeq8 & "|" & DoubleArrayToString(tempGRU.Meter8.Measurements) & ";" &
-                                          tempGRU.LpAeq10 & "|" & DoubleArrayToString(tempGRU.Meter10.Measurements) & ";" &
-                                          tempGRU.LpAeq12 & "|" & DoubleArrayToString(tempGRU.Meter12.Measurements))
-                                'special case for A2 and A3 because we need to record time
-                                If tempRun.Name.Contains("A2") Or tempRun.Name.Contains("A3") Then
-                                    Dim tempstep As Steps = tempRun.HeadStep
-                                    sb.Append("(")
-                                    While tempstep IsNot Nothing
-                                        sb.Append(tempstep.Time)
-                                        If tempstep.HasNext Then
-                                            sb.Append(",")
-                                        End If
-                                        tempstep = tempstep.NextStep
-                                    End While
-                                End If
-                                sb.AppendLine()
-                            End If
-                            Dim addGRU As Grid_Run_Unit = tempGRU.NextGRU
-                            While addGRU IsNot Nothing
+                            If Not tempRun.GRU.NotYetAccepted Then
+
+
+                                Dim tempGRU As Grid_Run_Unit = tempRun.GRU
+                                'FORMAT: HEADER;SUBHEADER;LpAeq2|meter2second1,meter2second2,meter2second3,meter2second4,meter2second5...;LpAeq4|meter4second1,....;....
                                 If Machine = Machines.Others Then
-                                    sb.AppendLine(addGRU.Header & ";" &
-                                              addGRU.Subheader & ";" &
-                                          addGRU.LpAeq2 & "|" & DoubleArrayToString(addGRU.Meter2.Measurements) & ";" &
-                                          addGRU.LpAeq4 & "|" & DoubleArrayToString(addGRU.Meter4.Measurements) & ";" &
-                                          addGRU.LpAeq6 & "|" & DoubleArrayToString(addGRU.Meter6.Measurements) & ";" &
-                                          addGRU.LpAeq8 & "|" & DoubleArrayToString(addGRU.Meter8.Measurements))
-                                    addGRU = addGRU.NextGRU
+                                    sb.AppendLine(tempGRU.Header & ";" &
+                                              tempGRU.Subheader & ";" &
+                                              tempGRU.LpAeq2 & "|" & DoubleArrayToString(tempGRU.Meter2.Measurements) & ";" &
+                                              tempGRU.LpAeq4 & "|" & DoubleArrayToString(tempGRU.Meter4.Measurements) & ";" &
+                                              tempGRU.LpAeq6 & "|" & DoubleArrayToString(tempGRU.Meter6.Measurements) & ";" &
+                                              tempGRU.LpAeq8 & "|" & DoubleArrayToString(tempGRU.Meter8.Measurements))
                                 Else
-                                    sb.Append(addGRU.Header & ";" &
-                                              addGRU.Subheader & ";" &
-                                          addGRU.LpAeq2 & "|" & DoubleArrayToString(addGRU.Meter2.Measurements) & ";" &
-                                          addGRU.LpAeq4 & "|" & DoubleArrayToString(addGRU.Meter4.Measurements) & ";" &
-                                          addGRU.LpAeq6 & "|" & DoubleArrayToString(addGRU.Meter6.Measurements) & ";" &
-                                          addGRU.LpAeq8 & "|" & DoubleArrayToString(addGRU.Meter8.Measurements) & ";" &
-                                          addGRU.LpAeq10 & "|" & DoubleArrayToString(addGRU.Meter10.Measurements) & ";" &
-                                          addGRU.LpAeq12 & "|" & DoubleArrayToString(addGRU.Meter12.Measurements))
-                                    addGRU = addGRU.NextGRU
-                                    If tempRun.Name.Contains("A2") Or tempRun.Name.Contains("A3") Then
+                                    sb.Append(tempGRU.Header & ";" &
+                                              tempGRU.Subheader & ";" &
+                                              tempGRU.LpAeq2 & "|" & DoubleArrayToString(tempGRU.Meter2.Measurements) & ";" &
+                                              tempGRU.LpAeq4 & "|" & DoubleArrayToString(tempGRU.Meter4.Measurements) & ";" &
+                                              tempGRU.LpAeq6 & "|" & DoubleArrayToString(tempGRU.Meter6.Measurements) & ";" &
+                                              tempGRU.LpAeq8 & "|" & DoubleArrayToString(tempGRU.Meter8.Measurements) & ";" &
+                                              tempGRU.LpAeq10 & "|" & DoubleArrayToString(tempGRU.Meter10.Measurements) & ";" &
+                                              tempGRU.LpAeq12 & "|" & DoubleArrayToString(tempGRU.Meter12.Measurements))
+                                    'special case for A2 and A3 because we need to record time
+                                    If tempRun.Name.Contains("A2") Then
                                         Dim tempstep As Steps = tempRun.HeadStep
                                         sb.Append("(")
                                         While tempstep IsNot Nothing
@@ -4737,15 +4872,78 @@ Public Class Program
                                             If tempstep.HasNext Then
                                                 sb.Append(",")
                                             End If
+                                            tempstep = tempstep.NextStep
+                                        End While
+                                    ElseIf tempRun.Name.Contains("A3") Then
+                                        'Recording both forward and backward times
+                                        Dim firstRun As Run_Unit
+                                        Dim secRun As Run_Unit
+                                        If tempRun.Name.Contains("fwd") Then
+                                            firstRun = tempRun
+                                            secRun = tempRun.NextUnit
+                                        Else
+                                            firstRun = tempRun.PrevUnit
+                                            secRun = tempRun
+                                        End If
+
+                                        Dim tempstep As Steps = firstRun.HeadStep
+                                        sb.Append("(")
+                                        While tempstep IsNot Nothing
+                                            sb.Append(tempstep.Time)
+                                            sb.Append(",")
+                                            tempstep = tempstep.NextStep
+                                        End While
+                                        tempstep = secRun.HeadStep
+                                        While tempstep IsNot Nothing
+                                            sb.Append(tempstep.Time)
+                                            If tempstep.HasNext Then
+                                                sb.Append(",")
+                                            End If
+                                            tempstep = tempstep.NextStep
                                         End While
                                     End If
                                     sb.AppendLine()
-
                                 End If
+                                Dim addGRU As Grid_Run_Unit = tempGRU.NextGRU
+                                While addGRU IsNot Nothing
+                                    If Machine = Machines.Others Then
+                                        sb.AppendLine(addGRU.Header & ";" &
+                                                  addGRU.Subheader & ";" &
+                                              addGRU.LpAeq2 & "|" & DoubleArrayToString(addGRU.Meter2.Measurements) & ";" &
+                                              addGRU.LpAeq4 & "|" & DoubleArrayToString(addGRU.Meter4.Measurements) & ";" &
+                                              addGRU.LpAeq6 & "|" & DoubleArrayToString(addGRU.Meter6.Measurements) & ";" &
+                                              addGRU.LpAeq8 & "|" & DoubleArrayToString(addGRU.Meter8.Measurements))
+                                        addGRU = addGRU.NextGRU
+                                    Else
+                                        sb.Append(addGRU.Header & ";" &
+                                                  addGRU.Subheader & ";" &
+                                              addGRU.LpAeq2 & "|" & DoubleArrayToString(addGRU.Meter2.Measurements) & ";" &
+                                              addGRU.LpAeq4 & "|" & DoubleArrayToString(addGRU.Meter4.Measurements) & ";" &
+                                              addGRU.LpAeq6 & "|" & DoubleArrayToString(addGRU.Meter6.Measurements) & ";" &
+                                              addGRU.LpAeq8 & "|" & DoubleArrayToString(addGRU.Meter8.Measurements) & ";" &
+                                              addGRU.LpAeq10 & "|" & DoubleArrayToString(addGRU.Meter10.Measurements) & ";" &
+                                              addGRU.LpAeq12 & "|" & DoubleArrayToString(addGRU.Meter12.Measurements))
+                                        addGRU = addGRU.NextGRU
+                                        If tempRun.Name.Contains("A2") Or tempRun.Name.Contains("A3") Then
+                                            Dim tempstep As Steps = tempRun.HeadStep
+                                            sb.Append("(")
+                                            While tempstep IsNot Nothing
+                                                sb.Append(tempstep.Time)
+                                                If tempstep.HasNext Then
+                                                    sb.Append(",")
+                                                End If
+                                            End While
+                                        End If
+                                        sb.AppendLine()
 
-                            End While
+                                    End If
+
+                                End While
+                            Else
+                                Exit While
+                            End If
+
                         End If
-
                     End If
                     tempRun = tempRun.NextUnit
                 End While
@@ -4831,39 +5029,17 @@ Public Class Program
                 MsgBox(ex.Message)
             End If
         End Try
-        'If A2 or A3 we need to set up time recorded before
-        If CurRun.Name.Contains("A2") Or CurRun.Name.Contains("A3") Then
-            Dim dl As List(Of Double) = StringToDoubleList(gruInfo(7).Split("|")(1).Split("(")(1))
-            'load steps and set cur step
-            Set_Run_Unit()
-            'load time for each step and set them up
-            Dim tempstep As Steps = CurRun.HeadStep
-            Dim i = 0 
-            While tempstep IsNot Nothing
-                Dim tempSec As Integer = dl(i)
-                If tempSec = -1 Then
-                    tempSec = 0
-                End If
-                'set the manual measured time fields because we set up the time for each step from there (for display)
-                array_step_s(i + 1).Text = tempSec
-                'for real countdown
-                tempstep.Time = -1
-                i += 1
-                tempstep = tempstep.NextStep
-            End While
-            'load time for each step from array_step_s    
-            Set_Second_for_Steps()
 
-            'make sure countdown is correct
-            If CurRun.Name.Contains("A1") Or CurRun.Name.Contains("A2") Or CurRun.Name.Contains("A3") Then
-                Countdown = True
-            Else
-                Countdown = False
-            End If
+
+        'make sure countdown is correct
+        If CurRun.Name.Contains("A1") Or CurRun.Name.Contains("A2") Or CurRun.Name.Contains("A3") Then
+            Countdown = True
+        Else
+            Countdown = False
         End If
 
         DataGrid.ShowGRUonForm(tempGRU)
-        if tempGRU.Header.Contains("RSS") then
+        If tempGRU.Header.Contains("RSS") Then
             DataGrid.ShowCalculated()
         End If
         If CurRun.Name.Contains("bkd") Then
@@ -4876,6 +5052,7 @@ Public Class Program
             DataGrid.ShowA3Overall(latestFwdGRU, latestBkdGRU)
         End If
     End Sub
+
 
     Public Function LoadFile() As Boolean
         Dim loadFileDialog As New OpenFileDialog()
@@ -4959,26 +5136,37 @@ Public Class Program
                             End If
                             'A2
                             If CurRun.Name.Contains("A2") Then
+                                Dim dl As List(Of Double) = StringToDoubleList(gruInfo(7).Split("|")(1).Split("(")(1))
+                                Dim dlnew As List(Of Double) = New List(Of Double)
+
+                                For i = 0 to dl.Count
+                                    If i = 0 Then
+                                        dlnew.Add(-1)
+                                    Else
+                                        dlnew.Add(dl(i - 1))
+                                    End If
+                                Next
                                 'create more gru for additional run
                                 CurRun.Set_BackColor(Color.Green)
                                 CurRun.Link.Enabled = True
                                 CurRun.Executed = True
+                                LoadInputTime(2, dlnew)
 
                                 If CurRun.Name.Contains("Add") Then
-                                    Set_Add_GRU(AesIdx, title, subh)
+                                    Set_Add_GRU(2, title, subh)
                                 End If
                                 CurRun.NextUnit.Set_BackColor(Color.Green)
                                 CurRun.NextUnit.Executed = True
+                                LoadInputTime(2, dl)
+
                                 CurRun = CurRun.NextUnit.NextUnit
                                 CurRun.Set_BackColor(Color.Green)
                                 CurRun.Executed = True
-                                ShowLoadedDataOnForm(gruInfo)
-                                Dim tempGRU As Grid_Run_Unit = CurRun.GRU
-                                While tempGRU.NextGRU IsNot Nothing
-                                    tempGRU = tempGRU.NextGRU
-                                End While
-                                tempGRU.Accept()
-                                CurRun = CurRun.NextUnit
+                                LoadInputTime(2, dl)
+
+
+
+
                                 'A1,A3,A4
                             Else
                                 'create more gru for additional run
@@ -4986,36 +5174,45 @@ Public Class Program
                                 CurRun.Executed = True
                                 CurRun.Link.Enabled = True
                                 If CurRun.Name.Contains("Add") Then
-                                    Set_Add_GRU(AesIdx, title, subh)
+                                    Set_Add_GRU(CInt(Aes(AesIdx).Substring(1)), title, subh)
                                 End If
-                                ShowLoadedDataOnForm(gruInfo)
-                                Dim tempGRU As Grid_Run_Unit = CurRun.GRU
-                                While tempGRU.NextGRU IsNot Nothing
-                                    tempGRU = tempGRU.NextGRU
-                                End While
-                                tempGRU.Accept()
-                                CurRun = CurRun.NextUnit
+                                If CurRun.Name.Contains("A3") Then
+                                    Dim dl As List(Of Double) = StringToDoubleList(gruInfo(7).Split("|")(1).Split("(")(1))
 
+                                    LoadInputTime(2, dl)
+                                End If
                             End If
+
+                            ShowLoadedDataOnForm(gruInfo)
+                            Dim tempGRU As Grid_Run_Unit = CurRun.GRU
+                            While tempGRU.NextGRU IsNot Nothing
+                                tempGRU = tempGRU.NextGRU
+                            End While
+                            tempGRU.Accept()
+
+                            If inFile.Peek() = 13 Then 'if end of file
+                                CurRun.Steps = CurRun.HeadStep
+                                Set_Second_for_Steps()
+                                If CurRun.Name.Contains("A2") Or CurRun.Name.Contains("A3") Then
+                                    CurRun.CurStep = CurRun.StartStep
+                                    For i = 1 To CurRun.StartStep - 1
+                                        CurRun.Steps = CurRun.Steps.NextStep
+                                    Next
+                                    timeLeft = CurRun.Steps.Time
+                                    timeLabel.Text = timeLeft & " s"
+                                End If
+                                Accept_Button.Enabled = False
+                                startButton.Enabled = True
+                                MoveOnToNextRun(True, True, False)
+                                DataGrid._Warning = True
+
+                            Else 'not end of file
+                                CurRun.Steps = Load_Steps_helper(CurRun)
+                                MoveToRun(CurRun.NextUnit)
+                            End If
+
                         End If
                     Loop While gruInfo IsNot Nothing And Not inFile.EndOfStream
-                    DataGrid._Warning = True
-                    If CurRun IsNot Nothing Then
-                        If CurRun.PrevUnit IsNot Nothing Then
-                            If Not (CurRun.Name.Contains("A1") And (CurRun.NextUnit.Name.Contains("A2") Or CurRun.NextUnit.Name.Contains("A3")) Or
-                                CurRun.Name.Contains("A2") And CurRun.Name.Contains("A3")) Then
-                                LoadInputTime()
-                                For i = 1 To CurRun.StartStep - 1
-                                    CurRun.Steps = CurRun.Steps.NextStep
-                                Next
-                                timeLeft = CurRun.Steps.Time
-                                timeLabel.Text = timeLeft & " s"
-                            End If
-                        End If
-                        CurRun = CurRun.PrevUnit
-                        MoveOnToNextRun(True, True, False)
-
-                    End If
                 End If
             End If
 

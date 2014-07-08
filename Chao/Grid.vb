@@ -909,7 +909,7 @@ Public Class Grid_Run_Unit
     Public ParentRU As Run_Unit
     Public NextGRU As Grid_Run_Unit
     Public OverallGRU As Grid_Run_Unit 'only used in A3
-    Private NotYetAccepted As Boolean = True
+    Public NotYetAccepted As Boolean = True
 
     Public Sub New(ByVal Header As String)
         _Header = Header

@@ -8,7 +8,6 @@ Public Class Grid
     Private _R As Double
     Private _Machine As Program.Machines
     Private _Parent As Control
-    Public _Warning As Boolean
 
     Private _Background As Grid_Run_Unit
     Public ReadOnly Property Background As Grid_Run_Unit
@@ -44,10 +43,9 @@ Public Class Grid
     '    A3l
     'End Enum
 
-    Private ListAsGRUs As List(Of List(Of Grid_Run_Unit))
+    Public ListAsGRUs As List(Of List(Of Grid_Run_Unit))
 
     Public Sub New(ByRef Parent As Control, ByVal Size As Size, ByVal Position As Point, ByVal R As Double, ByVal Machine As Program.Machines, ByVal headRU As Run_Unit)
-        _Warning = True
         If IsNothing(headRU) Then
             MsgBox("Cannot create chart because given head run_unit is null!")
             Return
@@ -177,14 +175,14 @@ Public Class Grid
 
             tempRU = ConnectGRU_RU_COL("Run2", "後退", 15, tempRU)
 
-            tempRU = ConnectGRU_RU_COL("Run1", "平均", 16, tempRU)
+            tempRU = ConnectGRU_RU_COL("Run2", "平均", 16, tempRU)
 
 
             tempRU = ConnectGRU_RU_COL("Run3", "前進", 17, tempRU)
 
             tempRU = ConnectGRU_RU_COL("Run3", "後退", 18, tempRU)
 
-            tempRU = ConnectGRU_RU_COL("Run1", "平均", 19, tempRU)
+            tempRU = ConnectGRU_RU_COL("Run3", "平均", 19, tempRU)
 
             tempRU = tempRU.NextUnit.NextUnit 'skipping add
 
@@ -395,6 +393,7 @@ Public Class Grid
         Form.Columns(colNum).HeaderText = colName
         Form.Rows(0).Cells(colNum).Value = subHeader
         Dim tempGRU As Grid_Run_Unit = New Grid_Run_Unit(colName)
+        tempGRU.Subheader = subHeader
         If (tempGRU.isRegular) And Not subHeader.Contains("前進") And Not subHeader.Contains("平均") Then
             ListAsGRUs(ListAsGRUs.Count - 1).Add(tempGRU)
         End If
@@ -586,19 +585,21 @@ Public Class Grid
     Public Sub ShowA3Overall(ByRef runFwd As Grid_Run_Unit, ByRef runBkd As Grid_Run_Unit)
         ' the only way to access the overall GRU is through the previous backward GRU
         Dim gru As Grid_Run_Unit = runBkd.OverallGRU
-        Try
-            gru.SetMs(runFwd.Meter2 + runBkd.Meter2,
-                    runFwd.Meter4 + runBkd.Meter4,
-                    runFwd.Meter6 + runBkd.Meter6,
-                    runFwd.Meter8 + runBkd.Meter8,
-                    runFwd.Meter10 + runBkd.Meter10,
-                    runFwd.Meter12 + runBkd.Meter12)
-            ShowGRUonForm(gru)
-        Catch ex As Exception
-            If _Warning Then
-                MsgBox(ex.Message)
-            End If
-        End Try
+        'Try
+        If gru Is Nothing Then
+            gru = New Grid_Run_Unit(runBkd.Header)
+            runBkd.OverallGRU = gru
+        End If
+        gru.SetMs(runFwd.Meter2 + runBkd.Meter2,
+                runFwd.Meter4 + runBkd.Meter4,
+                runFwd.Meter6 + runBkd.Meter6,
+                runFwd.Meter8 + runBkd.Meter8,
+                runFwd.Meter10 + runBkd.Meter10,
+                runFwd.Meter12 + runBkd.Meter12)
+        ShowGRUonForm(gru)
+        'Catch ex As Exception
+        '    MsgBox("In ShowA3Overall: " & ex.Message)
+        'End Try
 
     End Sub
 
@@ -666,38 +667,63 @@ Public Class Grid
         If RSS IsNot Nothing Then
             Calc_LsW()
             Calc_K2A()
-            Dim i = 0
-            For Each l In ListAsGRUs
-
-                'adding potential additional runs
+            Dim j = 0
+            Dim howManyAs As Integer = ListAsGRUs.Count
+            For i = 0 To howManyAs - 1
+                Dim l As List(Of Grid_Run_Unit) = ListAsGRUs(i)
+                'adding additional runs
                 If l(0).ParentRU.Name.Contains("A1") Then 'case for A1
-                    Dim add As Grid_Run_Unit = l(l.Count - 1).ParentRU.NextUnit.GRU
-                    While add IsNot Nothing
-                        l.Add(add)
-                        add = add.NextGRU
-                    End While
+                    If l(2).ParentRU.NextUnit.GRU IsNot Nothing Then
+                        Dim add As Grid_Run_Unit = l(2).ParentRU.NextUnit.GRU
+                        While add IsNot Nothing
+                            If l.IndexOf(add) < 0 Then
+                                l.Add(add)
+
+                            End If
+                            add = add.NextGRU
+                        End While
+                    End If
+
                 ElseIf l(0).ParentRU.Name.Contains("A2") Then 'case for A2
-                    Dim add As Grid_Run_Unit = l(l.Count - 1).ParentRU.NextUnit.NextUnit.NextUnit.GRU
-                    While add IsNot Nothing
-                        l.Add(add)
-                        add = add.NextGRU
-                    End While
+                    If l(2).ParentRU.NextUnit.NextUnit.NextUnit.GRU IsNot Nothing Then
+                        Dim add As Grid_Run_Unit = l(2).ParentRU.NextUnit.NextUnit.NextUnit.GRU
+                        While add IsNot Nothing
+                            If l.IndexOf(add) < 0 Then
+                                l.Add(add)
+
+                            End If
+                            add = add.NextGRU
+                        End While
+                    End If
+
                 ElseIf l(0).ParentRU.Name.Contains("A3") Then 'case for A3
-                    Dim addbkd As Grid_Run_Unit = l(l.Count - 1).ParentRU.NextUnit.NextUnit.GRU
-                    While addbkd IsNot Nothing
-                        l.Add(addbkd.OverallGRU)
-                        addbkd = addbkd.NextGRU
-                    End While
+                    If l(2).ParentRU.NextUnit.NextUnit.GRU IsNot Nothing Then
+                        Dim addbkd As Grid_Run_Unit = l(2).ParentRU.NextUnit.NextUnit.GRU
+
+                        While addbkd IsNot Nothing
+                            If l.IndexOf(addbkd) < 0 Then
+                                l.Add(addbkd.OverallGRU)
+
+                            End If
+                            addbkd = addbkd.NextGRU
+                        End While
+                    End If
+
                 ElseIf l(0).ParentRU.Name.Contains("A4") Then 'case for A4
-                    Dim add As Grid_Run_Unit = l(l.Count - 1).ParentRU.NextUnit.NextUnit.GRU
-                    While add IsNot Nothing
-                        l.Add(add)
-                        add = add.NextGRU
-                    End While
+                    If l(2).ParentRU.NextUnit.NextUnit.GRU IsNot Nothing Then
+                        Dim add As Grid_Run_Unit = l(2).ParentRU.NextUnit.NextUnit.GRU
+                        While add IsNot Nothing
+                            If l.IndexOf(add) Then
+                                l.Add(add)
+
+                            End If
+                            add = add.NextGRU
+                        End While
+                    End If
                 End If
                 'actually calculating the LWAs
-                Calc_LWAs(l, i)
-                i += 1
+                Calc_LWAs(l, j)
+                j += 1
             Next
         End If
     End Sub
@@ -729,7 +755,7 @@ Public Class Grid
 
     Private _K2A As Double
     Public Sub Calc_K2A()
-        _K2A = _LsW - _Lwr
+        _K2A = Round(_LsW - _Lwr)
     End Sub
 
     Public ReadOnly Property K2A()
@@ -776,7 +802,7 @@ Public Class Grid
     Public Function NeedAdd(ByRef grus As List(Of Grid_Run_Unit)) As Boolean
         Dim r = New Random()
         If r.Next(2) Then
-            If _Warning Then
+            If Program._Warning Then
                 MsgBox("即將多增加一次測試，因為前幾次差距大於1!")
             End If
             Return True
@@ -807,12 +833,12 @@ Public Class Grid
         Return Decimal.op_Explicit(Round(Run.LpAeqAvg + Run.K1A))
     End Function
 
-    
+    Public ChangedFromLast As Boolean = False
 
     Private Sub Form_CellValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Form.CellValueChanged
-        CType(_Parent.FindForm().MainMenuStrip.Items.Find("SaveToolStripMenuItem", True)(0), ToolStripMenuItem).Enabled = True
-        CType(_Parent.Controls.Find("ButtonExport", True)(0), Button).Enabled = True
+        ChangedFromLast = True
     End Sub
+
 End Class
 
 
@@ -1047,6 +1073,9 @@ Public Class Grid_Run_Unit
         _RealK1A = _K1A
         _RealLpAeqAvg = _LpAeqAvg
         _RealTime = _Time
+        If Me.OverallGRU IsNot Nothing Then
+            OverallGRU.Accept()
+        End If
     End Sub
 
     Private _Background As Grid_Run_Unit
@@ -1323,7 +1352,9 @@ Public Class Grid_Run_Unit
                 _K1A = 0
                 Return
             ElseIf _deltaLA < 3 Then
-                Throw New ChaoProblemException("ΔLA < 3dB 所以背景噪音修正值K1A無法計算!")
+                If Program._Warning Then
+                    MsgBox("ΔLA < 3dB 所以背景噪音修正值K1A無法計算!")
+                End If
                 Return
             End If
             Try
@@ -1386,29 +1417,4 @@ Public Class Grid_Run_Unit
         Return -1
     End Function
 
-End Class
-
-Public Class ChaoProblemException
-    Inherits Exception
-
-    Public Sub New()
-        ' Add other code for custom properties here.
-    End Sub
-
-    Public Sub New(ByVal message As String)
-        MyBase.New(message)
-        ' Add other code for custom properties here.
-    End Sub
-
-    Public Sub New(ByVal message As String, ByVal inner As Exception)
-        MyBase.New(message, inner)
-        ' Add other code for custom properties here.
-    End Sub
-
-    Public Sub New(
-        ByVal info As System.Runtime.Serialization.SerializationInfo,
-        ByVal context As System.Runtime.Serialization.StreamingContext)
-        MyBase.New(info, context)
-        ' Insert code here for custom properties here.
-    End Sub
 End Class

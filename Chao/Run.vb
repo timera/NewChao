@@ -29,9 +29,29 @@
         Name = na
     End Sub
 
-    Public Function HasNext()
+    Public Function HasNextStep()
         Return Not CurStep = EndStep
     End Function
+
+    Public Sub Deallocate()
+        Link = Nothing
+        Panel = Nothing
+        'Dim Data As List(Of Double)
+        NextUnit = Nothing
+        PrevUnit = Nothing
+        Time = Nothing
+        Steps = Nothing
+        HeadStep = Nothing
+        CurStep = Nothing
+        StartStep = Nothing
+        EndStep = Nothing
+        Name = Nothing
+        Executed = Nothing
+        If GRU IsNot Nothing Then
+            GRU.ParentRU = Nothing
+        End If
+        GRU = Nothing
+    End Sub
 
     'Public Sub ConnectGRU(ByRef gridrununit As Grid_Run_Unit)
     '    GRU = gridrununit
@@ -261,21 +281,21 @@
             Program.CurRun = Program.TrA3_Add_bkd
             Countdown_True_after_Jump()
         ElseIf Me.Link.Name = "LinkLabel_A4_Fst" Then
-            Countdown_True_before_Jump()
+            Countdown_false_before_Jump()
             Program.CurRun = Program.A4_Fst
-            Countdown_True_after_Jump()
+            Countdown_False_after_Jump()
         ElseIf Me.Link.Name = "LinkLabel_A4_Sec" Then
-            Countdown_True_before_Jump()
+            Countdown_False_before_Jump()
             Program.CurRun = Program.A4_Sec
-            Countdown_True_after_Jump()
+            Countdown_False_after_Jump()
         ElseIf Me.Link.Name = "LinkLabel_A4_Thd" Then
-            Countdown_True_before_Jump()
+            Countdown_False_before_Jump()
             Program.CurRun = Program.A4_Thd
-            Countdown_True_after_Jump()
+            Countdown_False_after_Jump()
         ElseIf Me.Link.Name = "LinkLabel_A4_Add" Then
-            Countdown_True_before_Jump()
+            Countdown_False_before_Jump()
             Program.CurRun = Program.A4_Add
-            Countdown_True_after_Jump()
+            Countdown_False_after_Jump()
         ElseIf Me.Link.Name = "LinkLabel_A4_Sec_Mid_Background" Then
             Countdown_False_before_Jump()
             Program.CurRun = Program.A4_Sec_Mid

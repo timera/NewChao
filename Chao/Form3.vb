@@ -15,6 +15,8 @@ Public Class Program
     <DllImport("dwmapi.dll")> Public Shared Function DwmExtendFrameIntoClientArea(ByVal hWnd As IntPtr, ByRef pMarinset As MARGINS) As Integer
     End Function
 
+    Public _Warning As Boolean = True
+
     'coordinates for 6 points
     Dim pos() As CoorPoint
     'Dim pos(5, 2) As Double
@@ -77,10 +79,10 @@ Public Class Program
 
     Dim NoisesArray(6) As Label
 
-    Dim sum_steps As Integer = 0
+    Dim sum_steps As Integer
 
     Dim choice As String
-    Dim TimerTesting As Boolean = False 'if set to true, it's currently timer testing
+    Dim TimerTesting As Boolean 'if set to true, it's currently timer testing
     'temporary constant
     Const seconds As Integer = 3
     Const graphW As Integer = 650
@@ -91,10 +93,8 @@ Public Class Program
 
     'doing the test for input s of steps
     'Dim Test_S As Boolean = False
-    Dim Last_timeLeft As Integer = 0
-    Dim Index_for_Setup_Time = 0
-    Dim Test_Change_Second As Boolean
-    Dim Original_Second_Dispose As Boolean = False
+    Dim Last_timeLeft As Integer
+    Dim Index_for_Setup_Time As Integer
 
     'dim PreCal, BG, RSS, PostCal jump pointer
     Public PreCal_1st As Run_Unit
@@ -183,7 +183,7 @@ Public Class Program
     Public Comm As Communication
 
     'if it is have additional test => true
-    Dim Add_Test_Record As Boolean = False
+    Dim Add_Test_Record As Boolean
 
     Public Sub New()
 
@@ -200,6 +200,11 @@ Public Class Program
         '##COMMUNICATION
         Comm = New Communication()
         SimulationMode()
+
+        Last_timeLeft = 0
+        Index_for_Setup_Time = 0
+        TimerTesting = False
+        Add_Test_Record = False
 
         'Set up the window
         Dim margins As MARGINS = New MARGINS
@@ -748,6 +753,38 @@ Public Class Program
         Label_A4_Hint2.Size = New Size(35, 164)
     End Sub
 
+    Private Sub BackToZero()
+        sum_steps = 0
+        Last_timeLeft = 0
+        Index_for_Setup_Time = 0
+        TimerTesting = False
+        MachChosen = False
+        Machine = Nothing
+        choice = Nothing
+
+        Add_Test_Record = False
+        startButton.Enabled = True
+        stopButton.Enabled = False
+        Button_Skip_Add.Enabled = False
+        Test_NextButton.Enabled = False
+        Test_StartButton.Enabled = True
+        Test_ConfirmButton.Enabled = False
+        ConnectButton.Enabled = True
+        DisconnButton.Enabled = False
+        SaveToolStripMenuItem.Enabled = False
+        For i = 0 To 8
+            array_step_s(i).Text = 0
+            array_step_s(i).Enabled = False
+        Next
+        Button_change_machine.Enabled = False
+        ComboBox_machine_list.Enabled = True
+        Button_Setting_Bargraph.Enabled = False
+
+        Null_CurRun = New Run_Unit(LinkLabel_Temp, Panel_Temp, Nothing, Nothing, 0, "Temp", 0, 0, 0)
+        Temp_CurRun = Null_CurRun
+        BasicInfoDataChangedFromLast = False
+    End Sub
+
     Private Sub Program_Close(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
         If SaveToolStripMenuItem.Enabled Then
             Dim answer As DialogResult = MessageBox.Show("尚未儲存資料，是否儲存?", "Save?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
@@ -773,18 +810,19 @@ Public Class Program
         End If
     End Sub
 
-    Sub SetTimerTabOn(ByVal index As Boolean)
-        'Tabcontrol_Changed(index=true)=>jump to tabpagetimer(enable) and tabpage3(disable),use for input seconds
-        'Tabcontrol_Changed(index=false)=>jump to tabpageProcedure(enable) and tabpage4(disable),use for button confirm
+    Sub SetTimerTabOn(ByVal timerOn As Boolean)
+        'Tabcontrol_Changed(timerOn=true)=>jump to tabpagetimer(enable) and tabpage3(disable),use for input seconds
+        'Tabcontrol_Changed(timerOn=false)=>jump to tabpageProcedure(enable) and tabpage4(disable),use for button confirm
         Dim tabpage As TabPage
         CurStep = Load_Steps_helper(CurRun)
-        If index = True Then
+        If timerOn Then
             Me.TabControl2.SelectedIndex = 1
             For Each tabpage In TabControl2.TabPages
                 If tabpage.Name = "TabPageProcedure" Then
                     tabpage.Enabled = False
                 ElseIf tabpage.Name = "TabPageTimer" Then
                     tabpage.Enabled = True
+
                 End If
             Next
             Test_StartButton.Enabled = True
@@ -800,7 +838,7 @@ Public Class Program
                 End If
                 CurStep = CurStep.NextStep
             Next
-        ElseIf index = False Then
+        ElseIf timerOn = False Then
             Me.TabControl2.SelectedIndex = 0
             For Each tabpage In TabControl2.TabPages
                 If tabpage.Name = "TabPageTimer" Then
@@ -808,12 +846,26 @@ Public Class Program
                 ElseIf tabpage.Name = "TabPageProcedure" Then
                     tabpage.Enabled = True
                     stopButton.Enabled = False
+                    startButton.Enabled = True
                 End If
             Next
             For i = 0 To 8
                 array_light(i).BackColor = Color.DarkGray
             Next
         End If
+    End Sub
+
+    Private Sub DisposeAllRuns()
+        Dim tempcurRun As Run_Unit = HeadRun
+        Dim tempRU As Run_Unit
+        While tempcurRun.NextUnit IsNot Nothing
+            tempRU = tempcurRun.NextUnit
+            tempcurRun.Deallocate()
+            tempcurRun = Nothing
+            tempcurRun = tempRU
+        End While
+        tempcurRun.Deallocate()
+        tempcurRun = Nothing
     End Sub
 
     Private Function Change_Machine()
@@ -829,16 +881,18 @@ Public Class Program
                 Return False
             End If
             'can choose machine again
-            ComboBox_machine_list.Enabled = True
-            Button_change_machine.Enabled = False
-            MachChosen = False
-            Machine = Nothing
-            choice = Nothing
+            BackToZero()
+
+
 
             'dispose graph
             MainLineGraph.Dispose()
             MainBarGraph.Dispose()
 
+            'dispose chart
+
+            DisposeChart()
+            DisposeAllRuns()
             'Set invisible property
             Panel_PreCal.Visible = False
             Panel_Bkg.Visible = False
@@ -881,9 +935,17 @@ Public Class Program
 
             Countdown = False
 
-            For i = 0 To 8
+            For i = 0 To array_step_s.Length - 1
                 array_step_s(i).Text = 0
                 array_step_s(i).Enabled = False
+            Next
+
+            For i = 0 To array_step_display.Length - 1
+                array_step_display(i).Text = ""
+            Next
+
+            For i = 0 To array_time.Length - 1
+                array_time(i) = 0
             Next
 
             A4_step_text = Nothing
@@ -1040,7 +1102,7 @@ Public Class Program
     End Function
 
     Private DataGrid As Grid
-    Private BasicInfoGrid As DataGridView
+    Private WithEvents BasicInfoGrid As DataGridView
     Private A_Unit_Size As Size = New Size(1250, 450)
     'Create charts for chosen machine
     Private Sub CreateChart(ByVal r As Double)
@@ -1106,7 +1168,6 @@ Public Class Program
             MachChosen = False
         End If
 
-        DisposeChart()
         CreateChart(r1)
         '選擇機具後可更換
         If MachChosen = True Then
@@ -1219,7 +1280,6 @@ Public Class Program
             MachChosen = False
         End If
 
-        DisposeChart()
         CreateChart(r2)
 
         '選擇機具後可更換
@@ -2270,7 +2330,7 @@ Public Class Program
             tempRun = tempRun.NextUnit
         End While
     End Sub
-    Dim BackgroundTime As Integer = 5
+    Dim A1Time As Integer = 5
 
     'before using Load_Steps_helper, array_time need to be set to the correct values
     'creates steps for run and returns the pointer to the first step
@@ -2278,7 +2338,7 @@ Public Class Program
         Dim tempRun As Run_Unit = run
         Dim tempStep As Steps
         If tempRun.Name = "ExA1" Or tempRun.Name = "LoA1" Or tempRun.Name = "TrA1" Or tempRun.Name = "ExA1_Add" Or tempRun.Name = "LoA1_Add" Or tempRun.Name = "TrA1_Add" Then
-            tempRun.Steps = New Steps(My.Resources.A1_step1, Step1, Nothing, True, BackgroundTime)
+            tempRun.Steps = New Steps(My.Resources.A1_step1, Step1, Nothing, True, A1Time)
             tempRun.HeadStep = tempRun.Steps
         ElseIf tempRun.Name = "ExA2_1st" Or tempRun.Name = "ExA2_1st_Add" Or tempRun.Name = "ExA2_2nd_3rd" Or tempRun.Name = "ExA2_2nd_3rd_Add" Then
             If tempRun.Name = "ExA2_1st" Or tempRun.Name = "ExA2_1st_Add" Then
@@ -2724,10 +2784,8 @@ Public Class Program
                                 Meter_Measure_Unit.SeriesToMMU(series(4), Leqpoints(4).YValues(0)),
                                 Meter_Measure_Unit.SeriesToMMU(series(5), Leqpoints(5).YValues(0)))
             End If
-        Catch ex As ChaoProblemException
-            If DataGrid._Warning Then
-                MsgBox(ex.Message)
-            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
         End Try
         DataGrid.ShowGRUonForm(tempGRU)
         If CurRun.Name.Contains("bkd") Then
@@ -2924,6 +2982,7 @@ Public Class Program
     'two approaches, if there's already a GRU existent, add as next GRU, if not, attach to the RU
     Sub Set_Add_GRU(ByVal whichA As Integer, ByVal colName As String, ByVal subHeader As String)
         Dim tempGRU = New Grid_Run_Unit(colName) 'the final GRU added
+        tempGRU.Subheader = subHeader
         Dim tempCol As DataGridViewTextBoxColumn = New DataGridViewTextBoxColumn()
         Dim lastGRU As Grid_Run_Unit 'used for getting the nearest column
         Dim firstAdd As Boolean = False 'only used for A3, check if it's the first add, if not it will help jump 3 columns at a time
@@ -2945,7 +3004,7 @@ Public Class Program
         Else 'condition for more than one additional run
             lastGRU = tempRun.GRU
 
-            While Not IsNothing(lastGRU.NextGRU)
+            While lastGRU.NextGRU IsNot Nothing
                 lastGRU = lastGRU.NextGRU
             End While
             lastGRU.NextGRU = tempGRU
@@ -4212,7 +4271,7 @@ Public Class Program
                 If Not IsNothing(CurRun.GRU) Then
                     Dim i As Integer = 5
                     Dim tempGRU As Grid_Run_Unit = CurRun.GRU
-                    While Not IsNothing(tempGRU.NextGRU)
+                    While tempGRU.NextGRU IsNot Nothing
                         tempGRU = tempGRU.NextGRU
                         i += 1
                     End While
@@ -4243,20 +4302,21 @@ Public Class Program
                 'CurRun.Link.Enabled = True
                 'Add?
                 Dim reallyNeedAdd As Boolean
-                Dim i As Integer = 4
-                If needDetermineAdd Then
-                    Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
-                    list.Add(CurRun.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding test 3
-                    list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding testing 2
-                    list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding test 1
-                    Dim tempGRU = CurRun.GRU
-                    'DataGrid.AddA3Overall(CurRun.PrevUnit.GRU, CurRun.GRU) 'adding overall gru and column
+                Dim i As Integer = 5
+                Dim list As List(Of Grid_Run_Unit) = New List(Of Grid_Run_Unit)
+                list.Add(CurRun.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding test 3
+                list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding testing 2
+                list.Add(CurRun.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.PrevUnit.GRU.OverallGRU) 'adding test 1
+                Dim tempGRU = CurRun.GRU
+                list.Add(tempGRU)
 
-                    While Not IsNothing(tempGRU)
-                        list.Add(tempGRU)
-                        tempGRU = tempGRU.NextGRU
-                        i += 1
-                    End While
+                While tempGRU.NextGRU IsNot Nothing
+                    list.Add(tempGRU.NextGRU)
+                    tempGRU = tempGRU.NextGRU
+                    i += 1
+                End While
+
+                If needDetermineAdd Then
                     reallyNeedAdd = DataGrid.NeedAdd(list)
                 Else
                     reallyNeedAdd = needAdd
@@ -4264,10 +4324,19 @@ Public Class Program
 
 
 
-                If reallyNeedAdd Then
+                If reallyNeedAdd Then 'True: add test
+
                     Restart_from_1st_Previous_Run_Unit()
-                    'True: add test
-                    Set_Add_GRU(3, "Run" & i, "前進")
+
+                    If tempGRU.Header.Equals("Run" & i) Then '前進 already exists
+                        MoveToRun(CurRun.NextUnit)
+                        Set_Add_GRU(3, "Run" & i, "後退")
+                    Else
+                        Set_Add_GRU(3, "Run" & i, "前進")
+                    End If
+
+
+
 
                     'load LoA3_fwd or TrA3_fwd's steps
                     Clear_Steps()
@@ -4311,6 +4380,32 @@ Public Class Program
         timeLabel.Text = timeLeft & "s"
     End Sub
 
+    Private Sub EnableSave()
+
+        'look for the right GRU
+        If CurRun IsNot Nothing Then
+            If CurRun.GRU IsNot Nothing Then
+                If Not CurRun.GRU.NotYetAccepted Then 'accepted so we can allow saving
+                    SaveToolStripMenuItem.Enabled = True
+                    ButtonExport.Enabled = True
+                    Return
+                Else 'if more than one additional
+                    'search for the right addition
+                    Dim tempgru As Grid_Run_Unit = CurRun.GRU
+                    'search regular
+                    While tempgru IsNot Nothing
+                        If Not tempgru.NotYetAccepted Then
+                            SaveToolStripMenuItem.Enabled = True
+                            ButtonExport.Enabled = True
+                            Return
+                        End If
+                        tempgru = tempgru.NextGRU
+                    End While
+                End If
+            End If
+        End If
+    End Sub
+
     Private Sub AcceptButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Accept_Button.Click
 
         Accept_Button.Enabled = False
@@ -4333,6 +4428,7 @@ Public Class Program
             If Result = DialogResult.Yes Then
                 'save currun data
                 keyGRU.Accept()
+                EnableSave()
                 CurRun.Executed = True
                 If CurRun.Name.Contains("bkd") Then
                     keyGRU.OverallGRU.Accept()
@@ -4350,6 +4446,7 @@ Public Class Program
         Else
             If Result = DialogResult.Yes Then
                 keyGRU.Accept()
+                EnableSave()
                 CurRun.Executed = True
                 If CurRun.Name.Contains("bkd") Then
                     keyGRU.OverallGRU.Accept()
@@ -4395,7 +4492,7 @@ Public Class Program
             ElseIf Result = DialogResult.Cancel Then
                 Accept_Cancel()
             End If
-        End If
+            End If
     End Sub
 
 
@@ -4816,6 +4913,36 @@ Public Class Program
         Return dbArray
     End Function
 
+    Function SaveA3Time(ByRef sb As StringBuilder, ByRef tempRun As Run_Unit) As StringBuilder
+        'Recording both forward and backward times
+        Dim firstRun As Run_Unit
+        Dim secRun As Run_Unit
+        If tempRun.Name.Contains("fwd") Then
+            firstRun = tempRun
+            secRun = tempRun.NextUnit
+        Else
+            firstRun = tempRun.PrevUnit
+            secRun = tempRun
+        End If
+
+        Dim tempstep As Steps = firstRun.HeadStep
+        sb.Append("(")
+        While tempstep IsNot Nothing
+            sb.Append(tempstep.Time)
+            sb.Append(",")
+            tempstep = tempstep.NextStep
+        End While
+        tempstep = secRun.HeadStep
+        While tempstep IsNot Nothing
+            sb.Append(tempstep.Time)
+            If tempstep.HasNext Then
+                sb.Append(",")
+            End If
+            tempstep = tempstep.NextStep
+        End While
+        Return sb
+    End Function
+
     'Menu Strip Functions
     'contains recording
     Public Function Save() As Boolean
@@ -4828,7 +4955,10 @@ Public Class Program
         If saveFileDialog1.ShowDialog() = DialogResult.OK Then
             outfile = New StreamWriter(saveFileDialog1.OpenFile(), System.Text.Encoding.Unicode)
             If (outfile IsNot Nothing) Then
+                'string builder for regular runs
                 Dim sb As StringBuilder = New StringBuilder()
+                'string builder for additional runs
+                Dim A3AddSb As StringBuilder = New StringBuilder()
                 'write basic data first
                 sb.AppendLine(ComboBox_machine_list.Text & "," & TextBox_L.Text & "," & TextBox_r1.Text & "," & TextBox_L1.Text & "," & TextBox_L2.Text & "," & TextBox_L3.Text & "," & TextBox_r2.Text)
                 For k = 0 To BasicInfoGrid.Rows.Count - 1
@@ -4844,7 +4974,7 @@ Public Class Program
                         If tempRun.GRU IsNot Nothing Then
                             If Not tempRun.GRU.NotYetAccepted Then
 
-
+                                'Saveing regular runs
                                 Dim tempGRU As Grid_Run_Unit = tempRun.GRU
                                 'FORMAT: HEADER;SUBHEADER;LpAeq2|meter2second1,meter2second2,meter2second3,meter2second4,meter2second5...;LpAeq4|meter4second1,....;....
                                 If Machine = Machines.Others Then
@@ -4875,70 +5005,99 @@ Public Class Program
                                             tempstep = tempstep.NextStep
                                         End While
                                     ElseIf tempRun.Name.Contains("A3") Then
-                                        'Recording both forward and backward times
-                                        Dim firstRun As Run_Unit
-                                        Dim secRun As Run_Unit
-                                        If tempRun.Name.Contains("fwd") Then
-                                            firstRun = tempRun
-                                            secRun = tempRun.NextUnit
-                                        Else
-                                            firstRun = tempRun.PrevUnit
-                                            secRun = tempRun
-                                        End If
-
-                                        Dim tempstep As Steps = firstRun.HeadStep
-                                        sb.Append("(")
-                                        While tempstep IsNot Nothing
-                                            sb.Append(tempstep.Time)
-                                            sb.Append(",")
-                                            tempstep = tempstep.NextStep
-                                        End While
-                                        tempstep = secRun.HeadStep
-                                        While tempstep IsNot Nothing
-                                            sb.Append(tempstep.Time)
-                                            If tempstep.HasNext Then
-                                                sb.Append(",")
-                                            End If
-                                            tempstep = tempstep.NextStep
-                                        End While
+                                        SaveA3Time(sb, tempRun)
                                     End If
                                     sb.AppendLine()
                                 End If
-                                Dim addGRU As Grid_Run_Unit = tempGRU.NextGRU
-                                While addGRU IsNot Nothing
-                                    If Machine = Machines.Others Then
-                                        sb.AppendLine(addGRU.Header & ";" &
-                                                  addGRU.Subheader & ";" &
-                                              addGRU.LpAeq2 & "|" & DoubleArrayToString(addGRU.Meter2.Measurements) & ";" &
-                                              addGRU.LpAeq4 & "|" & DoubleArrayToString(addGRU.Meter4.Measurements) & ";" &
-                                              addGRU.LpAeq6 & "|" & DoubleArrayToString(addGRU.Meter6.Measurements) & ";" &
-                                              addGRU.LpAeq8 & "|" & DoubleArrayToString(addGRU.Meter8.Measurements))
-                                        addGRU = addGRU.NextGRU
-                                    Else
-                                        sb.Append(addGRU.Header & ";" &
-                                                  addGRU.Subheader & ";" &
-                                              addGRU.LpAeq2 & "|" & DoubleArrayToString(addGRU.Meter2.Measurements) & ";" &
-                                              addGRU.LpAeq4 & "|" & DoubleArrayToString(addGRU.Meter4.Measurements) & ";" &
-                                              addGRU.LpAeq6 & "|" & DoubleArrayToString(addGRU.Meter6.Measurements) & ";" &
-                                              addGRU.LpAeq8 & "|" & DoubleArrayToString(addGRU.Meter8.Measurements) & ";" &
-                                              addGRU.LpAeq10 & "|" & DoubleArrayToString(addGRU.Meter10.Measurements) & ";" &
-                                              addGRU.LpAeq12 & "|" & DoubleArrayToString(addGRU.Meter12.Measurements))
-                                        addGRU = addGRU.NextGRU
-                                        If tempRun.Name.Contains("A2") Or tempRun.Name.Contains("A3") Then
-                                            Dim tempstep As Steps = tempRun.HeadStep
-                                            sb.Append("(")
-                                            While tempstep IsNot Nothing
-                                                sb.Append(tempstep.Time)
-                                                If tempstep.HasNext Then
-                                                    sb.Append(",")
+
+                                'Saving Additional runs
+                                If Not tempRun.Name.Contains("A3") Then
+                                    Dim addGRU As Grid_Run_Unit = tempGRU.NextGRU
+                                    While addGRU IsNot Nothing
+                                        If Not addGRU.NotYetAccepted Then
+                                            If Machine = Machines.Others Then
+                                                sb.AppendLine(addGRU.Header & ";" &
+                                                          addGRU.Subheader & ";" &
+                                                      addGRU.LpAeq2 & "|" & DoubleArrayToString(addGRU.Meter2.Measurements) & ";" &
+                                                      addGRU.LpAeq4 & "|" & DoubleArrayToString(addGRU.Meter4.Measurements) & ";" &
+                                                      addGRU.LpAeq6 & "|" & DoubleArrayToString(addGRU.Meter6.Measurements) & ";" &
+                                                      addGRU.LpAeq8 & "|" & DoubleArrayToString(addGRU.Meter8.Measurements))
+                                                addGRU = addGRU.NextGRU
+                                            Else
+                                                sb.Append(addGRU.Header & ";" &
+                                                          addGRU.Subheader & ";" &
+                                                      addGRU.LpAeq2 & "|" & DoubleArrayToString(addGRU.Meter2.Measurements) & ";" &
+                                                      addGRU.LpAeq4 & "|" & DoubleArrayToString(addGRU.Meter4.Measurements) & ";" &
+                                                      addGRU.LpAeq6 & "|" & DoubleArrayToString(addGRU.Meter6.Measurements) & ";" &
+                                                      addGRU.LpAeq8 & "|" & DoubleArrayToString(addGRU.Meter8.Measurements) & ";" &
+                                                      addGRU.LpAeq10 & "|" & DoubleArrayToString(addGRU.Meter10.Measurements) & ";" &
+                                                      addGRU.LpAeq12 & "|" & DoubleArrayToString(addGRU.Meter12.Measurements))
+                                                addGRU = addGRU.NextGRU
+                                                If tempRun.Name.Contains("A2") Then
+                                                    Dim tempstep As Steps = tempRun.HeadStep
+                                                    sb.Append("(")
+                                                    While tempstep IsNot Nothing
+                                                        sb.Append(tempstep.Time)
+                                                        If tempstep.HasNext Then
+                                                            sb.Append(",")
+                                                        End If
+                                                        tempstep = tempstep.NextStep
+                                                    End While
                                                 End If
-                                            End While
+                                                sb.AppendLine()
+
+                                            End If
+                                        Else
+                                            Exit While
                                         End If
-                                        sb.AppendLine()
+                                    End While
+                                ElseIf tempRun.Name.Contains("fwd") Then ' A3 is special case because we need to alternate additional runs after the first
+                                    'additional. A3fwd_Run4.nextGRU = A3fwd_Run5, A3fwd_Run5.nextGRU = A3fwd_Run6
+                                    Dim addGRU As Grid_Run_Unit = tempGRU.NextGRU
+                                    Dim bkdGRU As Grid_Run_Unit = tempRun.NextUnit.GRU.NextGRU
+                                    While addGRU IsNot Nothing
+                                        If Not addGRU.NotYetAccepted Then
 
-                                    End If
+                                            A3AddSb.Append(addGRU.Header & ";" &
+                                                      addGRU.Subheader & ";" &
+                                                  addGRU.LpAeq2 & "|" & DoubleArrayToString(addGRU.Meter2.Measurements) & ";" &
+                                                  addGRU.LpAeq4 & "|" & DoubleArrayToString(addGRU.Meter4.Measurements) & ";" &
+                                                  addGRU.LpAeq6 & "|" & DoubleArrayToString(addGRU.Meter6.Measurements) & ";" &
+                                                  addGRU.LpAeq8 & "|" & DoubleArrayToString(addGRU.Meter8.Measurements) & ";" &
+                                                  addGRU.LpAeq10 & "|" & DoubleArrayToString(addGRU.Meter10.Measurements) & ";" &
+                                                  addGRU.LpAeq12 & "|" & DoubleArrayToString(addGRU.Meter12.Measurements))
+                                            Dim tempstep As Steps = tempRun.HeadStep
+                                            SaveA3Time(A3AddSb, tempRun)
+                                            A3AddSb.AppendLine()
 
-                                End While
+                                            addGRU = addGRU.NextGRU
+
+                                            If bkdGRU IsNot Nothing Then
+                                                If Not bkdGRU.NotYetAccepted Then
+                                                    A3AddSb.Append(bkdGRU.Header & ";" &
+                                                          bkdGRU.Subheader & ";" &
+                                                      bkdGRU.LpAeq2 & "|" & DoubleArrayToString(bkdGRU.Meter2.Measurements) & ";" &
+                                                      bkdGRU.LpAeq4 & "|" & DoubleArrayToString(bkdGRU.Meter4.Measurements) & ";" &
+                                                      bkdGRU.LpAeq6 & "|" & DoubleArrayToString(bkdGRU.Meter6.Measurements) & ";" &
+                                                      bkdGRU.LpAeq8 & "|" & DoubleArrayToString(bkdGRU.Meter8.Measurements) & ";" &
+                                                      bkdGRU.LpAeq10 & "|" & DoubleArrayToString(bkdGRU.Meter10.Measurements) & ";" &
+                                                      bkdGRU.LpAeq12 & "|" & DoubleArrayToString(bkdGRU.Meter12.Measurements))
+                                                    SaveA3Time(A3AddSb, tempRun)
+                                                    A3AddSb.AppendLine()
+
+                                                    bkdGRU = bkdGRU.NextGRU
+                                                Else
+                                                    Exit While
+                                                End If
+                                            Else
+                                                Exit While
+                                            End If
+
+                                        Else
+                                            Exit While
+                                        End If
+                                    End While
+                                End If
                             Else
                                 Exit While
                             End If
@@ -4946,10 +5105,19 @@ Public Class Program
                         End If
                     End If
                     tempRun = tempRun.NextUnit
+                    If tempRun IsNot Nothing Then
+                        If tempRun.Name.Contains("RSS") Then
+                            If A3AddSb.Length > 0 Then
+                                sb.Append(A3AddSb.ToString())
+                            End If
+                        End If
+                    End If
                 End While
                 outfile.WriteLine(sb.ToString())
             End If
             outfile.Close()
+            DataGrid.ChangedFromLast = False
+            BasicInfoDataChangedFromLast = False
             Return True
         End If
         Return False
@@ -5024,10 +5192,10 @@ Public Class Program
                                                      New Meter_Measure_Unit(10, StringToDoubleList(gruInfo(6).Split("|")(1).Split("(")(0)), CDbl(gruInfo(6).Split("|")(0))),
                                                      New Meter_Measure_Unit(12, StringToDoubleList(gruInfo(7).Split("|")(1).Split("(")(0)), CDbl(gruInfo(7).Split("|")(0))))
             End If
-        Catch ex As ChaoProblemException
-            If DataGrid._Warning Then
-                MsgBox(ex.Message)
-            End If
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+
         End Try
 
 
@@ -5045,7 +5213,7 @@ Public Class Program
         If CurRun.Name.Contains("bkd") Then
             Dim latestFwdGRU As Grid_Run_Unit = CurRun.PrevUnit.GRU
             Dim latestBkdGRU As Grid_Run_Unit = CurRun.GRU
-            While Not IsNothing(latestFwdGRU.NextGRU)
+            While latestBkdGRU.NextGRU IsNot Nothing
                 latestFwdGRU = latestFwdGRU.NextGRU
                 latestBkdGRU = latestBkdGRU.NextGRU
             End While
@@ -5066,8 +5234,12 @@ Public Class Program
                     'load and write basic data first
                     Dim type_l_r() As String = inFile.ReadLine().Split(",")
 
+                    'putting everything in place
                     ComboBox_machine_list.Text = type_l_r(0)
-
+                    choice = type_l_r(0)
+                    MachChosen = True
+                    Dim Aes() As String = Decide_Machine(ComboBox_machine_list.Text).Split(",")
+                    Dim AesIdx As Integer = 0
 
                     TextBox_L.Text = type_l_r(1)
                     TextBox_r1.Text = type_l_r(2)
@@ -5085,19 +5257,19 @@ Public Class Program
                             BasicInfoGrid.Rows(k).Cells(0).Value = tempBlob.Remove(tempBlob.Length - 2, 2)
                         End If
                     Next
+
                     'A123
                     If Not Machine = Machines.Others Then
                         A123_Prepare()
                     Else 'A4
                         A4_Prepare()
                     End If
-                    DataGrid._Warning = False
+
+                    _Warning = False
+                    Dim halfwayAdd As Boolean = False
                     'Grid_Run_Unit_Info gives you the format as such- Background;110.9|107.5,69.2,111.9;59.5|70.9,105.7,60.5;54.7|113.2,45.9,55.7;99.3|67.6,44.9,100.3
                     Dim gruInfo() As String
 
-                    'Dim runsCount As Integer = 0
-                    Dim Aes() As String = Decide_Machine(ComboBox_machine_list.Text).Split(",")
-                    Dim AesIdx As Integer = 0
                     Do
                         gruInfo = inFile.ReadLine().Split(";")
                         If Not gruInfo.Length = 0 And Not inFile.EndOfStream Then
@@ -5106,14 +5278,15 @@ Public Class Program
                             Dim subh As String = gruInfo(1)
                             'Dim time As Integer = CInt(gruInfo(gruInfo.Length - 1))
 
+                            'This if and elseif moves the cursor to the correct place
                             'no additional after 3rd run
                             If CurRun.Name.Contains("Add") And (title.EndsWith("Run1") Or title.EndsWith("RSS")) Then
-                                AesIdx += 1
-                                'A2 or A3
-                                If CurRun.Name.Contains("A2") Or CurRun.Name.Contains("A3") Then
-                                    CurRun = CurRun.NextUnit.NextUnit.NextUnit
 
-                                ElseIf CurRun.Name.Contains("A4") Then 'A4
+                                If CurRun.Name.Contains("A2") Then 'A2, run1->run2->run3->RSS(or Run1)
+                                    CurRun = CurRun.NextUnit.NextUnit.NextUnit
+                                ElseIf CurRun.Name.Contains("A3") Then 'A3, fwd->bkd->RSS
+                                    CurRun = CurRun.NextUnit.NextUnit
+                                ElseIf CurRun.Name.Contains("A4") Then 'A4, bg->run->RSS
                                     CurRun = CurRun.NextUnit.NextUnit
                                 Else 'A1
                                     CurRun = CurRun.NextUnit 'skipping the additional Run_Unit
@@ -5121,25 +5294,41 @@ Public Class Program
                                 'additional run (already passed the first run of additional, if there's more...)
                             ElseIf (Not CurRun.Name.Contains("Add")) And title.Contains("Run") And Not (title = "Run1" Or title = "Run2" Or title = "Run3") Then
                                 'A2
-                                If CurRun.Name.Contains("A2") Then
+                                If CurRun.Name.Contains("A2") Then 'A1->A2
                                     'last run has to be A1
                                     CurRun = CurRun.PrevUnit
                                 ElseIf CurRun.Name.Contains("A3") Then
                                     'if last one was A1
-                                    If CurRun.PrevUnit.Name.Contains("A1") Then
+                                    If CurRun.PrevUnit.Name.Contains("A1") Then 'A1->A3
                                         CurRun = CurRun.PrevUnit
                                         'if last one was A2
-                                    ElseIf CurRun.PrevUnit.Name.Contains("A2") Then
+                                    ElseIf CurRun.PrevUnit.Name.Contains("A2") Then 'A1->A2->A3
                                         CurRun = CurRun.PrevUnit.PrevUnit.PrevUnit
+                                    End If
+                                ElseIf CurRun.Name.Contains("RSS") Then
+                                    If CurRun.PrevUnit.Name.Contains("A2") Then 'A1->A2->RSS
+                                        CurRun = CurRun.PrevUnit.PrevUnit.PrevUnit
+                                    ElseIf CurRun.PrevUnit.Name.Contains("A3") Then 'A1->A2->A3->RSS or A1->A3->RSS or A1->A2->A3->A1->A3->RSS
+                                        CurRun = CurRun.PrevUnit.PrevUnit
+                                    ElseIf CurRun.PrevUnit.Name.Contains("A4") Then 'A4->RSS
+                                        CurRun = CurRun.PrevUnit.PrevUnit
                                     End If
                                 End If
                             End If
+
+                            'makes sure when pass an A, we increase the AesIdx to know whichA we are at
+                            If CurRun.PrevUnit IsNot Nothing Then
+                                If CurRun.PrevUnit.Name.Contains("Add") And title.EndsWith("Run1") Then
+                                    AesIdx += 1
+                                End If
+                            End If
+
                             'A2
                             If CurRun.Name.Contains("A2") Then
                                 Dim dl As List(Of Double) = StringToDoubleList(gruInfo(7).Split("|")(1).Split("(")(1))
                                 Dim dlnew As List(Of Double) = New List(Of Double)
 
-                                For i = 0 to dl.Count
+                                For i = 0 To dl.Count
                                     If i = 0 Then
                                         dlnew.Add(-1)
                                     Else
@@ -5169,14 +5358,46 @@ Public Class Program
 
                                 'A1,A3,A4
                             Else
-                                'create more gru for additional run
                                 CurRun.Set_BackColor(Color.Green)
                                 CurRun.Executed = True
                                 CurRun.Link.Enabled = True
+
+                                'create more gru for additional run
+                                'adding the right additional GRUs
                                 If CurRun.Name.Contains("Add") Then
+                                    'if more than one additional run for A3 or A4
+                                    'A3
+                                    If CurRun.Name.Contains("A3") Then
+                                        If CurRun.Name.Contains("fwd") Then
+                                            halfwayAdd = True
+                                        Else
+                                            halfwayAdd = False
+                                        End If
+                                    ElseIf CurRun.Name.Contains("A4") Then
+                                        'A4
+                                        If CurRun.Name.Contains("A4_Mid_BG_Add") Then
+                                            halfwayAdd = True
+                                        Else
+                                            halfwayAdd = False
+                                        End If
+                                    End If
+                                    
                                     Set_Add_GRU(CInt(Aes(AesIdx).Substring(1)), title, subh)
+
+                                    If CurRun.Name.Contains("bkd") Then
+                                        Dim lastbkd As Grid_Run_Unit = CurRun.GRU
+                                        While lastbkd.NextGRU IsNot Nothing
+                                            lastbkd = lastbkd.NextGRU
+                                        End While
+                                        DataGrid.AddA3OverallColumn(lastbkd)
+                                    End If
                                 End If
-                                If CurRun.Name.Contains("A3") Then
+
+                                'also need to load time for A1 and A3
+                                If CurRun.Name.Contains("A1") Then
+                                    CurRun.Steps = New Steps(My.Resources.A1_step1, Step1, Nothing, True, A1Time)
+                                    CurRun.HeadStep = CurRun.Steps
+                                ElseIf CurRun.Name.Contains("A3") Then
                                     Dim dl As List(Of Double) = StringToDoubleList(gruInfo(7).Split("|")(1).Split("(")(1))
 
                                     LoadInputTime(2, dl)
@@ -5201,11 +5422,12 @@ Public Class Program
                                     timeLeft = CurRun.Steps.Time
                                     timeLabel.Text = timeLeft & " s"
                                 End If
-                                Accept_Button.Enabled = False
-                                startButton.Enabled = True
-                                MoveOnToNextRun(True, True, False)
-                                DataGrid._Warning = True
-
+                                If halfwayAdd Then
+                                    MoveOnToNextRun(True, False, True)
+                                Else
+                                    MoveOnToNextRun(True, True, False)
+                                End If
+                                _Warning = True
                             Else 'not end of file
                                 CurRun.Steps = Load_Steps_helper(CurRun)
                                 MoveToRun(CurRun.NextUnit)
@@ -5231,5 +5453,11 @@ Public Class Program
 
     Private Sub LoadToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LoadToolStripMenuItem.Click
         LoadFile()
+    End Sub
+
+    Private BasicInfoDataChangedFromLast As Boolean = False
+    Public Sub BasicInfoDataChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BasicInfoGrid.CellValueChanged
+        BasicInfoDataChangedFromLast = True
+        EnableSave()
     End Sub
 End Class

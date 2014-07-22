@@ -1645,7 +1645,11 @@ Partial Public Class Program
                     ElseIf CurRun.Name.Contains("bkd") Then 'A3 backward
                         cStep = 4
                     End If
-                    buffer = System.Text.Encoding.ASCII.GetBytes(aWhat & "-" & ADictionary(ComboBox_machine_list.Text) & cStep & "," & timeLeft & ",F" & Environment.NewLine)
+                    If Machine = Machines.Loader_Excavator And CurRun.Name.Contains("Lo") Then
+                        buffer = System.Text.Encoding.ASCII.GetBytes(aWhat & "-" & ADictionary(ComboBox_machine_list.Text) & cStep & "-2," & timeLeft & ",F" & Environment.NewLine)
+                    Else
+                        buffer = System.Text.Encoding.ASCII.GetBytes(aWhat & "-" & ADictionary(ComboBox_machine_list.Text) & cStep & "," & timeLeft & ",F" & Environment.NewLine)
+                    End If
                 End If
                 Try
                     PhoneSocket.Send(buffer)
@@ -3216,17 +3220,6 @@ Partial Public Class Program
         gp.DrawLine(Pens.Black, New Point(yCor(0, 0), yCor(0, 1)), New Point(yCor(1, 0), yCor(1, 1)))
         gp.DrawString("Y", fn, Brushes.Black, New Point(yCor(0, 0), yCor(0, 1)))
 
-        'xAxis = New LineShape(xCor(0, 0), xCor(0, 1), xCor(1, 0), xCor(1, 1))
-        'xAxis.Parent = canvas
-        'xLabel.Text = "x"
-        'xLabel.Size = New System.Drawing.Size(20, 20)
-        'xLabel.Location = New System.Drawing.Point(xCor(1, 0), xCor(1, 1))
-
-        'y axis
-        'yAxis = New LineShape(yCor(0, 0), yCor(0, 1), yCor(1, 0), yCor(1, 1))
-        'yAxis.Parent = canvas
-        'yLabel.Text = "y"
-        'yLabel.Location = New System.Drawing.Point(yCor(0, 0), yCor(0, 1))
     End Sub
 
     'given an array of coordinates, plot them out using the given coordinate system
@@ -3236,15 +3229,6 @@ Partial Public Class Program
     'r is the radius for the circle
     'coors is the coordinates for the points to be plotted
     Private Sub plot(ByVal repaint As Boolean, ByRef gp As Graphics, ByVal xCor As Double(,), ByVal yCor As Double(,), ByVal parent As Control)
-        ''clear canvas first
-        'If canvas IsNot Nothing Then
-        '    canvas.Dispose()
-        'End If
-
-        'canvas = New ShapeContainer()
-        'canvas.Parent = parent
-        'canvas.BackColor = Color.Transparent
-
         'plot the circle with r
         If Not repaint Then
             Dim temp As Double = length / R
@@ -3262,7 +3246,7 @@ Partial Public Class Program
         plotCor(gp, xCor, yCor)
         Dim rCircle As Rectangle = New Rectangle(New Point((origin(0) - R), (origin(1) - R)), New Size(R * 2, R * 2))
         gp.DrawEllipse(Pens.Black, rCircle)
-        'rCircle.Parent = canvas
+
         'plot normalized points
         Dim labels = {"P2", "P4", "P6", "P8", "P10", "P12"}
 
@@ -3272,9 +3256,6 @@ Partial Public Class Program
 
             Dim fn As Font = New Font("Microsoft Sans MS", 16)
             Dim solidBrush As SolidBrush = New SolidBrush(posColors(index))
-            Dim bBrush As SolidBrush = New SolidBrush(Color.Blue)
-            Dim rBrush As SolidBrush = New SolidBrush(Color.Red)
-            Dim gBrush As SolidBrush = New SolidBrush(Color.DarkGreen)
             Dim pHeight As Integer = TextRenderer.MeasureText(gp, labels(index), fn).Height
             Dim pWidth As Integer = TextRenderer.MeasureText(gp, labels(index), fn).Width
             Dim rect As Rectangle = New Rectangle(New Point((origin(0) + x - 2), (origin(1) - y - 2)), New Size(10, 10))
@@ -3298,36 +3279,22 @@ Partial Public Class Program
             Else
                 If labels(index) = "P4" Then
                     gp.DrawString(labels(index), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y))
-                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y - pHeight * 3 + e))
-                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y - pHeight * 2 + e))
-                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y - pHeight * 1 + e))
+                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, solidBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y - pHeight * 3 + e))
+                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, solidBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y - pHeight * 2 + e))
+                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, solidBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y - pHeight * 1 + e))
                 ElseIf labels(index) = "P6" Then
                     gp.DrawString(labels(index), fn, solidBrush, New System.Drawing.Point(origin(0) + x - pWidth + d, origin(1) - y))
 
-                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x - 2 * d, origin(1) - y - pHeight * 3))
-                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x - 2 * d, origin(1) - y - pHeight * 2))
-                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x - 2 * d, origin(1) - y - pHeight * 1))
+                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, solidBrush, New System.Drawing.Point(origin(0) + x - 2 * d, origin(1) - y - pHeight * 3))
+                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, solidBrush, New System.Drawing.Point(origin(0) + x - 2 * d, origin(1) - y - pHeight * 2))
+                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, solidBrush, New System.Drawing.Point(origin(0) + x - 2 * d, origin(1) - y - pHeight * 1))
                 Else
                     gp.DrawString(labels(index), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y))
-                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight - e))
-                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight * 2 - e))
-                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight * 3 - e))
+                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, solidBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight - e))
+                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, solidBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight * 2 - e))
+                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, solidBrush, New System.Drawing.Point(origin(0) + x + pWidth - d, origin(1) - y + pHeight * 3 - e))
                 End If
             End If
-            'Dim rPoint = New OvalShape((origin(0) + x - 2), (origin(1) - y - 2), 5, 5)
-
-
-            'rPoint.Parent = canvas
-            'rPoint.BorderColor = posColors(index)
-            'rPoint.BackColor = posColors(index)
-            'rPoint.BackStyle = BackStyle.Opaque
-            'coors(index).Label.Size = New Size(170, 100)
-            'coors(index).Label.P = labels(index)
-            'coors(index).Label.X = coors(index).Coors.Xc
-            'coors(index).Label.Y = coors(index).Coors.Yc
-            'coors(index).Label.Z = coors(index).Coors.Zc
-            'coors(index).Label.Location = translate(New System.Drawing.Point(origin(0) + x, origin(1) - y), GroupBox_Plot.Location, TabPage1.Location)
-            'coors(index).Label.BringToFront()
         Next
     End Sub
 
@@ -3363,7 +3330,9 @@ Partial Public Class Program
                 'write basic data first
                 sb.AppendLine(ComboBox_machine_list.Text & "," & TextBox_L.Text & "," & TextBox_r1.Text & "," & TextBox_L1.Text & "," & TextBox_L2.Text & "," & TextBox_L3.Text & "," & TextBox_r2.Text)
                 For k = 0 To BasicInfoGrid.Rows.Count - 1
-                    sb.AppendLine(BasicInfoGrid.Rows(k).Cells(0).Value)
+                    If BasicInfoGrid.Rows(k).Cells(0).Value IsNot Nothing Then
+                        sb.AppendLine(BasicInfoGrid.Rows(k).Cells(0).Value.ToString())
+                    End If
                 Next
                 'write column headers second
                 For i = 0 To DataGrid.Form.Columns.Count - 1
@@ -3376,7 +3345,11 @@ Partial Public Class Program
                 For j = 0 To DataGrid.Form.Rows.Count - 1
                     sb.Append(DataGrid.Form.Rows(j).HeaderCell.Value)
                     For i = 0 To DataGrid.Form.Columns.Count - 1
-                        sb.Append("," & DataGrid.Form.Rows(j).Cells(i).Value)
+
+                        sb.Append(",")
+                        If DataGrid.Form.Rows(j).Cells(i).Value IsNot Nothing Then
+                            sb.Append(DataGrid.Form.Rows(j).Cells(i).Value.ToString())
+                        End If
                     Next
                     sb.AppendLine()
                 Next
@@ -3952,25 +3925,17 @@ Partial Public Class Program
 
     Private Sub PrintPage(ByVal sender As Object, ByVal ev As PrintPageEventArgs)
         Try
-            Dim pageBitmap As Bitmap = New Bitmap(Me.Width, Me.Height)
-            Me.DrawToBitmap(pageBitmap, New Rectangle(New Point(0, 0), Me.Size))
+            Dim pageBitmap As Bitmap = New Bitmap(GroupBox_Plot.Width, GroupBox_Plot.Height)
+            Dim rect As Rectangle = New Rectangle(New Point(0, 0), New Size(GroupBox_Plot.Width, GroupBox_Plot.Height))
+            GroupBox_Plot.DrawToBitmap(pageBitmap, rect)
             ev.Graphics.DrawImage(pageBitmap, New Point(0, 0))
+
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
 
     End Sub
 
-    Private Sub PreviewPage(ByVal sender As Object, ByVal ev As PrintPageEventArgs)
-        Try
-            Dim pageBitmap As Bitmap = New Bitmap(Me.Width, Me.Height)
-            Me.DrawToBitmap(pageBitmap, New Rectangle(New Point(0, 0), Me.Size))
-            ev.Graphics.DrawImage(pageBitmap, New Point(0, 0))
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-
-    End Sub
 
     Private Sub ThrowPrePostCalWarnings()
         'IF PRECAL

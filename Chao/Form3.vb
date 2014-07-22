@@ -31,7 +31,6 @@ Partial Public Class Program
     Dim origin(1) As Double
     Dim length As Double
     ' Set plotting vars
-    Dim canvas As New ShapeContainer
     Dim xAxis As New LineShape
     ' xCor(0) is the start point, xCor(1) is the end point
     Dim yAxis As New LineShape
@@ -698,9 +697,7 @@ Partial Public Class Program
         'yEnd
         yCor(1, 0) = origin(0) 'x
         yCor(1, 1) = origin(1) + length 'y
-        'draw coordinates
-        'canvas.Parent = GroupBox_Plot
-        'canvas.Location = New System.Drawing.Point(0, 0)
+
 
         plotCor(GroupBox_Plot.CreateGraphics, xCor, yCor)
 
@@ -1160,6 +1157,7 @@ Partial Public Class Program
             End If
         End If
         Set_Second_for_Steps()
+        SendNonChangeSignalToMobile()
     End Sub
     
     '測完數據會需要按的接受鍵
@@ -1250,7 +1248,9 @@ Partial Public Class Program
                 Accept_Cancel()
             End If
         End If
-        SendNonChangeSignalToMobile()
+        If CurRun IsNot Nothing Then
+            SendNonChangeSignalToMobile()
+        End If
     End Sub
 
 
@@ -1450,7 +1450,12 @@ Partial Public Class Program
     Private Sub PrintToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PrintToolStripMenuItem.Click
         Dim pd As PrintDocument = New PrintDocument()
         AddHandler pd.PrintPage, AddressOf Me.PrintPage
-        pd.Print()
+        Try
+            pd.Print()
+            pd.Dispose()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
 
     End Sub
 

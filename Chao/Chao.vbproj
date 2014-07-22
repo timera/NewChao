@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculations.vb" />
+    <Compile Include="CommunicationWithAndroid.vb" />
     <Compile Include="CustomClasses.vb">
       <SubType>Component</SubType>
     </Compile>

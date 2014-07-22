@@ -2,6 +2,11 @@
 Imports Microsoft.VisualBasic.PowerPacks
 Imports System.IO
 Imports System.Text
+Imports System.Drawing.Printing
+Imports System.Threading
+Imports System.Net.Sockets
+Imports System.Net
+Imports System.Text.RegularExpressions
 
 Public Class Program
     <StructLayout(LayoutKind.Sequential)> _
@@ -185,6 +190,8 @@ Public Class Program
     'if it is have additional test => true
     Dim Add_Test_Record As Boolean
 
+    Dim ADictionary As New Dictionary(Of String, String)
+
     Public Sub New()
 
         ' 此為設計工具所需的呼叫。
@@ -197,6 +204,35 @@ Public Class Program
 
     ' things that need to be instantiated at startup
     Private Sub Program_Load_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        '##A4 Dictionary for communicating with Android phone
+        ADictionary.Add("瀝青混凝土舖築機(Asphalt finisher)", "A4-Asp_Fin")
+        ADictionary.Add("鑽土機(Earth drill)", "A4-Aug_Dri_Dri")
+        ADictionary.Add("全套管鑽掘機", "A4-Aug_Dri_Dri")
+        ADictionary.Add("土壤取樣器(地鑽) (Earth auger)", "A4-Aug_Dri_Dri")
+        ADictionary.Add("油壓式拔樁機", "A4-Aug_Dri_Dri")
+        ADictionary.Add("油壓式打樁機(Hydraulic pile driver)", "A4-Aug_Dri_Dri")
+        ADictionary.Add("拔樁機", "A4-Aug_Dri_Dri")
+        ADictionary.Add("鑽岩機(Rock breaker)", "A4-Aug_Dri_Dri")
+        ADictionary.Add("空氣壓縮機(Compressor)", "A4-Com")
+        ADictionary.Add("混凝土破碎機(Concrete breaker)", "A4-Con_Bre")
+        ADictionary.Add("混凝土割切機(Concrete cutter)", "A4-Con_Cut")
+        ADictionary.Add("混凝土泵車(Concrete pump)", "A4-Con_Pum")
+        ADictionary.Add("履帶起重機(Crawler crane)", "A4-Cra")
+        ADictionary.Add("卡車起重機(Truck crane)", "A4-Cra")
+        ADictionary.Add("輪形起重機(Wheel crane)", "A4-Cra")
+        ADictionary.Add("發電機(Generator)", "A4-Gen")
+        ADictionary.Add("鐵輪壓路機(Road roller)", "A4-Rol")
+        ADictionary.Add("膠輪壓路機(Wheel roller)", "A4-Rol")
+        ADictionary.Add("振動式壓路機(Vibrating roller)", "A4-Rol")
+        ADictionary.Add("振動式樁錘(Vibrating hammer)", "A4-Vib_Ham")
+        'other machines
+        ADictionary.Add("開挖機(Excavator)", "ex")
+        ADictionary.Add("推土機(Crawler and wheel tractor)", "Tr")
+        ADictionary.Add("裝料機(Crawler and wheel loader)", "Lo")
+        ADictionary.Add("裝料開挖機", "loex")
+
+
+
         '##COMMUNICATION
         Comm = New Communication()
         SimulationMode()
@@ -318,6 +354,9 @@ Public Class Program
         TextBox_Setting_Bargraph_Min.Size = New Size(142, 20)
         Button_Setting_Bargraph.Size = New Size(75, 50)
 
+        PanelMobile.Size = New Size(300, 100)
+        ButtonConnectMobile.Size = New Size(75, 23)
+        LabelMobileIP.Size = New Size(93, 15)
 
         '###LOCATION of OBJECTS
 
@@ -626,7 +665,10 @@ Public Class Program
         TextBox_Setting_Bargraph_Min.Location = New Point(93, 135)
         Button_Setting_Bargraph.Location = New Point(215, 160)
 
-
+        PanelMobile.Location = New Point(Panel_Setting_Bargraph_Max_Min.Location.X, Panel_Setting_Bargraph_Max_Min.Location.Y + 300)
+        LabelMobileIP.Location = New Point(5, 5)
+        MaskedTextBoxIPAddress.Location = New Point(LabelMobileIP.Location.X + LabelMobileIP.Width + 10, LabelMobileIP.Location.Y)
+        ButtonConnectMobile.Location = New Point(MaskedTextBoxIPAddress.Location.X + MaskedTextBoxIPAddress.Width + 10, MaskedTextBoxIPAddress.Location.Y)
 
 
         Button_change_machine.Enabled = False
@@ -856,16 +898,18 @@ Public Class Program
     End Sub
 
     Private Sub DisposeAllRuns()
-        Dim tempcurRun As Run_Unit = HeadRun
-        Dim tempRU As Run_Unit
-        While tempcurRun.NextUnit IsNot Nothing
-            tempRU = tempcurRun.NextUnit
+        If HeadRun IsNot Nothing Then
+            Dim tempcurRun As Run_Unit = HeadRun
+            Dim tempRU As Run_Unit
+            While tempcurRun.NextUnit IsNot Nothing
+                tempRU = tempcurRun.NextUnit
+                tempcurRun.Deallocate()
+                tempcurRun = Nothing
+                tempcurRun = tempRU
+            End While
             tempcurRun.Deallocate()
             tempcurRun = Nothing
-            tempcurRun = tempRU
-        End While
-        tempcurRun.Deallocate()
-        tempcurRun = Nothing
+        End If
     End Sub
 
     Private Function Change_Machine()
@@ -880,79 +924,83 @@ Public Class Program
             ElseIf answer = DialogResult.Cancel Then
                 Return False
             End If
-            'can choose machine again
-            BackToZero()
-
-
-
-            'dispose graph
-            MainLineGraph.Dispose()
-            MainBarGraph.Dispose()
-
-            'dispose chart
-
-            DisposeChart()
-            DisposeAllRuns()
-            'Set invisible property
-            Panel_PreCal.Visible = False
-            Panel_Bkg.Visible = False
-            Panel_RSS.Visible = False
-            Panel_PostCal.Visible = False
-            Panel_PreCal_Sub.Visible = False
-            Panel_PostCal_Sub.Visible = False
-            PanelA4.Visible = False
-            PanelExcavatorA1.Visible = False
-            PanelExcavatorA2.Visible = False
-            PanelLoaderA3.Visible = False
-            PanelLoaderA1.Visible = False
-            PanelLoaderA2.Visible = False
-            PanelTractorA1.Visible = False
-            PanelTractorA3.Visible = False
-
-            'set groupbox enable property
-            GroupBox_A1_A2_A3.Enabled = False
-            GroupBox_A4.Enabled = False
-
-            'set TabPage enable property
-            Me.TabPageProcedure.Enabled = True
-            Me.TabControl2.SelectedIndex = 0
-
-            'set button enable property
-            startButton.Enabled = True
-            stopButton.Enabled = False
-            Accept_Button.Enabled = False
-            Test_NextButton.Enabled = False
-            Test_StartButton.Enabled = False
-            Test_ConfirmButton.Enabled = False
-
-            'clear textbox content
-            TextBox_L.Text = Nothing
-            TextBox_L1.Text = Nothing
-            TextBox_L2.Text = Nothing
-            TextBox_L3.Text = Nothing
-            TextBox_r1.Text = Nothing
-            TextBox_r2.Text = Nothing
-
-            Countdown = False
-
-            For i = 0 To array_step_s.Length - 1
-                array_step_s(i).Text = 0
-                array_step_s(i).Enabled = False
-            Next
-
-            For i = 0 To array_step_display.Length - 1
-                array_step_display(i).Text = ""
-            Next
-
-            For i = 0 To array_time.Length - 1
-                array_time(i) = 0
-            Next
-
-            A4_step_text = Nothing
-
-            Label_A4_Hint1.Visible = False
-            Label_A4_Hint2.Visible = False
         End If
+        'can choose machine again
+        BackToZero()
+
+
+
+        'dispose graph
+        If MainLineGraph IsNot Nothing Then
+            MainLineGraph.Dispose()
+        End If
+        If MainBarGraph IsNot Nothing Then
+            MainBarGraph.Dispose()
+        End If
+
+        'dispose chart
+
+        DisposeChart()
+        DisposeAllRuns()
+        'Set invisible property
+        Panel_PreCal.Visible = False
+        Panel_Bkg.Visible = False
+        Panel_RSS.Visible = False
+        Panel_PostCal.Visible = False
+        Panel_PreCal_Sub.Visible = False
+        Panel_PostCal_Sub.Visible = False
+        PanelA4.Visible = False
+        PanelExcavatorA1.Visible = False
+        PanelExcavatorA2.Visible = False
+        PanelLoaderA3.Visible = False
+        PanelLoaderA1.Visible = False
+        PanelLoaderA2.Visible = False
+        PanelTractorA1.Visible = False
+        PanelTractorA3.Visible = False
+
+        'set groupbox enable property
+        GroupBox_A1_A2_A3.Enabled = False
+        GroupBox_A4.Enabled = False
+
+        'set TabPage enable property
+        Me.TabPageProcedure.Enabled = True
+        Me.TabControl2.SelectedIndex = 0
+
+        'set button enable property
+        startButton.Enabled = True
+        stopButton.Enabled = False
+        Accept_Button.Enabled = False
+        Test_NextButton.Enabled = False
+        Test_StartButton.Enabled = False
+        Test_ConfirmButton.Enabled = False
+
+        'clear textbox content
+        TextBox_L.Text = Nothing
+        TextBox_L1.Text = Nothing
+        TextBox_L2.Text = Nothing
+        TextBox_L3.Text = Nothing
+        TextBox_r1.Text = Nothing
+        TextBox_r2.Text = Nothing
+
+        Countdown = False
+
+        For i = 0 To array_step_s.Length - 1
+            array_step_s(i).Text = 0
+            array_step_s(i).Enabled = False
+        Next
+
+        For i = 0 To array_step_display.Length - 1
+            array_step_display(i).Text = ""
+        Next
+
+        For i = 0 To array_time.Length - 1
+            array_time(i) = 0
+        Next
+
+        A4_step_text = Nothing
+
+        Label_A4_Hint1.Visible = False
+        Label_A4_Hint2.Visible = False
         Return True
     End Function
 
@@ -1116,8 +1164,28 @@ Public Class Program
         End If
     End Sub
 
+    Private Sub SendChangeSignalForMobile()
+
+        Try
+            If PhoneSocket IsNot Nothing Then
+                If PhoneSocket.Connected Then
+                    Dim Buffer() As Byte = System.Text.Encoding.ASCII.GetBytes(ADictionary(ComboBox_machine_list.Text) & "," & timeLeft & ",T" & Environment.NewLine)
+                    PhoneSocket.Send(Buffer)
+                End If
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+        
+    End Sub
+
     Private Sub Button_L_check_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L_check.Click
+        If String.IsNullOrWhiteSpace(TextBox_L.Text) Then
+            Return
+        End If
         A123_Prepare()
+        
     End Sub
 
     Private Sub A123_Prepare()
@@ -1126,9 +1194,6 @@ Public Class Program
         pos = {New CoorPoint(), New CoorPoint(), New CoorPoint(), New CoorPoint(), New CoorPoint(), New CoorPoint()}
 
         Dim r1 As Integer
-        If String.IsNullOrWhiteSpace(TextBox_L.Text) Then
-            Return
-        End If
 
         If TextBox_L.Text < 1.5 Then
             TextBox_r1.Text = "4"
@@ -1176,9 +1241,13 @@ Public Class Program
             Button_L_check.Enabled = False
         End If
         TextBox_L.Enabled = False
+        SendChangeSignalForMobile()
     End Sub
 
     Private Sub Button_L1_L2_L3_check_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L1_L2_L3_check.Click
+        If String.IsNullOrWhiteSpace(TextBox_L1.Text) Or String.IsNullOrWhiteSpace(TextBox_L2.Text) Or String.IsNullOrWhiteSpace(TextBox_L3.Text) Then
+            Return
+        End If
         A4_Prepare()
     End Sub
 
@@ -1192,20 +1261,12 @@ Public Class Program
         Dim L2 As Double
         Dim L3 As Double
         Dim r2 As Double
-        If String.IsNullOrWhiteSpace(TextBox_L1.Text) Or String.IsNullOrWhiteSpace(TextBox_L2.Text) Or String.IsNullOrWhiteSpace(TextBox_L3.Text) Then
-            If String.IsNullOrWhiteSpace(TextBox_r2.Text) Then
-                Return
-            Else
-                r2 = TextBox_r2.Text
-            End If
-        Else
-            L1 = TextBox_L1.Text
-            L2 = TextBox_L2.Text
-            L3 = TextBox_L3.Text
-            r2 = Math.Ceiling(2 * Math.Sqrt(((L1 / 2) ^ 2) + ((L2 / 2) ^ 2) + (L3 ^ 2)))
-            TextBox_r2.Text = r2
-        End If
-
+        L1 = TextBox_L1.Text
+        L2 = TextBox_L2.Text
+        L3 = TextBox_L3.Text
+        r2 = Math.Ceiling(2 * Math.Sqrt(((L1 / 2) ^ 2) + ((L2 / 2) ^ 2) + (L3 ^ 2)))
+        TextBox_r2.Text = r2
+        
 
 
         pos(0).Coors = New ThreeDPoint(r2 * -0.45, r2 * 0.77, r2 * 0.45)
@@ -1291,6 +1352,7 @@ Public Class Program
         TextBox_L1.Enabled = False
         TextBox_L2.Enabled = False
         TextBox_L3.Enabled = False
+        SendChangeSignalForMobile()
     End Sub
 
     Sub Set_Panel(ByRef p As Panel, ByRef l As Label)
@@ -2556,6 +2618,38 @@ Public Class Program
                 End If
             End If
         End If
+
+        'if connected to Android phone then send signal to phone
+        SendNonChangeSignalToMobile()
+    End Sub
+
+    Sub SendNonChangeSignalToMobile()
+        If PhoneSocket IsNot Nothing Then
+            If PhoneSocket.Connected Then
+                Dim buffer() As Byte
+
+                'A4
+                If Machine = Machines.Others Then
+                    buffer = System.Text.Encoding.ASCII.GetBytes(ADictionary(ComboBox_machine_list.Text) & "," & timeLeft & ",F" & Environment.NewLine)
+
+                Else 'others
+                    Dim aWhat As String = Regex.Match(CurRun.Name, "A.").ToString()
+                    Dim cStep As Integer = CurRun.CurStep
+                    If CurRun.Name.Contains("A2_2nd_3rd") Then
+                        cStep = cStep + 1
+                    ElseIf CurRun.Name.Contains("bkd") Then 'A3 backward
+                        cStep = 4
+                    End If
+                    buffer = System.Text.Encoding.ASCII.GetBytes(aWhat & "-" & ADictionary(ComboBox_machine_list.Text) & cStep & "," & timeLeft & ",F" & Environment.NewLine)
+                End If
+                Try
+                    PhoneSocket.Send(buffer)
+                Catch ex As Exception
+                    MsgBox(ex.Message)
+                End Try
+            End If
+        End If
+
     End Sub
 
     Sub Set_Panel_BackColor()
@@ -4492,7 +4586,8 @@ Public Class Program
             ElseIf Result = DialogResult.Cancel Then
                 Accept_Cancel()
             End If
-            End If
+        End If
+        SendNonChangeSignalToMobile()
     End Sub
 
 
@@ -4563,7 +4658,7 @@ Public Class Program
             Dim x = pos(index).Coors.Xc * ratio
             Dim y = pos(index).Coors.Yc * ratio
 
-            Dim fn As Font = New Font("Microsoft Sans MS", 20)
+            Dim fn As Font = New Font("Microsoft Sans MS", 16)
             Dim solidBrush As SolidBrush = New SolidBrush(posColors(index))
             Dim bBrush As SolidBrush = New SolidBrush(Color.Blue)
             Dim rBrush As SolidBrush = New SolidBrush(Color.Red)
@@ -4579,14 +4674,14 @@ Public Class Program
             If pos.Length = 6 Then
                 If labels(index) = "P6" Or labels(index) = "P8" Or labels(index) = "P12" Then
                     gp.DrawString(labels(index), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y))
-                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y - pHeight * 3))
-                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y - pHeight * 2))
-                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y - pHeight * 1))
+                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y - pHeight * 3))
+                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y - pHeight * 2))
+                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y - pHeight * 1))
                 Else
                     gp.DrawString(labels(index), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y))
-                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, bBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y + pHeight - e))
-                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, rBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y + pHeight * 2 - e))
-                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, gBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y + pHeight * 3 - e))
+                    gp.DrawString(String.Format("X: {0:N1}", pos(index).Coors.Xc), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y + pHeight - e))
+                    gp.DrawString(String.Format("Y: {0:N1}", pos(index).Coors.Yc), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y + pHeight * 2 - e))
+                    gp.DrawString(String.Format("Z: {0:N1}", pos(index).Coors.Zc), fn, solidBrush, New System.Drawing.Point(origin(0) + x, origin(1) - y + pHeight * 3 - e))
                 End If
             Else
                 If labels(index) = "P4" Then
@@ -5381,7 +5476,7 @@ Public Class Program
                                             halfwayAdd = False
                                         End If
                                     End If
-                                    
+
                                     Set_Add_GRU(CInt(Aes(AesIdx).Substring(1)), title, subh)
 
                                     If CurRun.Name.Contains("bkd") Then
@@ -5459,5 +5554,56 @@ Public Class Program
     Public Sub BasicInfoDataChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BasicInfoGrid.CellValueChanged
         BasicInfoDataChangedFromLast = True
         EnableSave()
+    End Sub
+
+    Private Sub PrintToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PrintToolStripMenuItem.Click
+        Dim pd As PrintDocument = New PrintDocument()
+        AddHandler pd.PrintPage, AddressOf Me.PrintPage
+        pd.Print()
+
+    End Sub
+
+    Dim trd As Thread
+
+    Public Sub OpenSocket()
+        Dim hostAdd As Long = CommunicationWithAndroid.LongIntegerFromIP("192.168.1.10")
+        Dim port As Integer = 60000 'server port is 60000, we client is 5000
+        Dim serverSocket As New TcpListener(System.Net.Dns.GetHostEntry(Environment.MachineName).AddressList(0), port)
+        Dim clientSocket As TcpClient
+
+        serverSocket.Start()
+        MsgBox("server started")
+        clientSocket = serverSocket.AcceptTcpClient()
+        MsgBox("Accept connection from client")
+
+    End Sub
+
+    Private Sub PrintPreviewToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PrintPreviewToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub PrintPage(ByVal sender As Object, ByVal ev As PrintPageEventArgs)
+        Try
+            Dim pageBitmap As Bitmap = New Bitmap(Me.Width, Me.Height)
+            Me.DrawToBitmap(pageBitmap, New Rectangle(New Point(0, 0), Me.Size))
+            ev.Graphics.DrawImage(pageBitmap, New Point(0, 0))
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
+
+    Private PhoneSocket As Socket
+
+    Private Sub ButtonConnectMobile_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonConnectMobile.Click
+        Dim ip As String = MaskedTextBoxIPAddress.Text
+        ip = ip.Replace("_", "")
+        Dim s As Socket = CommunicationWithAndroid.ConnectSocket(ip, "60000")
+        If s IsNot Nothing Then
+            PhoneSocket = s
+            LabelConnectMobile.Text = "Connected"
+        Else
+            LabelConnectMobile.Text = "Not Connected"
+        End If
     End Sub
 End Class

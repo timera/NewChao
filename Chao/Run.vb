@@ -309,7 +309,7 @@
             Program.CurRun = Program.A4_Add_Mid
             Countdown_False_after_Jump()
         End If
-
+        Program.SendNonChangeSignalToMobile()
     End Sub
     Sub Countdown_True_before_Jump()
         If Program.CurRun IsNot Nothing Then

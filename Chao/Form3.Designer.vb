@@ -300,6 +300,11 @@ Partial Class Program
         Me.TabPageCharts = New System.Windows.Forms.TabPage()
         Me.ButtonExport = New System.Windows.Forms.Button()
         Me.TabPageSettings = New System.Windows.Forms.TabPage()
+        Me.PanelMobile = New System.Windows.Forms.Panel()
+        Me.LabelConnectMobile = New System.Windows.Forms.Label()
+        Me.ButtonConnectMobile = New System.Windows.Forms.Button()
+        Me.LabelMobileIP = New System.Windows.Forms.Label()
+        Me.MaskedTextBoxIPAddress = New System.Windows.Forms.MaskedTextBox()
         Me.Panel_Setting_Bargraph_Max_Min = New System.Windows.Forms.Panel()
         Me.TextBox_Setting_Bargraph_Min = New Chao.ChaoTextBox()
         Me.TextBox_Setting_Bargraph_Max = New Chao.ChaoTextBox()
@@ -313,6 +318,8 @@ Partial Class Program
         Me.LoadToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PrintToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PrintPreviewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -412,6 +419,7 @@ Partial Class Program
         Me.Test_Input_S_Panel.SuspendLayout()
         Me.TabPageCharts.SuspendLayout()
         Me.TabPageSettings.SuspendLayout()
+        Me.PanelMobile.SuspendLayout()
         Me.Panel_Setting_Bargraph_Max_Min.SuspendLayout()
         Me.MenuStrip.SuspendLayout()
         Me.SuspendLayout()
@@ -3399,6 +3407,7 @@ Partial Class Program
         'TabPageSettings
         '
         Me.TabPageSettings.BackColor = System.Drawing.Color.DarkGray
+        Me.TabPageSettings.Controls.Add(Me.PanelMobile)
         Me.TabPageSettings.Controls.Add(Me.Panel_Setting_Bargraph_Max_Min)
         Me.TabPageSettings.Location = New System.Drawing.Point(4, 25)
         Me.TabPageSettings.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -3407,6 +3416,53 @@ Partial Class Program
         Me.TabPageSettings.Size = New System.Drawing.Size(1266, 633)
         Me.TabPageSettings.TabIndex = 3
         Me.TabPageSettings.Text = "設定"
+        '
+        'PanelMobile
+        '
+        Me.PanelMobile.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.PanelMobile.Controls.Add(Me.LabelConnectMobile)
+        Me.PanelMobile.Controls.Add(Me.ButtonConnectMobile)
+        Me.PanelMobile.Controls.Add(Me.LabelMobileIP)
+        Me.PanelMobile.Controls.Add(Me.MaskedTextBoxIPAddress)
+        Me.PanelMobile.Location = New System.Drawing.Point(23, 320)
+        Me.PanelMobile.Name = "PanelMobile"
+        Me.PanelMobile.Size = New System.Drawing.Size(399, 190)
+        Me.PanelMobile.TabIndex = 1
+        '
+        'LabelConnectMobile
+        '
+        Me.LabelConnectMobile.AutoSize = True
+        Me.LabelConnectMobile.Location = New System.Drawing.Point(149, 81)
+        Me.LabelConnectMobile.Name = "LabelConnectMobile"
+        Me.LabelConnectMobile.Size = New System.Drawing.Size(0, 15)
+        Me.LabelConnectMobile.TabIndex = 3
+        '
+        'ButtonConnectMobile
+        '
+        Me.ButtonConnectMobile.Location = New System.Drawing.Point(295, 28)
+        Me.ButtonConnectMobile.Name = "ButtonConnectMobile"
+        Me.ButtonConnectMobile.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonConnectMobile.TabIndex = 2
+        Me.ButtonConnectMobile.Text = "Connect"
+        Me.ButtonConnectMobile.UseVisualStyleBackColor = True
+        '
+        'LabelMobileIP
+        '
+        Me.LabelMobileIP.AutoSize = True
+        Me.LabelMobileIP.Location = New System.Drawing.Point(39, 31)
+        Me.LabelMobileIP.Name = "LabelMobileIP"
+        Me.LabelMobileIP.Size = New System.Drawing.Size(93, 15)
+        Me.LabelMobileIP.TabIndex = 1
+        Me.LabelMobileIP.Text = "Mobile IP Add"
+        '
+        'MaskedTextBoxIPAddress
+        '
+        Me.MaskedTextBoxIPAddress.Location = New System.Drawing.Point(149, 28)
+        Me.MaskedTextBoxIPAddress.Mask = "000.000.000.000"
+        Me.MaskedTextBoxIPAddress.Name = "MaskedTextBoxIPAddress"
+        Me.MaskedTextBoxIPAddress.Size = New System.Drawing.Size(100, 25)
+        Me.MaskedTextBoxIPAddress.TabIndex = 0
+        Me.MaskedTextBoxIPAddress.TextMaskFormat = System.Windows.Forms.MaskFormat.IncludePromptAndLiterals
         '
         'Panel_Setting_Bargraph_Max_Min
         '
@@ -3501,7 +3557,7 @@ Partial Class Program
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LoadToolStripMenuItem, Me.SaveToolStripMenuItem, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LoadToolStripMenuItem, Me.SaveToolStripMenuItem, Me.ExitToolStripMenuItem, Me.PrintToolStripMenuItem, Me.PrintPreviewToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(45, 23)
         Me.FileToolStripMenuItem.Text = "File"
@@ -3528,6 +3584,19 @@ Partial Class Program
         Me.ExitToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.F4), System.Windows.Forms.Keys)
         Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(173, 24)
         Me.ExitToolStripMenuItem.Text = "Exit"
+        '
+        'PrintToolStripMenuItem
+        '
+        Me.PrintToolStripMenuItem.Name = "PrintToolStripMenuItem"
+        Me.PrintToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
+        Me.PrintToolStripMenuItem.Size = New System.Drawing.Size(173, 24)
+        Me.PrintToolStripMenuItem.Text = "Print"
+        '
+        'PrintPreviewToolStripMenuItem
+        '
+        Me.PrintPreviewToolStripMenuItem.Name = "PrintPreviewToolStripMenuItem"
+        Me.PrintPreviewToolStripMenuItem.Size = New System.Drawing.Size(173, 24)
+        Me.PrintPreviewToolStripMenuItem.Text = "Print Preview"
         '
         'Program
         '
@@ -3729,6 +3798,8 @@ Partial Class Program
         Me.Test_Input_S_Panel.PerformLayout()
         Me.TabPageCharts.ResumeLayout(False)
         Me.TabPageSettings.ResumeLayout(False)
+        Me.PanelMobile.ResumeLayout(False)
+        Me.PanelMobile.PerformLayout()
         Me.Panel_Setting_Bargraph_Max_Min.ResumeLayout(False)
         Me.Panel_Setting_Bargraph_Max_Min.PerformLayout()
         Me.MenuStrip.ResumeLayout(False)
@@ -4027,4 +4098,11 @@ Partial Class Program
     Friend WithEvents SaveToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ButtonExport As System.Windows.Forms.Button
+    Friend WithEvents PrintToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents PrintPreviewToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents PanelMobile As System.Windows.Forms.Panel
+    Friend WithEvents LabelConnectMobile As System.Windows.Forms.Label
+    Friend WithEvents ButtonConnectMobile As System.Windows.Forms.Button
+    Friend WithEvents LabelMobileIP As System.Windows.Forms.Label
+    Friend WithEvents MaskedTextBoxIPAddress As System.Windows.Forms.MaskedTextBox
 End Class

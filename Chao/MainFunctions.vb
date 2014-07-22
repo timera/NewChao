@@ -1484,7 +1484,7 @@ Partial Public Class Program
             tempRun = tempRun.NextUnit
         End While
     End Sub
-    Dim A1Time As Integer = 5
+
 
     'before using Load_Steps_helper, array_time need to be set to the correct values
     'creates steps for run and returns the pointer to the first step
@@ -2300,6 +2300,8 @@ Partial Public Class Program
         End If
 
     End Sub
+
+
     Sub Jump_Back_Countdown_False(ByVal Result As DialogResult)
         Dim keyGRU As Grid_Run_Unit = CurRun.GRU
         While Not IsNothing(keyGRU.NextGRU) 'for more than one additional runs
@@ -2412,6 +2414,8 @@ Partial Public Class Program
             Load_New_Graph_CD_True()
         End If
     End Sub
+
+
     Sub Accept_Cancel()
         startButton.Enabled = False
         Accept_Button.Enabled = True
@@ -3326,6 +3330,7 @@ Partial Public Class Program
             'coors(index).Label.BringToFront()
         Next
     End Sub
+
     'translate the location of point 1 from control 2's coordinates to control 3's coordinates
     'point 1 is given in var 2 coordinates
     'controls 2 and 3 are given in global terms)
@@ -3954,5 +3959,115 @@ Partial Public Class Program
             MsgBox(ex.Message)
         End Try
 
+    End Sub
+
+    Private Sub PreviewPage(ByVal sender As Object, ByVal ev As PrintPageEventArgs)
+        Try
+            Dim pageBitmap As Bitmap = New Bitmap(Me.Width, Me.Height)
+            Me.DrawToBitmap(pageBitmap, New Rectangle(New Point(0, 0), Me.Size))
+            ev.Graphics.DrawImage(pageBitmap, New Point(0, 0))
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
+
+    Private Sub ThrowPrePostCalWarnings()
+        'IF PRECAL
+        If CurRun.Name.Contains("PreCal") Then
+            Dim value As Integer
+            If CurRun.Name.Contains("P2") Then
+                value = CurRun.GRU.LpAeq2
+            ElseIf CurRun.Name.Contains("P4") Then
+                value = CurRun.GRU.LpAeq4
+            ElseIf CurRun.Name.Contains("P6") Then
+                value = CurRun.GRU.LpAeq6
+            ElseIf CurRun.Name.Contains("P8") Then
+                value = CurRun.GRU.LpAeq8
+            ElseIf CurRun.Name.Contains("P10") Then
+                value = CurRun.GRU.LpAeq10
+            ElseIf CurRun.Name.Contains("P12") Then
+                value = CurRun.GRU.LpAeq12
+            End If
+            If value > 94.7 Or value < 93.3 Then
+                MsgBox("校正值超出94 ± 0.7dB範圍，建議修正!")
+            End If
+            'IF PostCal
+        ElseIf CurRun.Name.Contains("PostCal") Then
+            Dim value1 As Integer
+            If CurRun.Name.Contains("P2") Then
+                value1 = CurRun.GRU.LpAeq2
+            ElseIf CurRun.Name.Contains("P4") Then
+                value1 = CurRun.GRU.LpAeq4
+            ElseIf CurRun.Name.Contains("P6") Then
+                value1 = CurRun.GRU.LpAeq6
+            ElseIf CurRun.Name.Contains("P8") Then
+                value1 = CurRun.GRU.LpAeq8
+            ElseIf CurRun.Name.Contains("P10") Then
+                value1 = CurRun.GRU.LpAeq10
+            ElseIf CurRun.Name.Contains("P12") Then
+                value1 = CurRun.GRU.LpAeq12
+            End If
+            Dim tempRun As Run_Unit = CurRun
+            While tempRun IsNot Nothing
+                If tempRun.Name.Contains("PreCal") Then
+                    Dim value2 As Integer
+                    If CurRun.Name.Contains("P2") Then
+                        value2 = tempRun.GRU.LpAeq2
+                    ElseIf CurRun.Name.Contains("P4") Then
+                        value2 = tempRun.GRU.LpAeq4
+                    ElseIf CurRun.Name.Contains("P6") Then
+                        value2 = tempRun.GRU.LpAeq6
+                    ElseIf CurRun.Name.Contains("P8") Then
+                        value2 = tempRun.GRU.LpAeq8
+                    ElseIf CurRun.Name.Contains("P10") Then
+                        value2 = tempRun.GRU.LpAeq10
+                    ElseIf CurRun.Name.Contains("P12") Then
+                        value2 = tempRun.GRU.LpAeq12
+                    End If
+                    If Math.Abs(value2 - value1) > 0.3 Then
+                        MsgBox("前後校正值差0.3dB以上!")
+                        Exit While
+                    End If
+                End If
+                tempRun = tempRun.PrevUnit
+            End While
+        ElseIf CurRun.Name.Contains("RSS") Then
+            If CurRun.GRU.LpAeqAvg - CurRun.GRU.Background.LpAeqAvg < 7 Then
+                MsgBox("RSS-背景噪音未達7dB!!")
+            End If
+        End If
+    End Sub
+
+    Private Sub BackToZero()
+        sum_steps = 0
+        Last_timeLeft = 0
+        Index_for_Setup_Time = 0
+        TimerTesting = False
+        MachChosen = False
+        Machine = Nothing
+        choice = Nothing
+
+        Add_Test_Record = False
+        startButton.Enabled = True
+        stopButton.Enabled = False
+        Button_Skip_Add.Enabled = False
+        Test_NextButton.Enabled = False
+        Test_StartButton.Enabled = True
+        Test_ConfirmButton.Enabled = False
+        ConnectButton.Enabled = True
+        DisconnButton.Enabled = False
+        SaveToolStripMenuItem.Enabled = False
+        For i = 0 To 8
+            array_step_s(i).Text = 0
+            array_step_s(i).Enabled = False
+        Next
+        Button_change_machine.Enabled = False
+        ComboBox_machine_list.Enabled = True
+        Button_Setting_Bargraph.Enabled = False
+
+        Null_CurRun = New Run_Unit(LinkLabel_Temp, Panel_Temp, Nothing, Nothing, 0, "Temp", 0, 0, 0)
+        Temp_CurRun = Null_CurRun
+        BasicInfoDataChangedFromLast = False
     End Sub
 End Class

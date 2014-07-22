@@ -188,6 +188,14 @@ Partial Public Class Program
 
     Dim ADictionary As New Dictionary(Of String, String)
 
+    Dim A1Time As Integer = 5
+
+    Private PhoneSocket As Socket
+    Public sim As Boolean = True
+    Private DataGrid As Grid
+    Private WithEvents BasicInfoGrid As DataGridView
+    Private A_Unit_Size As Size = New Size(1250, 450)
+
     Public Sub New()
 
         ' 此為設計工具所需的呼叫。
@@ -198,9 +206,10 @@ Partial Public Class Program
     End Sub
 
 
-    ' things that need to be instantiated at startup
+    ' 基本程式開時要準備的東西
     Private Sub Program_Load_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        '##A4 Dictionary for communicating with Android phone
+
+        '##A4 Dictionary 給選機具以後可以查他的簡寫，以便WIFI傳輸 for Android
         ADictionary.Add("瀝青混凝土舖築機(Asphalt finisher)", "A4-Asp_Fin")
         ADictionary.Add("鑽土機(Earth drill)", "A4-Aug_Dri_Dri")
         ADictionary.Add("全套管鑽掘機", "A4-Aug_Dri_Dri")
@@ -229,7 +238,7 @@ Partial Public Class Program
 
 
 
-        '##COMMUNICATION
+        '##COMMUNICATION with Noise Meters
         Comm = New Communication()
         SimulationMode()
 
@@ -715,38 +724,7 @@ Partial Public Class Program
         Label_A4_Hint2.Size = New Size(35, 164)
     End Sub
 
-    Private Sub BackToZero()
-        sum_steps = 0
-        Last_timeLeft = 0
-        Index_for_Setup_Time = 0
-        TimerTesting = False
-        MachChosen = False
-        Machine = Nothing
-        choice = Nothing
-
-        Add_Test_Record = False
-        startButton.Enabled = True
-        stopButton.Enabled = False
-        Button_Skip_Add.Enabled = False
-        Test_NextButton.Enabled = False
-        Test_StartButton.Enabled = True
-        Test_ConfirmButton.Enabled = False
-        ConnectButton.Enabled = True
-        DisconnButton.Enabled = False
-        SaveToolStripMenuItem.Enabled = False
-        For i = 0 To 8
-            array_step_s(i).Text = 0
-            array_step_s(i).Enabled = False
-        Next
-        Button_change_machine.Enabled = False
-        ComboBox_machine_list.Enabled = True
-        Button_Setting_Bargraph.Enabled = False
-
-        Null_CurRun = New Run_Unit(LinkLabel_Temp, Panel_Temp, Nothing, Nothing, 0, "Temp", 0, 0, 0)
-        Temp_CurRun = Null_CurRun
-        BasicInfoDataChangedFromLast = False
-    End Sub
-
+    '程式要關之前要做的事
     Private Sub Program_Close(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
         If SaveToolStripMenuItem.Enabled Then
             Dim answer As DialogResult = MessageBox.Show("尚未儲存資料，是否儲存?", "Save?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
@@ -762,7 +740,7 @@ Partial Public Class Program
         End If
     End Sub
 
-    'prevents user from clicking on tab b4 choosing machinery
+    'prevents user from clicking on tab before choosing machinery
     Private Sub TabControl1_IndexChanged(ByVal sender As TabControl, ByVal e As System.EventArgs) Handles TabControl1.SelectedIndexChanged
         If Not MachChosen Then
             If sender.SelectedIndex = 1 Or sender.SelectedIndex = 2 Then
@@ -773,11 +751,9 @@ Partial Public Class Program
     End Sub
 
     
+   
 
-    Private Sub Button_change_machine_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_change_machine.Click
-        Change_Machine()
-    End Sub
-
+    '機具選單中變換
     Private Sub ComboBox_machine_list_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBox_machine_list.SelectedIndexChanged
 
         'steps text 清空
@@ -815,34 +791,10 @@ Partial Public Class Program
         End If
     End Sub
 
-    
 
-    Private DataGrid As Grid
-    Private WithEvents BasicInfoGrid As DataGridView
-    Private A_Unit_Size As Size = New Size(1250, 450)
-    'Create charts for chosen machine
-    
-
-    Private Sub Button_L_check_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L_check.Click
-        If String.IsNullOrWhiteSpace(TextBox_L.Text) Then
-            Return
-        End If
-        A123_Prepare()
-
-    End Sub
-
-    
-
-    Private Sub Button_L1_L2_L3_check_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L1_L2_L3_check.Click
-        If String.IsNullOrWhiteSpace(TextBox_L1.Text) Or String.IsNullOrWhiteSpace(TextBox_L2.Text) Or String.IsNullOrWhiteSpace(TextBox_L3.Text) Then
-            Return
-        End If
-        A4_Prepare()
-    End Sub
-
-    
+    '開始計時候每秒跳要做的事
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-        If Countdown = False Then
+        If Countdown = False Then '如果是倒數
             timeLeft = timeLeft + 1
             timeLabel.Text = timeLeft & " s"
 
@@ -855,7 +807,7 @@ Partial Public Class Program
 
             'send values to display as text and graphs
             SetScreenValuesAndGraphs(GetInstantData())
-        Else
+        Else '正數
             stopButton.Enabled = True
             If timeLeft > 0 Then 'counting
                 If Not timeLeft = 1 Then
@@ -929,8 +881,34 @@ Partial Public Class Program
         SendNonChangeSignalToMobile()
     End Sub
 
-    
-    ' click event on Start Button
+    '##BUTTON CLICKS
+
+    '變更機具按鈕按下
+    Private Sub Button_change_machine_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_change_machine.Click
+        Change_Machine()
+    End Sub
+
+
+
+    '除了A4的機具按下確認鍵
+    Private Sub Button_L_check_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L_check.Click
+        If String.IsNullOrWhiteSpace(TextBox_L.Text) Then
+            Return
+        End If
+        A123_Prepare()
+
+    End Sub
+
+
+    'A4機具按下確認鍵
+    Private Sub Button_L1_L2_L3_check_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_L1_L2_L3_check.Click
+        If String.IsNullOrWhiteSpace(TextBox_L1.Text) Or String.IsNullOrWhiteSpace(TextBox_L2.Text) Or String.IsNullOrWhiteSpace(TextBox_L3.Text) Then
+            Return
+        End If
+        A4_Prepare()
+    End Sub
+
+    ' 開始測量鈕按下
     Private Sub startButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles startButton.Click
         All_Panel_Disable()
         Comm.StartMeasure()
@@ -954,13 +932,10 @@ Partial Public Class Program
 
     End Sub
 
-    
-
-
-    '##BUTTON CLICKS
+    '停止鍵按下
     Private Sub stopButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles stopButton.Click
         Timer1.Stop()
-        If Countdown = False Then
+        If Countdown = False Then '正數
             'startButton.Enabled = True
             Accept_Button.Enabled = True
             Button_Skip_Add.Enabled = False
@@ -972,71 +947,9 @@ Partial Public Class Program
             Comm.StopMeasure()
             ShowResultsOnForm()
 
-            'IF PRECAL
-            If CurRun.Name.Contains("PreCal") Then
-                Dim value As Integer
-                If CurRun.Name.Contains("P2") Then
-                    value = CurRun.GRU.LpAeq2
-                ElseIf CurRun.Name.Contains("P4") Then
-                    value = CurRun.GRU.LpAeq4
-                ElseIf CurRun.Name.Contains("P6") Then
-                    value = CurRun.GRU.LpAeq6
-                ElseIf CurRun.Name.Contains("P8") Then
-                    value = CurRun.GRU.LpAeq8
-                ElseIf CurRun.Name.Contains("P10") Then
-                    value = CurRun.GRU.LpAeq10
-                ElseIf CurRun.Name.Contains("P12") Then
-                    value = CurRun.GRU.LpAeq12
-                End If
-                If value > 94.7 Or value < 93.3 Then
-                    MsgBox("校正值超出94 ± 0.7dB範圍，建議修正!")
-                End If
-                'IF PostCal
-            ElseIf CurRun.Name.Contains("PostCal") Then
-                Dim value1 As Integer
-                If CurRun.Name.Contains("P2") Then
-                    value1 = CurRun.GRU.LpAeq2
-                ElseIf CurRun.Name.Contains("P4") Then
-                    value1 = CurRun.GRU.LpAeq4
-                ElseIf CurRun.Name.Contains("P6") Then
-                    value1 = CurRun.GRU.LpAeq6
-                ElseIf CurRun.Name.Contains("P8") Then
-                    value1 = CurRun.GRU.LpAeq8
-                ElseIf CurRun.Name.Contains("P10") Then
-                    value1 = CurRun.GRU.LpAeq10
-                ElseIf CurRun.Name.Contains("P12") Then
-                    value1 = CurRun.GRU.LpAeq12
-                End If
-                Dim tempRun As Run_Unit = CurRun
-                While tempRun IsNot Nothing
-                    If tempRun.Name.Contains("PreCal") Then
-                        Dim value2 As Integer
-                        If CurRun.Name.Contains("P2") Then
-                            value2 = tempRun.GRU.LpAeq2
-                        ElseIf CurRun.Name.Contains("P4") Then
-                            value2 = tempRun.GRU.LpAeq4
-                        ElseIf CurRun.Name.Contains("P6") Then
-                            value2 = tempRun.GRU.LpAeq6
-                        ElseIf CurRun.Name.Contains("P8") Then
-                            value2 = tempRun.GRU.LpAeq8
-                        ElseIf CurRun.Name.Contains("P10") Then
-                            value2 = tempRun.GRU.LpAeq10
-                        ElseIf CurRun.Name.Contains("P12") Then
-                            value2 = tempRun.GRU.LpAeq12
-                        End If
-                        If Math.Abs(value2 - value1) > 0.3 Then
-                            MsgBox("前後校正值差0.3dB以上!")
-                            Exit While
-                        End If
-                    End If
-                    tempRun = tempRun.PrevUnit
-                End While
-            ElseIf CurRun.Name.Contains("RSS") Then
-                If CurRun.GRU.LpAeqAvg - CurRun.GRU.Background.LpAeqAvg < 7 Then
-                    MsgBox("RSS-背景噪音未達7dB!!")
-                End If
-            End If
-        Else
+            ThrowPrePostCalWarnings()
+
+        Else '倒數
             'final Leq
             updateFinalBarGraph()
             'Tell meters to stop measuring
@@ -1054,8 +967,8 @@ Partial Public Class Program
             End If
 
             If Not isJumpStep Then 'if not jump step
-                'bounce back
-                If CurRun.Name = "ExA1" Or CurRun.Name = "LoA1" Or CurRun.Name = "TrA1" Or CurRun.Name = "A4" Or CurRun.Name = "ExA1_Add" Or CurRun.Name = "LoA1_Add" Or CurRun.Name = "TrA1_Add" Or CurRun.Name = "A4_Add" Or CurRun.Name = "ExA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "LoA2_1st_Add" Or CurRun.Name = "LoA3_fwd" Or CurRun.Name = "LoA3_bkd" Or CurRun.Name = "TrA3_fwd" Or CurRun.Name = "TrA3_bkd" Or CurRun.Name = "LoA3_fwd_Add" Or CurRun.Name = "LoA3_bkd_Add" Or CurRun.Name = "TrA3_fwd_Add" Or CurRun.Name = "TrA3_bkd_Add" Then
+                '這些是倒數的步驟，當遇到按STOP，往前跳一格
+                If CurRun.Name.Contains("A1") Or CurRun.Name = "A4" Or CurRun.Name = "A4_Add" Or CurRun.Name.Contains("A2_1st") Or CurRun.Name.Contains("A3") Then
                     'dispose data
 
                     'reset run_unit
@@ -1066,8 +979,8 @@ Partial Public Class Program
                     'dispose old graph and create new graph
                     Load_New_Graph_CD_True()
                     'bounce back to previous step
-                ElseIf CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_2nd_3rd" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
-                    If CurRun.PrevUnit.Name = "ExA2_1st" Or CurRun.PrevUnit.Name = "ExA2_1st_Add" Or CurRun.PrevUnit.Name = "LoA2_1st" Or CurRun.PrevUnit.Name = "LoA2_1st_Add" Then
+                ElseIf CurRun.Name.Contains("A2_2nd_3rd") Then 'A2要往回跳兩到三格
+                    If CurRun.PrevUnit.Name.Contains("A2_1st") Then
                         'dispose data
 
                         'reset run_unit
@@ -1089,11 +1002,11 @@ Partial Public Class Program
                         Load_New_Graph_CD_True()
                     End If
                 End If
-            Else
-                If CurRun.Name = "ExA2_1st" Or CurRun.Name = "LoA2_1st" Or CurRun.Name = "ExA2_1st_Add" Or CurRun.Name = "LoA2_1st_Add" Then
+            Else 'if jump step
+                If CurRun.Name.Contains("A2_1st") Then
                     CurRun.NextUnit.Set_BackColor(Color.Green)
                     CurRun.NextUnit.NextUnit.Set_BackColor(Color.Green)
-                ElseIf CurRun.Name = "ExA2_2nd_3rd" Or CurRun.Name = "LoA2_2nd_3rd" Or CurRun.Name = "ExA2_2nd_3rd_Add" Or CurRun.Name = "LoA2_2nd_3rd_Add" Then
+                ElseIf CurRun.Name.Contains("A2_2nd_3rd") Then
                     If CurRun.NextUnit.Name.Contains("_2nd_3rd") Then
                         CurRun.NextUnit.Set_BackColor(Color.Green)
                     End If
@@ -1131,7 +1044,7 @@ Partial Public Class Program
     End Sub
 
     
-
+    '測時間的開始健按下
     Private Sub Test_StartButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_StartButton.Click
 
         Load_New_Graph_CD_True()
@@ -1140,6 +1053,8 @@ Partial Public Class Program
         Test_StartButton.Enabled = False
         Timer1.Start()
     End Sub
+
+    '測時間的停止鍵按下
     Private Sub Test_StopButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_StopButton.Click
         Test_NextButton.Enabled = True
         Test_StopButton.Enabled = False
@@ -1155,6 +1070,8 @@ Partial Public Class Program
             Test_NextButton.Enabled = False
         End If
     End Sub
+
+    '測時間的下一步鍵按下
     Private Sub Test_NextButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_NextButton.Click
         timeLabel.Text = timeLeft & " s"
         Test_NextButton.Enabled = False
@@ -1169,6 +1086,7 @@ Partial Public Class Program
         array_step_s(Index_for_Setup_Time).Focus()
     End Sub
 
+    '測時間的CONFIRM鍵按下
     Private Sub Test_ConfirmButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_ConfirmButton.Click
         Dim Input_S_Apply As Boolean = True
 
@@ -1244,7 +1162,7 @@ Partial Public Class Program
         Set_Second_for_Steps()
     End Sub
     
-
+    '測完數據會需要按的接受鍵
     Private Sub AcceptButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Accept_Button.Click
 
         Accept_Button.Enabled = False
@@ -1336,7 +1254,7 @@ Partial Public Class Program
     End Sub
 
 
-
+    '畫出機具座標
     Private Sub GroupBox_Plot_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles GroupBox_Plot.Paint
         If R = 0 Or pos Is Nothing Then
             Return
@@ -1345,7 +1263,7 @@ Partial Public Class Program
     End Sub
 
   
-
+    '連結到噪音計的鍵按下
     Private Sub ConnectButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ConnectButton.Click
         If Comm.Open() Then
             If Comm.SetupServer() Then
@@ -1357,6 +1275,7 @@ Partial Public Class Program
         End If
     End Sub
 
+    '中斷到噪音計的連結
     Private Sub DisconnButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DisconnButton.Click
         If Comm.Close() Then
             DisconnButton.Enabled = False
@@ -1364,19 +1283,19 @@ Partial Public Class Program
         End If
     End Sub
 
+    '存檔鍵按下
     Private Sub SaveToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveToolStripMenuItem.Click
         If Save() Then
             SaveToolStripMenuItem.Enabled = False
         End If
     End Sub
 
-    Public sim As Boolean = True
-
+    '模擬鍵按下
     Private Sub ButtonSim_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonSim.Click
         SimulationMode()
     End Sub
 
-
+    '正常噪音計鍵按下
     Private Sub ButtonMeters_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonMeters.Click
         sim = False
         ButtonMeters.Enabled = False
@@ -1384,6 +1303,7 @@ Partial Public Class Program
         PanelMeterSetup.Enabled = True
     End Sub
 
+    '重新跟噪音計連結鍵按下
     Private Sub ButtonComRefresh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonComRefresh.Click
         ComboBoxComs.Items.Clear()
         For Each com In Communication.GetComs()
@@ -1391,6 +1311,7 @@ Partial Public Class Program
         Next
     End Sub
 
+    'Bargraph設定確定鍵按下
     Private Sub Button_Setting_Bargraph_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_Setting_Bargraph.Click
         If String.IsNullOrWhiteSpace(TextBox_Setting_Bargraph_Max.Text) Then
             MessageBox.Show("請輸入最大值!")
@@ -1408,10 +1329,12 @@ Partial Public Class Program
         Button_Setting_Bargraph.Enabled = False
     End Sub
 
+    'Bargraph設定輸入格有輸入
     Private Sub TextBox_Setting_Bargraph_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBox_Setting_Bargraph_Max.TextChanged, TextBox_Setting_Bargraph_Min.TextChanged
         Button_Setting_Bargraph.Enabled = True
     End Sub
 
+    '跳過加測鍵按下
     Private Sub Button_Skip_Add_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_Skip_Add.Click
         Timer1.Stop()
         Button_Skip_Add.Enabled = False
@@ -1504,23 +1427,26 @@ Partial Public Class Program
     End Sub
 
     
-
+    '表格輸出按下
     Private Sub ButtonExport_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonExport.Click
         If ExportToCSV() Then
             ButtonExport.Enabled = False
         End If
     End Sub
 
+    '開檔鍵按下
     Private Sub LoadToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LoadToolStripMenuItem.Click
         LoadFile()
     End Sub
 
+    '機具基本資料改變(助於存檔鍵的enable)
     Private BasicInfoDataChangedFromLast As Boolean = False
     Public Sub BasicInfoDataChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BasicInfoGrid.CellValueChanged
         BasicInfoDataChangedFromLast = True
         EnableSave()
     End Sub
 
+    '列印鍵按下
     Private Sub PrintToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PrintToolStripMenuItem.Click
         Dim pd As PrintDocument = New PrintDocument()
         AddHandler pd.PrintPage, AddressOf Me.PrintPage
@@ -1528,14 +1454,7 @@ Partial Public Class Program
 
     End Sub
 
-    Private Sub PrintPreviewToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PrintPreviewToolStripMenuItem.Click
-
-    End Sub
-
-    
-
-    Private PhoneSocket As Socket
-
+    '連到ANDROID鍵按下
     Private Sub ButtonConnectMobile_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonConnectMobile.Click
         Dim ip As String = MaskedTextBoxIPAddress.Text
         ip = ip.Replace("_", "")

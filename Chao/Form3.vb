@@ -54,6 +54,7 @@ Partial Public Class Program
         Tractor
         Others
     End Enum
+
     Dim Machine As Machines
 
     Public A4_step_text As String
@@ -195,6 +196,8 @@ Partial Public Class Program
     Private WithEvents BasicInfoGrid As DataGridView
     Private A_Unit_Size As Size = New Size(1250, 450)
 
+    Private BasicInfoGridFields() As String
+
     Public Sub New()
 
         ' 此為設計工具所需的呼叫。
@@ -235,7 +238,41 @@ Partial Public Class Program
         ADictionary.Add("裝料機(Crawler and wheel loader)", "Lo")
         ADictionary.Add("裝料開挖機", "loex")
 
+        '加到主選單中
+        Dim machListforComboBox As New List(Of String)
+        machListforComboBox.Add("A1+A2")
+        machListforComboBox.Add("開挖機(Excavator)")
+        machListforComboBox.Add("A1+A3")
+        machListforComboBox.Add("推土機(Crawler and wheel tractor)")
+        machListforComboBox.Add("A1+A2+A3")
+        machListforComboBox.Add("裝料機(Crawler and wheel loader)")
+        machListforComboBox.Add("A1+A2 A1+A2+A3")
+        machListforComboBox.Add("裝料開挖機")
+        machListforComboBox.Add("A4")
+        For Each key As String In ADictionary.Keys
+            If ADictionary(key).Contains("A4") Then
+                machListforComboBox.Add(key)
+            End If
+        Next
+        ComboBox_machine_list.Items.AddRange(machListforComboBox.ToArray())
 
+        BasicInfoGridFields = {
+            "測試編號：",
+            "測試日期：",
+            "機具名稱：",
+            "廠牌：",
+            "型號：",
+            "規格：",
+            "附屬配備：",
+            "減音裝置：",
+            "馬力：",
+            "最大轉速：",
+            "基本尺寸：",
+            "量測位置（量測點及其高度、聲音感應器高度等、與施工機具音源相對位置）：",
+            "測試環境反射面的實際描述：",
+            "周圍地形的位置、周圍之情況（周圍之建築物、地形、地貌、防音設施等）："
+        }
+        
 
         '##COMMUNICATION with Noise Meters
         Comm = New Communication()
@@ -705,10 +742,8 @@ Partial Public Class Program
         BasicInfoGrid.Columns.Add("Data", "")
         BasicInfoGrid.Rows.Add(26)
         BasicInfoGrid.ColumnHeadersVisible = False
-        Dim tempString As String = "測試編號：,測試日期：,機具名稱：,廠牌：,型號：,規格：,附屬配備：,減音裝置：,馬力：,最大轉速：,基本尺寸：,量測位置（量測點及其高度、聲音感應器高度等、與施工機具音源相對位置）：,測試環境反射面的實際描述：,周圍地形的位置、周圍之情況（周圍之建築物、地形、地貌、防音設施等）："
-        Dim strings() As String = tempString.Split(",")
         For i = 0 To 12
-            BasicInfoGrid.Rows(i * 2).Cells(0).Value = strings(i)
+            BasicInfoGrid.Rows(i * 2).Cells(0).Value = BasicInfoGridFields(i)
             BasicInfoGrid.Rows(i * 2).Cells(0).ReadOnly = True
             BasicInfoGrid.Rows(i * 2).Cells(0).Style.BackColor = Color.Aqua
 
@@ -747,8 +782,8 @@ Partial Public Class Program
         End If
     End Sub
 
-    
-   
+
+
 
     '機具選單中變換
     Private Sub ComboBox_machine_list_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBox_machine_list.SelectedIndexChanged
@@ -756,24 +791,18 @@ Partial Public Class Program
         'steps text 清空
         Clear_Steps()
 
-        Dim inner_choice As String = ComboBox_machine_list.Text
-        Decide_Machine(inner_choice)
-        choice = inner_choice
+        choice = ComboBox_machine_list.Text
+        Dim decided As String = Decide_Machine()
 
         'mach區分要輸入至哪個 groupbox for plotting the coordinates
-        If Not IsNothing(Machine) Then
-            If Not Machine = Machines.Others Then
-                If inner_choice.Contains("A1") Or inner_choice.Contains("A4") Then
-                    GroupBox_A1_A2_A3.Enabled = False
-                    GroupBox_A4.Enabled = False
-                Else
-                    GroupBox_A1_A2_A3.Enabled = True
-                    TextBox_L.Enabled = True
-                    Button_L_check.Enabled = True
-                    GroupBox_A4.Enabled = False
-                End If
+        If Not decided = "" Then
+            If Not Machine = Machines.Others Then 'A123
+                GroupBox_A1_A2_A3.Enabled = True
+                TextBox_L.Enabled = True
+                Button_L_check.Enabled = True
+                GroupBox_A4.Enabled = False
             Else
-                GroupBox_A1_A2_A3.Enabled = False
+                GroupBox_A1_A2_A3.Enabled = False 'A4
                 GroupBox_A4.Enabled = True
                 TextBox_L1.Enabled = True
                 TextBox_L2.Enabled = True
@@ -782,9 +811,9 @@ Partial Public Class Program
                 TextBox_r2.ReadOnly = False
                 Button_L1_L2_L3_check.Enabled = True
             End If
-
-            'if machine chose, then allow to go to the 2nd tab
-            'MachChosen = True
+        Else
+            GroupBox_A1_A2_A3.Enabled = False
+            GroupBox_A4.Enabled = False
         End If
     End Sub
 
@@ -1040,7 +1069,7 @@ Partial Public Class Program
         End If
     End Sub
 
-    
+
     '測時間的開始健按下
     Private Sub Test_StartButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Test_StartButton.Click
 
@@ -1159,7 +1188,7 @@ Partial Public Class Program
         Set_Second_for_Steps()
         SendNonChangeSignalToMobile()
     End Sub
-    
+
     '測完數據會需要按的接受鍵
     Private Sub AcceptButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Accept_Button.Click
 
@@ -1262,7 +1291,7 @@ Partial Public Class Program
         plot(True, e.Graphics, xCor, yCor, GroupBox_Plot)
     End Sub
 
-  
+
     '連結到噪音計的鍵按下
     Private Sub ConnectButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ConnectButton.Click
         If Comm.Open() Then
@@ -1426,7 +1455,7 @@ Partial Public Class Program
         End If
     End Sub
 
-    
+
     '表格輸出按下
     Private Sub ButtonExport_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonExport.Click
         If ExportToCSV() Then
@@ -1470,5 +1499,9 @@ Partial Public Class Program
         Else
             LabelConnectMobile.Text = "Not Connected"
         End If
+    End Sub
+
+    Private Sub ExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExitToolStripMenuItem.Click
+        Me.Close()
     End Sub
 End Class

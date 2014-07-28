@@ -4,12 +4,15 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 
 Partial Public Class Program
+
+    '當要run A2 or A3 時，我們需要先測量即將跑的時間，這時就會call SetTimerTabOn(true), 要回到普通畫面則call SetTimerTabOff(false)
     Sub SetTimerTabOn(ByVal timerOn As Boolean)
         'Tabcontrol_Changed(timerOn=true)=>jump to tabpagetimer(enable) and tabpage3(disable),use for input seconds
         'Tabcontrol_Changed(timerOn=false)=>jump to tabpageProcedure(enable) and tabpage4(disable),use for button confirm
         Dim tabpage As TabPage
+        '先將此STEP的步驟LOAD出來
         CurStep = Load_Steps_helper(CurRun)
-        If timerOn Then
+        If timerOn Then 'TIMER模式
             Me.TabControl2.SelectedIndex = 1
             For Each tabpage In TabControl2.TabPages
                 If tabpage.Name = "TabPageProcedure" Then
@@ -32,7 +35,7 @@ Partial Public Class Program
                 End If
                 CurStep = CurStep.NextStep
             Next
-        ElseIf timerOn = False Then
+        ElseIf timerOn = False Then '回到原來畫面模式
             Me.TabControl2.SelectedIndex = 0
             For Each tabpage In TabControl2.TabPages
                 If tabpage.Name = "TabPageTimer" Then
@@ -49,6 +52,8 @@ Partial Public Class Program
         End If
     End Sub
 
+    '雖然VB有garbage collector, 但因為RUN_UNIT裡有指到前後RUN_UNIT的POINTER，讓VB的garbage collector 無法正常得將釋放出的RUN_UNIT殺掉
+    '所以需要此步驟的幫忙才能釋出舊的RUN_UNIT的MEMORY
     Private Sub DisposeAllRuns()
         If HeadRun IsNot Nothing Then
             Dim tempcurRun As Run_Unit = HeadRun
@@ -64,6 +69,7 @@ Partial Public Class Program
         End If
     End Sub
 
+    '要換機具時要叫此FUNCTION，他會先問是否要儲存，然後再將需要歸零的歸零，更新的更新
     Private Function Change_Machine()
         If SaveToolStripMenuItem.Enabled Then
             Dim answer As DialogResult = MessageBox.Show("尚未儲存資料，是否儲存?", "Save?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
@@ -91,7 +97,6 @@ Partial Public Class Program
         End If
 
         'dispose chart
-
         DisposeChart()
         DisposeAllRuns()
         'Set invisible property
@@ -156,100 +161,102 @@ Partial Public Class Program
         Return True
     End Function
 
-    Private Function Decide_Machine(ByVal name As String) As String
-        If name = "開挖機(Excavator)" Then
+
+    'Given a machine name, it will decide what type of machine it is based on the selection, if not valid machine name, then set machine = nothing, return ""
+    Private Function Decide_Machine() As String
+        If choice = "開挖機(Excavator)" Then
             Picture_machine.Image = My.Resources.小型開挖機_compact_excavator_
             Machine = Machines.Excavator
             Return "A1,A2"
-        ElseIf name = "推土機(Crawler and wheel tractor)" Then  'A1+A3
+        ElseIf choice = "推土機(Crawler and wheel tractor)" Then  'A1+A3
             Picture_machine.Image = My.Resources.履帶式推土機_crawler_dozer_
             Machine = Machines.Tractor
             Return "A1,A3"
-        ElseIf name = "鐵輪壓路機(Road roller)" Then
+        ElseIf choice = "鐵輪壓路機(Road roller)" Then
             Picture_machine.Image = My.Resources.壓路機_rollers_
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "膠輪壓路機(Wheel roller)" Then
+        ElseIf choice = "膠輪壓路機(Wheel roller)" Then
             Picture_machine.Image = My.Resources.壓路機_rollers_
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "振動式壓路機(Vibrating roller)" Then
+        ElseIf choice = "振動式壓路機(Vibrating roller)" Then
             Picture_machine.Image = My.Resources.壓路機_rollers_
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "裝料機(Crawler and wheel loader)" Then
+        ElseIf choice = "裝料機(Crawler and wheel loader)" Then
             Picture_machine.Image = My.Resources.履帶式裝料機_crawler_loader_
             Machine = Machines.Loader
             Return "A1,A2,A3"
-        ElseIf name = "裝料開挖機" Then
+        ElseIf choice = "裝料開挖機" Then
             Picture_machine.Image = My.Resources.履帶式開挖裝料機_crawler_backhoe_loader_
             Machine = Machines.Loader_Excavator
             Return "A1,A2,A1,A2,A3"
-        ElseIf name = "履帶起重機(Crawler crane)" Then
+        ElseIf choice = "履帶起重機(Crawler crane)" Then
             Picture_machine.Image = My.Resources.履帶起重機
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "卡車起重機(Truck crane)" Then
+        ElseIf choice = "卡車起重機(Truck crane)" Then
             Picture_machine.Image = My.Resources.卡車起重機
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "輪形起重機(Wheel crane)" Then
+        ElseIf choice = "輪形起重機(Wheel crane)" Then
             Picture_machine.Image = My.Resources.輪式起重機
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "振動式樁錘(Vibrating hammer)" Then
+        ElseIf choice = "振動式樁錘(Vibrating hammer)" Then
             Picture_machine.Image = My.Resources.vibrating_hammer
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "油壓式打樁機(Hydraulic pile driver)" Then
+        ElseIf choice = "油壓式打樁機(Hydraulic pile driver)" Then
             Picture_machine.Image = My.Resources.油壓式打樁機_Hydraulic_pile_driver_
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "拔樁機" Then
+        ElseIf choice = "拔樁機" Then
             Picture_machine.Image = My.Resources.拔樁機
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "油壓式拔樁機" Then
+        ElseIf choice = "油壓式拔樁機" Then
             Picture_machine.Image = My.Resources.油壓式打樁機_Hydraulic_pile_driver_
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "土壤取樣器(地鑽) (Earth auger)" Then
+        ElseIf choice = "土壤取樣器(地鑽) (Earth auger)" Then
             Picture_machine.Image = My.Resources.土壤取樣器_地鑽___Earth_auger_
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "全套管鑽掘機" Then
+        ElseIf choice = "全套管鑽掘機" Then
             Picture_machine.Image = My.Resources.全套管鑽掘機
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "鑽土機(Earth drill)" Then
+        ElseIf choice = "鑽土機(Earth drill)" Then
             Picture_machine.Image = My.Resources.鑽土機_Earth_drill_
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "鑽岩機(Rock breaker)" Then
+        ElseIf choice = "鑽岩機(Rock breaker)" Then
             Picture_machine.Image = My.Resources.鑽岩機_Rock_breaker_
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "混凝土泵車(Concrete pump)" Then
+        ElseIf choice = "混凝土泵車(Concrete pump)" Then
             Picture_machine.Image = My.Resources.混凝土泵車_Concrete_pump_
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "混凝土破碎機(Concrete breaker)" Then
+        ElseIf choice = "混凝土破碎機(Concrete breaker)" Then
             Picture_machine.Image = My.Resources.混凝土破碎機_Concrete_breaker_
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "瀝青混凝土舖築機(Asphalt finisher)" Then
+        ElseIf choice = "瀝青混凝土舖築機(Asphalt finisher)" Then
             Picture_machine.Image = My.Resources.瀝青混凝土舖築機_Asphalt_finisher_
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "混凝土割切機(Concrete cutter)" Then
+        ElseIf choice = "混凝土割切機(Concrete cutter)" Then
             Picture_machine.Image = My.Resources.混凝土割切機_Concrete_cutter_
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "發電機(Generator)" Then
+        ElseIf choice = "發電機(Generator)" Then
             Picture_machine.Image = My.Resources.發電機_Generator_
             Machine = Machines.Others
             Return "A4"
-        ElseIf name = "空氣壓縮機(Compressor)" Then
+        ElseIf choice = "空氣壓縮機(Compressor)" Then
             Picture_machine.Image = My.Resources.空氣壓縮機_Compressor_
             Machine = Machines.Others
             Return "A4"
@@ -260,19 +267,25 @@ Partial Public Class Program
         Return ""
     End Function
 
+    'given the radius, it creates the chart for recording data
     Private Sub CreateChart(ByVal r As Double)
         DataGrid = New Grid(TabPageCharts, A_Unit_Size, New Point(10, 10), r, Machine, HeadRun)
     End Sub
 
+    'DataGrid 是在第三個TAB中的主要表格，在要換新表格前我們要call此function去移除就表格
     Private Sub DisposeChart()
-        If Not IsNothing(DataGrid) Then
-            DataGrid.Form.Dispose()
-            DataGrid = Nothing
+        If DataGrid IsNot Nothing Then
+            Try
+                DataGrid.Form.Dispose()
+                DataGrid = Nothing
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            End Try
         End If
     End Sub
 
+    '要換機具時要寄此訊號
     Private Sub SendChangeSignalForMobile()
-
         Try
             If PhoneSocket IsNot Nothing Then
                 If PhoneSocket.Connected Then
@@ -280,13 +293,13 @@ Partial Public Class Program
                     PhoneSocket.Send(Buffer)
                 End If
             End If
-
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
 
     End Sub
 
+    '要測Tractor, Loader, Excavator, or Loader Excavator 時，將r輸入後要叫此function
     Private Sub A123_Prepare()
         'Set up Plotting
         'Points = New ArrayList
@@ -328,8 +341,6 @@ Partial Public Class Program
         ElseIf choice = "裝料開挖機" Then
             Load_Loader_Excavator()
             MachChosen = True
-        Else
-            MachChosen = False
         End If
 
         CreateChart(r1)
@@ -343,6 +354,7 @@ Partial Public Class Program
         SendChangeSignalForMobile()
     End Sub
 
+    '測A4機具時要叫此Function
     Private Sub A4_Prepare()
         TextBox_r2.ReadOnly = True
         Label_A4_Hint1.Visible = True
@@ -369,84 +381,21 @@ Partial Public Class Program
         R = r2
         GP.Clear(Color.DarkGray)
         plot(False, GP, xCor, yCor, GroupBox_Plot)
-        If choice = "鐵輪壓路機(Road roller)" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "膠輪壓路機(Wheel roller)" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "振動式壓路機(Vibrating roller)" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "履帶起重機(Crawler crane)" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "卡車起重機(Truck crane)" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "輪形起重機(Wheel crane)" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "振動式樁錘(Vibrating hammer)" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "油壓式打樁機(Hydraulic pile driver)" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "拔樁機" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "油壓式拔樁機" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "土壤取樣器(地鑽) (Earth auger)" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "全套管鑽掘機" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "鑽土機(Earth drill)" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "鑽岩機(Rock breaker)" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "混凝土泵車(Concrete pump)" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "混凝土破碎機(Concrete breaker)" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "瀝青混凝土舖築機(Asphalt finisher)" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "混凝土割切機(Concrete cutter)" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "發電機(Generator)" Then
-            Load_Others(choice)
-            MachChosen = True
-        ElseIf choice = "空氣壓縮機(Compressor)" Then
-            Load_Others(choice)
-            MachChosen = True
-        Else
-            MachChosen = False
-        End If
-
+        Load_Others(choice)
+        MachChosen = True
         CreateChart(r2)
 
         '選擇機具後可更換
-        If MachChosen = True Then
-            Button_change_machine.Enabled = True
-            ComboBox_machine_list.Enabled = False
-            Button_L1_L2_L3_check.Enabled = False
-        End If
+        Button_change_machine.Enabled = True
+        ComboBox_machine_list.Enabled = False
+        Button_L1_L2_L3_check.Enabled = False
         TextBox_L1.Enabled = False
         TextBox_L2.Enabled = False
         TextBox_L3.Enabled = False
         SendChangeSignalForMobile()
     End Sub
 
+    '這個是設定主畫面中每個步驟上的字、大小、顏色等 例如:P2,P4,P6
     Sub Set_Panel(ByRef p As Panel, ByRef l As Label)
         If p.Name = "Panel_Bkg" Or p.Name = "Panel_RSS" Or p.Name.Contains("Panel_P") Then
             p.Size = New Size(80, 26)
@@ -483,6 +432,7 @@ Partial Public Class Program
         End If
     End Sub
 
+    '設定A123 or A4的Precal and Postcal的綠燈，因為A4較少
     Sub LinkLabel_PreCal_PostCal_visible()
         Panel_PreCal_Sub.Visible = True
         Panel_PostCal_Sub.Visible = True
@@ -499,6 +449,7 @@ Partial Public Class Program
             Panel_PostCal_6th.Visible = True
         End If
     End Sub
+
 
     Sub LinkLabel_PreCal_PostCal_BG_RSS_enable()
         LinkLabel_PreCal_1st.Enabled = False
@@ -525,6 +476,7 @@ Partial Public Class Program
         End If
     End Sub
 
+    '將前校正的RUN_UNIT先讀入
     Function Load_PreCal(ByRef tempRun As Run_Unit) As Run_Unit
         'Precal
 
@@ -567,6 +519,7 @@ Partial Public Class Program
         Return tempRun
     End Function
 
+    '將後校正的RUN_UNIT讀入
     Sub Load_PostCal(ByRef temprun As Run_Unit)
         'PostCal
         'Set_Panel(Panel_PostCal, LinkLabel_postCal)
@@ -602,6 +555,7 @@ Partial Public Class Program
 
     End Sub
 
+    '讀入Excavator的必備物件
     Sub Load_Excavator()
 
         PanelExcavatorA1.Visible = True
@@ -681,6 +635,7 @@ Partial Public Class Program
         Next
     End Sub
 
+    '讀入Excavator的RUN_UNIT
     Function Load_Excavator_Helper(ByRef run As Run_Unit)
         'Create an object for each step
         Dim tempRun As Run_Unit = run
@@ -771,6 +726,7 @@ Partial Public Class Program
 
     End Function
 
+    '讀入Loader的必備物件
     Sub Load_Loader()
 
         PanelLoaderA1.Visible = True
@@ -869,6 +825,7 @@ Partial Public Class Program
         Next
     End Sub
 
+    '讀入Loader的RUN_UNIT
     Function Load_Loader_Helper(ByRef run As Run_Unit)
         'Create an object for each step
         Dim tempRun As Run_Unit = run
@@ -1007,6 +964,7 @@ Partial Public Class Program
 
     End Function
 
+    '讀入Loader Excavator的必要物件
     Sub Load_Loader_Excavator()
         PanelExcavatorA1.Visible = True
         PanelExcavatorA2.Visible = True
@@ -1134,6 +1092,7 @@ Partial Public Class Program
         Next
     End Sub
 
+    '讀入Tractor必要物件
     Sub Load_Tractor()
 
         PanelTractorA1.Visible = True
@@ -1214,6 +1173,7 @@ Partial Public Class Program
         Next
     End Sub
 
+    '讀入Tractor的RUN_UNIT
     Function Load_Tractor_Helper(ByRef run As Run_Unit)
         'Create an object for each step
         Dim tempRun As Run_Unit = run
@@ -1296,6 +1256,7 @@ Partial Public Class Program
 
     End Function
 
+    '讀入A4的必須物件
     Sub Load_Others(ByVal name As String)
 
         PanelA4.Visible = True
@@ -1557,7 +1518,7 @@ Partial Public Class Program
     End Function
 
 
-
+    '從METER抓即時資訊
     Private Function GetInstantData()
         Dim result(6 - 1) As Double
         Dim temp() As String =
@@ -1573,6 +1534,7 @@ Partial Public Class Program
         Return result
     End Function
 
+    '更新螢幕上的即時圖和數據
     Private Sub SetScreenValuesAndGraphs(ByVal vals() As Double)
         Dim num As Integer
         Dim sum As Long = 0
@@ -1628,6 +1590,7 @@ Partial Public Class Program
         MainLineGraph.Update(vals)
     End Sub
 
+    '送出TCP signal到ANDROID，更新新步驟，和秒數
     Sub SendNonChangeSignalToMobile()
         If PhoneSocket IsNot Nothing Then
             If PhoneSocket.Connected Then
@@ -1707,6 +1670,8 @@ Partial Public Class Program
             array_step(index).BackColor = Color.DarkGray
         Next
     End Sub
+
+    '讀入步驟所需的物件及細節
     Sub Load_Steps()
         Set_Second_for_Steps()
         For index = CurRun.StartStep To CurRun.EndStep
@@ -1743,6 +1708,7 @@ Partial Public Class Program
         Next
         CurStep = CurRun.HeadStep
     End Sub
+
     Sub Load_New_Graph_CD_False()
         'load new graph (when variable countdown = false)
         MainLineGraph.Dispose()
@@ -1763,6 +1729,7 @@ Partial Public Class Program
         sum_steps = 0
     End Sub
 
+    '在按STOP或時間到，要Bar graph 顯示最後的數據
     Private Sub updateFinalBarGraph()
         Dim cal As Boolean = False
         Dim meter As Integer = -1
@@ -1819,6 +1786,7 @@ Partial Public Class Program
 
     End Sub
 
+    '
     Private Sub ShowResultsOnForm()
 
         'Precal,postcal,RSS,background
@@ -1885,6 +1853,7 @@ Partial Public Class Program
         Next
     End Sub
 
+    '處理加測的Grid_Run_Unit
     'two approaches, if there's already a GRU existent, add as next GRU, if not, attach to the RU
     Sub Set_Add_GRU(ByVal whichA As Integer, ByVal colName As String, ByVal subHeader As String)
         Dim tempGRU = New Grid_Run_Unit(colName) 'the final GRU added
@@ -2095,6 +2064,7 @@ Partial Public Class Program
         End If
     End Sub
 
+    '要設步驟的秒數前，要確定array_step_s有設好
     Sub Set_Second_for_Steps()
         Dim isJumpStep As Boolean = False
         If Temp_CurRun Is Nothing Then
@@ -2186,7 +2156,7 @@ Partial Public Class Program
             Next
         End If
     End Sub
-    '
+
     Sub Reset_Test_Time()
         CurRun.Steps = Load_Steps_helper(CurRun)
         TimerTesting = True
@@ -2426,6 +2396,7 @@ Partial Public Class Program
         Button_Skip_Add.Enabled = False
     End Sub
 
+    '當每次要到下一步時，都會call這個步驟去決定下一步要怎麼走，無論是跳步驟或是暫停等
     Sub MoveOnToNextRun(ByVal showGraph As Boolean, ByVal needDetermineAdd As Boolean, ByVal needAdd As Boolean)
         If IsNothing(CurRun.NextUnit) Then
             All_Panel_Enable()
@@ -3136,9 +3107,6 @@ Partial Public Class Program
                         Set_Add_GRU(3, "Run" & i, "前進")
                     End If
 
-
-
-
                     'load LoA3_fwd or TrA3_fwd's steps
                     Clear_Steps()
                     Load_Steps()
@@ -3172,6 +3140,7 @@ Partial Public Class Program
         End If
     End Sub
 
+    '已經做完所有的步驟
     Private Sub BackToEnd()
         startButton.Enabled = False
         stopButton.Enabled = False
@@ -3181,8 +3150,8 @@ Partial Public Class Program
         timeLabel.Text = timeLeft & "s"
     End Sub
 
+    '此function是在表格中的資料有變化後會被叫，然後他會去以表格裡有沒有已被接受且未存檔的去決定需不需要儲存
     Private Sub EnableSave()
-
         'look for the right GRU
         If CurRun IsNot Nothing Then
             If CurRun.GRU IsNot Nothing Then
@@ -3255,6 +3224,7 @@ Partial Public Class Program
             Dim y = pos(index).Coors.Yc * ratio
 
             Dim fn As Font = New Font("Microsoft Sans MS", 16)
+            'SolidBrush裡有存在圖上的顏色
             Dim solidBrush As SolidBrush = New SolidBrush(posColors(index))
             Dim pHeight As Integer = TextRenderer.MeasureText(gp, labels(index), fn).Height
             Dim pWidth As Integer = TextRenderer.MeasureText(gp, labels(index), fn).Width
@@ -3305,120 +3275,6 @@ Partial Public Class Program
         Dim x = p1.X + con2.X - con3.X
         Dim y = p1.Y + con2.Y - con3.Y
         Return New System.Drawing.Point(x, y)
-    End Function
-
-    Private Sub SimulationMode()
-        ButtonMeters.Enabled = True
-        ButtonSim.Enabled = False
-        Comm.Sim()
-        PanelMeterSetup.Enabled = False
-        sim = True
-    End Sub
-    'Export Function
-    Public Function ExportToCSV() As Boolean
-
-        Dim saveFileDialog1 As New SaveFileDialog()
-
-        saveFileDialog1.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*"
-        saveFileDialog1.RestoreDirectory = True
-        Dim outfile As StreamWriter
-
-        If saveFileDialog1.ShowDialog() = DialogResult.OK Then
-            outfile = New StreamWriter(saveFileDialog1.OpenFile(), System.Text.Encoding.Unicode)
-            If (outfile IsNot Nothing) Then
-                Dim sb As StringBuilder = New StringBuilder()
-                'write basic data first
-                sb.AppendLine(ComboBox_machine_list.Text & "," & TextBox_L.Text & "," & TextBox_r1.Text & "," & TextBox_L1.Text & "," & TextBox_L2.Text & "," & TextBox_L3.Text & "," & TextBox_r2.Text)
-                For k = 0 To BasicInfoGrid.Rows.Count - 1
-                    If BasicInfoGrid.Rows(k).Cells(0).Value IsNot Nothing Then
-                        sb.AppendLine(BasicInfoGrid.Rows(k).Cells(0).Value.ToString())
-                    End If
-                Next
-                'write column headers second
-                For i = 0 To DataGrid.Form.Columns.Count - 1
-                    sb.Append("," & DataGrid.Form.Columns(i).HeaderText)
-                Next
-                outfile.WriteLine(sb.ToString())
-                sb.Clear()
-
-                'write actual data now
-                For j = 0 To DataGrid.Form.Rows.Count - 1
-                    sb.Append(DataGrid.Form.Rows(j).HeaderCell.Value)
-                    For i = 0 To DataGrid.Form.Columns.Count - 1
-
-                        sb.Append(",")
-                        If DataGrid.Form.Rows(j).Cells(i).Value IsNot Nothing Then
-                            sb.Append(DataGrid.Form.Rows(j).Cells(i).Value.ToString())
-                        End If
-                    Next
-                    sb.AppendLine()
-                Next
-                outfile.Write(sb.ToString())
-            End If
-            outfile.Close()
-            Return True
-        End If
-        Return False
-    End Function
-
-    Public Function DoubleArrayToString(ByRef array As List(Of Double)) As String
-        If array IsNot Nothing Then
-            Dim sb As StringBuilder = New StringBuilder()
-            For i = 0 To array.Count - 1
-                sb.Append(array(i))
-                If Not i = array.Count - 1 Then
-                    sb.Append(",")
-                End If
-            Next
-            Return sb.ToString()
-        End If
-        Return ""
-    End Function
-
-    Public Function StringToDoubleList(ByRef st As String) As List(Of Double)
-        Dim dbArray As List(Of Double) = New List(Of Double)
-        If st IsNot Nothing Then
-            Dim stArray() As String = st.Split(",")
-
-            If stArray IsNot Nothing Then
-                If Not stArray.Length = 0 Then
-                    For i = 0 To stArray.Length - 1
-                        dbArray.Add(CDbl(stArray(i)))
-                    Next
-                End If
-            End If
-        End If
-        Return dbArray
-    End Function
-
-    Function SaveA3Time(ByRef sb As StringBuilder, ByRef tempRun As Run_Unit) As StringBuilder
-        'Recording both forward and backward times
-        Dim firstRun As Run_Unit
-        Dim secRun As Run_Unit
-        If tempRun.Name.Contains("fwd") Then
-            firstRun = tempRun
-            secRun = tempRun.NextUnit
-        Else
-            firstRun = tempRun.PrevUnit
-            secRun = tempRun
-        End If
-
-        Dim tempstep As Steps = firstRun.HeadStep
-        sb.Append("(")
-        While tempstep IsNot Nothing
-            sb.Append(tempstep.Time)
-            sb.Append(",")
-            tempstep = tempstep.NextStep
-        End While
-        tempstep = secRun.HeadStep
-        While tempstep IsNot Nothing
-            sb.Append(tempstep.Time)
-            If tempstep.HasNext Then
-                sb.Append(",")
-            End If
-            tempstep = tempstep.NextStep
-        End While
-        Return sb
     End Function
 
     'Menu Strip Functions
@@ -3601,34 +3457,357 @@ Partial Public Class Program
         Return False
     End Function
 
+    'Export Function
+    Public Function ExportToCSV() As Boolean
+
+        Dim saveFileDialog1 As New SaveFileDialog()
+
+        saveFileDialog1.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*"
+        saveFileDialog1.RestoreDirectory = True
+        Dim outfile As StreamWriter
+
+        If saveFileDialog1.ShowDialog() = DialogResult.OK Then
+            outfile = New StreamWriter(saveFileDialog1.OpenFile(), System.Text.Encoding.Unicode)
+            If (outfile IsNot Nothing) Then
+                Dim sb As StringBuilder = New StringBuilder()
+                'write basic data first
+                sb.AppendLine(ComboBox_machine_list.Text & "," & TextBox_L.Text & "," & TextBox_r1.Text & "," & TextBox_L1.Text & "," & TextBox_L2.Text & "," & TextBox_L3.Text & "," & TextBox_r2.Text)
+                For k = 0 To BasicInfoGrid.Rows.Count - 1
+                    If BasicInfoGrid.Rows(k).Cells(0).Value IsNot Nothing Then
+                        sb.AppendLine(BasicInfoGrid.Rows(k).Cells(0).Value.ToString())
+                    End If
+                Next
+                'write column headers second
+                For i = 0 To DataGrid.Form.Columns.Count - 1
+                    sb.Append("," & DataGrid.Form.Columns(i).HeaderText)
+                Next
+                outfile.WriteLine(sb.ToString())
+                sb.Clear()
+
+                'write actual data now
+                For j = 0 To DataGrid.Form.Rows.Count - 1
+                    sb.Append(DataGrid.Form.Rows(j).HeaderCell.Value)
+                    For i = 0 To DataGrid.Form.Columns.Count - 1
+
+                        sb.Append(",")
+                        If DataGrid.Form.Rows(j).Cells(i).Value IsNot Nothing Then
+                            sb.Append(DataGrid.Form.Rows(j).Cells(i).Value.ToString())
+                        End If
+                    Next
+                    sb.AppendLine()
+                Next
+                outfile.Write(sb.ToString())
+            End If
+            outfile.Close()
+            Return True
+        End If
+        Return False
+    End Function
+
+    '讀取已存檔案
+    Public Function LoadFile() As Boolean
+        Dim loadFileDialog As New OpenFileDialog()
+        Dim inFile As StreamReader
+        Try
+            If loadFileDialog.ShowDialog() = DialogResult.OK Then
+                inFile = New StreamReader(loadFileDialog.OpenFile(), System.Text.Encoding.Unicode)
+                If inFile IsNot Nothing Then
+                    'liberate data first
+                    If Change_Machine() Then
+
+                        'load and write basic data first
+                        Dim type_l_r() As String = inFile.ReadLine().Split(",")
+
+                        'putting everything in place
+                        ComboBox_machine_list.Text = type_l_r(0)
+                        choice = type_l_r(0)
+                        MachChosen = True
+                        Dim Aes() As String = Decide_Machine().Split(",")
+                        Dim AesIdx As Integer = 0
+
+                        TextBox_L.Text = type_l_r(1)
+                        TextBox_r1.Text = type_l_r(2)
+                        TextBox_L1.Text = type_l_r(3)
+                        TextBox_L2.Text = type_l_r(4)
+                        TextBox_L3.Text = type_l_r(5)
+                        TextBox_r2.Text = type_l_r(6)
+
+                        For k = 0 To BasicInfoGrid.Rows.Count - 1
+                            If Not k Mod 2 = 0 Then 'skipping even number columns to avoid titles
+                                Dim tempBlob As StringBuilder = New StringBuilder(inFile.ReadLine())
+                                While Not tempBlob.ToString().EndsWith("##")
+                                    tempBlob.AppendLine(inFile.ReadLine())
+                                End While
+                                BasicInfoGrid.Rows(k).Cells(0).Value = tempBlob.Remove(tempBlob.Length - 2, 2)
+                            End If
+                        Next
+
+                        'A123
+                        If Not Machine = Machines.Others Then
+                            A123_Prepare()
+                        Else 'A4
+                            A4_Prepare()
+                        End If
+
+                        _Warning = False
+                        Dim halfwayAdd As Boolean = False
+                        'Grid_Run_Unit_Info gives you the format as such- Background;110.9|107.5,69.2,111.9;59.5|70.9,105.7,60.5;54.7|113.2,45.9,55.7;99.3|67.6,44.9,100.3
+                        Dim gruInfo() As String
+
+                        Do
+                            gruInfo = inFile.ReadLine().Split(";")
+                            If Not gruInfo.Length = 0 And Not inFile.EndOfStream Then
+                                'runsCount += 1
+                                Dim title As String = gruInfo(0)
+                                Dim subh As String = gruInfo(1)
+                                'Dim time As Integer = CInt(gruInfo(gruInfo.Length - 1))
+
+                                'This if and elseif moves the cursor to the correct place
+                                'no additional after 3rd run
+                                If CurRun.Name.Contains("Add") And (title.EndsWith("Run1") Or title.EndsWith("RSS")) Then
+
+                                    If CurRun.Name.Contains("A2") Then 'A2, run1->run2->run3->RSS(or Run1)
+                                        CurRun = CurRun.NextUnit.NextUnit.NextUnit
+                                    ElseIf CurRun.Name.Contains("A3") Then 'A3, fwd->bkd->RSS
+                                        CurRun = CurRun.NextUnit.NextUnit
+                                    ElseIf CurRun.Name.Contains("A4") Then 'A4, bg->run->RSS
+                                        CurRun = CurRun.NextUnit.NextUnit
+                                    Else 'A1
+                                        CurRun = CurRun.NextUnit 'skipping the additional Run_Unit
+                                    End If
+                                    'additional run (already passed the first run of additional, if there's more...)
+                                ElseIf (Not CurRun.Name.Contains("Add")) And title.Contains("Run") And Not (title = "Run1" Or title = "Run2" Or title = "Run3") Then
+                                    'A2
+                                    If CurRun.Name.Contains("A2") Then 'A1->A2
+                                        'last run has to be A1
+                                        CurRun = CurRun.PrevUnit
+                                    ElseIf CurRun.Name.Contains("A3") Then
+                                        'if last one was A1
+                                        If CurRun.PrevUnit.Name.Contains("A1") Then 'A1->A3
+                                            CurRun = CurRun.PrevUnit
+                                            'if last one was A2
+                                        ElseIf CurRun.PrevUnit.Name.Contains("A2") Then 'A1->A2->A3
+                                            CurRun = CurRun.PrevUnit.PrevUnit.PrevUnit
+                                        End If
+                                    ElseIf CurRun.Name.Contains("RSS") Then
+                                        If CurRun.PrevUnit.Name.Contains("A2") Then 'A1->A2->RSS
+                                            CurRun = CurRun.PrevUnit.PrevUnit.PrevUnit
+                                        ElseIf CurRun.PrevUnit.Name.Contains("A3") Then 'A1->A2->A3->RSS or A1->A3->RSS or A1->A2->A3->A1->A3->RSS
+                                            CurRun = CurRun.PrevUnit.PrevUnit
+                                        ElseIf CurRun.PrevUnit.Name.Contains("A4") Then 'A4->RSS
+                                            CurRun = CurRun.PrevUnit.PrevUnit
+                                        End If
+                                    End If
+                                End If
+
+                                'makes sure when pass an A, we increase the AesIdx to know whichA we are at
+                                If CurRun.PrevUnit IsNot Nothing Then
+                                    If CurRun.PrevUnit.Name.Contains("Add") And title.EndsWith("Run1") Then
+                                        AesIdx += 1
+                                    End If
+                                End If
+
+                                'A2
+                                If CurRun.Name.Contains("A2") Then
+                                    Dim dl As List(Of Double) = StringToDoubleList(gruInfo(7).Split("|")(1).Split("(")(1))
+                                    Dim dlnew As List(Of Double) = New List(Of Double)
+
+                                    For i = 0 To dl.Count
+                                        If i = 0 Then
+                                            dlnew.Add(-1)
+                                        Else
+                                            dlnew.Add(dl(i - 1))
+                                        End If
+                                    Next
+                                    'create more gru for additional run
+                                    CurRun.Set_BackColor(Color.Green)
+                                    CurRun.Link.Enabled = True
+                                    CurRun.Executed = True
+                                    LoadInputTime(2, dlnew)
+
+                                    If CurRun.Name.Contains("Add") Then
+                                        Set_Add_GRU(2, title, subh)
+                                    End If
+                                    CurRun.NextUnit.Set_BackColor(Color.Green)
+                                    CurRun.NextUnit.Executed = True
+                                    LoadInputTime(2, dl)
+
+                                    CurRun = CurRun.NextUnit.NextUnit
+                                    CurRun.Set_BackColor(Color.Green)
+                                    CurRun.Executed = True
+                                    LoadInputTime(2, dl)
+
+
+
+
+                                    'A1,A3,A4
+                                Else
+                                    CurRun.Set_BackColor(Color.Green)
+                                    CurRun.Executed = True
+                                    CurRun.Link.Enabled = True
+
+                                    'create more gru for additional run
+                                    'adding the right additional GRUs
+                                    If CurRun.Name.Contains("Add") Then
+                                        'if more than one additional run for A3 or A4
+                                        'A3
+                                        If CurRun.Name.Contains("A3") Then
+                                            If CurRun.Name.Contains("fwd") Then
+                                                halfwayAdd = True
+                                            Else
+                                                halfwayAdd = False
+                                            End If
+                                        ElseIf CurRun.Name.Contains("A4") Then
+                                            'A4
+                                            If CurRun.Name.Contains("A4_Mid_BG_Add") Then
+                                                halfwayAdd = True
+                                            Else
+                                                halfwayAdd = False
+                                            End If
+                                        End If
+
+                                        Set_Add_GRU(CInt(Aes(AesIdx).Substring(1)), title, subh)
+
+                                        If CurRun.Name.Contains("bkd") Then
+                                            Dim lastbkd As Grid_Run_Unit = CurRun.GRU
+                                            While lastbkd.NextGRU IsNot Nothing
+                                                lastbkd = lastbkd.NextGRU
+                                            End While
+                                            DataGrid.AddA3OverallColumn(lastbkd)
+                                        End If
+                                    End If
+
+                                    'also need to load time for A1 and A3
+                                    If CurRun.Name.Contains("A1") Then
+                                        CurRun.Steps = New Steps(My.Resources.A1_step1, Step1, Nothing, True, A1Time)
+                                        CurRun.HeadStep = CurRun.Steps
+                                    ElseIf CurRun.Name.Contains("A3") Then
+                                        Dim dl As List(Of Double) = StringToDoubleList(gruInfo(7).Split("|")(1).Split("(")(1))
+
+                                        LoadInputTime(2, dl)
+                                    End If
+                                End If
+
+                                ShowLoadedDataOnForm(gruInfo)
+                                Dim tempGRU As Grid_Run_Unit = CurRun.GRU
+                                While tempGRU.NextGRU IsNot Nothing
+                                    tempGRU = tempGRU.NextGRU
+                                End While
+                                tempGRU.Accept()
+
+                                If inFile.Peek() = 13 Then 'if end of file
+                                    CurRun.Steps = CurRun.HeadStep
+                                    Set_Second_for_Steps()
+                                    If CurRun.Name.Contains("A2") Or CurRun.Name.Contains("A3") Then
+                                        CurRun.CurStep = CurRun.StartStep
+                                        For i = 1 To CurRun.StartStep - 1
+                                            CurRun.Steps = CurRun.Steps.NextStep
+                                        Next
+                                        timeLeft = CurRun.Steps.Time
+                                        timeLabel.Text = timeLeft & " s"
+                                    End If
+                                    If halfwayAdd Then
+                                        MoveOnToNextRun(True, False, True)
+                                    Else
+                                        MoveOnToNextRun(True, True, False)
+                                    End If
+                                    _Warning = True
+                                Else 'not end of file
+                                    CurRun.Steps = Load_Steps_helper(CurRun)
+                                    MoveToRun(CurRun.NextUnit)
+                                End If
+
+                            End If
+                        Loop While gruInfo IsNot Nothing And Not inFile.EndOfStream
+                    End If
+                End If
+
+                Return True
+            Else
+                Return False
+            End If
+        Catch ex As Exception
+            MsgBox("讀取檔案錯誤:" & ex.Message)
+        End Try
+        Return False
+    End Function
+
+    Private Sub SimulationMode()
+        ButtonMeters.Enabled = True
+        ButtonSim.Enabled = False
+        Comm.Sim()
+        PanelMeterSetup.Enabled = False
+        sim = True
+    End Sub
+
+    Public Function DoubleArrayToString(ByRef array As List(Of Double)) As String
+        If array IsNot Nothing Then
+            Dim sb As StringBuilder = New StringBuilder()
+            For i = 0 To array.Count - 1
+                sb.Append(array(i))
+                If Not i = array.Count - 1 Then
+                    sb.Append(",")
+                End If
+            Next
+            Return sb.ToString()
+        End If
+        Return ""
+    End Function
+
+    Public Function StringToDoubleList(ByRef st As String) As List(Of Double)
+        Dim dbArray As List(Of Double) = New List(Of Double)
+        If st IsNot Nothing Then
+            Dim stArray() As String = st.Split(",")
+
+            If stArray IsNot Nothing Then
+                If Not stArray.Length = 0 Then
+                    For i = 0 To stArray.Length - 1
+                        dbArray.Add(CDbl(stArray(i)))
+                    Next
+                End If
+            End If
+        End If
+        Return dbArray
+    End Function
+
+    '處理A3要儲存時間時會遇到的特例
+    Function SaveA3Time(ByRef sb As StringBuilder, ByRef tempRun As Run_Unit) As StringBuilder
+        'Recording both forward and backward times
+        Dim firstRun As Run_Unit
+        Dim secRun As Run_Unit
+        If tempRun.Name.Contains("fwd") Then
+            firstRun = tempRun
+            secRun = tempRun.NextUnit
+        Else
+            firstRun = tempRun.PrevUnit
+            secRun = tempRun
+        End If
+
+        Dim tempstep As Steps = firstRun.HeadStep
+        sb.Append("(")
+        While tempstep IsNot Nothing
+            sb.Append(tempstep.Time)
+            sb.Append(",")
+            tempstep = tempstep.NextStep
+        End While
+        tempstep = secRun.HeadStep
+        While tempstep IsNot Nothing
+            sb.Append(tempstep.Time)
+            If tempstep.HasNext Then
+                sb.Append(",")
+            End If
+            tempstep = tempstep.NextStep
+        End While
+        Return sb
+    End Function
+
+    
+
     Public Sub MoveToRun(ByRef Run As Run_Unit)
         CurRun = Run
     End Sub
 
-    Public Function CheckFileFormat(ByVal inFile As StreamReader) As Boolean
-        'check basic data first
-        Dim type_l_r() As String = inFile.ReadLine().Split(",")
-        'not the correct format cuz it doesn't follow: machine name, L, r1, L1, L2, L3, r2
-        If Not type_l_r.Length = 7 Then
-            Return False
-        End If
-        ''check if machine matches r and L
-        'if A123
-
-        'if A4
-        'check if each row has the same num columns
-        Dim tempRow() As String = inFile.ReadLine().Split(",")
-        Dim numCol As Integer = tempRow.Length
-        While Not inFile.EndOfStream
-            tempRow = inFile.ReadLine().Split(",")
-            If Not tempRow.Length = numCol Then
-                Return False
-            End If
-        End While
-
-        Return True
-    End Function
-
+    '位給這個function一行讀取檔裡的資料，他會將其顯示在表中
     Public Sub ShowLoadedDataOnForm(ByRef gruInfo As String())
         'precal and postcal
         If CurRun.Name.Contains("Cal") Then
@@ -3700,229 +3879,6 @@ Partial Public Class Program
     End Sub
 
 
-    Public Function LoadFile() As Boolean
-        Dim loadFileDialog As New OpenFileDialog()
-        Dim inFile As StreamReader
-        If loadFileDialog.ShowDialog() = DialogResult.OK Then
-            inFile = New StreamReader(loadFileDialog.OpenFile(), System.Text.Encoding.Unicode)
-            If inFile IsNot Nothing Then
-                'liberate data first
-                If Change_Machine() Then
-
-                    'load and write basic data first
-                    Dim type_l_r() As String = inFile.ReadLine().Split(",")
-
-                    'putting everything in place
-                    ComboBox_machine_list.Text = type_l_r(0)
-                    choice = type_l_r(0)
-                    MachChosen = True
-                    Dim Aes() As String = Decide_Machine(ComboBox_machine_list.Text).Split(",")
-                    Dim AesIdx As Integer = 0
-
-                    TextBox_L.Text = type_l_r(1)
-                    TextBox_r1.Text = type_l_r(2)
-                    TextBox_L1.Text = type_l_r(3)
-                    TextBox_L2.Text = type_l_r(4)
-                    TextBox_L3.Text = type_l_r(5)
-                    TextBox_r2.Text = type_l_r(6)
-
-                    For k = 0 To BasicInfoGrid.Rows.Count - 1
-                        If Not k Mod 2 = 0 Then 'skipping even number columns to avoid titles
-                            Dim tempBlob As StringBuilder = New StringBuilder(inFile.ReadLine())
-                            While Not tempBlob.ToString().EndsWith("##")
-                                tempBlob.AppendLine(inFile.ReadLine())
-                            End While
-                            BasicInfoGrid.Rows(k).Cells(0).Value = tempBlob.Remove(tempBlob.Length - 2, 2)
-                        End If
-                    Next
-
-                    'A123
-                    If Not Machine = Machines.Others Then
-                        A123_Prepare()
-                    Else 'A4
-                        A4_Prepare()
-                    End If
-
-                    _Warning = False
-                    Dim halfwayAdd As Boolean = False
-                    'Grid_Run_Unit_Info gives you the format as such- Background;110.9|107.5,69.2,111.9;59.5|70.9,105.7,60.5;54.7|113.2,45.9,55.7;99.3|67.6,44.9,100.3
-                    Dim gruInfo() As String
-
-                    Do
-                        gruInfo = inFile.ReadLine().Split(";")
-                        If Not gruInfo.Length = 0 And Not inFile.EndOfStream Then
-                            'runsCount += 1
-                            Dim title As String = gruInfo(0)
-                            Dim subh As String = gruInfo(1)
-                            'Dim time As Integer = CInt(gruInfo(gruInfo.Length - 1))
-
-                            'This if and elseif moves the cursor to the correct place
-                            'no additional after 3rd run
-                            If CurRun.Name.Contains("Add") And (title.EndsWith("Run1") Or title.EndsWith("RSS")) Then
-
-                                If CurRun.Name.Contains("A2") Then 'A2, run1->run2->run3->RSS(or Run1)
-                                    CurRun = CurRun.NextUnit.NextUnit.NextUnit
-                                ElseIf CurRun.Name.Contains("A3") Then 'A3, fwd->bkd->RSS
-                                    CurRun = CurRun.NextUnit.NextUnit
-                                ElseIf CurRun.Name.Contains("A4") Then 'A4, bg->run->RSS
-                                    CurRun = CurRun.NextUnit.NextUnit
-                                Else 'A1
-                                    CurRun = CurRun.NextUnit 'skipping the additional Run_Unit
-                                End If
-                                'additional run (already passed the first run of additional, if there's more...)
-                            ElseIf (Not CurRun.Name.Contains("Add")) And title.Contains("Run") And Not (title = "Run1" Or title = "Run2" Or title = "Run3") Then
-                                'A2
-                                If CurRun.Name.Contains("A2") Then 'A1->A2
-                                    'last run has to be A1
-                                    CurRun = CurRun.PrevUnit
-                                ElseIf CurRun.Name.Contains("A3") Then
-                                    'if last one was A1
-                                    If CurRun.PrevUnit.Name.Contains("A1") Then 'A1->A3
-                                        CurRun = CurRun.PrevUnit
-                                        'if last one was A2
-                                    ElseIf CurRun.PrevUnit.Name.Contains("A2") Then 'A1->A2->A3
-                                        CurRun = CurRun.PrevUnit.PrevUnit.PrevUnit
-                                    End If
-                                ElseIf CurRun.Name.Contains("RSS") Then
-                                    If CurRun.PrevUnit.Name.Contains("A2") Then 'A1->A2->RSS
-                                        CurRun = CurRun.PrevUnit.PrevUnit.PrevUnit
-                                    ElseIf CurRun.PrevUnit.Name.Contains("A3") Then 'A1->A2->A3->RSS or A1->A3->RSS or A1->A2->A3->A1->A3->RSS
-                                        CurRun = CurRun.PrevUnit.PrevUnit
-                                    ElseIf CurRun.PrevUnit.Name.Contains("A4") Then 'A4->RSS
-                                        CurRun = CurRun.PrevUnit.PrevUnit
-                                    End If
-                                End If
-                            End If
-
-                            'makes sure when pass an A, we increase the AesIdx to know whichA we are at
-                            If CurRun.PrevUnit IsNot Nothing Then
-                                If CurRun.PrevUnit.Name.Contains("Add") And title.EndsWith("Run1") Then
-                                    AesIdx += 1
-                                End If
-                            End If
-
-                            'A2
-                            If CurRun.Name.Contains("A2") Then
-                                Dim dl As List(Of Double) = StringToDoubleList(gruInfo(7).Split("|")(1).Split("(")(1))
-                                Dim dlnew As List(Of Double) = New List(Of Double)
-
-                                For i = 0 To dl.Count
-                                    If i = 0 Then
-                                        dlnew.Add(-1)
-                                    Else
-                                        dlnew.Add(dl(i - 1))
-                                    End If
-                                Next
-                                'create more gru for additional run
-                                CurRun.Set_BackColor(Color.Green)
-                                CurRun.Link.Enabled = True
-                                CurRun.Executed = True
-                                LoadInputTime(2, dlnew)
-
-                                If CurRun.Name.Contains("Add") Then
-                                    Set_Add_GRU(2, title, subh)
-                                End If
-                                CurRun.NextUnit.Set_BackColor(Color.Green)
-                                CurRun.NextUnit.Executed = True
-                                LoadInputTime(2, dl)
-
-                                CurRun = CurRun.NextUnit.NextUnit
-                                CurRun.Set_BackColor(Color.Green)
-                                CurRun.Executed = True
-                                LoadInputTime(2, dl)
-
-
-
-
-                                'A1,A3,A4
-                            Else
-                                CurRun.Set_BackColor(Color.Green)
-                                CurRun.Executed = True
-                                CurRun.Link.Enabled = True
-
-                                'create more gru for additional run
-                                'adding the right additional GRUs
-                                If CurRun.Name.Contains("Add") Then
-                                    'if more than one additional run for A3 or A4
-                                    'A3
-                                    If CurRun.Name.Contains("A3") Then
-                                        If CurRun.Name.Contains("fwd") Then
-                                            halfwayAdd = True
-                                        Else
-                                            halfwayAdd = False
-                                        End If
-                                    ElseIf CurRun.Name.Contains("A4") Then
-                                        'A4
-                                        If CurRun.Name.Contains("A4_Mid_BG_Add") Then
-                                            halfwayAdd = True
-                                        Else
-                                            halfwayAdd = False
-                                        End If
-                                    End If
-
-                                    Set_Add_GRU(CInt(Aes(AesIdx).Substring(1)), title, subh)
-
-                                    If CurRun.Name.Contains("bkd") Then
-                                        Dim lastbkd As Grid_Run_Unit = CurRun.GRU
-                                        While lastbkd.NextGRU IsNot Nothing
-                                            lastbkd = lastbkd.NextGRU
-                                        End While
-                                        DataGrid.AddA3OverallColumn(lastbkd)
-                                    End If
-                                End If
-
-                                'also need to load time for A1 and A3
-                                If CurRun.Name.Contains("A1") Then
-                                    CurRun.Steps = New Steps(My.Resources.A1_step1, Step1, Nothing, True, A1Time)
-                                    CurRun.HeadStep = CurRun.Steps
-                                ElseIf CurRun.Name.Contains("A3") Then
-                                    Dim dl As List(Of Double) = StringToDoubleList(gruInfo(7).Split("|")(1).Split("(")(1))
-
-                                    LoadInputTime(2, dl)
-                                End If
-                            End If
-
-                            ShowLoadedDataOnForm(gruInfo)
-                            Dim tempGRU As Grid_Run_Unit = CurRun.GRU
-                            While tempGRU.NextGRU IsNot Nothing
-                                tempGRU = tempGRU.NextGRU
-                            End While
-                            tempGRU.Accept()
-
-                            If inFile.Peek() = 13 Then 'if end of file
-                                CurRun.Steps = CurRun.HeadStep
-                                Set_Second_for_Steps()
-                                If CurRun.Name.Contains("A2") Or CurRun.Name.Contains("A3") Then
-                                    CurRun.CurStep = CurRun.StartStep
-                                    For i = 1 To CurRun.StartStep - 1
-                                        CurRun.Steps = CurRun.Steps.NextStep
-                                    Next
-                                    timeLeft = CurRun.Steps.Time
-                                    timeLabel.Text = timeLeft & " s"
-                                End If
-                                If halfwayAdd Then
-                                    MoveOnToNextRun(True, False, True)
-                                Else
-                                    MoveOnToNextRun(True, True, False)
-                                End If
-                                _Warning = True
-                            Else 'not end of file
-                                CurRun.Steps = Load_Steps_helper(CurRun)
-                                MoveToRun(CurRun.NextUnit)
-                            End If
-
-                        End If
-                    Loop While gruInfo IsNot Nothing And Not inFile.EndOfStream
-                End If
-            End If
-
-            Return True
-        Else
-            Return False
-        End If
-
-    End Function
-
     Private Sub PrintPage(ByVal sender As Object, ByVal ev As PrintPageEventArgs)
         Try
             Dim pageBitmap As Bitmap = New Bitmap(GroupBox_Plot.Width, GroupBox_Plot.Height)
@@ -3931,7 +3887,7 @@ Partial Public Class Program
             ev.Graphics.DrawImage(pageBitmap, New Point(0, 0))
 
         Catch ex As Exception
-            MsgBox(ex.Message)
+            MsgBox("列印錯誤:" & ex.Message)
         End Try
 
     End Sub

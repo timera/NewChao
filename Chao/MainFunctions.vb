@@ -284,20 +284,7 @@ Partial Public Class Program
         End If
     End Sub
 
-    '要換機具時要寄此訊號
-    Private Sub SendChangeSignalForMobile()
-        Try
-            If PhoneSocket IsNot Nothing Then
-                If PhoneSocket.Connected Then
-                    Dim Buffer() As Byte = System.Text.Encoding.ASCII.GetBytes(ADictionary(ComboBox_machine_list.Text) & "," & timeLeft & ",T" & Environment.NewLine)
-                    PhoneSocket.Send(Buffer)
-                End If
-            End If
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
 
-    End Sub
 
     '要測Tractor, Loader, Excavator, or Loader Excavator 時，將r輸入後要叫此function
     Private Sub A123_Prepare()
@@ -1590,6 +1577,25 @@ Partial Public Class Program
         MainLineGraph.Update(vals)
     End Sub
 
+    '要換機具時要寄此訊號
+    Private Sub SendChangeSignalForMobile()
+        Try
+            If PhoneSocket IsNot Nothing Then
+                If PhoneSocket.Connected Then
+                    Dim Buffer() As Byte = System.Text.Encoding.ASCII.GetBytes(ADictionary(ComboBox_machine_list.Text) & "," & timeLeft & ",T" & Environment.NewLine)
+                    PhoneSocket.Send(Buffer)
+                Else
+                    LabelConnectMobile.Text = "Not Connected"
+                End If
+            Else
+                LabelConnectMobile.Text = "Not Connected"
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
+
     '送出TCP signal到ANDROID，更新新步驟，和秒數
     Sub SendNonChangeSignalToMobile()
         If PhoneSocket IsNot Nothing Then
@@ -1619,7 +1625,11 @@ Partial Public Class Program
                 Catch ex As Exception
                     MsgBox(ex.Message)
                 End Try
+            Else
+                LabelConnectMobile.Text = "Not Connected"
             End If
+        Else
+            LabelConnectMobile.Text = "Not Connected"
         End If
 
     End Sub

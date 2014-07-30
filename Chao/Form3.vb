@@ -649,15 +649,20 @@ Partial Public Class Program
         'all size and location in machine choose 
         ComboBox_machine_list.Location = New Point(10, 10)
         ComboBox_machine_list.Size = New Size(280, 20)
-        Button_change_machine.Location = New Point(300, 10)
-        Button_change_machine.Size = New Size(90, 30)
+        Button_change_machine.Location = New Point(ComboBox_machine_list.Location.X + ComboBox_machine_list.Width, 8)
+        Button_change_machine.Size = New Size(80, 27)
         Label_machine_pic.Location = New Point(10, 40)
         Label_machine_pic.Size = New Size(74, 21)
-        Picture_machine.Location = New Point(10, 65)
-        Picture_machine.Size = New Size(320, 190)
+        Label_machine_pic.Visible = False
+        Picture_machine.Location = New Point(10, 40)
+        Picture_machine.Size = New Size(280, 190)
 
-        GroupBox_A1_A2_A3.Location = New Point(10, 260)
-        GroupBox_A1_A2_A3.Size = New Size(275, 80)
+
+        Dim GroupBoxWidth As Integer = 280
+        Dim GroupBoxX As Integer = 10
+        GroupBox_A1_A2_A3.Location = New Point(GroupBoxX, Picture_machine.Location.Y + Picture_machine.Height + 8)
+        GroupBox_A1_A2_A3.Size = New Size(GroupBoxWidth, 80)
+
         Label_input_L.Location = New Point(6, 18)
         Label_input_L.Size = New Size(75, 26)
         Label_r1.Location = New Point(46, 46)
@@ -669,8 +674,9 @@ Partial Public Class Program
         Button_L_check.Location = New Point(210, 20)
         Button_L_check.Size = New Size(50, 30)
 
-        GroupBox_A4.Location = New Point(10, 350)
-        GroupBox_A4.Size = New Size(275, 145)
+        GroupBox_A4.Location = New Point(GroupBoxX, GroupBox_A1_A2_A3.Location.Y + GroupBox_A1_A2_A3.Height + 8)
+        GroupBox_A4.Size = New Size(GroupBoxWidth, 143)
+
         Label_input_L1.Location = New Point(6, 18)
         Label_input_L1.Size = New Size(88, 26)
         Label_input_L2.Location = New Point(6, 47)
@@ -690,8 +696,9 @@ Partial Public Class Program
         Button_L1_L2_L3_check.Location = New Point(210, 80)
         Button_L1_L2_L3_check.Size = New Size(50, 30)
 
-        GroupBox1.Location = New Point(10, 500)
-        GroupBox1.Size = New Size(275, 145)
+        GroupBox1.Location = New Point(GroupBoxX, GroupBox_A4.Location.Y + GroupBox_A4.Height + 8)
+        GroupBox1.Size = New Size(GroupBoxWidth, 125)
+
         PanelMeterSetup.Location = New Point(16, 21)
         PanelMeterSetup.Size = New Size(252, 68)
         ComboBoxComs.Location = New Point(9, 3)
@@ -707,13 +714,20 @@ Partial Public Class Program
         ButtonMeters.Location = New Point(141, 94)
         ButtonMeters.Size = New Size(110, 23)
 
-        GroupBox_Plot.Location = New Point(365, 40)
-        GroupBox_Plot.Size = New Size(580, 580)
+        'A4 Hints
+        Dim A4HintHeight As Integer = Picture_machine.Location.Y
+        Label_A4_Hint1.Location = New Point(GroupBoxX + Picture_machine.Width + 10, A4HintHeight)
+        Label_A4_Hint1.Size = New Size(32, 273)
+        Label_A4_Hint2.Location = New Point(Label_A4_Hint1.Location.X + Label_A4_Hint1.Width + 10, A4HintHeight)
+        Label_A4_Hint2.Size = New Size(35, 164)
+
+        GroupBox_Plot.Location = New Point(365, 26)
+        GroupBox_Plot.Size = New Size(576, 576)
         GroupBox_Plot.Visible = True
         GP = GroupBox_Plot.CreateGraphics()
 
-        BasicInfoGrid.Location = New Point(GroupBox_Plot.Location.X + GroupBox_Plot.Size.Width + 5, GroupBox_Plot.Location.Y)
-        BasicInfoGrid.Size = New Size(200, GroupBox_Plot.Size.Height)
+        BasicInfoGrid.Location = New Point(GroupBox_Plot.Location.X + GroupBox_Plot.Size.Width + 20, GroupBox_Plot.Location.Y + 8)
+        BasicInfoGrid.Size = New Size(270, GroupBox_Plot.Size.Height - 8)
 
         'COOR PLOT
         'x
@@ -738,6 +752,9 @@ Partial Public Class Program
 
         plotCor(GroupBox_Plot.CreateGraphics, xCor, yCor)
 
+        Picture_machine.BorderStyle = BorderStyle.None
+
+        BasicInfoGrid.BorderStyle = BorderStyle.None
         BasicInfoGrid.RowHeadersVisible = False
         BasicInfoGrid.Columns.Add("Data", "")
         BasicInfoGrid.Rows.Add(26)
@@ -749,11 +766,9 @@ Partial Public Class Program
 
         Next
         BasicInfoGrid.AllowUserToAddRows = False
+        BasicInfoGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
 
-        Label_A4_Hint1.Location = New Point(288, 328)
-        Label_A4_Hint1.Size = New Size(32, 273)
-        Label_A4_Hint2.Location = New Point(323, 328)
-        Label_A4_Hint2.Size = New Size(35, 164)
+
     End Sub
 
     '程式要關之前要做的事
@@ -1482,6 +1497,7 @@ Partial Public Class Program
         Try
             pd.Print()
             pd.Dispose()
+            pd = Nothing
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try

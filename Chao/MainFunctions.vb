@@ -1513,7 +1513,7 @@ Partial Public Class Program
         'TEMP
         For i = 0 To temp.Length - 1
 
-            result(i) = temp(i)
+            Double.TryParse(temp(i), result(i))
         Next
         For i = temp.Length To result.Length - 1
             result(i) = "0"
@@ -1766,7 +1766,7 @@ Partial Public Class Program
                 meter = 5
             End If
         End If
-        Dim temps() As String = Comm.GetMeasurementsFromBuffer(Communication.Measurements.Leq)
+        Dim temps() As String = Comm.ConsumeMeasurementsFromBuffer(Communication.Measurements.Leq)
         Dim Leqs(6) As Double
         Dim sum As Double = 0
         For i = 0 To temps.Length - 1
@@ -3748,6 +3748,14 @@ Partial Public Class Program
         Comm.Sim()
         PanelMeterSetup.Enabled = False
         sim = True
+    End Sub
+
+    Private Sub MetersMode()
+        sim = False
+        ButtonMeters.Enabled = False
+        ButtonSim.Enabled = True
+        Comm.Real()
+        PanelMeterSetup.Enabled = True
     End Sub
 
     Public Function DoubleArrayToString(ByRef array As List(Of Double)) As String

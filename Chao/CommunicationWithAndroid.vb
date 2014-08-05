@@ -6,7 +6,9 @@ Imports System.Net.Sockets
 Imports Microsoft.VisualBasic
 Imports System.Net.NetworkInformation
 
+'此class是跟ANDROID用TCP的方式溝通
 Public Class CommunicationWithAndroid
+    '與ANDROID的IP address 和 port連線
     Public Shared Function ConnectSocket(ByVal serverIP As String, ByVal port As Integer) As Socket
         Dim hostEntry As IPHostEntry = Nothing
 
@@ -41,6 +43,7 @@ Public Class CommunicationWithAndroid
         Return False
     End Function
 
+    '一個好用的轉換string 到 long integer 的function
     Public Shared Function LongIntegerFromIP(ByVal p_strIP As String) As Long
         Dim arrTemp As Object
         Dim i As Integer

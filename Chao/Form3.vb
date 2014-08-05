@@ -858,7 +858,7 @@ Partial Public Class Program
                     'send values to display as text and graphs
                     SetScreenValuesAndGraphs(GetInstantData())
                 ElseIf timeLeft = 1 Then 'time's up\
-                    Comm.StopMeasure()
+
                     timeLeft = timeLeft - 1
                     timeLabel.Text = timeLeft & " s"
                     'send values to display as text and graphs
@@ -870,9 +870,11 @@ Partial Public Class Program
                     'do next step
                     If CurRun.CurStep = CurRun.EndStep Then 'last step (not HasNextStep)
                         'stop the timer
+                        Comm.StopMeasure()
                         Timer1.Stop()
                         'Continuing on for A2's unfinished runs
                         If CurRun.NextUnit.Name.Contains("_2nd_3rd") Then
+
                             Accept_Button.Enabled = False
                             startButton.Enabled = True
                             stopButton.Enabled = False
@@ -951,26 +953,26 @@ Partial Public Class Program
 
     ' 開始測量鈕按下
     Private Sub startButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles startButton.Click
-        All_Panel_Disable()
-        Comm.StartMeasure()
-        stopButton.Focus()
-        If Countdown = False Then
-            startButton.Enabled = False
-            Accept_Button.Enabled = False
-            stopButton.Enabled = False
-            'If CurRun.Name.Contains("A4") Or CurRun.Name.Contains("RSS") Or CurRun.Name.Contains("Background") Then
-            '    stopButton.Enabled = False
-            'Else
-            '    stopButton.Enabled = True
-            'End If
+        If Comm.StartMeasure() Then
+            All_Panel_Disable()
+            stopButton.Focus()
+            If Countdown = False Then
+                startButton.Enabled = False
+                Accept_Button.Enabled = False
+                stopButton.Enabled = False
+                'If CurRun.Name.Contains("A4") Or CurRun.Name.Contains("RSS") Or CurRun.Name.Contains("Background") Then
+                '    stopButton.Enabled = False
+                'Else
+                '    stopButton.Enabled = True
+                'End If
 
-            Timer1.Start()
-        Else
-            startButton.Enabled = False
-            stopButton.Enabled = True
-            Timer1.Start()
+                Timer1.Start()
+            Else
+                startButton.Enabled = False
+                stopButton.Enabled = True
+                Timer1.Start()
+            End If
         End If
-
     End Sub
 
     '停止鍵按下
@@ -1341,10 +1343,7 @@ Partial Public Class Program
 
     '正常噪音計鍵按下
     Private Sub ButtonMeters_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonMeters.Click
-        sim = False
-        ButtonMeters.Enabled = False
-        ButtonSim.Enabled = True
-        PanelMeterSetup.Enabled = True
+        MetersMode()
     End Sub
 
     '重新跟噪音計連結鍵按下

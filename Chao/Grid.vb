@@ -15,33 +15,6 @@ Public Class Grid
             Return _Background
         End Get
     End Property
-    'Public Cur_Column
-
-    'Private A_s As Integer 'keep track of which A's this one has
-    'Private As_Last_Indices() As Integer ' index of last column of each A run
-    'Enum Excavator_As
-    '    A1
-    '    A2
-    'End Enum
-
-    'Enum Loader_As
-    '    A1
-    '    A2
-    '    A3
-    'End Enum
-
-    'Enum Tractor_As
-    '    A1
-    '    A3
-    'End Enum
-
-    'Enum LoadExcavator_As
-    '    A1e
-    '    A2e
-    '    A1l
-    '    A2l
-    '    A3l
-    'End Enum
 
     Public ListAsGRUs As List(Of List(Of Grid_Run_Unit))
 
@@ -78,8 +51,6 @@ Public Class Grid
         Form.Rows(15).HeaderCell.Value = "LWA 採用"
 
         ListAsGRUs = New List(Of List(Of Grid_Run_Unit))
-
-        'Grid.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders)
 
         'Set A sequence
         Dim tempRU As Run_Unit = headRU
@@ -384,6 +355,7 @@ Public Class Grid
         End If
     End Function
 
+    '將Grid_RUN_UNIT and Run_Unit 作連結
     Function ConnectGRU_RU_COL(ByVal colName As String, ByVal subHeader As String, ByVal colNum As Integer, ByRef tempRU As Run_Unit) As Run_Unit
 
         Dim A3overall As Boolean = False
@@ -928,7 +900,7 @@ Public Class Meter_Measure_Unit
 End Class
 
 
-
+'這個class代表的是表格上每一列的所有資訊，包含看得到的和看不到的，每個RUN_UNIT不見得搭載一個GRU，因為像A2要重複的三步驟就都聚集在同一個GRU裡面
 Public Class Grid_Run_Unit
     Public Considered As Boolean = False
     Public Column As DataGridViewTextBoxColumn
@@ -1113,6 +1085,7 @@ Public Class Grid_Run_Unit
         End Set
     End Property
 
+    'Real meter 和 meter 的差別在於real meter 是存已被接受過的數據，因為有時候測試過的數據看完後，不接受的話，要跳回原來的數據
     Private _Meter2 As Meter_Measure_Unit
     Private _RealMeter2 As Meter_Measure_Unit
     Public ReadOnly Property Meter2() As Meter_Measure_Unit
@@ -1398,7 +1371,6 @@ Public Class Grid_Run_Unit
     End Property
 
     Private _LWA As Double
-    'Private _RealLWA As Double
     Public ReadOnly Property LWA() As Double
         Get
             Return _LWA

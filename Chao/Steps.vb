@@ -1,4 +1,5 @@
-﻿Public Class Steps
+﻿'This is a small class for storing small step information
+Public Class Steps
     Public step_str As String
     Public step_label As Label
 

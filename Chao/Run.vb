@@ -1,4 +1,6 @@
-﻿Public Class Run_Unit
+﻿'Run_Unit is a class that represents each big step on the main testing page. Each light(green or red) is represented by one 
+'Run_Unit object
+Public Class Run_Unit
 
     Public WithEvents Link As LinkLabel
     Dim Panel As Panel
@@ -53,22 +55,11 @@
         GRU = Nothing
     End Sub
 
-    'Public Sub ConnectGRU(ByRef gridrununit As Grid_Run_Unit)
-    '    GRU = gridrununit
-    'End Sub
-
-    'Sub Append_Data(ByVal d() As Double)
-    '    If Not IsNothing(d) And d.Length > 0 Then
-    '        For i = 0 To d.Length - 1
-    '            Data.Add(d(i))
-    '        Next
-    '    End If
-    'End Sub
-
     Sub Set_BackColor(ByVal c As Color)
         Panel.BackColor = c
     End Sub
 
+    '被按下去後的反應
     Private Sub LinkLabel_Clicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles Link.LinkClicked
         Program.startButton.Enabled = True
         Program.Accept_Button.Enabled = False
@@ -281,7 +272,7 @@
             Program.CurRun = Program.TrA3_Add_bkd
             Countdown_True_after_Jump()
         ElseIf Me.Link.Name = "LinkLabel_A4_Fst" Then
-            Countdown_false_before_Jump()
+            Countdown_False_before_Jump()
             Program.CurRun = Program.A4_Fst
             Countdown_False_after_Jump()
         ElseIf Me.Link.Name = "LinkLabel_A4_Sec" Then
@@ -311,6 +302,8 @@
         End If
         Program.SendNonChangeSignalToMobile()
     End Sub
+
+    '在跳步驟前，如果要跳往的步驟是以倒數的方式計時所要叫的function
     Sub Countdown_True_before_Jump()
         If Program.CurRun IsNot Nothing Then
             If Program.CurRun.Name = "ExA2_2nd_3rd" Or Program.CurRun.Name = "LoA2_2nd_3rd" Or Program.CurRun.Name = "ExA2_2nd_3rd_Add" Or Program.CurRun.Name = "LoA2_2nd_3rd_Add" Then
@@ -342,6 +335,8 @@
         Program.Temp_Countdown = Program.Countdown
 
     End Sub
+
+    '在跳步驟後，如果要跳往的步驟是以倒數的方式計時所要叫的function
     Sub Countdown_True_after_Jump()
         Program.Countdown = True
         Program.Load_Array_Step_S()
@@ -385,6 +380,8 @@
         'dispose old graph and create new graph
         Program.Load_New_Graph_CD_True()
     End Sub
+
+    '在跳步驟前，如果要跳往的步驟是不是以倒數的方式計時所要叫的function
     Sub Countdown_False_before_Jump()
         'before jump       
         If Program.CurRun IsNot Nothing Then
@@ -421,6 +418,8 @@
         Program.Temp_Countdown = Program.Countdown
 
     End Sub
+
+    '在跳步驟後，如果要跳往的步驟不是以倒數的方式計時所要叫的function
     Sub Countdown_False_after_Jump()
         Program.Countdown = False
         Program.Clear_Steps()
@@ -433,13 +432,6 @@
         Program.timeLabel.Text = Program.timeLeft & " s"
         Program.CurRun.Set_BackColor(Color.Yellow)
     End Sub
-    'Function L_Average()
-
-    'End Function
-
-    'Function Set_Time()
-
-    'End Function
 End Class
 
 

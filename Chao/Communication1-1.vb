@@ -5,7 +5,7 @@ Imports System.IO
 Imports System.Management
 
 'This is the class dealing with Noise Meters
-Public Class Communication
+Public Class Communication1_1
     Dim _Latency As Integer = 500 'miliseconds to wait for response
     Dim _PollingFrequency As Integer = 400 'miliseconds for every poll
     Enum Meters
@@ -231,14 +231,14 @@ Public Class Communication
         Dim start As Integer = -1
 
         '每個BYTE看內容,然後將一個個封包分開放入msgs中
-        For i = 0 To Input.Length - 1
+        For i = 0 To input.Length - 1
             '&H81是毎個不同receiver回的封包的開頭
-            If Input(i) = &H81 Then
+            If input(i) = &H81 Then
                 '如果不是第一個封包
                 If Not start = -1 Then
                     Dim size = i - start
                     Dim bufferTemp(size - 1) As Byte
-                    Array.Copy(Input, start, bufferTemp, 0, size)
+                    Array.Copy(input, start, bufferTemp, 0, size)
                     msgs.Add(bufferTemp)
                 End If
                 '如果有切斷的資訊
@@ -247,7 +247,7 @@ Public Class Communication
                         If LeftFromLastRead IsNot Nothing Then
                             Dim bufferTemp(LeftFromLastRead.Length + i) As Byte
                             Array.Copy(LeftFromLastRead, bufferTemp, LeftFromLastRead.Length)
-                            Array.Copy(Input, 0, bufferTemp, LeftFromLastRead.Length, i + 1)
+                            Array.Copy(input, 0, bufferTemp, LeftFromLastRead.Length, i + 1)
                             msgs.Add(bufferTemp)
                             LeftFromLastRead = Nothing
                         End If
@@ -260,13 +260,13 @@ Public Class Communication
                 End If
                 start = i
             End If
-            If i = Input.Length - 1 Then 'assume it's always chopped off at the end
+            If i = input.Length - 1 Then 'assume it's always chopped off at the end
                 If start = -1 Then
                     start = 0
                 End If
                 Dim size = i - start
                 Dim bufferTemp(size - 1) As Byte
-                Array.Copy(Input, start, bufferTemp, 0, size)
+                Array.Copy(input, start, bufferTemp, 0, size)
                 If skipLeftFromLast Then
                     msgs.Add(bufferTemp)
                 Else
@@ -398,32 +398,32 @@ Public Class Communication
     '14 figures
     Public Function ConsumeMeasurementsFromBuffer(ByVal part As Measurements) As String()
         Dim result() As String = New String(MeterMacs.Count - 1) {}
-        Try
-            If Not IsNothing(buffer) Then
-                SyncLock bufferLock
-                    FilterMsgsFromBuffer("R+0000")
-                    For i = 0 To MeterMacs.Count - 1
-                        If buffer(i).Count > 0 Then
-                            For j = 0 To buffer(i).Count - 1
-                                If buffer(i)(j).Length > 8 Then
-                                    Dim temp() As String = buffer(i)(0).Substring(8).Split(",")
-                                    If part < temp.Length Then
-                                        result(i) = temp(part)
-                                        Exit For
-                                    End If
+        'Try
+        If Not IsNothing(buffer) Then
+            SyncLock bufferLock
+                FilterMsgsFromBuffer("R+0000")
+                For i = 0 To MeterMacs.Count - 1
+                    If buffer(i).Count > 0 Then
+                        For j = 0 To buffer(i).Count - 1
+                            If buffer(i)(j).Length > 8 Then
+                                Dim temp() As String = buffer(i)(0).Substring(8).Split(",")
+                                If part < temp.Length Then
+                                    result(i) = temp(part)
+                                    Exit For
                                 End If
-                            Next
-                            'always keeping the last one
-                            Dim tempItem As String = buffer(i)(buffer(i).Count - 1)
-                            buffer(i).Clear()
-                            buffer(i).Add(tempItem)
-                        End If
-                    Next
-                End SyncLock
-            End If
-        Catch ex As Exception
-            MsgBox("ConsumeMeasurementsFromBuffer: " & ex.Message)
-        End Try
+                            End If
+                        Next
+                        'always keeping the last one
+                        Dim tempItem As String = buffer(i)(buffer(i).Count - 1)
+                        buffer(i).Clear()
+                        buffer(i).Add(tempItem)
+                    End If
+                Next
+            End SyncLock
+        End If
+        'Catch ex As Exception
+        'MsgBox("ConsumeMeasurementsFromBuffer: " & ex.Message)
+        'End Try
         Return result
     End Function
 
@@ -456,65 +456,4 @@ Public Class Communication
         Return result
     End Function
 
-    'API Mode
-    'API mode is an alternative to the default transparent operation of the RM024 and provides dynamic packet routing and packet accounting abilities to the OEM host without requiring extensive programming by the OEM host. API mode utilizes specific frame-based packet formats, specifying various vital parameters used to control radio settings and packet routing on a packet-by-packet basis. The API features can be used in any combination that suits the OEM’s application specific needs.
-    'The RM024 has three API functions:
-    ' Send Data Complete
-    ' Receive API
-    ' Transmit API
-
-    'mode = 1 > Receive packet
-    'mode = 2 > Transmit packet
-    'mode = 4 > Send Data complete
-    Private Function EnterAPIMode(ByVal mode) As Boolean
-        If Open() Then
-            Try
-                Dim bufCmd() As Byte = {&H41, &H54, &H2B, &H2B, &H2B, &HD}
-                Dim sucCmd() As Byte = {&HCC, &H43, &H4F, &H4D, &H0}
-
-                Dim bufWriteAPI() As Byte = {&HCC, &H17, mode}
-                Dim sucWriteAPI() As Byte = {&HCC, mode, &H0}
-
-                Dim bufExitCmd() As Byte = {&HCC, &H41, &H54, &H4F, &HD}
-                Dim sucExitCmd() As Byte = {&HCC, &H44, &H41, &H54, &H0}
-
-                'Enter AT Command Mode
-                SyncLock portLock
-                    port.Write(bufCmd, 0, bufCmd.Length)
-                    Thread.Sleep(_Latency)
-                    Dim buffer() As Byte = New Byte(port.BytesToRead) {}
-                    port.Read(buffer, 0, buffer.Length)
-
-                    'if Enter AT Command Mode successful
-                    If buffer.SequenceEqual(sucCmd) Then
-
-                        'Write API Control-Transmit API
-                        port.Write(bufWriteAPI, 0, bufWriteAPI.Length)
-                        Thread.Sleep(_Latency)
-                        buffer = New Byte(port.BytesToRead) {}
-                        port.Read(buffer, 0, buffer.Length)
-
-                        'If Successfully write API Control-Transmit API
-                        If buffer.SequenceEqual(sucWriteAPI) Then
-                            port.Write(bufExitCmd, 0, bufExitCmd.Length)
-                            Thread.Sleep(_Latency)
-                            buffer = New Byte(port.BytesToRead) {}
-                            port.Read(buffer, 0, buffer.Length)
-                            If buffer.SequenceEqual(sucExitCmd) Then
-                                Return True
-                            End If
-                        End If
-                    End If
-                End SyncLock
-            Catch ex As Exception
-                MsgBox(ex.Message)
-            End Try
-        End If
-        Return False
-    End Function
-
-    'This Will Set up the server to enter API mode
-    Public Function SetupServer() As Boolean
-        Return EnterAPIMode(1)
-    End Function
 End Class

@@ -91,7 +91,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Calculations.vb" />
+    <Compile Include="Communication1-1.vb" />
     <Compile Include="CommunicationWithAndroid.vb" />
     <Compile Include="CustomClasses.vb">
       <SubType>Component</SubType>

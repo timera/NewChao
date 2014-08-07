@@ -181,7 +181,7 @@ Partial Public Class Program
 
     Public array_time(8) As Integer
 
-    Public Comm As Communication
+    Public Comm As Communication1_1
 
     'if it is have additional test => true
     Dim Add_Test_Record As Boolean
@@ -275,7 +275,7 @@ Partial Public Class Program
         
 
         '##COMMUNICATION with Noise Meters
-        Comm = New Communication()
+        Comm = New Communication1_1()
         SimulationMode()
 
         Last_timeLeft = 0
@@ -1312,12 +1312,10 @@ Partial Public Class Program
     '連結到噪音計的鍵按下
     Private Sub ConnectButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ConnectButton.Click
         If Comm.Open() Then
-            If Comm.SetupServer() Then
-                ConnectButton.Enabled = False
-                DisconnButton.Enabled = True
-            Else
-                MsgBox("Cannot Set up Server Correctly!")
-            End If
+            ConnectButton.Enabled = False
+            DisconnButton.Enabled = True
+        Else
+            MsgBox("Cannot Set up Server Correctly!")
         End If
     End Sub
 
@@ -1349,7 +1347,7 @@ Partial Public Class Program
     '重新跟噪音計連結鍵按下
     Private Sub ButtonComRefresh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonComRefresh.Click
         ComboBoxComs.Items.Clear()
-        For Each com In Communication.GetComs()
+        For Each com In Communication1_1.GetComs()
             ComboBoxComs.Items.Add(com)
         Next
     End Sub

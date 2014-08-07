@@ -1512,7 +1512,6 @@ Partial Public Class Program
         Comm.GetMeasurementsFromMeters(Communication.Measurements.Lp)
         'TEMP
         For i = 0 To temp.Length - 1
-
             Double.TryParse(temp(i), result(i))
         Next
         For i = temp.Length To result.Length - 1
@@ -1549,32 +1548,36 @@ Partial Public Class Program
                 meter = Communication.Meters.p12
             End If
         End If
-        For i = 0 To 6 - 1
-            If Not onlyCal Then
-                NoisesArray(i).Text = vals(i)
-                sum += 10 ^ (0.1 * vals(i))
-            ElseIf i = meter Then
-                NoisesArray(i).Text = vals(i)
-                sum = vals(i)
-            Else
-                vals(i) = 0
-            End If
-        Next
+
 
         Dim valsAndAvg() As Double = New Double(6) {}
         Array.Copy(vals, valsAndAvg, 6)
+        Dim avg As Double = GetAverageFromVals(vals)
 
-        Dim avg As Double
-        If Not onlyCal Then
-            avg = 10 * (Math.Log10(sum / num))
-        Else
-            avg = sum
-        End If
-        NoisesArray(6).Text = CStr(Math.Round(avg, 1))
+        SetNoiseLabelValues(vals, onlyCal, num, meter, avg)
         valsAndAvg(6) = avg
         'Set graphs
         MainBarGraph.Update(valsAndAvg)
         MainLineGraph.Update(vals)
+    End Sub
+
+    Private Function GetAverageFromVals(ByRef vals() As Double) As Double
+        Dim sum As Long = 0
+        For i = 0 To vals.Length - 1
+            sum += 10 ^ (0.1 * vals(i))
+        Next
+        Return 10 * (Math.Log10(sum / vals.Length))
+    End Function
+
+    Private Sub SetNoiseLabelValues(ByRef vals() As Double, ByVal onlyCal As Boolean, ByVal numOfMeters As Integer, ByVal meter As Integer, ByVal avg As Double)
+        For i = 0 To numOfMeters - 1
+            If Not onlyCal Then
+                NoisesArray(i).Text = vals(i)
+            ElseIf i = meter Then
+                NoisesArray(i).Text = vals(i)
+            End If
+        Next
+        NoisesArray(6).Text = CStr(Math.Round(avg, 1))
     End Sub
 
     '要換機具時要寄此訊號
@@ -1792,6 +1795,9 @@ Partial Public Class Program
             avg = sum
         End If
         Leqs(6) = avg
+        Dim vals(6 - 1) As Double
+        Array.Copy(Leqs, vals, 6)
+        SetNoiseLabelValues(Leqs, False, num, 0, avg)
         MainBarGraph.Update(Leqs)
 
     End Sub
@@ -1806,17 +1812,17 @@ Partial Public Class Program
 
         'precal and postcal
         If CurRun.Name.Contains("Cal") Then
-            If CurRun.Name.Contains("2") Then
+            If CurRun.Name.Contains("Cal_P2") Then
                 CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(0), Leqpoints(0).YValues(0)), 2)
-            ElseIf CurRun.Name.Contains("4") Then
+            ElseIf CurRun.Name.Contains("Cal_P4") Then
                 CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(1), Leqpoints(1).YValues(0)), 4)
-            ElseIf CurRun.Name.Contains("6") Then
+            ElseIf CurRun.Name.Contains("Cal_P6") Then
                 CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(2), Leqpoints(2).YValues(0)), 6)
-            ElseIf CurRun.Name.Contains("8") Then
+            ElseIf CurRun.Name.Contains("Cal_P8") Then
                 CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(3), Leqpoints(3).YValues(0)), 8)
-            ElseIf CurRun.Name.Contains("10") Then
+            ElseIf CurRun.Name.Contains("Cal_P10") Then
                 CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(4), Leqpoints(4).YValues(0)), 10)
-            ElseIf CurRun.Name.Contains("12") Then
+            ElseIf CurRun.Name.Contains("Cal_P12") Then
                 CurRun.GRU.SetM(Meter_Measure_Unit.SeriesToMMU(series(5), Leqpoints(5).YValues(0)), 12)
 
             End If

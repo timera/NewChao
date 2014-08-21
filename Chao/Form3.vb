@@ -181,7 +181,7 @@ Partial Public Class Program
 
     Public array_time(8) As Integer
 
-    Public Comm As Communication1_1
+    Public Comm As Communication
 
     'if it is have additional test => true
     Dim Add_Test_Record As Boolean
@@ -275,7 +275,7 @@ Partial Public Class Program
         
 
         '##COMMUNICATION with Noise Meters
-        Comm = New Communication1_1()
+        Comm = New Communication()
         SimulationMode()
 
         Last_timeLeft = 0
@@ -835,7 +835,7 @@ Partial Public Class Program
 
     '開始計時候每秒跳要做的事
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-        If Countdown = False Then '如果是倒數
+        If Countdown = False Then '如果是正數
             timeLeft = timeLeft + 1
             timeLabel.Text = timeLeft & " s"
 
@@ -848,7 +848,9 @@ Partial Public Class Program
 
             'send values to display as text and graphs
             SetScreenValuesAndGraphs(GetInstantData())
-        Else '正數
+
+
+        Else '倒數
             stopButton.Enabled = True
             If timeLeft > 0 Then 'counting
                 If Not timeLeft = 1 Then
@@ -870,11 +872,11 @@ Partial Public Class Program
                     'do next step
                     If CurRun.CurStep = CurRun.EndStep Then 'last step (not HasNextStep)
                         'stop the timer
-                        Comm.StopMeasure()
+
                         Timer1.Stop()
                         'Continuing on for A2's unfinished runs
                         If CurRun.NextUnit.Name.Contains("_2nd_3rd") Then
-
+                            Comm.PauseMeasure(True)
                             Accept_Button.Enabled = False
                             startButton.Enabled = True
                             stopButton.Enabled = False
@@ -893,6 +895,10 @@ Partial Public Class Program
                             'Load_New_Graph_CD_True()
 
                         Else 'Countdown finally stop for entire run
+                            If CurRun.Name.Contains("_2nd_3rd") Then
+                                Comm.PauseMeasure(False)
+                            End If
+                            Comm.StopMeasure()
                             Accept_Button.Enabled = True
                             Button_Skip_Add.Enabled = False
                             startButton.Enabled = False
@@ -1312,10 +1318,13 @@ Partial Public Class Program
     '連結到噪音計的鍵按下
     Private Sub ConnectButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ConnectButton.Click
         If Comm.Open() Then
-            ConnectButton.Enabled = False
-            DisconnButton.Enabled = True
-        Else
-            MsgBox("Cannot Set up Server Correctly!")
+            If Comm.SetupServer() Then
+                ConnectButton.Enabled = False
+                DisconnButton.Enabled = True
+
+            Else
+                MsgBox("Cannot Set up Server Correctly!")
+            End If
         End If
     End Sub
 

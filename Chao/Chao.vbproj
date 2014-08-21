@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communication1-1.vb" />
+    <Compile Include="Communication1-All.vb" />
     <Compile Include="CommunicationWithAndroid.vb" />
     <Compile Include="CustomClasses.vb">
       <SubType>Component</SubType>

@@ -1509,7 +1509,7 @@ Partial Public Class Program
     Private Function GetInstantData()
         Dim result(6 - 1) As Double
         Dim temp() As String =
-        Comm.GetMeasurementsFromMeters(Communication.Measurements.Lp)
+        Comm.GetMeasurementsFromMeters(Communication.Measurements.Lp, CurRun.Name)
         'TEMP
         For i = 0 To temp.Length - 1
             Double.TryParse(temp(i), result(i))
@@ -1534,28 +1534,23 @@ Partial Public Class Program
         Dim meter As Integer = -1
         If CurRun.Name.Contains("Cal") Then
             onlyCal = True
-            If CurRun.Name.Contains("Cal_P2") Then
-                meter = Communication.Meters.p2
-            ElseIf CurRun.Name.Contains("Cal_P4") Then
-                meter = Communication.Meters.p4
-            ElseIf CurRun.Name.Contains("Cal_P6") Then
-                meter = Communication.Meters.p6
-            ElseIf CurRun.Name.Contains("Cal_P8") Then
-                meter = Communication.Meters.p8
-            ElseIf CurRun.Name.Contains("Cal_P10") Then
-                meter = Communication.Meters.p10
-            ElseIf CurRun.Name.Contains("Cal_P12") Then
-                meter = Communication.Meters.p12
-            End If
+            meter = Comm.DetermineMeter(CurRun.Name)
         End If
 
 
         Dim valsAndAvg() As Double = New Double(6) {}
         Array.Copy(vals, valsAndAvg, 6)
-        Dim avg As Double = GetAverageFromVals(vals)
+        Dim avg As Double
+        If onlyCal Then
+            avg = vals(meter)
+        Else
+            avg = GetAverageFromVals(vals)
+        End If
+        valsAndAvg(6) = avg
 
         SetNoiseLabelValues(vals, onlyCal, num, meter, avg)
-        valsAndAvg(6) = avg
+
+
         'Set graphs
         MainBarGraph.Update(valsAndAvg)
         MainLineGraph.Update(vals)
@@ -1755,30 +1750,20 @@ Partial Public Class Program
 
         If CurRun.Name.Contains("Cal") Then
             cal = True
-            If CurRun.Name.Contains("Cal_P2") Then
-                meter = 0
-            ElseIf CurRun.Name.Contains("Cal_P4") Then
-                meter = 1
-            ElseIf CurRun.Name.Contains("Cal_P6") Then
-                meter = 2
-            ElseIf CurRun.Name.Contains("Cal_P8") Then
-                meter = 3
-            ElseIf CurRun.Name.Contains("Cal_P10") Then
-                meter = 4
-            Else
-                meter = 5
-            End If
+            meter = Comm.DetermineMeter(CurRun.Name)
         End If
-        Dim temps() As String = Comm.ConsumeMeasurementsFromBuffer(Communication.Measurements.Leq)
+        Dim temps() As String = Comm.ConsumeMeasurementsFromBuffer(Communication.Measurements.Leq, CurRun.Name)
         Dim Leqs(6) As Double
         Dim sum As Double = 0
         For i = 0 To temps.Length - 1
             If Not cal Then
-                Dim number = Convert.ToDouble(temps(i))
+                Dim number As Double
+                Double.TryParse(temps(i), number)
                 Leqs(i) = number
                 sum += 10 ^ (0.1 * number)
             ElseIf i = meter Then
-                Dim number = Convert.ToDouble(temps(i))
+                Dim number As Double
+                Double.TryParse(temps(i), number)
                 Leqs(i) = number
                 sum = number
             Else

@@ -8,14 +8,14 @@ Imports System.Management
 Public Class Communication
     Dim _Latency As Integer = 500 'miliseconds to wait for response
     Dim _PollingFrequency As Integer = 400 'miliseconds for every poll
-    Enum Meters
-        p2
-        p4
-        p6
-        p8
-        p10
-        p12
-    End Enum
+    Dim Meters() As String = {
+        "P2",
+        "P4",
+        "P6",
+        "P8",
+        "P10",
+        "P12"
+    }
 
     Enum Measurements
         Lp
@@ -46,7 +46,7 @@ Public Class Communication
     Private Meter12Mac() As Byte = New Byte(2) {&HA2, &HF4, &H95}
 
     '這是已從server那讀取的資訊，但還沒有顯示
-    Private buffer() As List(Of String)
+    Private buffer(6 - 1) As StringBuilder
 
     Public WithEvents port As SerialPort
 
@@ -65,10 +65,69 @@ Public Class Communication
         ClearBuffer()
     End Sub
 
+    Function EnableBroadCast() As Boolean
+        Return SetBroadCast(1)
+    End Function
+
+    Function DisableBroadCast() As Boolean
+        Return SetBroadCast(0)
+    End Function
+
+    Function SetBroadCast(ByVal code As Integer) As Boolean
+        Dim bufCmd() As Byte = {&HCC, &H8, code}
+        Dim sucCmd() As Byte = {&HCC, code, &H0}
+        Return SetupAndSendCommand(bufCmd, sucCmd)
+    End Function
+
+    Function SetupAndSendCommand(ByRef command As Byte(), ByRef returnCode As Byte())
+        Dim bufCmd() As Byte = {&H41, &H54, &H2B, &H2B, &H2B, &HD}
+        Dim sucCmd() As Byte = {&HCC, &H43, &H4F, &H4D}
+
+        Dim bufWrite() As Byte = command
+        Dim sucWrite() As Byte = returnCode
+
+        Dim bufExitCmd() As Byte = {&HCC, &H41, &H54, &H4F, &HD}
+        Dim sucExitCmd() As Byte = {&HCC, &H44, &H41, &H54}
+
+        Dim sucTotal(sucCmd.Length + sucWrite.Length + sucExitCmd.Length - 1) As Byte
+        Array.Copy(sucCmd, sucTotal, sucCmd.Length)
+        Array.Copy(sucWrite, 0, sucTotal, sucCmd.Length, sucWrite.Length)
+        Array.Copy(sucExitCmd, 0, sucTotal, sucCmd.Length + sucWrite.Length - 1, sucExitCmd.Length)
+
+        port.Write(bufCmd, 0, bufCmd.Length)
+        Thread.Sleep(10)
+        port.Write(bufWrite, 0, bufWrite.Length)
+        Thread.Sleep(10)
+        port.Write(bufExitCmd, 0, bufExitCmd.Length)
+
+        Thread.Sleep(30)
+        If port.BytesToRead > 0 Then
+            Dim buffer() As Byte = New Byte(port.BytesToRead) {}
+            port.Read(buffer, 0, buffer.Length)
+            Dim str As String = Encoding.Default.GetString(buffer)
+            'If Successfully write command
+            If buffer.SequenceEqual(sucTotal) Then
+                Return True
+            End If
+        End If
+        Return False
+
+    End Function
+
+    Public Function DetermineMeter(ByVal name As String) As Integer
+        Dim i As Integer = 0
+        For Each meter In Meters
+            If name.Contains(meter) Then
+                Return i
+            End If
+            i += 1
+        Next
+        Return -1
+    End Function
+
     Private Sub ClearBuffer()
-        buffer = New List(Of String)(MeterMacs.Count - 1) {}
         For i = 0 To MeterMacs.Count - 1
-            buffer(i) = New List(Of String)
+            buffer(i) = New StringBuilder
         Next
     End Sub
     'TEMP
@@ -178,20 +237,21 @@ Public Class Communication
     End Function
 
     'Filters out the other messages than the given filter
-    Private Sub FilterMsgsFromBuffer(ByVal filter As String)
+    Private Function FilterMsgsFromBuffer(ByVal filter As String)
         Dim tempBuffer = New List(Of String)(MeterMacs.Count - 1) {}
         For i = 0 To MeterMacs.Count - 1
             tempBuffer(i) = New List(Of String)
         Next
         For i = 0 To buffer.Length - 1
-            For j = 0 To buffer(i).Count - 1
-                If buffer(i)(j).Contains(filter) Then
-                    tempBuffer(i).Add(buffer(i)(j))
+            Dim str As String = buffer(i).ToString().Replace(filter, "%")
+            If str IsNot Nothing Then
+                If str.Length > 0 Then
+                    tempBuffer(i).AddRange(str.Split("%"))
                 End If
-            Next
+            End If
         Next
-        buffer = tempBuffer
-    End Sub
+        Return tempBuffer
+    End Function
 
     'Should only be called by ReadAndSortMsgs because of ease of control of race conditions
     Private Function GetInputFromPort() As Byte()
@@ -290,7 +350,8 @@ Public Class Communication
                         '封包第八開始是資料
                         Array.Copy(msgs(i), 7, bytes, 0, msgs(i).Length - 7)
                         Dim s As String = Encoding.Default.GetString(bytes)
-                        buffer(j).Add(s)
+
+                        buffer(j).Append(s)
                         Exit For
                     End If
                 Next
@@ -326,6 +387,8 @@ Public Class Communication
             '    If EnterAPIMode(1) Then
             SyncLock portLock
                 port.WriteLine("DOD?")
+                port.WriteLine("DOD?")
+                port.WriteLine("DOD?")
             End SyncLock
             Thread.Sleep(_PollingFrequency)
             SyncLock bufferLock
@@ -358,6 +421,34 @@ Public Class Communication
         Return False
     End Function
 
+
+    'broadcasts pause measuring, returns the ones that confirm pause measuring
+    Public Function PauseMeasure(ByVal pause As Boolean) As Boolean
+        If Program.sim Then
+            Return True
+        ElseIf Open() Then
+            ClearBuffer()
+            If MakeSureReady() Then
+                SyncLock portLock
+                    If pause Then
+                        port.WriteLine("Pause, Pause")
+                    Else
+                        port.WriteLine("Pause, Clear")
+                    End If
+                End SyncLock
+                If pause Then
+                    PollingThread = New Thread(AddressOf Poll)
+                    PollingThread.Start()
+                    'Poll()
+                End If
+                Return True
+            Else
+                MsgBox("Meters Not Ready")
+            End If
+        End If
+        Return False
+    End Function
+
     Public Function MakeSureReady() As Boolean
         Dim result() As Boolean = New Boolean(MeterMacs.Count - 1) {}
         'This will prevent other threads from accessing buffer at the same time
@@ -365,9 +456,9 @@ Public Class Communication
             ReadAndSortMsgs(True, "")
         End SyncLock
         SyncLock bufferLock
-            FilterMsgsFromBuffer("$")
+
             For i = 0 To MeterMacs.Count - 1
-                If buffer(i).Count > 0 Then
+                If buffer(i).Length > 0 Then
                     result(i) = True
                     buffer(i).Clear()
                 End If
@@ -396,43 +487,71 @@ Public Class Communication
     End Sub
 
     '14 figures
-    Public Function ConsumeMeasurementsFromBuffer(ByVal part As Measurements) As String()
+    Public Function ConsumeMeasurementsFromBuffer(ByVal part As Measurements, ByVal name As String) As String()
         Dim result() As String = New String(MeterMacs.Count - 1) {}
-        Try
-            If Not IsNothing(buffer) Then
-                SyncLock bufferLock
-                    FilterMsgsFromBuffer("R+0000")
-                    For i = 0 To MeterMacs.Count - 1
-                        If buffer(i).Count > 0 Then
-                            For j = 0 To buffer(i).Count - 1
-                                If buffer(i)(j).Length > 8 Then
-                                    Dim temp() As String = buffer(i)(0).Substring(8).Split(",")
-                                    If part < temp.Length Then
-                                        result(i) = temp(part)
-                                        Exit For
-                                    End If
+        Dim meterIndex As Integer = DetermineMeter(name)
+        If Not Program.sim Then
+            Try
+                If Not IsNothing(buffer) Then
+                    SyncLock bufferLock
+                        Dim arrayOfLists() As List(Of String) = FilterMsgsFromBuffer("R+0000" + vbCrLf)
+                        For i = 0 To MeterMacs.Count - 1
+                            If Not meterIndex = -1 Then
+                                If Not i = meterIndex Then
+                                    result(i) = "0"
+                                    Continue For
                                 End If
-                            Next
+                            End If
+                            Dim count As Integer = arrayOfLists(i).Count
+                            If count >= 2 Then
+                                If arrayOfLists(i)(1).EndsWith("$") Then
+                                    Dim temp() As String = arrayOfLists(i)(1).Split(",")
+                                    result(i) = temp(part)
+                                End If
+                            End If
+                            If result(i) Is Nothing And count = 1 Then
+                                If arrayOfLists(i)(0).EndsWith("$") Then
+                                    Dim temp() As String = arrayOfLists(i)(count - 1).Split(",")
+                                    result(i) = temp(part)
+                                End If
+
+                            End If
                             'always keeping the last one
-                            Dim tempItem As String = buffer(i)(buffer(i).Count - 1)
+                            Dim tempItem As String = arrayOfLists(i)(arrayOfLists(i).Count - 1)
                             buffer(i).Clear()
-                            buffer(i).Add(tempItem)
-                        End If
-                    Next
-                End SyncLock
-            End If
-        Catch ex As Exception
-            MsgBox("ConsumeMeasurementsFromBuffer: " & ex.Message)
-        End Try
+                            buffer(i).Append(tempItem)
+
+                        Next
+                    End SyncLock
+                End If
+            Catch ex As Exception
+                MsgBox("ConsumeMeasurementsFromBuffer: " & ex.Message)
+            End Try
+        Else
+            ''TEMP
+            Dim r = New Random()
+            For i = 0 To MeterMacs.Count - 1
+                Dim tempR = (r.Next(1, 10) / 10) + r.Next(40, 119)
+                Dim str As String = (tempR & "," & (tempR - 1) & ",--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-")
+                result(i) = str.Split(",")(part)
+                If Not meterIndex = -1 Then
+                    If Not i = meterIndex Then
+                        result(i) = 0
+                    End If
+                End If
+            Next
+        End If
+        
         Return result
     End Function
 
-    Public Function GetMeasurementsFromMeters(ByVal part As Measurements) As String()
+    Public Function GetMeasurementsFromMeters(ByVal part As Measurements, ByVal name As String) As String()
         Dim result() As String = New String(MeterMacs.Count - 1) {}
+        Dim meterIndex As Integer = DetermineMeter(name)
         If Not Program.sim Then
             Try
                 If Open() Then
-                    result = ConsumeMeasurementsFromBuffer(part)
+                    result = ConsumeMeasurementsFromBuffer(part, name)
                 End If
             Catch ex As Exception
                 MsgBox("GetMeasurementsFromMeters: " & ex.Message)
@@ -441,17 +560,19 @@ Public Class Communication
         Else
             ''TEMP
             Dim r = New Random()
-            Dim temp(MeterMacs.Count - 1) As List(Of String)
-            For i = 0 To MeterMacs.Count - 1
-                temp(i) = New List(Of String)
-            Next
             For i = 0 To MeterMacs.Count - 1
                 Dim tempR = (r.Next(1, 10) / 10) + r.Next(40, 119)
-                temp(i).Add("R+0000  " & tempR & "," & (tempR - 1) & ",--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-")
-                result(i) = temp(i)(0).Substring(8).Split(",")(part)
+                Dim str As String = (tempR & "," & (tempR - 1) & ",--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-")
+                result(i) = str.Split(",")(part)
+                If Not meterIndex = -1 Then
+                    If Not i = meterIndex Then
+                        result(i) = 0
+                    End If
+                End If
             Next
 
-            buffer = temp
+
+
         End If
         Return result
     End Function
@@ -515,6 +636,7 @@ Public Class Communication
 
     'This Will Set up the server to enter API mode
     Public Function SetupServer() As Boolean
+        EnableBroadCast()
         Return EnterAPIMode(1)
     End Function
 End Class

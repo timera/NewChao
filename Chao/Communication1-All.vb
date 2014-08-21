@@ -5,18 +5,18 @@ Imports System.IO
 Imports System.Management
 
 'This is the class dealing with Noise Meters
-Public Class Communication1_1
-    Dim _Latency As Integer = 300 'miliseconds to wait for response
+Public Class Communication1_All
+    Dim _Latency As Integer = 700 'miliseconds to wait for response
     Dim _serverLatency As Integer = 30 'miliseconds to wait for response via serial port
     Dim _btwCmdLatency As Integer = 10
-    Enum Meters
-        p2
-        p4
-        p6
-        p8
-        p10
-        p12
-    End Enum
+    Dim Meters() As String = {
+        "P2",
+        "P4",
+        "P6",
+        "P8",
+        "P10",
+        "P12"
+    }
 
     Enum Measurements
         Lp
@@ -52,8 +52,8 @@ Public Class Communication1_1
     Public WithEvents port As SerialPort
 
     Public Sub New()
-        PollingThread = New Thread(AddressOf Poll)
-        PollingThread.IsBackground = True
+        'PollingThread = New Thread(AddressOf Poll)
+        'PollingThread.IsBackground = True
         MeterMacs.Add(Meter2Mac)
         MeterMacs.Add(Meter4Mac)
         'TEMP，有正確的MAC之後再把if拿掉
@@ -200,6 +200,17 @@ Public Class Communication1_1
         Return Nothing
     End Function
 
+    Function DetermineMeter(ByVal name As String) As Integer
+        Dim i As Integer = 0
+        For Each meter In Meters
+            If name.Contains(meter) Then
+                Return i
+            End If
+            i += 1
+        Next
+        Return -1
+    End Function
+
     'Thread to poll data from server buffer
     Private PollingThread As Thread
 
@@ -207,36 +218,53 @@ Public Class Communication1_1
     Dim bufferLock As New Object
     Dim portLock As New Object
 
-    Public Sub Poll()
-        'xxSyncLock portLock
-        Dim i As Integer = 0
-        For Each mac As Byte() In MeterMacs
+    Public Sub Poll(ByVal meterIndex As Integer)
+        SyncLock portLock
+            Dim i As Integer = 0
+            For Each mac As Byte() In MeterMacs
+                If meterIndex = -1 Then
+                    'destination address
+                    Dim command(2 + 3) As Byte
+                    command(0) = &HCC
+                    command(1) = &H10
+                    Array.Copy(mac, 0, command, 2, 3)
+                    'success code
+                    Dim sucCode(1 + 3) As Byte
+                    sucCode(0) = &HCC
+                    Array.Copy(mac, 0, sucCode, 1, 3)
 
-            'destination address
-            Dim command(2 + 3) As Byte
-            command(0) = &HCC
-            command(1) = &H10
-            Array.Copy(mac, 0, command, 2, 3)
-            'success code
-            Dim sucCode(1 + 3) As Byte
-            sucCode(0) = &HCC
-            Array.Copy(mac, 0, sucCode, 1, 3)
+                    If SetupAndSendCommand(command, sucCode) Then
+                        port.WriteLine("DOD?")
+                    End If
+                ElseIf meterIndex = i Then 'specific meter
+                    'destination address
+                    Dim command(2 + 3) As Byte
+                    command(0) = &HCC
+                    command(1) = &H10
+                    Array.Copy(mac, 0, command, 2, 3)
+                    'success code
+                    Dim sucCode(1 + 3) As Byte
+                    sucCode(0) = &HCC
+                    Array.Copy(mac, 0, sucCode, 1, 3)
 
-            If SetupAndSendCommand(command, sucCode) Then
-                port.WriteLine("DOD?")
-                Thread.Sleep(_Latency)
-                Dim input() As Byte = GetInputFromPort()
-                If input Is Nothing Then
-                    buffer(i) = ""
-                ElseIf input.Length = 0 Then
-                    buffer(i) = ""
-                ElseIf input.Length > 0 Then
-                    buffer(i) = Encoding.Default.GetString(input)
+                    If SetupAndSendCommand(command, sucCode) Then
+                        port.WriteLine("DOD?")
+                    End If
+                    Exit For
                 End If
+                i += 1
+            Next
+        End SyncLock
+        Thread.Sleep(_Latency)
+        Dim input() As Byte
+        SyncLock portLock
+            input = GetInputFromPort()
+        End SyncLock
+        SyncLock bufferLock
+            If input IsNot Nothing Then
+                buffer = Encoding.Default.GetString(input).Split("$")
             End If
-            i += 1
-        Next
-        'xx End SyncLock
+        End SyncLock
     End Sub
 
     Function EnableBroadCast()
@@ -294,6 +322,7 @@ Public Class Communication1_1
         If port.BytesToRead > 0 Then
             Dim buffer() As Byte = New Byte(port.BytesToRead) {}
             port.Read(buffer, 0, buffer.Length)
+            Dim str As String = Encoding.Default.GetString(buffer)
             'If Successfully write command
             If buffer.SequenceEqual(sucTotal) Then
                 Return True
@@ -334,26 +363,79 @@ Public Class Communication1_1
         Return False
     End Function
 
+    Public Function EnsureActionOnAll()
+
+    End Function
+
     'broadcasts start measuring, returns the ones that confirm start measuring
-    Public Function StartMeasure() As Boolean
+    Public Function StartMeasure(ByVal name As String) As Boolean
         If Program.sim Then
             Return True
         ElseIf Open() Then
             ClearBuffer()
             If MakeSureReady() Then
-                'xx SyncLock portLock
-                If EnableBroadCast() Then
-                    port.WriteLine("Measure, Start")
-                Else
-                    MsgBox("Broadcast cannot be enabled!")
-                    Return False
+                SyncLock portLock
+                    If name.Contains("Cal") Then
+
+                        Dim meterIndex As Integer = DetermineMeter(name)
+                        Dim mac() As Byte = MeterMacs(meterIndex)
+                        Dim command(2 + 3) As Byte
+                        command(0) = &HCC
+                        command(1) = &H10
+                        Array.Copy(mac, 0, command, 2, 3)
+                        'success code
+                        Dim sucCode(1 + 3) As Byte
+                        sucCode(0) = &HCC
+                        Array.Copy(mac, 0, sucCode, 1, 3)
+
+                        If SetupAndSendCommand(command, sucCode) Then
+                            port.WriteLine("Measure, Start")
+                        End If
+                    Else
+                        If EnableBroadCast() Then
+                            port.WriteLine("Measure, Start")
+                        Else
+                            MsgBox("Broadcast cannot be enabled!")
+                            Return False
+                        End If
+                    End If
+                End SyncLock
+
+                'PollingThread = New Thread(AddressOf Poll)
+                'PollingThread.Start(DetermineMeter(name))
+                Poll(DetermineMeter(name))
+                Return True
+            Else
+                MsgBox("Meters Not Ready")
+            End If
+        End If
+        Return False
+    End Function
+
+    'broadcasts pause measuring, returns the ones that confirm pause measuring
+    Public Function PauseMeasure(ByVal pause As Boolean) As Boolean
+        If Program.sim Then
+            Return True
+        ElseIf Open() Then
+            ClearBuffer()
+            If MakeSureReady() Then
+                SyncLock portLock
+                    If EnableBroadCast() Then
+                        If pause Then
+                            port.WriteLine("Pause, Pause")
+                        Else
+                            port.WriteLine("Pause, Clear")
+                        End If
+                    Else
+                        MsgBox("Broadcast cannot be enabled!")
+                        Return False
+                    End If
+                End SyncLock
+                If pause Then
+                    'PollingThread = New Thread(AddressOf Poll)
+                    'PollingThread.Start()
+                    'Poll()
                 End If
-                'xx End SyncLock
-                'If IsNothing(PollingThread) Then
-                '    PollingThread = New Thread(AddressOf Poll)
-                'End If
-                'PollingThread.Start()
-                Poll()
                 Return True
             Else
                 MsgBox("Meters Not Ready")
@@ -365,39 +447,38 @@ Public Class Communication1_1
     Public Function MakeSureReady() As Boolean
         Dim result() As Boolean = New Boolean(MeterMacs.Count - 1) {}
         'This will prevent other threads from accessing buffer at the same time
-        'xx SyncLock bufferLock
-        Dim i As Integer = 0
+        SyncLock portLock
+            Dim i As Integer = 0
 
-        For Each mac As Byte() In MeterMacs
-            'destination address
-            Dim command(2 + 3) As Byte
-            command(0) = &HCC
-            command(1) = &H10
-            Array.Copy(mac, 0, command, 2, 3)
-            'success code
-            Dim sucCode(1 + 3) As Byte
-            sucCode(0) = &HCC
-            Array.Copy(mac, 0, sucCode, 1, 3)
-            If SetupAndSendCommand(command, sucCode) Then
-                port.WriteLine("")
-                Thread.Sleep(_Latency)
-                Dim input() As Byte = GetInputFromPort()
-                If input Is Nothing Then
-                    result(i) = False
+            For Each mac As Byte() In MeterMacs
+                    'destination address
+                    Dim command(2 + 3) As Byte
+                    command(0) = &HCC
+                    command(1) = &H10
+                    Array.Copy(mac, 0, command, 2, 3)
+                    'success code
+                    Dim sucCode(1 + 3) As Byte
+                    sucCode(0) = &HCC
+                    Array.Copy(mac, 0, sucCode, 1, 3)
+                    If SetupAndSendCommand(command, sucCode) Then
+                        port.WriteLine("")
+                        Thread.Sleep(_Latency)
+                        Dim input() As Byte = GetInputFromPort()
+                        If input Is Nothing Then
+                            result(i) = False
+                            i += 1
+                            Continue For
+                        ElseIf input.Length = 0 Then
+                            result(i) = False
+                            i += 1
+                            Continue For
+                        ElseIf input.Length > 0 Then
+                            result(i) = True
+                        End If
+                    End If
                     i += 1
-                    Continue For
-                ElseIf input.Length = 0 Then
-                    result(i) = False
-                    i += 1
-                    Continue For
-                ElseIf input.Length > 0 Then
-                    result(i) = True
-                End If
-            End If
-
-            i += 1
-        Next
-        'xx End SyncLock
+            Next
+        End SyncLock
 
         For i = 0 To result.Length - 1
             If Not result(i) Then
@@ -405,33 +486,6 @@ Public Class Communication1_1
             End If
         Next
         Return True
-    End Function
-
-    'broadcasts pause measuring, returns the ones that confirm pause measuring
-    Public Function PauseMeasure(ByVal pause As Boolean) As Boolean
-        If Program.sim Then
-            Return True
-        ElseIf Open() Then
-            ClearBuffer()
-            If MakeSureReady() Then
-                SyncLock portLock
-                    If pause Then
-                        port.WriteLine("Pause, Pause")
-                    Else
-                        port.WriteLine("Pause, Clear")
-                    End If
-                End SyncLock
-                If pause Then
-                    PollingThread = New Thread(AddressOf Poll)
-                    PollingThread.Start()
-                    'Poll()
-                End If
-                Return True
-            Else
-                MsgBox("Meters Not Ready")
-            End If
-        End If
-        Return False
     End Function
 
     'broadcasts stop measuring, returns the ones that confrim stop measuring
@@ -442,38 +496,45 @@ Public Class Communication1_1
                 result(i) = True
             Next
         ElseIf Open() Then
-            If EnableBroadCast() Then
-                'xx SyncLock portLock
-                port.WriteLine("Measure, Stop")
-                'xx End SyncLock
-            End If
-            'PollingThread.Abort()
-            'PollingThread = Nothing
+            SyncLock portLock
+                If EnableBroadCast() Then
+                    port.WriteLine("Measure, Stop")
+
+                End If
+            End SyncLock
         End If
     End Sub
 
     '14 figures
-    Public Function ConsumeMeasurementsFromBuffer(ByVal part As Measurements) As String()
+    Public Function ConsumeMeasurementsFromBuffer(ByVal part As Measurements, ByVal name As String) As String()
         Dim result() As String = New String(MeterMacs.Count - 1) {}
+        Dim meterIndex As Integer = DetermineMeter(name)
         Try
             If Not IsNothing(buffer) Then
-                'xx        SyncLock bufferLock
-                FilterMsgsFromBuffer("R+0000")
-                For i = 0 To MeterMacs.Count - 1
-                    If buffer(i).Length > 8 Then
-                        Dim temp() As String = buffer(i).Substring(8).Split(",")
-                        If part < temp.Length Then
-                            result(i) = temp(part)
-                            Continue For
+                SyncLock bufferLock
+                    FilterMsgsFromBuffer("R+0000")
+                    For i = 0 To MeterMacs.Count - 1
+                        If Not meterIndex = -1 Then
+                            If Not i = meterIndex Then
+                                result(i) = "0"
+                                Continue For
+                            End If
                         End If
-                        buffer(i) = ""
-                        result(i) = "0"
-                    Else
-                        buffer(i) = ""
-                        result(i) = "0"
-                    End If
-                Next
-                'xx End SyncLock
+                        If buffer(i).Length > 8 Then
+                            Dim temp() As String = buffer(i).Substring(8).Split(",")
+                            If part < temp.Length Then
+                                result(i) = temp(part)
+                                Continue For
+                            End If
+                            buffer(i) = ""
+                            result(i) = "0"
+                        Else
+                            buffer(i) = ""
+                            result(i) = "0"
+                        End If
+
+                    Next
+                End SyncLock
             End If
         Catch ex As Exception
             MsgBox("ConsumeMeasurementsFromBuffer: " & ex.Message)
@@ -481,14 +542,17 @@ Public Class Communication1_1
         Return result
     End Function
 
-    Public Function GetMeasurementsFromMeters(ByVal part As Measurements) As String()
-
+    'if meterIndex = -1 -> we want all meters, else it's a specific meter
+    Public Function GetMeasurementsFromMeters(ByVal part As Measurements, ByVal name As String) As String()
+        Dim meterIndex As Integer = DetermineMeter(name)
         Dim result() As String = New String(MeterMacs.Count - 1) {}
         If Not Program.sim Then
             Try
                 If Open() Then
-                    Poll()
-                    result = ConsumeMeasurementsFromBuffer(part)
+                    'PollingThread = New Thread(AddressOf Poll)
+                    'PollingThread.Start()
+                    Poll(DetermineMeter(name))
+                    result = ConsumeMeasurementsFromBuffer(part, name)
                 End If
             Catch ex As Exception
                 MsgBox("GetMeasurementsFromMeters: " & ex.Message)
@@ -503,6 +567,11 @@ Public Class Communication1_1
                 Dim tempR = (r.Next(1, 10) / 10) + r.Next(40, 119)
                 temp(i) = ("R+0000  " & tempR & "," & (tempR - 1) & ",--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-,--.-")
                 result(i) = temp(i).Substring(8).Split(",")(part)
+                If Not meterIndex = -1 Then
+                    If Not i = meterIndex Then
+                        result(i) = 0
+                    End If
+                End If
             Next
 
             buffer = temp
